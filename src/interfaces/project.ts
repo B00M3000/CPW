@@ -7,6 +7,7 @@ export interface Student {
 
 export interface Project {
     studentId: string;
+    year: number;
     subject: string;
     tags: string[];
     mentor: Mentor;
