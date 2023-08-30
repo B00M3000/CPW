@@ -2,14 +2,17 @@
     import ProjectCard from "@client/components/ProjectCard.svelte";
     import type { Project } from "@interfaces/project";
     import data from "@client/data/generated/projects.json";
+    import tags from "@client/data/generated/tags.json";
     import { json } from "@sveltejs/kit";
-
+    import MultiSelect from "svelte-multiselect"
     let search = "".toLowerCase();
     // Define filter variables
     let filterBySubject = false;
     let filterByYear = false;
     let filterByTags = false;
     let filterByMentor = false;
+    let selected;
+
 
     function advancedSearch(project) {
         if (search && !JSON.stringify(project).toLowerCase().includes(search)) {
@@ -24,7 +27,11 @@
         if (filterByYear && project.year !== parseInt(search)) {
             return false;
         }
-        if (filterByTags && !project.tags.includes(search)) {
+        if (
+            filterByTags &&
+            selected.length > 0 &&
+            !selected.some((tag) => project.tags.includes(tag))
+        ) {
             return false;
         }
         if (
@@ -38,6 +45,7 @@
     $: displayed_projects = data;
 
     function filteredProjects() {
+        console.log(selected);
         displayed_projects = data
             .filter((p: Project) =>
                 JSON.stringify(p).toLowerCase().includes(search)
@@ -67,7 +75,6 @@
                     filterByTags = false;
                     filterByMentor = false;
                     search = "";
-                    document.getElementById("search-box").value = "";
                     displayed_projects = data;
                 }}>Clear</button
             >
@@ -82,12 +89,13 @@
             <label>
                 <input type="checkbox" bind:checked={filterByYear} />Year
             </label>
-            <label>
-                <input type="checkbox" bind:checked={filterByTags} />Tags
-            </label>
+
             <label>
                 <input type="checkbox" bind:checked={filterByMentor} />Mentor
             </label>
+            <MultiSelect id="languages" options={Object.values(tags)} placeholder="Select Tags" bind:selected>
+
+            </MultiSelect>
         </div>
         <div class="results">
             {#if displayed_projects.length === 0}
