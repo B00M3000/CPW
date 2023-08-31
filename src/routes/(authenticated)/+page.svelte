@@ -1,5 +1,5 @@
 <script lang="ts">
-
+  import { goto } from "$app/navigation";
 </script>
 
 <main>
@@ -9,7 +9,7 @@
     </nav>
     <h1>Commonwealth School Project Week Database</h1>
 
-    <input type="text" />
+    <button on:click={() => goto('/login')}>Login</button>
 </main>
 
 <style>
