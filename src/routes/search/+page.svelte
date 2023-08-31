@@ -6,6 +6,7 @@
     import { json } from "@sveltejs/kit";
     import MultiSelect from "svelte-multiselect"
     let search = "".toLowerCase();
+
     // Define filter variables
     let filterBySubject = false;
     let filterByYear = false;
@@ -27,11 +28,9 @@
         if (filterByYear && project.year !== parseInt(search)) {
             return false;
         }
-        if (
-            filterByTags &&
+        if (filterByTags &&
             selected.length > 0 &&
-            !selected.some((tag) => project.tags.includes(tag))
-        ) {
+            !selected.some((tag) => project.tags.includes(tag))) {
             return false;
         }
         if (
@@ -42,6 +41,7 @@
         }
         return true;
     }
+
     $: displayed_projects = data;
 
     function filteredProjects() {
@@ -93,9 +93,8 @@
             <label>
                 <input type="checkbox" bind:checked={filterByMentor} />Mentor
             </label>
-            <MultiSelect id="languages" options={Object.values(tags)} placeholder="Select Tags" bind:selected>
-
-            </MultiSelect>
+            <MultiSelect id="languages" options={Object.values(tags)} placeholder="Select Tags" bind:selected />
+            <button class="button" on:click={filteredProjects}>Search</button>
         </div>
         <div class="results">
             {#if displayed_projects.length === 0}

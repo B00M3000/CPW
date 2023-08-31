@@ -8,8 +8,6 @@
         <a href="/about">about</a>
     </nav>
     <h1>Commonwealth School Project Week Database</h1>
-
-    <input type="text" />
 </main>
 
 <style>
