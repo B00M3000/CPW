@@ -9,7 +9,7 @@
             scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
             redirect_uri: `${PUBLIC_ORIGIN}/login/redirect`,
             response_type: 'code',
-            //prompt: 'none',
+            prompt: 'none',
         });
 
         await goto(`https://accounts.google.com/o/oauth2/v2/auth?${params}`)
