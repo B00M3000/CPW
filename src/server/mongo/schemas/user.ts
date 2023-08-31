@@ -13,8 +13,8 @@ const schema = new mongoose.Schema(
     name: { type: String, required: true },
     picture: { type: String, required: true },
     email: { type: String, required: true },
-    session_id: { type: String, required: true },
-    google_id: { type: String, required: true },
+    session_id: { type: String, required: true, unique: true },
+    google_id: { type: String, required: true, unique: true },
   },
   { timestamps: true },
 );

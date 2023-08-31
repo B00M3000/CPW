@@ -1,8 +1,9 @@
 import { error, json } from '@sveltejs/kit';
 import { UserSchema } from '@/server/mongo/schemas/user';
 import type { RequestHandler } from './$types';
-import { PUBLIC_GOOGLE_CLIENT_ID, PUBLIC_ORIGIN } from '$env/static/public'
-import { GOOGLE_CLIENT_SECRET } from '$env/static/private'
+import { PUBLIC_GOOGLE_CLIENT_ID, PUBLIC_ORIGIN } from '$env/static/public';
+import { GOOGLE_CLIENT_SECRET } from '$env/static/private';
+import { v4 as uuidv4 } from 'uuid';
 
 async function get_tokens(code: string) {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -54,6 +55,8 @@ export const GET: RequestHandler = async (req) => {
 
   const google_user = await get_user(token_type, access_token);
 
+  const session_id = uuidv4()
+
   const user = await UserSchema.findOneAndUpdate(
     {
       google_id: google_user.id,
@@ -63,7 +66,7 @@ export const GET: RequestHandler = async (req) => {
       email: google_user.email,
       name: google_user.name, // can in future use family_name and given_name to use first and last name separately
       picture: google_user.picture,
-      session_id: google_user.id // for now is just user id
+      session_id
     },
     {
       upsert: true,
@@ -79,7 +82,7 @@ export const GET: RequestHandler = async (req) => {
       status: 307,
       headers: {
         location: redirect && !absolute.test(redirect) ? redirect : '/',
-        'set-cookie': req.cookies.serialize('session_id', google_user.id, {
+        'set-cookie': req.cookies.serialize('session_id', session_id, {
           path: '/',
         }),
       },
