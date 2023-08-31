@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Project } from "@interfaces/project";
-
+    import tags from "@client/data/generated/tags.json"
     import Tag from "@client/components/Tag.svelte";
     import StudentCard from "@client/components/StudentCard.svelte";
 
@@ -15,7 +15,7 @@
     </div>
     <div class="project-card/tags">
         {#each project.tags as tag}
-            <Tag text={tag} />
+            <Tag text={tags[tag]} />
         {/each}
     </div>
     <p>{project.shortDescription}</p>

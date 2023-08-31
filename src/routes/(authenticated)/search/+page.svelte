@@ -11,7 +11,6 @@
     // Define filter variables
     let filterBySubject = false;
     let filterByYear = false;
-    let filterByTags = false;
     let filterByMentor = false;
 
     let selected:any[] = [];
@@ -21,24 +20,13 @@
         if (search && !JSON.stringify(project).toLowerCase().includes(search)) {
             return false;
         }
-        if (
-            filterBySubject &&
-            !project.subject.toLowerCase().includes(search)
-        ) {
-            return false;
-        }
         if (filterByYear && project.year !== parseInt(search)) {
             return false;
         }
-        if (filterByTags &&
-            selected.length > 0 &&
-            !selected.some((tag) => project.tags.includes(tag))) {
+        if (selected.length > 0 && !selected.some((tag) => project.tags.includes(tag))) {
             return false;
         }
-        if (
-            filterByMentor &&
-            !JSON.stringify(project.mentor).toLowerCase().includes(search)
-        ) {
+        if (filterByMentor && !JSON.stringify(project.mentor).toLowerCase().includes(search)) {
             return false;
         }
         return true;
@@ -72,9 +60,7 @@
             <button
                 class="button"
                 on:click={() => {
-                    filterBySubject = false;
                     filterByYear = false;
-                    filterByTags = false;
                     filterByMentor = false;
                     search = "";
                     displayed_projects = data;
@@ -85,9 +71,6 @@
     <div class="leftright">
         <div class="sidebar">
             <p>Advanced Search Options:</p>
-            <label>
-                <input type="checkbox" bind:checked={filterBySubject} />Subject
-            </label>
             <label>
                 <input type="checkbox" bind:checked={filterByYear} />Year
             </label>
