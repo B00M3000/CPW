@@ -42,8 +42,6 @@ export const GET: RequestHandler = async (req) => {
 
   const data = await get_tokens(code);
 
-  console.log(data)
-
   if (!data.access_token) {
     throw error(400, {
         message: 'Invalid Authorization Code',
