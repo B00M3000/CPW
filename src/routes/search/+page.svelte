@@ -1,20 +1,22 @@
 <script lang="ts">
     import ProjectCard from "@client/components/ProjectCard.svelte";
+    import MultiSelect from "@client/components/MultiSelect.svelte"
     import type { Project } from "@interfaces/project";
     import data from "@client/data/generated/projects.json";
     import tags from "@client/data/generated/tags.json";
     import { json } from "@sveltejs/kit";
-    import MultiSelect from "svelte-multiselect"
+    //import MultiSelect from "svelte-multiselect"
     let search = "".toLowerCase();
     // Define filter variables
     let filterBySubject = false;
     let filterByYear = false;
     let filterByTags = false;
     let filterByMentor = false;
-    let selected;
+
+    let selected:any[] = [];
 
 
-    function advancedSearch(project) {
+    function advancedSearch(project:any) {
         if (search && !JSON.stringify(project).toLowerCase().includes(search)) {
             return false;
         }
@@ -93,9 +95,8 @@
             <label>
                 <input type="checkbox" bind:checked={filterByMentor} />Mentor
             </label>
-            <MultiSelect id="languages" options={Object.values(tags)} placeholder="Select Tags" bind:selected>
+            <MultiSelect options={Object.entries(tags).map(([key, value]) => ({ key, value }))} bind:selectedValues={selected} />
 
-            </MultiSelect>
         </div>
         <div class="results">
             {#if displayed_projects.length === 0}
@@ -161,14 +162,13 @@
     }
 
     .sidebar {
-        flex: 0 0 200px;
+        flex: 0 0 240px;
         border-radius: 10px;
-        max-width: 200px;
-        height: 800px;
+        max-width: 240px;
+        height: 100vh;
         background-color: #9b9b9b;
         padding: 20px;
         margin-left: 0.9rem;
-        box-shadow: 0px 0px 60px rgba(48, 48, 48, 0.1);
     }
 
     .sidebar p {
