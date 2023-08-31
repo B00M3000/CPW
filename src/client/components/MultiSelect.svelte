@@ -38,9 +38,9 @@
        
         <div class="dropdown-content">
             {#each displayedTags as option}
-                <div class="option" on:click={() => addToSelected(option)}>
+                <button class="option" on:click={() => addToSelected(option)}>
                     {option.value}
-                </div>
+                </button>
             {/each}
         </div>
     </div>
@@ -74,6 +74,7 @@
         text-decoration: none;
         padding: 5px 30px;
         border: 0.5px solid;
+        width:100%;
     }
 
     .option:hover {
