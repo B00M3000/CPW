@@ -26,10 +26,8 @@
         display: flex;
         justify-content: space-between;
         padding: 0 3rem;
-
         font-size: 24px;
-
-        background-color: bisque;
+        background-color: rgb(107, 107, 107);
     }
 
     .main-navigation {
@@ -43,7 +41,7 @@
     a {
         margin: 2rem 1rem;
 
-        color: black;
+        color: rgb(255, 255, 255);
         text-decoration: none;
     }
 

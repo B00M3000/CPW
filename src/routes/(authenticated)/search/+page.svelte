@@ -1,32 +1,44 @@
 <script lang="ts">
     import ProjectCard from "@client/components/ProjectCard.svelte";
-    import MultiSelect from "@client/components/MultiSelect.svelte"
+    import MultiSelect from "@client/components/MultiSelect.svelte";
     import type { Project } from "@interfaces/project";
     import data from "@client/data/generated/projects.json";
     import tags from "@client/data/generated/tags.json";
+    import YearFilter from "@client/components/YearFilter.svelte";
     import { json } from "@sveltejs/kit";
     //import MultiSelect from "svelte-multiselect"
     let search = "".toLowerCase();
 
     // Define filter variables
     let filterBySubject = false;
-    let filterByYear = false;
-    let filterByMentor = false;
+    let yearUpper: number = new Date().getFullYear();
+    let yearLower: number = 2019;
+    let mentorSearch: string;
+    let selected: any[] = [];
 
-    let selected:any[] = [];
-
-
-    function advancedSearch(project:any) {
+    function advancedSearch(project: any) {
         if (search && !JSON.stringify(project).toLowerCase().includes(search)) {
             return false;
         }
-        if (filterByYear && project.year !== parseInt(search)) {
+        if (
+            mentorSearch &&
+            !JSON.stringify(project.mentor).toLowerCase().includes(mentorSearch)
+        ) {
+            console.log(project.mentor);
             return false;
         }
-        if (selected.length > 0 && !selected.some((tag) => project.tags.includes(tag))) {
+        if (
+            !(
+                parseInt(project.year) >= yearLower &&
+                parseInt(project.year) <= yearUpper
+            )
+        ) {
             return false;
         }
-        if (filterByMentor && !JSON.stringify(project.mentor).toLowerCase().includes(search)) {
+        if (
+            selected.length > 0 &&
+            !selected.some((tag) => project.tags.includes(tag))
+        ) {
             return false;
         }
         return true;
@@ -35,12 +47,7 @@
     $: displayed_projects = data;
 
     function filteredProjects() {
-        console.log(selected);
-        displayed_projects = data
-            .filter((p: Project) =>
-                JSON.stringify(p).toLowerCase().includes(search)
-            )
-            .filter(advancedSearch);
+        displayed_projects = data.filter(advancedSearch);
     }
 </script>
 
@@ -60,8 +67,9 @@
             <button
                 class="button"
                 on:click={() => {
-                    filterByYear = false;
-                    filterByMentor = false;
+                    yearLower = 2019;
+                    yearUpper = new Date().getFullYear();
+                    mentorSearch = "";
                     search = "";
                     displayed_projects = data;
                 }}>Clear</button
@@ -71,17 +79,34 @@
     <div class="leftright">
         <div class="sidebar">
             <p>Advanced Search Options:</p>
-            <label>
-                <input type="checkbox" bind:checked={filterByYear} />Year
+            <h1 class="filter-labels">
+                Filter by year:
+                <YearFilter
+                    bind:yearLowerBound={yearLower}
+                    bind:yearUpperBound={yearUpper}
+                />
+            </h1>
+
+            <label class="filter-labels">
+                Filter by mentor:
+                <input
+                    class="mentorFilter"
+                    type="search"
+                    placeholder="Search Mentor"
+                    bind:value={mentorSearch}
+                />
             </label>
 
-            <label>
-                <input type="checkbox" bind:checked={filterByMentor} />Mentor
-            </label>
-            <MultiSelect options={Object.entries(tags).map(([key, value]) => ({ key, value }))} bind:selectedValues={selected} />
-
-
-
+            <h1 class="filter-labels">
+                Filter by tags:
+                <MultiSelect
+                    options={Object.entries(tags).map(([key, value]) => ({
+                        key,
+                        value,
+                    }))}
+                    bind:selectedValues={selected}
+                />
+            </h1>
         </div>
         <div class="results">
             {#if displayed_projects.length === 0}
@@ -116,6 +141,21 @@
         margin-top: 5vh;
         justify-content: center;
         align-items: center;
+    }
+
+    .mentorFilter {
+        background-color: #525252;
+        color: white;
+        padding: 2px;
+        font-size: 16px;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+    }
+
+    .filter-labels {
+        margin-top: 1rem;
+        font-size: 15px;
+        font-weight: 900;
     }
 
     .search-box {

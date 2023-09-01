@@ -34,7 +34,7 @@
 
 <div class="multi-select">
     <div class="dropdown">
-        <input id="search-tag" class="dropbtn" type="text" placeholder="Search Tags" bind:value={searchQuery}/> 
+        <input id="search-tag" class="dropbtn" type="search" placeholder="Search Tags" bind:value={searchQuery}/> 
        
         <div class="dropdown-content">
             {#each displayedTags as option}
@@ -111,6 +111,7 @@
         padding: 2px;
         font-size: 16px;
         border-radius: 5px;
+
     }
 
     .dropdown {
