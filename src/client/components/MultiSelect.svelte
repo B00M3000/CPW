@@ -44,7 +44,7 @@
             {/each}
         </div>
     </div>
-    <button on:click = {removeAllTags}> Clear All</button>
+    <button class="clearallbtn" on:click = {removeAllTags}> × </button>
     <div class="selected-container">
         <div class="selected-bubbles">
             {#each selectedValuesView as selectedValue}
@@ -65,7 +65,19 @@
         display: flex;
         flex-wrap: wrap;
     }
-
+    
+    .clearallbtn {
+        
+        background-color: transparent;
+        border: 2px solid black;
+        border-radius: 5px;
+        align-items: center;
+        text-align: center;
+        vertical-align: middle;
+    }
+    .clearallbtn:hover {
+        background-color: gray;
+    }
     .option {
         cursor: pointer;
         display: block;
@@ -87,6 +99,7 @@
         display: flex;
         flex-wrap: wrap;
         margin-top: 8px;
+        font-weight: 200;
         
     }
 
@@ -111,6 +124,9 @@
         padding: 2px;
         font-size: 16px;
         border-radius: 5px;
+        border: 2px solid black;
+        border-radius: 5px;
+        margin-right: 2px;
 
     }
 

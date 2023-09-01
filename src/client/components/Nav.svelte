@@ -2,68 +2,94 @@
     import { user } from "@/client/stores/user";
 </script>
 
-<nav>
+<nav class="navbar">
     <div class="main-navigation">
         <a href="/">Home</a>
         <a href="/search">Projects</a>
     </div>
-
-    <div class="other-navigation">
+    <h1 class="title"><em>Commonwealth School Project Week Database</em></h1>
+    <div class="user-navigation">
         {#if $user}
-        <div class="user-card">
-            <img src={$user.picture}/>
-            <span>{$user.name}</span>
-        </div>
-        <button on:click={() => user.logout()}>Log Out</button>
+            <div class="user-card">
+                <img src={$user.picture} alt="User Profile" />
+                <span>{$user.name}</span>
+            </div>
+            <button
+                class="logout-button"
+                on:click={() => {
+                    user.logout();
+                    location.reload();
+                }}>Log Out</button
+            >
         {:else}
-        <a href="/login">Log In</a>
+            <a class="login-button" href="/login">Log In</a>
         {/if}
     </div>
 </nav>
 
 <style lang="scss">
-    nav {
+    .title {
+        margin: 0.2rem;
+    }
+    .navbar {
         display: flex;
         justify-content: space-between;
-        padding: 0 3rem;
-        font-size: 24px;
-        background-color: rgb(107, 107, 107);
+        padding: 1rem 3rem;
+        background-color: #333;
+        color: #fff;
     }
 
     .main-navigation {
         display: flex;
+        align-items: center;
     }
 
-    .other-navigation {
+    .user-navigation {
         display: flex;
+        align-items: center;
     }
 
     a {
-        margin: 2rem 1rem;
-
-        color: rgb(255, 255, 255);
+        margin: 0 1rem;
+        color: #fff;
         text-decoration: none;
     }
 
     a:hover {
-        color: grey;
-        background-color: antiquewhite;
-    }
-
-    span {
-        margin: 2rem;
+        color: #ccc;
+        background-color: #444;
+        border-radius: 4px;
     }
 
     .user-card {
         display: flex;
         align-items: center;
-        justify-content: center;
+
         img {
-            width: 64px;
-            height: 64px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 8px;
         }
+
         span {
-            margin-left: 1rem;
+            font-weight: bold;
+            margin-right: 2rem;
         }
+    }
+
+    .logout-button,
+    .login-button {
+        padding: 0.5rem 1rem;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .logout-button:hover,
+    .login-button:hover {
+        background-color: #0056b3;
     }
 </style>
