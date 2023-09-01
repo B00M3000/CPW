@@ -1,6 +1,17 @@
 import mongoose from 'mongoose';
 
-interface UserData {
+export enum AccountType {
+  Unassisgned,
+  Student,
+  Advisor
+}
+
+export enum AccessLevel {
+  Normal,
+  Admin
+}
+
+interface UserDocumentData {
   name: string;
   picture: string;
   google_id: string;
@@ -15,10 +26,12 @@ const schema = new mongoose.Schema(
     email: { type: String, required: true },
     session_id: { type: String, required: true, unique: true },
     google_id: { type: String, required: true, unique: true },
+    account_type: { type: Number, required: true, default: 0 },
+    access_level: { type: Number, required: true, default: 0 }
   },
   { timestamps: true },
 );
-export type UserDocument = mongoose.HydratedDocument<UserData>;
+export type UserDocument = mongoose.HydratedDocument<UserDocumentData>;
 
-export const UserSchema: mongoose.Model<UserData> =
+export const UserSchema: mongoose.Model<UserDocumentData> =
   mongoose.models['Users'] || mongoose.model('Users', schema);
