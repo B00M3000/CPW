@@ -7,45 +7,72 @@
     import YearFilter from "@client/components/YearFilter.svelte";
     import students from "@client/data/generated/students.json";
     import { json } from "@sveltejs/kit";
+    import lowRelevance from "@client/data/generated/low-relevance.json";
 
     let search = "".toLowerCase();
-
-    // Define filter variables
     let yearUpper: number = new Date().getFullYear();
     let yearLower: number = 2019;
     let mentorSearch: string = "";
     let studentSearch: string = "";
     let filteredStudents: string[] = [];
     let selected: any[] = [];
-
+    let searchWords: string[] = [];
     function advancedSearch(project: any) {
         if (studentSearch) {
             for (const student of students) {
-                let studentName:string = student.firstName;
-                studentName.concat(" ", student.lastName)
-                if (studentName.toLowerCase().includes(studentSearch.toLowerCase())) {
+                let studentName: string = student.firstName;
+                studentName.concat(" ", student.lastName);
+                if (
+                    studentName
+                        .toLowerCase()
+                        .includes(studentSearch.toLowerCase())
+                ) {
                     filteredStudents.push(student.studentId);
                 }
             }
-            if(filteredStudents.length == 0){
+            if (filteredStudents.length == 0) {
                 return false;
             }
         }
-        if (filteredStudents.length >= 1 && !filteredStudents.some((id) => project.studentId.includes(id))) {
+
+        searchWords = search.split(" ");
+
+        searchWords = searchWords.filter((word) => {
+            return lowRelevance.includes(word) || word.length === 1;
+        });
+
+        if(searchWords.length >= 1 && !searchWords.some((title) => project.subject.includes(title))){
+            return false;
+        }
+
+        if (
+            filteredStudents.length >= 1 &&
+            !filteredStudents.some((id) => project.studentId.includes(id))
+        ) {
             return false;
         }
 
         if (search && !JSON.stringify(project).toLowerCase().includes(search)) {
             return false;
         }
-        if (mentorSearch && !JSON.stringify(project.mentor).toLowerCase().includes(mentorSearch)) {
-
+        if (
+            mentorSearch &&
+            !JSON.stringify(project.mentor).toLowerCase().includes(mentorSearch)
+        ) {
             return false;
         }
-        if (!(parseInt(project.year) >= yearLower && parseInt(project.year) <= yearUpper)) {
+        if (
+            !(
+                parseInt(project.year) >= yearLower &&
+                parseInt(project.year) <= yearUpper
+            )
+        ) {
             return false;
         }
-        if (selected.length > 0 && !selected.some((tag) => project.tags.includes(tag))) {
+        if (
+            selected.length > 0 &&
+            !selected.some((tag) => project.tags.includes(tag))
+        ) {
             return false;
         }
         return true;
@@ -55,9 +82,6 @@
 
     function filteredProjects() {
         displayed_projects = data
-            .filter((p: Project) =>
-                JSON.stringify(p).toLowerCase().includes(search.toLowerCase())
-            )
             .filter(advancedSearch);
         filteredStudents = [];
     }
@@ -65,7 +89,6 @@
 
 <main>
     <div class="head">
-        
         <div class="search">
             <input
                 placeholder="Search..."
@@ -75,9 +98,7 @@
                 bind:value={search}
                 type="text"
             />
-            <button class="button" on:click={filteredProjects}
-                >Search</button
-            >
+            <button class="button" on:click={filteredProjects}>Search</button>
 
             <button
                 class="button"
@@ -138,7 +159,7 @@
 
             <button class="button" on:click={filteredProjects}>Search</button>
         </div>
-        
+
         <div class="results">
             {#if displayed_projects.length === 0}
                 <h1 class="no-results">
@@ -171,7 +192,7 @@
         justify-content: center;
         align-items: left;
         background-color: #d0d0d0;
-        width:  calc(100vw - 2rem);
+        width: calc(100vw - 2rem);
         height: 8vh;
         border-bottom: 2px solid black;
         border-top: 2px solid black;
@@ -219,7 +240,7 @@
 
     .leftright {
         display: flex;
-        max-width:  calc(100vw - (100vw - 100%));
+        max-width: calc(100vw - (100vw - 100%));
     }
 
     .sidebar {
@@ -265,7 +286,6 @@
         overflow-y: scroll;
         height: 82.44vh;
     }
-    
 
     .no-results {
         font-size: 3rem;
