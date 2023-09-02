@@ -56,25 +56,28 @@
     .filter-container {
         display: flex;
         align-items: center;
-        gap: 10px;
-        margin-bottom: 20px;
+        gap: 20px;
+        width: 208px;
         background-color: #525252;
-        padding: 10px;
+        padding: 2px;
         border-radius: 5px;
         margin-bottom: 2rem;
     }
 
     .yearFilter {
-        padding: 2px;
-        border: 1px solid #ffffff;
+        padding: 1px;
+        border: 1px solid gray;
         border-radius: 4px;
+        background-color: gray;
+        font-weight: 800;
+        color: white;
+        
     }
     label {
         color: white;
         font-weight: 900;
         background-color: gray;
-        padding: 0.5px;
-        padding-left: 2px;
+        padding-left: 5px;
         border-radius: 5px;
     }
 </style>

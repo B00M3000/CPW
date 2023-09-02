@@ -3,7 +3,7 @@
 </script>
 
 <main>
-    <nav>
+    <nav class="nav-main">
         <a href="/">home</a>
         <a href="/about">about</a>
     </nav>
@@ -20,4 +20,5 @@
         align-items: center;
         height: 100vh;
     }
+
 </style>
