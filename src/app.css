@@ -1,5 +1,43 @@
 :root {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    --primary-color-900: #2c0310;
+    --primary-color-600: #9E133F;
+    --primary-color-500: #A4123F;
+    --primary-color-400: #B64165;
+    --primary-color-300: #C8718C;
+    --primary-color-200: #DBA0B2;
+    --primary-color-100: #EDD0D9;
+    --red-color-900: #2b0404;
+    --red-color-600: #F42E2F;
+    --red-color-500: #FF2E2E;
+    --red-color-400: #FF5858;
+    --red-color-300: #FF8282;
+    --red-color-200: #FFABAB;
+    --red-color-100: #FFD5D5;
+    --green-color-900: #032903;
+    --green-color-600: #2a9329;
+    --green-color-500: #2a9928;
+    --green-color-400: #55ad58;
+    --green-color-300: #7fc27e;
+    --green-color-200: #aad6a9;
+    --green-color-100: #d4ebd4;
+    --yellow-color-900: #2d1f04;
+    --yellow-color-600: #ecaa26;
+    --yellow-color-500: #f4b63c;
+    --yellow-color-400: #f1bd5d;
+    --yellow-color-300: #efc87e;
+    --yellow-color-200: #f6d8a2;
+    --yellow-color-100: #f5e9d3;
+    --blue-grey-color-900: #dfe4eb;
+    --blue-grey-color-800: #aeb5bf;
+    --blue-grey-color-700: #788392;
+    --blue-grey-color-600: #54606f;
+    --blue-grey-color-500: #374351;
+    --blue-grey-color-400: #243040;
+    --blue-grey-color-300: #141f2a;
+    --blue-grey-color-200: #0b121c;
+    --blue-grey-color-100: #050a12;
+    --blue-color-500: #277fd8;
 }
 
 body {
