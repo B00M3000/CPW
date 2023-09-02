@@ -3,7 +3,7 @@
     import MultiSelect from "@client/components/MultiSelect.svelte";
     import type { Project } from "@interfaces/project";
     import data from "@client/data/generated/projects.json";
-    import tags from "@client/data/generated/tags.json";
+    import tags from "@/lib/tags";
     import YearFilter from "@client/components/YearFilter.svelte";
     import { json } from "@sveltejs/kit";
     //import MultiSelect from "svelte-multiselect"
@@ -107,6 +107,8 @@
                     bind:selectedValues={selected}
                 />
             </h1>
+
+            <button class="button" on:click={filteredProjects}>Search</button>
         </div>
         <div class="results">
             {#if displayed_projects.length === 0}

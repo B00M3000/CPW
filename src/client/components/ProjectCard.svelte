@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Project } from "@interfaces/project";
-    import tags from "@client/data/generated/tags.json"
+    import tags from "@/lib/tags";
     import Tag from "@client/components/Tag.svelte";
     import StudentCard from "@client/components/StudentCard.svelte";
 

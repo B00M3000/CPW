@@ -1,4 +1,4 @@
-{
+export default {
     "2da95": "Law, Government, and Politics",
     "d4bfb": "Arts (studio)",
     "19242": "Communications",
