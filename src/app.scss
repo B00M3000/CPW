@@ -1,5 +1,4 @@
-:root {
-    font-family: 'Monospace', 'Trebuchet MS', Arial, sans-serif;
+@mixin colors() {
     --color-primary-900: #2c0310;
     --color-primary-600: #9E133F;
     --color-primary-500: #A4123F;
@@ -40,7 +39,11 @@
     --color-blue-500: #277fd8;
     --color-white: #fff;
     --color-black: #000;
+}
 
+:root {
+    @include colors();
+    font-family: 'Monospace', 'Trebuchet MS', Arial, sans-serif;
 }
 
 body {
