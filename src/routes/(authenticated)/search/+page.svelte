@@ -192,13 +192,19 @@
         justify-content: center;
         align-items: left;
         background-color: #d0d0d0;
-        width: calc(100vw - 2rem);
+        width: 100%;
         height: 8vh;
         border-bottom: 2px solid black;
         border-top: 2px solid black;
-        padding-left: 2rem;
     }
 
+    .search {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+    }
+    
     .SearchFilter {
         background-color: #525252;
         color: white;
@@ -298,8 +304,5 @@
     .random-img {
         margin-top: -300px;
     }
-    .search {
-        display: flex;
-        align-items: center;
-    }
+
 </style>
