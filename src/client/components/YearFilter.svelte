@@ -56,8 +56,9 @@
     .filter-container {
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 20px;
-        width: 208px;
+        width: 215px;
         background-color: #525252;
         padding: 2px;
         border-radius: 5px;
