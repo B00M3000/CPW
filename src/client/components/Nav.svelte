@@ -20,14 +20,16 @@
 
 <style lang="scss">
     .title {
-        margin: 0.2rem;
+        align-items: center;
     }
     .navbar {
         display: flex;
         justify-content: space-between;
-        padding: 1rem 3rem;
-        background-color: #333;
+        background-color: #a4123f;
+        padding: 0rem 1rem;
         color: #fff;
+        height: 8vh;
+        max-height: 8vh;
     }
 
     .main-navigation {

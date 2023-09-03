@@ -33,7 +33,7 @@
         &:hover {
             background-color: rgba(255, 255, 255, 0.1);
 
-            .dropdown-container {
+            .dropdown-content {
                 display: flex;
             }
         }

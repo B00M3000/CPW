@@ -3,13 +3,9 @@
 </script>
 
 <main>
-    <nav class="nav-main">
-        <a href="/">home</a>
-        <a href="/about">about</a>
-    </nav>
+
     <h1>Commonwealth School Project Week Database</h1>
 
-    <button on:click={() => goto('/login')}>Login</button>
 </main>
 
 <style>
