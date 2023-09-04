@@ -14,7 +14,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        height: calc(100vh - var(--nav-bar-height));
     }
 
 </style>

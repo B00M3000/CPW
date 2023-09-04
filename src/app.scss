@@ -27,24 +27,25 @@
     --color-yellow-300: #efc87e;
     --color-yellow-200: #f6d8a2;
     --color-yellow-100: #f5e9d3;
-    --color-blue-grey-900: #dfe4eb;
-    --color-blue-grey-800: #aeb5bf;
-    --color-blue-grey-700: #788392;
-    --color-blue-grey-600: #54606f;
+    --color-blue-grey-900: #050a12;
+    --color-blue-grey-800: #0b121c;
+    --color-blue-grey-700: #141f2a;
+    --color-blue-grey-600: #243040;
     --color-blue-grey-500: #374351;
-    --color-blue-grey-400: #243040;
-    --color-blue-grey-300: #141f2a;
-    --color-blue-grey-200: #0b121c;
-    --color-blue-grey-100: #050a12;
+    --color-blue-grey-400: #54606f;
+    --color-blue-grey-300: #788392;
+    --color-blue-grey-200: #aeb5bf;
+    --color-blue-grey-100: #dfe4eb;
     --color-blue-500: #277fd8;
     --color-white: #fff;
     --color-black: #000;
     --color-commschool-nav: #a4123f;
+    --nav-bar-height: 70px;
 }
 
 :root {
     @include colors();
     font-family: 'Monospace', 'Trebuchet MS', Arial, sans-serif;
-    background-color:  var(--color-blue-grey-800);
+    background-color:  var(--color-blue-grey-100);
 }
 

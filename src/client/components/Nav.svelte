@@ -28,8 +28,7 @@
         background-color: #a4123f;
         padding: 0rem 1rem;
         color: #fff;
-        height: 8vh;
-        max-height: 8vh;
+        height: var(--nav-bar-height);
     }
 
     .main-navigation {

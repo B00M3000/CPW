@@ -2,6 +2,7 @@
     import { user } from "@/client/stores/user";
 </script>
 
+{#if $user}
 <div class="dropdown-container">
     <div class="dropdown-initiator">
         <img src={$user.picture} alt="User Profile" />
@@ -20,6 +21,9 @@
         >
     </div>
 </div>
+{:else}
+<span>ERROR: NO USER LOGGED IN</span>
+{/if}
 
 <style lang="scss">
     .dropdown-container {
