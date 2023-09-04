@@ -243,7 +243,7 @@
     .sidebar {
         flex: 0 0 240px;
         max-width: 240px;
-        height: calc(100vh - 8vh - 8vh);
+        height: calc(100vh - 8vh - var(--nav-bar-height));
         background-color: #777777;
         padding-left: 2rem;
         overflow-y: hidden;
@@ -283,7 +283,7 @@
         overflow-y: scroll;
         padding-top: 20px;
         padding-bottom: 10px;
-        height: calc(100vh - 8vh - 8vh - 20px - 10px);
+        height: calc(100vh - 8vh - var(--nav-bar-height) - 20px - 10px);
     }
 
     .no-results {
