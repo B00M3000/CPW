@@ -171,7 +171,9 @@
                     <ProjectCard {project} />
                 {/each}
             {/if}
+            
         </div>
+        
     </div>
 </main>
 
@@ -297,4 +299,10 @@
     .random-img {
         margin-top: -300px;
     }
+
+
+
+
+
+ 
 </style>

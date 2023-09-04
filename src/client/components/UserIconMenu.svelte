@@ -11,18 +11,21 @@
     <div class="dropdown-content">
         <div class="brief-profile">
             <img src={$user.picture} alt="User Profile" />
-            <div style="line-height: 1; flex-direction: column;">
-                <h1>{$user.name}</h1>
-                <p>{$user.email}</p>
+            <div style="line-height: 1; flex-direction: column; padding-left: 5px;">
+                <h1> {$user.name}</h1>
+                <p> {$user.email}</p>
             </div>
         </div>
         <hr />
-        <button class="logout-button" on:click={() => user.logout() }>Log Out</button
-        >
+        <a href="/">Home</a>
+        <hr />
+        <a href="/student/{$user.id}">User Profile</a>
+        <hr />
+        <button class="logout-button" on:click={() => user.logout() }>Log Out</button>
     </div>
 </div>
 {:else}
-<span>ERROR: NO USER LOGGED IN</span>
+    <span>ERROR: NO USER LOGGED IN</span>
 {/if}
 
 <style lang="scss">
@@ -51,10 +54,12 @@
 
     .dropdown-initiator {
         display: inline-flex;
-        // border: 2px solid var(--color-blue-500);
         border: 2px soild blue;
     }
-
+    a {
+        text-align: center;
+        text-decoration: none; 
+     }
     .brief-profile {
         font-weight: 900;
         color: black;
@@ -64,6 +69,13 @@
         display: flex;
         padding-bottom: 1px;
     }
+
+    
+    hr {
+        width:99%;
+        margin-left:0
+    }
+
 
     .brief-profile {
         p {
@@ -99,7 +111,8 @@
     }
 
     .dropdown-content {
-        display: none;
+        display:none;
+        flex-direction: column;
         position: absolute;
         overflow: auto;
         background-color: #fff;
@@ -111,4 +124,5 @@
         top: 100%;
         white-space: nowrap;
     }
+
 </style>
