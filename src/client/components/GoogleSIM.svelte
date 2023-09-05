@@ -34,14 +34,15 @@
         border-radius: 3px;
         cursor: pointer;
         background: white;
+        justify-content: center;
     }
     img {
-        width: 18px;
-        height: 18px;
+        width: 20px;
+        height: 20px;
     }
     .text {
         font-family: Roboto-Medium;
-        font-size: 14px;
+        font-size: 16px;
         color: rgba(67, 67, 67, 1);
         margin: 0 20px;
     }
