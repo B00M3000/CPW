@@ -18,13 +18,15 @@
     .student-card {
         display: inline-flex;
         
-        padding: 0.5em;
+        padding: 0.3em;
 
-        margin: 0.25em;
+        font-size: large;
+
+        margin: -0.1em;
 
         background-color: lightgoldenrodyellow;
 
-        border-radius: 0.5em;
+        border-radius: 0.2em;
     }
 
     .text {

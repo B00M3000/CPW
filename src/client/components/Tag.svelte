@@ -10,13 +10,13 @@
     .tag {
         display: inline-flex;
         
-        padding: 0.5em;
+        padding: 0.3em;
 
         margin: 0.25em;
 
         background-color: lightcyan;
 
-        border-radius: 0.5em;
+        border-radius: 0.2em;
     }
 
     .text {
