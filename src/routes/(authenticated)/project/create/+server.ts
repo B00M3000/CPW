@@ -2,9 +2,9 @@
 import students from '@client/data/generated/students.json';
 import { user } from "@/client/stores/user";
 
-export const actions = {
-    default: async ({req}) => {
-        const formData = await req.formData();
+export const POST = {
+  async ({request}) => {
+    const formData = await request.formData();
         const mentorNames = formData.get('mentor').split(" ")
         const name = user.name.split(' ');
         const student = students.find(s => s.firstName == name[0] && s.lastName == name[1] )
@@ -23,5 +23,6 @@ export const actions = {
             shortDescription: formData.get('mentorOrg'),
             fullReport: formData.get('fullReport')
           };
-    }
+        }
+        
 }
