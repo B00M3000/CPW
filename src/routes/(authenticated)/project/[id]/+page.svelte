@@ -8,8 +8,4 @@
 
 <main>
     <h1>{project.subject}</h1>
-
-
-
-
 </main>
