@@ -38,7 +38,7 @@
        
         <div class="dropdown-content">
             {#each displayedTags as option}
-                <button class="option" on:click={() => addToSelected(option)}>
+                <button class="option" on:click={() => {addToSelected(option)}}>
                     {option.value}
                 </button>
             {/each}

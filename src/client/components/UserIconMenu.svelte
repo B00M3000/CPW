@@ -19,7 +19,7 @@
         <hr />
         <a href="/">Home</a>
         <hr />
-        <a href="/student/{$user.id}">User Profile</a>
+        <a href="/account">Account</a>
         <hr />
         <button class="logout-button" on:click={() => user.logout() }>Log Out</button>
     </div>

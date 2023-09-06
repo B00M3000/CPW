@@ -9,7 +9,7 @@
     <p class="subtitle"> Welcome to the Commonwealth School Project Week collection.
     </p>
     {#if !$user}
-        <a class="login-button" href="/login">Log In</a>
+    <a class="login-button" href="/login">Log In</a>
     {/if}
         
 
