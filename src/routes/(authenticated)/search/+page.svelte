@@ -152,12 +152,7 @@
 
         <div class="results">
             {#if displayed_projects.length === 0}
-                <h1 class="no-results">
-                    No Results For "{`${
-                        search.length < 20
-                            ? search
-                            : search.slice(0, 17) + "..."
-                    }`}" Were Found
+                <h1 class="no-results"> No Results For "{`${ search.length < 20 ? search : search.slice(0, 17) + "..."}`}" Were Found
                 </h1>
                 <img
                     class="random-img"

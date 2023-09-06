@@ -36,8 +36,13 @@
       </div>
       
       <div class="custom-form-group">
-        <label for="mentor" class="custom-label">Mentor First & Last Name</label>
-        <input type="text" id="mentor" name="mentor" required class="custom-input" bind:value={mentor}>
+        <label for="mentorFirst" class="custom-label">Mentor First Name</label>
+        <input type="text" id="mentorFirst" name="mentorFirst" required class="custom-input" bind:value={mentor}>
+      </div>
+
+      <div class="custom-form-group">
+        <label for="mentorLast" class="custom-label">Mentor Last Name</label>
+        <input type="text" id="mentorLast" name="mentorLast" required class="custom-input" bind:value={mentor}>
       </div>
 
       <div class="custom-form-group">
