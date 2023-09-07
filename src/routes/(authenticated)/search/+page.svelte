@@ -146,6 +146,9 @@
                     bind:selectedValues={selected}
                 />
             </h1>
+            <div>
+                <button on:click = {filteredProjects}>Search</button>
+            </div>
         </div>
 
         <div class="results">
@@ -156,8 +159,8 @@
                     class="random-img"
                     src="https://media.tenor.com/S9enOIQiZ8gAAAAC/troll-troll-face.gif"
                     alt="dancing penguin"
-                    width="800px"
-                    height="300px"
+                    width=100%
+                    height=100%
                 />
             {:else}
                 {#each displayed_projects as project}
