@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit';
-import type { RequestHandler } from './$types';
-export const GET: RequestHandler = ({ cookies }) => {
+
+export async function GET({ cookies }) {
   return json(
     {
       message: 'Logout successful.',
