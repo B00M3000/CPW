@@ -18,9 +18,7 @@
     let selected: any[] = [];
     let searchWords: string[] = [];
 
-    function buildRegex(keywords:string[]){
-        return new RegExp(keywords.map((w:string) => `(?=.*?${w})`).join("") + ".*",   "i");
-    }
+  
 
 
     function advancedSearch(project: Project) {
