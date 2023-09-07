@@ -53,20 +53,5 @@
         border-radius: 4px;
     }
 
-    .logout-button,
-    .login-button {
-        background-color: #ff6347;
-        color: #fff;
-        border: none;
-        border-radius: 2px;
-        padding: 5px 10px;
-        cursor: pointer;
-        width: 98%;
-        margin: 1px;
-    }
 
-    .logout-button:hover,
-    .login-button:hover {
-        background-color: #0056b3;
-    }
 </style>

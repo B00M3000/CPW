@@ -3,12 +3,12 @@
 
     export let studentId: string;
 
-    let student = students.find(s => s.studentId == studentId)
+    let student = students.find((s:any) => s.studentId == studentId)
 </script>
 
 <div class="student-card">
     {#if student}
-        <span class="text">{student.firstName} {student.lastName}</span> 
+        <a href="student/{student.studentId}" class="text">{student.firstName} {student.lastName}</a> 
     {:else}
         <span class="text">Student Not Found!</span>
     {/if}
