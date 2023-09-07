@@ -6,7 +6,7 @@
 <nav class="navbar">
     <div class="main-navigation">
         <a href="/">Home</a>
-        <a href="/projects">Search</a>
+        <a href="/projects">Projects</a>
     </div>
     <h1 class="title">Commonwealth School Project Week Database</h1>
     <div class="user-navigation">
