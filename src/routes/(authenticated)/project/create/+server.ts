@@ -5,11 +5,11 @@ export async function POST({ request }) {
   const formData = await request.formData();
   const mentorNames = formData.get('mentor').split(" ")
   const name = user.name.split(' ');
-  const student = students.find(s => s.firstName == name[0] && s.lastName == name[1] )
+  const student = students.find(s => s.firstName == name[0] && s.lastName == name[1])
   const projectObject = {
     studentId: student.studentId,
     subject: formData.get('subject'),
-    year: new Date().getFullYear(), 
+    year: new Date().getFullYear(),
     tags: formData.getAll('selected'),
     mentor: {
       firstName: mentorNames[0],
@@ -22,4 +22,4 @@ export async function POST({ request }) {
     fullReport: formData.get('fullReport')
   };
 }
-        
+
