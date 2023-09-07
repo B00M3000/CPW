@@ -19,7 +19,7 @@
     let searchWords: string[] = [];
 
     function buildRegex(keywords:string[]){
-        return new RegExp(keywords.map((w:string) => `(?=.*?\\b${w})`).join("") + ".*", "i");
+        return new RegExp(keywords.map((w:string) => `(?=.*?${w})`).join("") + ".*",   "i");
 
     }
 
@@ -37,6 +37,7 @@
                 return false;
             }
         }
+        
         if (searchWords.length > 0 && searchWords.some((title) => project.subject.includes(title))) {
             return true;
         }
@@ -45,9 +46,6 @@
             return false;
         }
 
-        if (search && !JSON.stringify(project).toLowerCase().includes(search)) {
-            return false;
-        }
         if (mentorSearch && !JSON.stringify(project.mentor).toLowerCase().includes(mentorSearch)) {
             return false;
         }
@@ -63,15 +61,15 @@
     $: displayed_projects = data;
 
     function filteredProjects() {
-        if(searchWords.length > 0){
-            searchWords = search.trim().split(/\W+/);
+        if(search.length > 0){
+            searchWords = search.toLowerCase().trim().split(/\W+/);
 
             searchWords = searchWords.filter((word) => {
                 return !lowRelevance.includes(word) && !(word.length === 1);
             });
             
             let searchRegex:RegExp = buildRegex(searchWords);
-            console.log(searchRegex)
+            //console.log(searchRegex)
             displayed_projects = data.filter((p:Project) => {return searchRegex.test(p.subject)});
         }
         displayed_projects = displayed_projects.filter(advancedSearch)
@@ -148,23 +146,21 @@
                     bind:selectedValues={selected}
                 />
             </h1>
+            <div>
+                <button on:click = {filteredProjects}>Search</button>
+            </div>
         </div>
 
         <div class="results">
             {#if displayed_projects.length === 0}
-                <h1 class="no-results">
-                    No Results For "{`${
-                        search.length < 20
-                            ? search
-                            : search.slice(0, 17) + "..."
-                    }`}" Were Found
+                <h1 class="no-results"> No Results For "{`${ search.length < 20 ? search : search.slice(0, 17) + "..."}`}" Were Found
                 </h1>
                 <img
                     class="random-img"
                     src="https://media.tenor.com/S9enOIQiZ8gAAAAC/troll-troll-face.gif"
                     alt="dancing penguin"
-                    width="800px"
-                    height="300px"
+                    width=100%
+                    height=100%
                 />
             {:else}
                 {#each displayed_projects as project}
