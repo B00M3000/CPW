@@ -8,46 +8,33 @@
     import students from "@client/data/generated/students.json";
     import { json } from "@sveltejs/kit";
     import lowRelevance from "@client/data/generated/low-relevance.json";
+    import type { Student } from "@/interfaces/project";
 
     let search = "".toLowerCase();
     let yearUpper: number = new Date().getFullYear();
     let yearLower: number = 2019;
     let mentorSearch: string = "";
     let studentSearch: string = "";
-    let filteredStudents: string[] = [];
     let selected: any[] = [];
     let searchWords: string[] = [];
 
     function buildRegex(keywords:string[]){
         return new RegExp(keywords.map((w:string) => `(?=.*?${w})`).join("") + ".*",   "i");
-
     }
 
 
-    function advancedSearch(project: any) {
+    function advancedSearch(project: Project) {
         if (studentSearch) {
-            for (const student of students) {
-                let studentName: string = student.firstName;
-                studentName.concat(" ", student.lastName);
-                if (studentName.toLowerCase().includes(studentSearch.toLowerCase())) {
-                    filteredStudents.push(student.studentId);
-                }
-            }
-            if (filteredStudents.length == 0) {
+            let studentRegex: RegExp = buildRegex(studentSearch.split(" "))
+            let filteredStudents = students.filter((s:Student) => {return studentRegex.test(s.firstName + " " + s.lastName)});
+            if (filteredStudents.length > 0 && !filteredStudents.some((s: Student) =>  {return project.studentId == s.studentId})) {
+                //
                 return false;
             }
         }
-        
-        if (searchWords.length > 0 && searchWords.some((title) => project.subject.includes(title))) {
-            return true;
-        }
-
-        if (filteredStudents.length >= 1 && !filteredStudents.some((id) => project.studentId.includes(id))) {
-            return false;
-        }
 
         if (mentorSearch && !JSON.stringify(project.mentor).toLowerCase().includes(mentorSearch)) {
-            return false;
+            return false;   
         }
         if (!(parseInt(project.year) >= yearLower && parseInt(project.year) <= yearUpper)) {
             return false;
@@ -58,7 +45,7 @@
         return true;
     }
 
-    $: displayed_projects = data;
+    let displayed_projects = data;
 
     function filteredProjects() {
         if(search.length > 0){
@@ -69,11 +56,10 @@
             });
             
             let searchRegex:RegExp = buildRegex(searchWords);
-            //console.log(searchRegex)
             displayed_projects = data.filter((p:Project) => {return searchRegex.test(p.subject)});
         }
         displayed_projects = displayed_projects.filter(advancedSearch)
-        filteredStudents = [];
+        console.log(displayed_projects)
     }
 </script>
 
