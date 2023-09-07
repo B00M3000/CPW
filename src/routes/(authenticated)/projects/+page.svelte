@@ -84,7 +84,6 @@
                     mentorSearch = "";
                     studentSearch = "";
                     search = "";
-                    filteredStudents = [];
                     displayed_projects = data;
                 }}>Clear</button
             >
