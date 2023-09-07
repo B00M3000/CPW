@@ -7,10 +7,9 @@ interface ProjectDocumentData {
   title: string;
   year: number;
   tags: string[];
-
   mentorId: string;
-  //shortDesc: string;
-  //fullReport: string;
+  shortDesc: string;
+  fullReport: string;
 }
 
 const schema = new mongoose.Schema(

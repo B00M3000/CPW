@@ -2,6 +2,7 @@
     import projects from "@client/data/generated/projects.json";
     const project = projects.find((id:string) => id == id) 
 
+    
 
 </script>
 
