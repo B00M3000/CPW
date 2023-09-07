@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
 
-
-
 interface ProjectDocumentData {
   studentId: string;
   title: string;
