@@ -38,12 +38,11 @@ export async function load({ url }) {
     if(mentorSearch){
         const mentorRegex = buildRegex(mentorSearch.split(" "))
         const mentors = (await MentorSchema.find({ name: mentorRegex }, 'firstName lastName').lean())?.map(stringifyObjectId);
-        console.log(mentorRegex, "||", mentors)
-        console.log("-----------")
+  
         if(mentors.length > 0){
             mentors.forEach(m => cachedMentors[m._id] = m)
             dbQuery.mentorId = { $in: mentors.map(m => m._id)}
-        }
+        } 
     }
 
     const studentSearch = searchParams.get('studentSearch');

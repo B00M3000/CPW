@@ -43,7 +43,7 @@
         if(studentSearch) searchParams.set("studentSearch", studentSearch);
         if(query) searchParams.set("query", query)
 
-        await goto(`/_projects?${searchParams}`, { replaceState: true });
+        await goto(`/projects?${searchParams}`, { replaceState: true });
     }
 </script>
 
