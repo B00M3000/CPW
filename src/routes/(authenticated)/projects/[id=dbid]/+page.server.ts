@@ -4,6 +4,5 @@ import type { PageServerLoad } from "./$types";
 export const load: PageServerLoad = async ({ params }) => {
     const id = params.id;
 
-    const project = await ProjectSchema.findOneById(id)
-
+    const project = await ProjectSchema.findById(id)
 }
