@@ -3,7 +3,6 @@
     import students from '@client/data/generated/students.json';
 
     export let student: Student;
-
 </script>
 
 <div class="student-card">
