@@ -5,10 +5,6 @@ import { UserSchema } from '@/server/mongo/schemas/user';
 import lowRelevance from "@/client/data/generated/low-relevance.json";
 import type { FilterQuery } from 'mongoose';
 
-function buildRegex(keywords: string[]){
-    return new RegExp(keywords.map((w:string) => `(?=.*?${w})`).join("") + ".*",   "i");
-}
-
 export async function load({ url }) {
     const searchParams = url.searchParams;
 
@@ -65,6 +61,10 @@ export async function load({ url }) {
     const inflatedProjects = await Promise.all(projects.map(stringifyObjectId).map(injectStudentAndMentor))
 
     return { projects: inflatedProjects }
+}
+
+function buildRegex(keywords: string[]){
+    return new RegExp(keywords.map((w:string) => `(?=.*?${w})`).join("") + ".*",   "i");
 }
 
 function stringifyObjectId(document: Object | null | undefined) {
