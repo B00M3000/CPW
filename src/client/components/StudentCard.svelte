@@ -1,9 +1,9 @@
 <script lang="ts">
+    import type { Student } from '@/interfaces/project';
     import students from '@client/data/generated/students.json';
 
-    export let studentId: string;
+    export let student: Student;
 
-    let student = students.find((s:any) => s.studentId == studentId)
 </script>
 
 <div class="student-card">
