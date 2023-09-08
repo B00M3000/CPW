@@ -5,6 +5,7 @@
     import StudentCard from "@client/components/StudentCard.svelte";
     
     export let project: Project;
+    //console.log(project)
 </script>
 
 <div class="project-card">
@@ -14,7 +15,7 @@
     <p><strong>Mentor: </strong>{project.mentor.firstName} {project.mentor.lastName}</p>
     <p><strong>Description:</strong> {project.shortDescription}</p>
     <p><strong>Year: </strong> {project.year}</p>
-
+    <p><strong><a href="{`/_projects/${project._id}`}"> Read More</a></strong></p>
     <div class="project-card/tags">
         {#each project.tags as tag}
             <Tag text={tags[tag]} />
