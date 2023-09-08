@@ -3,9 +3,11 @@ import mongoose from 'mongoose';
 interface UserDocumentData {
   name: string;
   picture: string;
-  google_id: string;
+  googleId: string;
   email: string
-  session_id: string;
+  sessionId: string;
+  accountType: number;
+  accessLevel: number;
 }
 
 const schema = new mongoose.Schema(

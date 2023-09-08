@@ -20,7 +20,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 				name: user?.name,
 				email: user?.email,
 				picture: user?.picture,
-				sessionId: user?.session_id,
+				sessionId: user?.sessionId,
 				accountType: user?.accountType,
 				accessLevel: user?.accessLevel
 			};
