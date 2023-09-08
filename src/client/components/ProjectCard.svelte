@@ -5,11 +5,11 @@
     import StudentCard from "@client/components/StudentCard.svelte";
     
     export let project: Project;
-    console.log(project)
+
 </script>
 
 <div class="project-card">
-    <h2>{project.subject}</h2>
+    <h2>{project.title}</h2>
     
     <p><strong>Completed by </strong><StudentCard studentId={project.studentId} /></p>
     <p><strong>Mentor: </strong>{project.mentor.firstName} {project.mentor.lastName}</p>

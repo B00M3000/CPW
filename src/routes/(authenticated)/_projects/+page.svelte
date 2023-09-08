@@ -8,7 +8,7 @@
 
     const projects = data.projects;
 
-
+    console.log(projects)
     let query: string = "";
     let yearUpper: number = 2019;
     let yearLower: number = new Date().getFullYear();
