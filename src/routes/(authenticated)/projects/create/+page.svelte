@@ -16,14 +16,8 @@
 
 
 <main class="formbar">
-<<<<<<< HEAD:src/routes/(authenticated)/project/create/+page.svelte
   <div class="custom-form-container">
     <form id="inputForm" class="custom-text-white" method="POST">
-=======
-
-  <div class="form-container">
-    <form id="inputForm" method="POST">
->>>>>>> fe261d73dfba69cb11d4796384ff9d3c68b658d9:src/routes/(authenticated)/projects/create/+page.svelte
 
       <div class="form-group">
         <label for="subject" class="label">Project Title</label>
@@ -80,28 +74,7 @@
   </div>
 </main>
 
-<<<<<<< HEAD:src/routes/(authenticated)/project/create/+page.svelte
 <style>
-  .formbar {
-    background-color: #4a5568;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-    width: auto; 
-    width: calc(100vw - (100vw - 100%));
-    display: flex;
-    justify-content: center;
-  }
-
-  .custom-form-group {
-    padding-top: 2rem;
-  }
-
-
-  .custom-form-container {
-    
-    padding-top: 1.5rem;
-  }
-=======
-<style scoped>
 .formbar {
   background-color: #4a5568;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
@@ -119,51 +92,11 @@
   
   padding-top: 1.5rem;
 }
->>>>>>> fe261d73dfba69cb11d4796384ff9d3c68b658d9:src/routes/(authenticated)/projects/create/+page.svelte
 
   #inputForm {
     color: #fff;
   }
 
-<<<<<<< HEAD:src/routes/(authenticated)/project/create/+page.svelte
-  .custom-label {
-    display: block;
-    font-size: 0.875rem;
-    font-weight: 700;
-    margin-bottom: 0.2rem;
-  }
-
-  .custom-input,
-  .custom-textarea {
-    padding: 0.3rem 0.7rem;
-    border: 2px solid #000;
-    border-radius: 0.375rem;
-    outline: none;
-    transition: box-shadow 0.2s, border-color 0.2s;
-    color: white;
-    background-color: #525252;
-  }
-
-  .custom-input:focus,
-  .custom-textarea:focus {
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
-    border-color: #4299e1;
-  }
-
-
-  .custom-submit-button {
-    padding: 0.5rem 1rem;
-    background-color: #2563eb;
-    color: #fff;
-    border-radius: 0.375rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-
-  .custom-submit-button:hover {
-    background-color: #1e40af;
-  }
-=======
 .label {
   display: block;
   font-size: 0.875rem;
@@ -205,11 +138,6 @@ textarea:focus {
 .submit-button:focus {
   outline: none;
 }
->>>>>>> fe261d73dfba69cb11d4796384ff9d3c68b658d9:src/routes/(authenticated)/projects/create/+page.svelte
-
-  .custom-submit-button:focus {
-    outline: none;
-  }
 </style>
 
 
