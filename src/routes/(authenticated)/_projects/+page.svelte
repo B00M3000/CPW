@@ -1,67 +1,56 @@
 <script lang="ts">
-    import ProjectCard from "@client/components/ProjectCard.svelte";
-    import MultiSelect from "@client/components/MultiSelect.svelte";
-    import type { Project } from "@interfaces/project";
-    import data from "@client/data/generated/projects.json";
-    import tags from "@/lib/tags";
-    import YearFilter from "@client/components/YearFilter.svelte";
-    import students from "@client/data/generated/students.json";
-    import { json } from "@sveltejs/kit";
-    import lowRelevance from "@client/data/generated/low-relevance.json";
-    import type { Student } from "@/interfaces/project";
-
-    let search = "".toLowerCase();
-    let yearUpper: number = new Date().getFullYear();
-    let yearLower: number = 2019;
-    let mentorSearch: string = "";
-    let studentSearch: string = "";
-    let selected: any[] = [];
-    let searchWords: string[] = [];
-
-  
+    import { goto } from "$app/navigation";
+    import YearFilter from "@/client/components/YearFilter.svelte";
+    import MultiSelect from "@/client/components/MultiSelect.svelte";
+    import tags from "@/lib/tags.js";
+    import ProjectCard from "@/client/components/ProjectCard.svelte";
+    import { page } from "$app/stores";
 
 
-    function advancedSearch(project: Project) {
-        if (studentSearch) {
-            let studentRegex: RegExp = buildRegex(studentSearch.split(" "))
-            let filteredStudents = students.filter((s:Student) => {return studentRegex.test(s.firstName + " " + s.lastName)});
-            if (filteredStudents.length > 0 && !filteredStudents.some((s: Student) =>  {return project.studentId == s.studentId})) {
-                //
-                return false;
-            }
-        }
+    export let data;
 
-        if (mentorSearch && !JSON.stringify(project.mentor).toLowerCase().includes(mentorSearch)) {
-            return false;   
-        }
-        if (!(parseInt(project.year) >= yearLower && parseInt(project.year) <= yearUpper)) {
-            return false;
-        }
-        if (selected.length > 0 && !selected.some((tag) => project.tags.includes(tag))) {
-            return false;
-        }
-        return true;
+    $: ({projects} = data);
+
+    $: searchParams = $page.url.searchParams
+
+    let query: string;
+    let yearUpper: number | undefined;
+    let yearLower: number | undefined;
+    let mentorSearch: string;
+    let studentSearch: string;
+    let selected: string[];
+
+    function syncFields(){
+        query = searchParams?.get("query") || "";
+        yearUpper = ((yu: string | null) => yu ? parseInt(yu) : undefined || new Date().getFullYear())(searchParams?.get("yearUpper"));
+        yearLower = ((yl: string | null) => yl ? parseInt(yl) : undefined || 2019)(searchParams?.get("yearLower"));
+        mentorSearch = searchParams?.get("mentorSearch") || "";
+        studentSearch = searchParams?.get("studentSearch") || "";
+        selected = searchParams?.get("tags")?.split("_") || [];
     }
 
-    let displayed_projects = data;
+    syncFields();
 
-    function filteredProjects() {
-        if(search.length > 0){
-            searchWords = search.toLowerCase().trim().split(/\W+/);
+    async function search(e: Event){
+        e.preventDefault();
 
-            searchWords = searchWords.filter((word) => {
-                return !lowRelevance.includes(word) && !(word.length === 1);
-            });
-            
-            let searchRegex:RegExp = buildRegex(searchWords);
-            displayed_projects = data.filter((p:Project) => {return searchRegex.test(p.subject)});
-        }
-        displayed_projects = displayed_projects.filter(advancedSearch)
-        console.log(displayed_projects)
+        const searchParams = new URLSearchParams();
+
+        if(selected.length > 0) searchParams.set("tags", selected.join("_"));
+        if(yearUpper) searchParams.set("yearUpper", yearUpper.toString());
+        if(yearLower) searchParams.set("yearLower", yearLower.toString())
+        if(mentorSearch) searchParams.set("mentorSearch", mentorSearch);
+        if(studentSearch) searchParams.set("studentSearch", studentSearch);
+        if(query) searchParams.set("query", query)
+
+        await goto(`/_projects?${searchParams}`, { replaceState: true });
     }
 </script>
 
+
+
 <main>
+    
     <div class="head">
         <div class="search">
             <input
@@ -69,44 +58,31 @@
                 size="90"
                 id="search-box"
                 class="search-box"
-                bind:value={search}
+                bind:value={query}
                 type="text"
             />
-            <button class="button" on:click={filteredProjects}>Search</button>
+            <button class="button" on:click={search}>Search</button>
 
-            <button
-                class="button"
-                on:click={() => {
-                    yearLower = 2019;
-                    yearUpper = new Date().getFullYear();
-                    mentorSearch = "";
-                    studentSearch = "";
-                    search = "";
-                    displayed_projects = data;
-                }}>Clear</button
-            >
+            <button class="button" on:click={async () => {
+                await goto(`/_projects`);
+                syncFields();
+            }}>Clear</button>
         </div>
     </div>
+
+
     <div class="leftright">
         <div class="sidebar">
             <h1>Refine Search</h1>
             <hr />
             <h1 class="filter-labels">
                 Filter by Year:
-                <YearFilter
-                    bind:yearLowerBound={yearLower}
-                    bind:yearUpperBound={yearUpper}
-                />
+                <YearFilter bind:yearLowerBound={yearLower} bind:yearUpperBound={yearUpper}/>
             </h1>
 
             <label class="filter-labels">
                 Filter by Mentor:
-                <input
-                    class="SearchFilter"
-                    type="search"
-                    placeholder="Search Mentor"
-                    bind:value={mentorSearch}
-                />
+                <input class="SearchFilter" type="search" placeholder="Search Mentor" bind:value={mentorSearch}/>
             </label>
 
             <label class="filter-labels">
@@ -121,22 +97,16 @@
 
             <h1 class="filter-labels">
                 Filter by tags:
-                <MultiSelect
-                    options={Object.entries(tags).map(([key, value]) => ({
-                        key,
-                        value,
-                    }))}
-                    bind:selectedValues={selected}
-                />
+                <MultiSelect options={Object.entries(tags).map(([key, value]) => ({ key, value, }))} bind:selectedValues={selected} />
             </h1>
             <div>
-                <button on:click = {filteredProjects}>Search</button>
+                <button on:click = {search}>Search</button>
             </div>
         </div>
 
         <div class="results">
-            {#if displayed_projects.length === 0}
-                <h1 class="no-results"> No Results For "{`${ search.length < 20 ? search : search.slice(0, 17) + "..."}`}" Were Found
+            {#if projects.length === 0}
+                <h1 class="no-results"> No Results For "{`${ query.length < 20 ? query : query.slice(0, 17) + "..."}`}" Were Found
                 </h1>
                 <img
                     class="random-img"
@@ -146,7 +116,7 @@
                     height=100%
                 />
             {:else}
-                {#each displayed_projects as project}
+                {#each projects as project}
                     <ProjectCard {project} />
                 {/each}
             {/if}
@@ -156,7 +126,8 @@
     </div>
 </main>
 
-<style>
+
+<style lang="scss">
     .head {
         display: flex;
         flex-direction: column;
@@ -278,8 +249,6 @@
     .random-img {
         margin-top: -300px;
     }
-
-
 
 
 

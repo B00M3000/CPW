@@ -1,26 +1,24 @@
 <script lang="ts">
-    export let yearLowerBound: number;
-    export let yearUpperBound: number;
-    let yearSearchLower = 2019;
-    let yearSearchUpper = new Date().getFullYear();
+    export let yearLowerBound: number = 2019;
+    export let yearUpperBound: number = new Date().getFullYear();
 
     function updateUpperBound() {
-        if (yearSearchUpper < yearSearchLower) {
-            yearSearchUpper = yearSearchLower;
+        if (yearUpperBound < yearLowerBound) {
+            yearUpperBound = yearLowerBound;
         }
-        yearUpperBound = yearSearchUpper;
+        yearUpperBound = yearUpperBound;
     }
 
     function updateLowerBound() {
-        if (yearSearchLower > yearSearchUpper) {
-            yearSearchLower = yearSearchUpper;
+        if (yearLowerBound > yearUpperBound) {
+            yearLowerBound = yearUpperBound;
         }
-        yearLowerBound = yearSearchLower;
+        yearLowerBound = yearLowerBound;
     }
 
     let yearOptions: number[] = [];
 
-    for (let year = 2019; year <= yearSearchUpper; year++) {
+    for (let year = 2019; year <= yearUpperBound; year++) {
         yearOptions.push(year);
     }
 </script>
@@ -30,7 +28,7 @@
         From:
         <select
             class="yearFilter"
-            bind:value={yearSearchLower}
+            bind:value={yearLowerBound}
             on:change={updateLowerBound}
         >
             {#each yearOptions as year}
@@ -42,7 +40,7 @@
         To:
         <select
             class="yearFilter"
-            bind:value={yearSearchUpper}
+            bind:value={yearUpperBound}
             on:change={updateUpperBound}
         >
             {#each yearOptions as year}

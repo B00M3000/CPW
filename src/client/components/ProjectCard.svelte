@@ -3,14 +3,14 @@
     import tags from "@/lib/tags";
     import Tag from "@client/components/Tag.svelte";
     import StudentCard from "@client/components/StudentCard.svelte";
-
+    
     export let project: Project;
 </script>
 
 <div class="project-card">
-    <h2>{project.subject}</h2>
+    <h2>{project.title}</h2>
     
-    <p><strong>Completed by </strong><StudentCard studentId={project.studentId} /></p>
+    <p><strong>Completed by </strong><StudentCard student={project.student} /></p>
     <p><strong>Mentor: </strong>{project.mentor.firstName} {project.mentor.lastName}</p>
     <p><strong>Description:</strong> {project.shortDescription}</p>
     <p><strong>Year: </strong> {project.year}</p>
