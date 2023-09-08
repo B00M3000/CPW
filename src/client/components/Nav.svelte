@@ -8,7 +8,7 @@
 <nav class="navbar">
     <div class="main-navigation">
         <a href="/">Home</a>
-        <a href="/projects">Projects</a>
+        <a href="/_projects">Projects</a>
         {#if $user?.accessLevel == AccessLevel.Admin}
         <a href="/admin">Admin</a>
         {/if}
