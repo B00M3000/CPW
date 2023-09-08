@@ -4,37 +4,47 @@
     import MultiSelect from "@/client/components/MultiSelect.svelte";
     import tags from "@/lib/tags.js";
     import ProjectCard from "@/client/components/ProjectCard.svelte";
+    import { page } from "$app/stores";
+
+
     export let data;
 
-    const projects = data.projects;
+    $: ({projects} = data);
 
+    $: searchParams = $page.url.searchParams
 
-    let query: string = "";
-    let yearUpper: number = 2019;
-    let yearLower: number = new Date().getFullYear();
-    let mentorSearch: string = "";
-    let studentSearch: string = "";
-    let selected: string[] = [];
+    let query: string;
+    let yearUpper: number | undefined;
+    let yearLower: number | undefined;
+    let mentorSearch: string;
+    let studentSearch: string;
+    let selected: string[];
 
+    function syncFields(){
+        query = searchParams?.get("query") || "";
+        yearUpper = ((yu: string | null) => yu ? parseInt(yu) : undefined || new Date().getFullYear())(searchParams?.get("yearUpper"));
+        yearLower = ((yl: string | null) => yl ? parseInt(yl) : undefined || 2019)(searchParams?.get("yearLower"));
+        mentorSearch = searchParams?.get("mentorSearch") || "";
+        studentSearch = searchParams?.get("studentSearch") || "";
+        selected = searchParams?.get("tags")?.split("_") || [];
+    }
 
+    syncFields();
 
     async function search(e: Event){
         e.preventDefault();
 
         const searchParams = new URLSearchParams();
 
-        searchParams.set("tags", selected.join("_"));
-        searchParams.set("yearUpper", yearUpper.toString());
-        searchParams.set("yearLower", yearLower.toString())
-        searchParams.set("mentorSearch", mentorSearch);
-        searchParams.set("studentSearch", studentSearch);
-        searchParams.set("query", query)
+        if(selected.length > 0) searchParams.set("tags", selected.join("_"));
+        if(yearUpper) searchParams.set("yearUpper", yearUpper.toString());
+        if(yearLower) searchParams.set("yearLower", yearLower.toString())
+        if(mentorSearch) searchParams.set("mentorSearch", mentorSearch);
+        if(studentSearch) searchParams.set("studentSearch", studentSearch);
+        if(query) searchParams.set("query", query)
 
-
-        await goto(`/_projects?${searchParams}`);
+        await goto(`/_projects?${searchParams}`, { replaceState: true });
     }
-
-    console.log(data)
 </script>
 
 
@@ -53,7 +63,10 @@
             />
             <button class="button" on:click={search}>Search</button>
 
-            <button class="button" on:click={async () =>  await goto(`/_projects`)}>Clear</button>
+            <button class="button" on:click={async () => {
+                await goto(`/_projects`);
+                syncFields();
+            }}>Clear</button>
         </div>
     </div>
 

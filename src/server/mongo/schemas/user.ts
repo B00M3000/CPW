@@ -11,7 +11,7 @@ export enum AccessLevel {
   Admin
 }
 
-interface UserDocumentData {
+export interface UserDocumentData {
   name: string;
   firstName: string;
   lastName: string;

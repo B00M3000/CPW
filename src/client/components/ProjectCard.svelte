@@ -5,7 +5,6 @@
     import StudentCard from "@client/components/StudentCard.svelte";
     
     export let project: Project;
-    console.log(project)
 </script>
 
 <div class="project-card">

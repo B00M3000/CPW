@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-interface MentorDocumentData {
+export interface MentorDocumentData {
   firstName: string;
   lastName: string;
   organization: string;

@@ -1,46 +1,73 @@
-import { ProjectSchema, type ProjectDocumentData } from '@/server/mongo/schemas/project';
+import { ProjectSchema, type ProjectDocument, type ProjectDocumentData } from '@/server/mongo/schemas/project';
 import { MentorSchema } from '@/server/mongo/schemas/mentor';
 import { UserSchema } from '@/server/mongo/schemas/user';
 
 import lowRelevance from "@/client/data/generated/low-relevance.json";
+import type { FilterQuery } from 'mongoose';
 
 function buildRegex(keywords: string[]){
     return new RegExp(keywords.map((w:string) => `(?=.*?${w})`).join("") + ".*",   "i");
 }
 
 export async function load({ url }) {
-    // const searchParams = url.searchParams
+    const searchParams = url.searchParams;
 
-    // const tags = searchParams.get('tags')?.split("_")
-    // const yearUpper = searchParams.get('yearUpper');
-    // const yearLower = searchParams.get('yearLower');
-    // const mentorSearch = searchParams.get('mentorSearch');
-    // const studentSearch = searchParams.get('studentSearch');
-    // const title = searchParams.get('query')?.split(" ");
-    // let titleRegex: RegExp = new RegExp("/");
+    const dbQuery: FilterQuery<ProjectDocument> = {};
 
-    // if(title){
-    //     titleRegex = buildRegex(title.filter((word) => {
-    //         return !lowRelevance.includes(word) && !(word.length === 1);
-    //     }))
-    // }
+    const title = searchParams.get('query')?.split(" ");
+    if(title){
+        dbQuery.title = buildRegex(title.filter((word) => {
+            return !lowRelevance.includes(word) && !(word.length === 1);
+        }))
+    }
 
-    // const projects = await ProjectSchema.find({ tags, title: titleRegex });
+    const tags = searchParams.get('tags')?.split("_")
+    if(tags) dbQuery.tags = tags
 
-    const projects: ProjectDocumentData[] = await ProjectSchema.find({}, 'studentId title year tags mentorId shortDescription').lean();
+    const yearUpper = searchParams.get('yearUpper');
+    const yearLower = searchParams.get('yearLower');
+    if(yearLower || yearUpper) dbQuery.year = { $gte: yearLower ? parseInt(yearLower) : undefined, $lte: yearUpper ? parseInt(yearUpper) : undefined };
+
+    let cachedStudents: any = {}
+    let cachedMentors: any = {}
+
+    async function injectStudentAndMentor(project: any) {
+        project.student = cachedStudents[project.studentId] || stringifyObjectId(await UserSchema.findById(project.studentId, 'firstName lastName').lean());
+        project.mentor = cachedMentors[project.mentorId] || stringifyObjectId(await MentorSchema.findById(project.mentorId, 'firstName lastName').lean());
+        return project;
+    }
+
+    const mentorSearch = searchParams.get('mentorSearch');
+    if(mentorSearch){
+        const mentorRegex = buildRegex(mentorSearch.split(" "))
+        const mentors = (await MentorSchema.find({ name: mentorRegex }, 'firstName lastName').lean())?.map(stringifyObjectId);
+        if(mentors.length > 0){
+            mentors.forEach(m => cachedMentors[m._id] = m)
+            dbQuery.mentorId = { $in: mentors.map(m => m._id)}
+        }
+    }
+
+    const studentSearch = searchParams.get('studentSearch');
+    if(studentSearch){
+        const studentRegex = buildRegex(studentSearch.split(" "))
+        console.log(studentRegex)
+        const students = (await UserSchema.find({ name: studentRegex }, 'firstName lastName').lean())?.map(stringifyObjectId);
+        if(students.length > 0){
+            students.forEach(s => cachedMentors[s._id] = s)
+            dbQuery.studentId = { $in: students.map(s => s._id)}
+        }
+    }
+
+    console.log(dbQuery, cachedMentors, cachedStudents)
+
+    const projects: ProjectDocumentData[] = await ProjectSchema.find(dbQuery, 'studentId title year tags mentorId shortDescription').lean();
 
     const inflatedProjects = await Promise.all(projects.map(stringifyObjectId).map(injectStudentAndMentor))
 
     return { projects: inflatedProjects }
 }
 
-async function injectStudentAndMentor(project: ProjectDocumentData) {
-    project.student = stringifyObjectId(await UserSchema.findById(project.studentId, 'firstName lastName').lean());
-    project.mentor = stringifyObjectId(await MentorSchema.findById(project.mentorId, 'firstName lastName').lean());
-    return project;
-}
-
-function stringifyObjectId(document: Object | null | undefined){
+function stringifyObjectId(document: Object | null | undefined) {
     if(document) document._id = document?._id.toString();
     return document
 }

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-interface ProjectDocumentData {
+export interface ProjectDocumentData {
   studentId: string;
   title: string;
   year: number;
