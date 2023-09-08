@@ -108,10 +108,6 @@
         }
     }
 
-    .verticalLine {
-        border-left: 2px solid #ffffff;
-    }
-
     .dropdown-content {
         display:none;
         flex-direction: column;
