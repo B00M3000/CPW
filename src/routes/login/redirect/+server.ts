@@ -59,14 +59,14 @@ export const GET: RequestHandler = async (req) => {
 
   const user = await UserSchema.findOneAndUpdate(
     {
-      google_id: google_user.id,
+      googleId: google_user.id,
     },
     {
-      google_id: google_user.id,
+      googleId: google_user.id,
       email: google_user.email,
       name: google_user.name, // can in future use family_name and given_name to use first and last name separately
       picture: google_user.picture,
-      session_id
+      sessionId: session_id
     },
     {
       upsert: true,
