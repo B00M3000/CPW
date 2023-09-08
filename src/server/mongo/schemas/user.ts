@@ -20,7 +20,7 @@ const schema = new mongoose.Schema(
     lastName: { type: String, required: true },
     picture: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    sessionId: { type: String, required: true, unique: true },
+    sessionId: { type: String, unique: true },
     googleId: { type: String, required: true, unique: true },
     accountType: { type: Number, required: true, default: 0 },
     accessLevel: { type: Number, required: true, default: 0 },

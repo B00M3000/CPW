@@ -1,4 +1,5 @@
 import { GhostSchema } from '@/server/mongo/schemas/ghost.js';
+import { UserSchema } from '@/server/mongo/schemas/user.js';
 import { error, json } from '@sveltejs/kit';
 
 export async function POST({ request }) {
@@ -18,6 +19,7 @@ async function handleOne(data: any){
     if(action == "CREATE" || action == "EDIT"){
         const { email, accessLevel, accountType } = data;
         await GhostSchema.findOneAndUpdate({ email }, { email, accessLevel, accountType }, { upsert: true })
+        await UserSchema.findOneAndUpdate({ email }, { $unset: { sessionId: "" } })
     } else if(action == "DELETE"){
         const { email } = data;
         await GhostSchema.deleteOne({ email })
