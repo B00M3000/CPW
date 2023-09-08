@@ -1,6 +1,7 @@
 import { ProjectSchema, type ProjectDocument, type ProjectDocumentData } from '@/server/mongo/schemas/project';
 import { MentorSchema } from '@/server/mongo/schemas/mentor';
 import { UserSchema } from '@/server/mongo/schemas/user';
+import { buildRegex, stringifyObjectId } from '@/lib/utils';
 
 import lowRelevance from "@/client/data/generated/low-relevance.json";
 import type { FilterQuery } from 'mongoose';
@@ -17,15 +18,15 @@ export async function load({ url }) {
         }))
     }
 
-    const tags = searchParams.get('tags')?.split("_")
-    if(tags) dbQuery.tags = tags
+    const tags = searchParams.get('tags')?.split("_");
+    if(tags) dbQuery.tags = { $all: tags };
 
     const yearUpper = searchParams.get('yearUpper');
     const yearLower = searchParams.get('yearLower');
     if(yearLower || yearUpper) dbQuery.year = { $gte: yearLower ? parseInt(yearLower) : undefined, $lte: yearUpper ? parseInt(yearUpper) : undefined };
 
-    let cachedStudents: any = {}
-    let cachedMentors: any = {}
+    let cachedStudents: any = {};
+    let cachedMentors: any = {};
 
     async function injectStudentAndMentor(project: any) {
         project.student = cachedStudents[project.studentId] || stringifyObjectId(await UserSchema.findById(project.studentId, 'firstName lastName').lean());
@@ -54,20 +55,9 @@ export async function load({ url }) {
         }
     }
 
-    console.log(dbQuery, cachedMentors, cachedStudents)
-
     const projects: ProjectDocumentData[] = await ProjectSchema.find(dbQuery, 'studentId title year tags mentorId shortDescription').lean();
 
     const inflatedProjects = await Promise.all(projects.map(stringifyObjectId).map(injectStudentAndMentor))
 
     return { projects: inflatedProjects }
-}
-
-function buildRegex(keywords: string[]){
-    return new RegExp(keywords.map((w:string) => `(?=.*?${w})`).join("") + ".*",   "i");
-}
-
-function stringifyObjectId(document: Object | null | undefined) {
-    if(document) document._id = document?._id.toString();
-    return document
 }
