@@ -54,8 +54,6 @@ export async function load({ url }) {
         }
     }
 
-    console.log(dbQuery, cachedMentors, cachedStudents)
-
     const projects: ProjectDocumentData[] = await ProjectSchema.find(dbQuery, 'studentId title year tags mentorId shortDescription').lean();
 
     const inflatedProjects = await Promise.all(projects.map(stringifyObjectId).map(injectStudentAndMentor))

@@ -1,13 +1,12 @@
 <script lang="ts">
     import type { Student } from '@/interfaces/project';
-    import students from '@client/data/generated/students.json';
 
     export let student: Student;
 </script>
 
 <div class="student-card">
     {#if student}
-        <a href="student/{student.studentId}" class="text">{student.firstName} {student.lastName}</a> 
+        <a href={`/student/${student._id}`} class="text">{student.firstName} {student.lastName}</a> 
     {:else}
         <span class="text">Student Not Found!</span>
     {/if}
