@@ -2,13 +2,19 @@
     import { user } from "@/client/stores/user";
     import UserIconMenu from "@/client/components/UserIconMenu.svelte";
 
-    import { AccessLevel } from "@/lib/enums";
+    import { AccessLevel, AccountType } from "@/lib/enums";
 </script>
 
 <nav class="navbar">
     <div class="main-navigation">
         <a href="/">Home</a>
         <a href="/projects">Projects</a>
+        {#if $user?.accountType == AccountType.Student}
+        <a href="/manage-projects">Manage Projects</a>
+        {/if}
+        {#if $user?.accountType == AccountType.Advisor}
+        <a href="/manage-advisees">Manage Advisees</a>
+        {/if}
         {#if $user?.accessLevel == AccessLevel.Admin}
         <a href="/admin">Admin</a>
         {/if}
