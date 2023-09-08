@@ -10,18 +10,19 @@
 
 </script>
 
-
 <main>
     <div class="profile">
-        <img src={student.picture} alt="pfp">
+        <div class="profile-picture">
+            <img src={student.picture} alt="pfp">
+        </div>
         <div class="student-info">
-            <h1 class="title">  {student.name} </h1>
-            <h1 class="title"> {student.email} </h1>
+            <h1 class="title">{student.name}</h1>
+            <h1 class="title">{student.email}</h1>
         </div>
     </div>
-    
-    <div class = "projects">
-        {#each projects as project }
+    <hr>
+    <div class="projects">
+        {#each projects as project}
             <ProjectCard {project} />
         {/each}
     </div>
@@ -29,34 +30,45 @@
 
 
 <style lang="scss">
+        img {
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+    }
 
-img {
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-}
-.profile{
-    font-weight: 900;
-    color: black;
-    font-size: medium;
-    align-items: center;
-    padding: 5px;
-    display: flex;
-    padding-bottom: 1px;
-}
+    .profile {
+        justify-content: center;
+        font-weight: 900;
+        color: #333;
+        font-size: 0.5rem;
+        align-items: center;
+        padding: 20px;
+        display: flex;
+        gap: 20px;
+        border-radius: 10px;
+    }
 
-.title{
-    text-align: left;
-}
-.projects{
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-}
+    .profile-picture {
+        flex-shrink: 0; /* Prevent the image from shrinking */
+    }
 
-.student-info{
-    line-height: 1; 
-    flex-direction: column; 
-    padding-left: 5px;
-}
+    .title {
+        text-align: left;
+        margin: 0;
+    }
+
+    .student-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .projects {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+    }
 </style>
