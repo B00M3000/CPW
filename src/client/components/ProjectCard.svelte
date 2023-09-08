@@ -3,8 +3,9 @@
     import tags from "@/lib/tags";
     import Tag from "@client/components/Tag.svelte";
     import StudentCard from "@client/components/StudentCard.svelte";
-
+    
     export let project: Project;
+    console.log(project)
 </script>
 
 <div class="project-card">

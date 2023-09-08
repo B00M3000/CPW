@@ -21,9 +21,6 @@
     async function search(e: Event){
         e.preventDefault();
 
-
-
-
         const searchParams = new URLSearchParams();
 
         searchParams.set("tags", selected.join("_"));
@@ -36,6 +33,8 @@
 
         await goto(`/_projects?${searchParams}`);
     }
+
+    console.log(data)
 </script>
 
 
