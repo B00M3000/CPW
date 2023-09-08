@@ -35,7 +35,12 @@ export async function load({ url }) {
 }
 
 async function injectStudentAndMentor(project: ProjectDocumentData) {
-    project.student = await UserSchema.findById(project.studentId, 'firstName lastName').lean();
-    project.mentor = await MentorSchema.findById(project.mentorId, 'firstName lastName').lean();
+    project.student = stringifyObjectId(await UserSchema.findById(project.studentId, 'firstName lastName').lean());
+    project.mentor = stringifyObjectId(await MentorSchema.findById(project.mentorId, 'firstName lastName').lean());
     return project;
+}
+
+function stringifyObjectId(document: Object | null | undefined){
+    if(document) document._id = document?._id.toString();
+    return document
 }
