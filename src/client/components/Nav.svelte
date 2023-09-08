@@ -1,12 +1,17 @@
 <script>
     import { user } from "@/client/stores/user";
     import UserIconMenu from "@/client/components/UserIconMenu.svelte";
+
+    import { AccessLevel } from "@/lib/enums";
 </script>
 
 <nav class="navbar">
     <div class="main-navigation">
         <a href="/">Home</a>
         <a href="/projects">Projects</a>
+        {#if $user?.accessLevel == AccessLevel.Admin}
+        <a href="/admin">Admin</a>
+        {/if}
     </div>
     <h1 class="title">Commonwealth School Project Week Database</h1>
     <div class="user-navigation">

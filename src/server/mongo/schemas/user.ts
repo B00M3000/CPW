@@ -1,16 +1,5 @@
 import mongoose from 'mongoose';
 
-export enum AccountType {
-  Unassisgned,
-  Student,
-  Advisor
-}
-
-export enum AccessLevel {
-  Normal,
-  Admin
-}
-
 interface UserDocumentData {
   name: string;
   picture: string;
@@ -31,6 +20,7 @@ const schema = new mongoose.Schema(
   },
   { timestamps: true },
 );
+
 export type UserDocument = mongoose.HydratedDocument<UserDocumentData>;
 
 export const UserSchema: mongoose.Model<UserDocumentData> =
