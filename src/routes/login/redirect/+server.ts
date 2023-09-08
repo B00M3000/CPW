@@ -64,7 +64,9 @@ export const GET: RequestHandler = async (req) => {
     {
       googleId: google_user.id,
       email: google_user.email,
-      name: google_user.name, // can in future use family_name and given_name to use first and last name separately
+      firstName: google_user.given_name,
+      lastName: google_user.family_name,
+      name: google_user.name,
       picture: google_user.picture,
       sessionId: session_id
     },

@@ -1,14 +1,14 @@
 <script lang="ts">
+    import type { Student } from '@/interfaces/project';
     import students from '@client/data/generated/students.json';
 
-    export let studentId: string;
+    export let student: Student;
 
-    let student = students.find(s => s.studentId == studentId)
 </script>
 
 <div class="student-card">
     {#if student}
-        <span class="text">{student.firstName} {student.lastName}</span> 
+        <a href="student/{student.studentId}" class="text">{student.firstName} {student.lastName}</a> 
     {:else}
         <span class="text">Student Not Found!</span>
     {/if}
@@ -24,7 +24,7 @@
 
         margin: -0.1em;
 
-        background-color: lightgoldenrodyellow;
+        background-color: rgb(113, 151, 201);
 
         border-radius: 0.2em;
     }

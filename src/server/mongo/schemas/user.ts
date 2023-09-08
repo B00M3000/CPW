@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 
 interface UserDocumentData {
   name: string;
+  firstName: string;
+  lastName: string;
   picture: string;
   googleId: string;
   email: string
@@ -13,6 +15,8 @@ interface UserDocumentData {
 const schema = new mongoose.Schema(
   {
     name: { type: String, required: true },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
     picture: { type: String, required: true },
     email: { type: String, required: true },
     sessionId: { type: String, required: true, unique: true },
