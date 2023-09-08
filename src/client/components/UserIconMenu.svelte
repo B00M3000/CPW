@@ -1,5 +1,6 @@
 <script lang="ts">
     import { user } from "@/client/stores/user";
+    import { AccessLevel, AccountType } from "@/lib/enums";
 </script>
 
 {#if $user}
@@ -14,6 +15,7 @@
             <div style="line-height: 1; flex-direction: column; padding-left: 5px;">
                 <h1> {$user.name}</h1>
                 <p> {$user.email}</p>
+                <p> {AccountType[$user.accountType]} - {AccessLevel[$user.accessLevel]}</p>
             </div>
         </div>
         <hr />

@@ -18,9 +18,9 @@ interface User {
 	name: string;
 	email: string;
 	picture: string;
-	session_id: string;
-	account_type: number;
-	access_level: number;
+	sessionId: string;
+	accountType: number;
+	accessLevel: number;
 }
 
 export {};
