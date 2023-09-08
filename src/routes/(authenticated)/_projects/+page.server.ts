@@ -37,6 +37,8 @@ export async function load({ url }) {
     if(mentorSearch){
         const mentorRegex = buildRegex(mentorSearch.split(" "))
         const mentors = (await MentorSchema.find({ name: mentorRegex }, 'firstName lastName').lean())?.map(stringifyObjectId);
+        console.log(mentorRegex, "||", mentors)
+        console.log("-----------")
         if(mentors.length > 0){
             mentors.forEach(m => cachedMentors[m._id] = m)
             dbQuery.mentorId = { $in: mentors.map(m => m._id)}
@@ -46,7 +48,7 @@ export async function load({ url }) {
     const studentSearch = searchParams.get('studentSearch');
     if(studentSearch){
         const studentRegex = buildRegex(studentSearch.split(" "))
-        console.log(studentRegex)
+       // console.log(studentRegex)
         const students = (await UserSchema.find({ name: studentRegex }, 'firstName lastName').lean())?.map(stringifyObjectId);
         if(students.length > 0){
             students.forEach(s => cachedMentors[s._id] = s)
@@ -54,7 +56,7 @@ export async function load({ url }) {
         }
     }
 
-    console.log(dbQuery, cachedMentors, cachedStudents)
+    //console.log(dbQuery, cachedMentors, cachedStudents)
 
     const projects: ProjectDocumentData[] = await ProjectSchema.find(dbQuery, 'studentId title year tags mentorId shortDescription').lean();
 
