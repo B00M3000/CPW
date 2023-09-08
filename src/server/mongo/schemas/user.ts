@@ -13,10 +13,10 @@ const schema = new mongoose.Schema(
     name: { type: String, required: true },
     picture: { type: String, required: true },
     email: { type: String, required: true },
-    session_id: { type: String, required: true, unique: true },
-    google_id: { type: String, required: true, unique: true },
-    account_type: { type: Number, required: true, default: 0 },
-    access_level: { type: Number, required: true, default: 0 }
+    sessionId: { type: String, required: true, unique: true },
+    googleId: { type: String, required: true, unique: true },
+    accountType: { type: Number, required: true, default: 0 },
+    accessLevel: { type: Number, required: true, default: 0 }
   },
   { timestamps: true },
 );
