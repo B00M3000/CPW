@@ -11,7 +11,7 @@
 <div class="project-card">
     <h2>{project.title}</h2>
     
-    <p><strong>Completed by </strong><StudentCard studentId={project.student} /></p>
+    <p><strong>Completed by </strong><StudentCard student={project.student} /></p>
     <p><strong>Mentor: </strong>{project.mentor.firstName} {project.mentor.lastName}</p>
     <p><strong>Description:</strong> {project.shortDescription}</p>
     <p><strong>Year: </strong> {project.year}</p>
