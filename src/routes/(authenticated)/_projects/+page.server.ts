@@ -1,6 +1,7 @@
 import { ProjectSchema, type ProjectDocument, type ProjectDocumentData } from '@/server/mongo/schemas/project';
 import { MentorSchema } from '@/server/mongo/schemas/mentor';
 import { UserSchema } from '@/server/mongo/schemas/user';
+import { buildRegex, stringifyObjectId } from '@/lib/utils';
 
 import lowRelevance from "@/client/data/generated/low-relevance.json";
 import type { FilterQuery } from 'mongoose';
@@ -59,13 +60,4 @@ export async function load({ url }) {
     const inflatedProjects = await Promise.all(projects.map(stringifyObjectId).map(injectStudentAndMentor))
 
     return { projects: inflatedProjects }
-}
-
-function buildRegex(keywords: string[]){
-    return new RegExp(keywords.map((w:string) => `(?=.*?${w})`).join("") + ".*",   "i");
-}
-
-function stringifyObjectId(document: Object | null | undefined) {
-    if(document) document._id = document?._id.toString();
-    return document
 }

@@ -3,6 +3,7 @@
     import tags from "@/lib/tags";
     import Tag from "@client/components/Tag.svelte";
     import StudentCard from "@client/components/StudentCard.svelte";
+    import MentorCard from "@/client/components/MentorCard.svelte";
     
     export let project: Project;
 </script>
@@ -11,7 +12,7 @@
     <h2>{project.title}</h2>
     
     <p><strong>Completed by </strong><StudentCard student={project.student} /></p>
-    <p><strong>Mentor: </strong>{project.mentor.firstName} {project.mentor.lastName}</p>
+    <p><strong>Mentor: </strong><MentorCard mentor={project.mentor} /></p>
     <p><strong>Description:</strong> {project.shortDescription}</p>
     <p><strong>Year: </strong> {project.year}</p>
 
