@@ -13,6 +13,8 @@ export enum AccessLevel {
 
 interface UserDocumentData {
   name: string;
+  firstName: string;
+  lastName: string;
   picture: string;
   google_id: string;
   email: string
@@ -22,6 +24,8 @@ interface UserDocumentData {
 const schema = new mongoose.Schema(
   {
     name: { type: String, required: true },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
     picture: { type: String, required: true },
     email: { type: String, required: true },
     session_id: { type: String, required: true, unique: true },
