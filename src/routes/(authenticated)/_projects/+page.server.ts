@@ -29,7 +29,7 @@ export async function load({ url }) {
 
     const projects: ProjectDocumentData[] = await ProjectSchema.find({}, 'studentId title year tags mentorId shortDescription').lean();
 
-    const inflatedProjects = await Promise.all(projects.map(injectStudentAndMentor))
+    const inflatedProjects = await Promise.all(projects.map(stringifyObjectId).map(injectStudentAndMentor))
 
     return { projects: inflatedProjects }
 }
