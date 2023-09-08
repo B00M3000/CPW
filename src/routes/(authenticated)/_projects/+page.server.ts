@@ -17,15 +17,15 @@ export async function load({ url }) {
         }))
     }
 
-    const tags = searchParams.get('tags')?.split("_")
-    if(tags) dbQuery.tags = tags
+    const tags = searchParams.get('tags')?.split("_");
+    if(tags) dbQuery.tags = { $all: tags };
 
     const yearUpper = searchParams.get('yearUpper');
     const yearLower = searchParams.get('yearLower');
     if(yearLower || yearUpper) dbQuery.year = { $gte: yearLower ? parseInt(yearLower) : undefined, $lte: yearUpper ? parseInt(yearUpper) : undefined };
 
-    let cachedStudents: any = {}
-    let cachedMentors: any = {}
+    let cachedStudents: any = {};
+    let cachedMentors: any = {};
 
     async function injectStudentAndMentor(project: any) {
         project.student = cachedStudents[project.studentId] || stringifyObjectId(await UserSchema.findById(project.studentId, 'firstName lastName').lean());
