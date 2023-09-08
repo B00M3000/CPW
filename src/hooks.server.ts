@@ -12,7 +12,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const session_id = cookies.session_id;
 
 	if (session_id) {
-		const user = await UserSchema.findOne({ session_id });
+		const user = await UserSchema.findOne({ sessionId: session_id });
 
 		if (user) {
 			event.locals.user = {
