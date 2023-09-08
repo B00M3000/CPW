@@ -10,6 +10,7 @@ interface UserDocumentData {
   sessionId: string;
   accountType: number;
   accessLevel: number;
+  advisees: string[];
 }
 
 const schema = new mongoose.Schema(
@@ -18,11 +19,12 @@ const schema = new mongoose.Schema(
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     picture: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     sessionId: { type: String, required: true, unique: true },
     googleId: { type: String, required: true, unique: true },
     accountType: { type: Number, required: true, default: 0 },
-    accessLevel: { type: Number, required: true, default: 0 }
+    accessLevel: { type: Number, required: true, default: 0 },
+    advisees: { type: [String], required: true, default: [] }
   },
   { timestamps: true },
 );
