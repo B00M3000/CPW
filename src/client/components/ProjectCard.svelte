@@ -16,7 +16,7 @@
     <p><strong>Mentor: </strong><MentorCard mentor={project.mentor} /></p>
     <p><strong>Description:</strong> {project.shortDescription}</p>
     <p><strong>Year: </strong> {project.year}</p>
-    <p><strong><a href="{`/_projects/${project._id}`}"> Read More</a></strong></p>
+    <p><strong><a href="{`/projects/${project._id}`}"> Read More</a></strong></p>
     <div class="project-card/tags">
         {#each project.tags as tag}
             <Tag text={tags[tag]} />
