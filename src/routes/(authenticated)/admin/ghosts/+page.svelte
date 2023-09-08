@@ -56,64 +56,104 @@
     let actionFormClear: boolean = false;
 </script>
 
-<h1>Admin - Ghost Manager</h1>
+<main>
+    <h1>Admin - Ghost Manager</h1>
 
-<h2>Active Ghosts</h2>
-<div class="ghosts">
-    {#each ghosts as ghost}
-        <p>Email: {ghost.email}</p>
-        <p>Account Type: {AccountType[ghost.accountType]}</p>
-        <p>Access Level: {AccessLevel[ghost.accessLevel]}</p>
-        <button on:click={() => deleteAction(ghost.email)}>Delete</button>
-    {:else}
-        <h3>No ghosts.</h3>
-    {/each}
-</div>
+    <p>Note that only one ghost can exist per email address!</p>
+    <p>If modifications to an existing ghost are needed, please delete the existing one first before attempting to create a new updated one.</p>
 
-<h2>Queued Actions</h2>
-<div class="actions">
-    {#each actions as action}
-        <div class="action">
-            <p>Action: {action.action}</p>
-            <p>Email: {action.email}</p>
-            {#if action.accountType !== undefined}<p>Account Type: {AccountType[action.accountType]}</p>{/if}
-            {#if action.accessLevel !== undefined}<p>Access Level: {AccessLevel[action.accessLevel]}</p>{/if}
+    <div class="content">
+        <div class="ghosts-container">
+            <h2>Active Ghosts</h2>
+            <div class="ghosts">
+                {#each ghosts as ghost}
+                <div class="ghost">
+                    <div class="info">
+                        <span>Email: {ghost.email}</span>
+                        <span>Account Type: {AccountType[ghost.accountType]}</span>
+                        <span>Access Level: {AccessLevel[ghost.accessLevel]}</span>
+                    </div>
+                    <button on:click={() => deleteAction(ghost.email)}>Delete</button>
+                </div>
+                {:else}
+                <h3>No ghosts.</h3>
+                {/each}
+            </div>
         </div>
-    {:else}
-        <h3>No actions queued.</h3>
-    {/each}
-</div>
 
-<div class="action-form">
-    <label for="email">Email: </label>
-    <input id="email" bind:value={actionFormEmail} type="text" placeholder="Enter Email to Match..."/>
-    <label for="at">Account Type: </label>
-    <select id="at"bind:value={actionFormAT}>
-        <option value={AccountType.Unknown}>Unknown</option>
-        <option value={AccountType.Student}>Student</option>
-        <option value={AccountType.Advisor}>Advisor</option>
-    </select>
-    <label for="al">Access Level: </label>
-    <select id="al" bind:value={actionFormAL}>
-        <option value={AccessLevel.Normal}>Normal</option>
-        <option value={AccessLevel.Admin}>Admin</option>
-    </select>
-    <label for="al">Clear after each add: </label>
-    <input type="checkbox" bind:checked={actionFormClear}/>
-</div>
+        <div class="actions-container">
+            <h2>Queued Actions</h2>
+            <div class="actions">
+                {#each actions as action}
+                <div class="action">
+                    <span>Action: {action.action}</span>
+                    <span>Email: {action.email}</span>
+                    {#if action.accountType !== undefined}<span>Account Type: {AccountType[action.accountType]}</span>{/if}
+                    {#if action.accessLevel !== undefined}<span>Access Level: {AccessLevel[action.accessLevel]}</span>{/if}
+                </div>
+                {:else}
+                <h3>No actions queued.</h3>
+                {/each}
+            </div>
+            <button on:click={clearActions}>Clear Queue</button>
+            <button on:click={upload}>Upload Queue to Server</button>
+        </div>
 
-<button on:click={actionFormSubmit}>Add New User to Queue</button>
-<button on:click={clearActions}>Clear Queue</button>
-<button on:click={upload}>Upload Queue to Server</button>
+        <div class="action-form">
+            <h2>Add a New Ghost</h2>
+            <label for="email">Email: </label>
+            <input id="email" bind:value={actionFormEmail} type="text" placeholder="Enter Email to Match..."/>
+            <label for="at">Account Type: </label>
+            <select id="at"bind:value={actionFormAT}>
+                <option value={AccountType.Unknown}>Unknown</option>
+                <option value={AccountType.Student}>Student</option>
+                <option value={AccountType.Advisor}>Advisor</option>
+            </select>
+            <label for="al">Access Level: </label>
+            <select id="al" bind:value={actionFormAL}>
+                <option value={AccessLevel.Normal}>Normal</option>
+                <option value={AccessLevel.Admin}>Admin</option>
+            </select>
+            <label for="al">Clear after each add: </label>
+            <input type="checkbox" bind:checked={actionFormClear}/>
+            <button on:click={actionFormSubmit}>Add New User to Queue</button>
+        </div>
+    </div>
+</main>
 
 <style>
-    .action {
+    .action, .info {
+        display: flex;
+        flex-direction: column;
         color: grey;
+        padding: 1rem;
     }
-    .actions {
+    .actions, .ghosts {
+        display: flex;
+        flex-direction: column;
+        background: #e0e0e0;
+        max-height: 55vh;
+        min-width: 20vw;
+        overflow-y: auto;
+    }
+    .ghost {
+        display: flex;
+        justify-content: space-between;
+    }
+    .actions>div:nth-of-type(even) {
         background: #bababa;
     }
-    .actions>div:nth-of-type(odd) {
-        background: #e0e0e0;
+    .content {
+        display: flex;
+        gap: 5rem;
+    }
+    .actions-container, .ghosts-container, .action-form {
+        display: flex;
+        flex-direction: column;
+    }
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 </style>
