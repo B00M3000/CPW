@@ -34,7 +34,7 @@ export async function POST({ request, locals }) {
     if(action == "CREATE"){
         const project = data[0];
         console.log(project)
-        await new ProjectSchema({ 
+        let schema = new ProjectSchema({ 
           title: project.title, 
           year: project.year, 
           tags: project.tags, 
@@ -43,7 +43,13 @@ export async function POST({ request, locals }) {
           underReview: project.underReview,
           mentorId: "12349012734890172340987",
           studentId: locals.user.id 
-        }).save()
+        })
+
+        if(schema.mentorId && schema.studentId){
+          await schema.save();
+        } else {
+          throw error(400, 'Something happened when inserting mentor or student.');
+        }
 
     } else {
         throw error(400, `Invalid Request Type! Must be CREATE, EDIT or DELETE given ${data.action.toUpperCase()}`)
