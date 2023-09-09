@@ -12,7 +12,12 @@
     let shortDesc:string = "";
     let fullReport:string = "N/A";
 
-    //let section: string[] = ["title", "tags", "mentor", "desc", "submit"]
+
+    
+
+
+
+
     let steps: number = 0;
     let begin: boolean = false;
     function Next() {
@@ -32,11 +37,6 @@
 
 <main class="formbar">
   <div class="form-container">
-    {#if !begin}
-      <div>
-        <button on:click = {Begin}> Begin </button>
-      </div>
-    {:else}
       <div id="inputForm">
         {#if steps == 0}
           <div class="form-group">
@@ -108,9 +108,6 @@
         {/if}
       
       </div>
-    
-    {/if}
-    
   </div>
   
 </main>
