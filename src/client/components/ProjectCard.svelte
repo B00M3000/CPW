@@ -14,7 +14,7 @@
     
     <p><strong>Completed by </strong><StudentCard student={project.student} /></p>
     <p><strong>Mentor: </strong><MentorCard mentor={project.mentor} /></p>
-    <p><strong>Description:</strong> {project.shortDescription}</p>
+    <p><strong>Description:</strong> {project.shortDesc}</p>
     <p><strong>Year: </strong> {project.year}</p>
     <p><strong><a href="{`/projects/${project._id}`}"> Read More</a></strong></p>
     <div class="project-card/tags">

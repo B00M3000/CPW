@@ -11,7 +11,7 @@ export interface Project {
     subject: string;
     tags: string[];
     mentor: Mentor;
-    shortDescription: string;
+    shortDesc: string;
     fullReport: string;
 }
 

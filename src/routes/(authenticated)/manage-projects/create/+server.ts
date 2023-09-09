@@ -27,11 +27,12 @@ import { ProjectSchema } from '@/server/mongo/schemas/project';
 import { UserSchema } from '@/server/mongo/schemas/user';
 import { error, json } from '@sveltejs/kit';
 import { MentorSchema } from '@/server/mongo/schemas/mentor';
+import { stringifyObjectId } from "@/lib/utils";
+
 export async function POST({ request, locals }) {
     const data = await request.json();
-    console.log(data)
     const action = data[0].action?.toUpperCase()
-    const mentorId = createOrFindMentor(data[0]);
+    const mentorId = await createOrFindMentor(data[0]);
     console.log(mentorId)
     if(action == "CREATE"){
         const project = data[0];
@@ -39,7 +40,7 @@ export async function POST({ request, locals }) {
           title: project.title, 
           year: project.year, 
           tags: project.tags, 
-          shortDescription: project.shortDesc, 
+          shortDesc: project.shortDescription, 
           fullReport: project.fullReport,
           underReview: project.underReview,
           mentorId: mentorId,
@@ -49,7 +50,7 @@ export async function POST({ request, locals }) {
         if(schema.mentorId && schema.studentId){
           await schema.save();
         } else {
-          console.log("stuff happened lmao")
+          console.log("???????????")
           throw error(400, 'Something happened when inserting mentor or student.');
         }
 
@@ -65,7 +66,7 @@ async function createOrFindMentor(data: any){
   const foundMentor = await MentorSchema.findOne({ email: data.mentorEmail});
 
   if(foundMentor){
-    return foundMentor._id;
+    return foundMentor._id.valueOf()
   } else {
     let mentorSchema = new MentorSchema({
       firstName: data.mentorFirst,
@@ -75,9 +76,8 @@ async function createOrFindMentor(data: any){
       email: data.mentorEmail,
       phoneNumber: data.mentorPhone
     });
-    mentorSchema.save();
-    console.log(mentorSchema._id)
-    return mentorSchema._id;
+    await mentorSchema.save();
+    return mentorSchema._id.valueOf();
   }
 }
 

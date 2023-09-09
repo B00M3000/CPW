@@ -1,6 +1,5 @@
 <script lang=ts>
     import tags from "$lib/tags";
-
     interface Action {
         action: string;
         title: string;
@@ -10,7 +9,8 @@
         mentorOrg:string;
         mentorEmail:string;
         mentorPhone:string;
-        shortDesc: string;
+        tags: string[];
+        shortDescription: string;
         fullReport: string;
         underReview: boolean;
     }
@@ -37,7 +37,8 @@
             mentorOrg: mentorOrg,
             mentorEmail: mentorEmail,
             mentorPhone: mentorPhone,
-            shortDesc: shortDesc,
+            tags: selected,
+            shortDescription: shortDesc,
             fullReport: fullReport,
             underReview: true
         })
@@ -87,7 +88,7 @@
             <div class="form-group">
               <label for="selected" class="label">Select Tags</label>
               {#each Object.entries(tags) as [id, label]}
-                    <input type="checkbox" value = {id} id="selected" name="selected" />
+                    <input type="checkbox" value = {id} id="selected" name="selected" bind:group={selected}/>
                     {label}
                   <br />
                 {/each}
