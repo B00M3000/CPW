@@ -15,6 +15,6 @@ export async function POST({ request }) {
 }
 
 async function handleOne(data: any){
-    const { email, advisees } = data;
-    await UserSchema.findOneAndUpdate({ email }, { advisees })
+    const { email, adviseeIds } = data;
+    await UserSchema.findOneAndUpdate({ email }, { adviseeIds })
 }

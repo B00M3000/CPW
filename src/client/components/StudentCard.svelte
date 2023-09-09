@@ -6,7 +6,7 @@
 
 <div class="student-card">
     {#if student}
-        <a href={`/student/${student._id}`} class="text">{student.firstName} {student.lastName}</a> 
+        <a href={`/students/${student._id}`} class="text">{student.firstName} {student.lastName}</a> 
     {:else}
         <span class="text">Student Not Found!</span>
     {/if}
