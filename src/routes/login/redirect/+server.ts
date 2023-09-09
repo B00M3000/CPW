@@ -1,43 +1,14 @@
-import { error, json } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import { UserSchema } from '@/server/mongo/schemas/user';
-import type { RequestHandler } from './$types';
-import { PUBLIC_GOOGLE_CLIENT_ID, PUBLIC_ORIGIN } from '$env/static/public';
-import { GOOGLE_CLIENT_SECRET } from '$env/static/private';
 import { v4 as uuidv4 } from 'uuid';
-
-async function get_tokens(code: string) {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const data = new URLSearchParams({
-    'client_id': PUBLIC_GOOGLE_CLIENT_ID!,
-    'client_secret': GOOGLE_CLIENT_SECRET!,
-    'grant_type': 'authorization_code',
-    'redirect_uri': `${PUBLIC_ORIGIN}/login/redirect`,
-    'code': code
-  });
-
-  const response = await fetch('https://accounts.google.com/o/oauth2/token', {
-    method: 'POST',
-    body: data as never,
-  });
-  
-  return response.json();
-}
-
-async function get_user(token_type: unknown, access_token: unknown) {
-  const response = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
-    headers: {
-      authorization: `${token_type} ${access_token}`,
-    },
-  });
-  const data = await response.json();
-  return data;
-}
+import { get_tokens, get_user } from '@/server/google';
+import { GhostSchema } from '@/server/mongo/schemas/ghost';
 
 const absolute = new RegExp('^(?:[a-z+]+:)?//', 'i');
 
-export const GET: RequestHandler = async (req) => {
-  const code = req.url.searchParams.get('code');
-  const redirect = req.url.searchParams.get('state');
+export async function GET({ url, cookies, setHeaders }) {
+  const code = url.searchParams.get('code');
+  const redirectURL = url.searchParams.get('state');
 
   if (!code) throw error(400, 'missing code');
 
@@ -55,7 +26,19 @@ export const GET: RequestHandler = async (req) => {
 
   const google_user = await get_user(token_type, access_token);
 
-  const session_id = uuidv4()
+  const session_id = uuidv4();
+
+  const ghost = await GhostSchema.findOne({ email: google_user.email })
+
+  console.log(ghost)
+
+  let accessLevel;
+  let accountType;
+  if(ghost) {
+    if(ghost.accessLevel) accessLevel = ghost.accessLevel
+    if(ghost.accountType) accountType = ghost.accountType
+    ghost.deleteOne({ email: google_user.email });
+  }
 
   const user = await UserSchema.findOneAndUpdate(
     {
@@ -68,7 +51,9 @@ export const GET: RequestHandler = async (req) => {
       lastName: google_user.family_name,
       name: google_user.name,
       picture: google_user.picture,
-      sessionId: session_id
+      sessionId: session_id,
+      accessLevel,
+      accountType
     },
     {
       upsert: true,
@@ -76,18 +61,6 @@ export const GET: RequestHandler = async (req) => {
     },
   );
 
-  return json(
-    {
-      message: 'Redirect to User Dashboard',
-    },
-    {
-      status: 307,
-      headers: {
-        location: redirect && !absolute.test(redirect) ? redirect : '/',
-        'set-cookie': req.cookies.serialize('session_id', session_id, {
-          path: '/',
-        }),
-      },
-    },
-  );
+  cookies.set('session_id', session_id, { path: '/' })
+  throw redirect(307, redirectURL && !absolute.test(redirectURL) ? redirectURL : "/",)
 };

@@ -1,5 +1,5 @@
 export enum AccountType {
-    Unassisgned,
+    Unknown,
     Student,
     Advisor
 }

@@ -6,10 +6,9 @@
     import ProjectCard from "@/client/components/ProjectCard.svelte";
     import { page } from "$app/stores";
 
-
     export let data;
 
-    $: ({projects} = data);
+    $: ({ projects } = data);
 
     $: searchParams = $page.url.searchParams
 
@@ -43,7 +42,7 @@
         if(studentSearch) searchParams.set("studentSearch", studentSearch);
         if(query) searchParams.set("query", query)
 
-        await goto(`/_projects?${searchParams}`, { replaceState: true });
+        await goto(`/projects?${searchParams}`, { replaceState: true });
     }
 </script>
 

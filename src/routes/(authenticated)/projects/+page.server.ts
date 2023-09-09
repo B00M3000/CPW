@@ -34,6 +34,8 @@ export async function load({ url }) {
         return project;
     }
 
+    let returnEmpty = false;
+
     const mentorSearch = searchParams.get('mentorSearch');
     if(mentorSearch){
         const mentorRegex = buildRegex(mentorSearch.split(" "))
@@ -41,21 +43,24 @@ export async function load({ url }) {
         if(mentors.length > 0){
             mentors.forEach(m => cachedMentors[m._id] = m)
             dbQuery.mentorId = { $in: mentors.map(m => m._id)}
+        } else {
+            returnEmpty = true;
         }
     }
 
     const studentSearch = searchParams.get('studentSearch');
     if(studentSearch){
         const studentRegex = buildRegex(studentSearch.split(" "))
-        console.log(studentRegex)
         const students = (await UserSchema.find({ name: studentRegex }, 'firstName lastName').lean())?.map(stringifyObjectId);
         if(students.length > 0){
             students.forEach(s => cachedMentors[s._id] = s)
             dbQuery.studentId = { $in: students.map(s => s._id)}
+        } else {
+            returnEmpty = true;
         }
     }
 
-    const projects: ProjectDocumentData[] = await ProjectSchema.find(dbQuery, 'studentId title year tags mentorId shortDescription').lean();
+    const projects: ProjectDocumentData[] = returnEmpty ? [] : await ProjectSchema.find(dbQuery, 'studentId title year tags mentorId shortDescription').lean() || [];
 
     const inflatedProjects = await Promise.all(projects.map(stringifyObjectId).map(injectStudentAndMentor))
 
