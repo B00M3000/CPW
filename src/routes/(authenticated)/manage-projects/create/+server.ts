@@ -31,9 +31,10 @@ export async function POST({ request, locals }) {
     const data = await request.json();
     console.log(data)
     const action = data[0].action?.toUpperCase()
+    const mentorId = createOrFindMentor(data[0]);
+    console.log(mentorId)
     if(action == "CREATE"){
         const project = data[0];
-        console.log(project)
         let schema = new ProjectSchema({ 
           title: project.title, 
           year: project.year, 
@@ -41,13 +42,14 @@ export async function POST({ request, locals }) {
           shortDescription: project.shortDesc, 
           fullReport: project.fullReport,
           underReview: project.underReview,
-          mentorId: "12349012734890172340987",
+          mentorId: mentorId,
           studentId: locals.user.id 
         })
 
         if(schema.mentorId && schema.studentId){
           await schema.save();
         } else {
+          console.log("stuff happened lmao")
           throw error(400, 'Something happened when inserting mentor or student.');
         }
 
@@ -58,7 +60,26 @@ export async function POST({ request, locals }) {
     return json({ message: "Actions Successfully Executed." });
 }
 
+async function createOrFindMentor(data: any){
 
+  const foundMentor = await MentorSchema.findOne({ email: data.mentorEmail});
+
+  if(foundMentor){
+    return foundMentor._id;
+  } else {
+    let mentorSchema = new MentorSchema({
+      firstName: data.mentorFirst,
+      lastName: data.mentorLast,
+      name: data.mentorFirst + " " + data.mentorLast,
+      organization: data.mentorOrg,
+      email: data.mentorEmail,
+      phoneNumber: data.mentorPhone
+    });
+    mentorSchema.save();
+    console.log(mentorSchema._id)
+    return mentorSchema._id;
+  }
+}
 
 
 
