@@ -60,7 +60,8 @@ export async function load({ url }) {
         }
     }
 
-    const projects: ProjectDocumentData[] = returnEmpty ? [] : await ProjectSchema.find(dbQuery, 'studentId title year tags mentorId shortDescription').lean() || [];
+    dbQuery.underReview = false;
+    const projects: ProjectDocumentData[] = returnEmpty ? [] : await ProjectSchema.find(dbQuery, 'studentId title year tags mentorId shortDesc').lean() || [];
 
     const inflatedProjects = await Promise.all(projects.map(stringifyObjectId).map(injectStudentAndMentor))
 
