@@ -1,11 +1,25 @@
 <script lang=ts>
     import tags from "$lib/tags";
 
-    let form: HTMLFormElement;
+    interface Action {
+        action: string;
+        title: string;
+        year: number;
+        mentorFirst: string;
+        mentorLast: string;
+        mentorOrg:string;
+        mentorEmail:string;
+        mentorPhone:string;
+        shortDesc: string;
+        fullReport: string;
+        underReview: boolean;
+    }
+
 
     let selected: string[] = [];
     let subject:string = "";
-    let mentor:string = "";
+    let mentorFirst:string = "";
+    let mentorLast: string = "";
     let mentorOrg:string = "";
     let mentorEmail:string = "";
     let mentorPhone:string = "";
@@ -13,13 +27,36 @@
     let fullReport:string = "N/A";
 
 
+    async function upload() {
+      actions.push({
+            action: "CREATE",
+            title: subject,
+            year: new Date().getFullYear(),
+            mentorFirst: mentorFirst,
+            mentorLast: mentorLast,
+            mentorOrg: mentorOrg,
+            mentorEmail: mentorEmail,
+            mentorPhone: mentorPhone,
+            shortDesc: shortDesc,
+            fullReport: fullReport,
+            underReview: true
+        })
+        actions = actions;
+        const res = await fetch('/manage-projects/create', {
+            method: "POST",
+            body: JSON.stringify(actions)
+        });
+        location.reload();
+    }
+
+
     
 
-
-
+    let actions: Action[] = [];
 
     let steps: number = 0;
     let begin: boolean = false;
+
     function Next() {
       steps += 1;
       console.log(steps)
@@ -60,12 +97,12 @@
         
           <div class="form-group">
             <label for="mentorFirst" class="label">Mentor First Name</label>
-            <input type="text" id="mentorFirst" name="mentorFirst" required bind:value={mentor}>
+            <input type="text" id="mentorFirst" name="mentorFirst" required bind:value={mentorFirst}>
           </div>
         
           <div class="form-group">
             <label for="mentorLast" class="label">Mentor Last Name</label>
-            <input type="text" id="mentorLast" name="mentorLast" required bind:value={mentor}>
+            <input type="text" id="mentorLast" name="mentorLast" required bind:value={mentorLast}>
           </div>
 
           <div class="form-group">
@@ -94,7 +131,7 @@
 
         {:else if steps == 4}
           <div class="form-group button-group">
-            <button type="submit" class="submit-button"> Submit Form</button>
+            <button type="submit" class="submit-button" on:click={upload}> Submit Form</button>
           </div>
           
         {/if}

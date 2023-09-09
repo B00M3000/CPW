@@ -23,10 +23,39 @@
 //   };
 // }
 
-import { stringifyObjectId } from "@/lib/utils";
-import { ProjectSchema } from "@/server/mongo/schemas/project";
+import { ProjectSchema } from '@/server/mongo/schemas/project';
+import { UserSchema } from '@/server/mongo/schemas/user';
+import { error, json } from '@sveltejs/kit';
+import { MentorSchema } from '@/server/mongo/schemas/mentor';
+export async function POST({ request, locals }) {
+    const data = await request.json();
+    console.log(data)
+    const action = data[0].action?.toUpperCase()
+    if(action == "CREATE"){
+        const project = data[0];
+        console.log(project)
+        await new ProjectSchema({ 
+          title: project.title, 
+          year: project.year, 
+          tags: project.tags, 
+          shortDescription: project.shortDesc, 
+          fullReport: project.fullReport,
+          underReview: project.underReview,
+          mentorId: "12349012734890172340987",
+          studentId: locals.user.id 
+        }).save()
 
-export async function load() {
-    const ghosts = (await ProjectSchema.find().lean())?.map(stringifyObjectId);
-    return { ghosts };
+    } else {
+        throw error(400, `Invalid Request Type! Must be CREATE, EDIT or DELETE given ${data.action.toUpperCase()}`)
+    }   
+
+    return json({ message: "Actions Successfully Executed." });
 }
+
+
+
+
+
+
+
+
