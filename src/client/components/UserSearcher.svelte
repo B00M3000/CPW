@@ -1,45 +1,36 @@
 <script lang="ts">
+    import { createEventDispatcher } from "svelte";
+
+    export let disabled: boolean = false;
+
     let search = "";
 
     let students: any = [];
 
     async function update() {
-        if(!search) return;
+        if(!search || search.endsWith("&#8291")) return;
         const res = await fetch(`/students.json?query=${search}`);
         ({ students } = await res.json());
     }
 
-    $: console.log(students)
+    const dispatcher = createEventDispatcher()
+
+    $: if(search.slice(-1) === '\u2063') {
+        dispatcher('select', { email: search.slice(0, search.length - 1) })
+        search = "";
+    }
+
+    $: if(disabled) search = "";
 </script>
 
-<input list="results" type="text" placeholder="Start typing to search..." bind:value={search} on:keyup={update} />
+<input list="results" type="text" placeholder="Start typing to search..." bind:value={search} on:keyup={update} disabled={disabled}/>
 <datalist id="results">
 {#each students as student}
-    <option>{student.name}</option>
-    <option>{student.email}</option>
+    <option value="{student.email}&#8291">{student.name}</option>
+    <option value="{student.email}&#8291">{student.email}</option>
 {/each}
 </datalist>
 
 <style lang="scss">
-    /* <datalist> and <option> styling */
-    datalist {
-        position: absolute;
-        max-height: 20em;
-        border: 0 none;
-        overflow-x: hidden;
-        overflow-y: auto;
-    }
 
-    datalist option {
-        font-size: 0.8em;
-        padding: 0.3em 1em;
-        background-color: #ccc;
-        cursor: pointer;
-    }
-
-    datalist option:hover, datalist option:focus {
-        color: #fff;
-        background-color: #036;
-        outline: 0 none;
-    }
 </style>
