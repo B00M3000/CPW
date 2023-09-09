@@ -24,7 +24,7 @@ const schema = new mongoose.Schema(
     googleId: { type: String, required: true, unique: true },
     accountType: { type: Number, required: true, default: 0 },
     accessLevel: { type: Number, required: true, default: 0 },
-    advisees: { type: [String], required: true, default: [] }
+    adviseeIds: { type: [String], required: true, default: [] }
   },
   { timestamps: true },
 );
