@@ -4,66 +4,79 @@
     import { onMount } from "svelte";
 
     export let data;
-    $: ({ project, mentor } = data);
-    let selected: string[] = "";
-    let subject:string = "";
-    let mentorFirst:string = "";
-    let mentorLast: string = "";
-    let mentorOrg:string = "";
-    let mentorEmail:string = "";
-    let mentorPhone:string = "";
-    let shortDesc:string = "";
-    let fullReport:string = "";
-
-    onMount(() => {
-        selected = project.tags;
-        subject = project.title;
-        mentorFirst = mentor.firstName;
-        mentorLast = mentor.lastName;
-        mentorOrg = mentor.organization;
-        mentorEmail = mentor.email;
-        mentorPhone = mentor.phoneNumber;
-        shortDesc = project.shortDesc;
-        fullReport = project.fullReport;    
-    })
+    $: ({ project, mentor, id } = data);
 
     interface Action {
-        action: string;
-        title: string;
-        year: number;
-        mentorFirst: string;
-        mentorLast: string;
-        mentorOrg:string;
-        mentorEmail:string;
-        mentorPhone:string;
-        tags: string[];
-        shortDescription: string;
-        fullReport: string;
-        underReview: boolean;
+      action: string;
+      project: ProjectInformation;
+      mentor: MentorInformation;
+      mentorId?: string;
     }
-    let actions: Action[] = [];
-    async function upload() {
-        actions.push({
-                action: "CREATE",
-                title: subject,
-                year: new Date().getFullYear(),
-                mentorFirst: mentorFirst,
-                mentorLast: mentorLast,
-                mentorOrg: mentorOrg,
-                mentorEmail: mentorEmail,
-                mentorPhone: mentorPhone,
-                tags: selected,
-                shortDescription: shortDesc,
-                fullReport: fullReport,
-                underReview: true
-            })
-            actions = actions;
-            const res = await fetch('/manage-projects/create', {
-                method: "POST",
-                body: JSON.stringify(actions)
-            });
-            goto("/manage-projects")
-        }
+
+    interface ProjectInformation {
+      projectId: string;
+      title: string;
+      tags: string[];
+      shortDesc: string;
+    }
+
+    interface MentorInformation {
+      mentorId: string;
+      firstName: string;
+      lastName: string;
+      organization: string;
+      email: string;
+      phoneNumber: string;
+    }
+
+
+    let action: Action;
+
+    
+    let currentProj: ProjectInformation = {
+        projectId: "",
+        title: "",
+        tags: [],
+        shortDesc: ""
+      };
+
+      let currentMentor: MentorInformation = {
+        mentorId: "",
+        firstName: "",
+        lastName: "",
+        organization: "",
+        email: "",
+        phoneNumber: "",
+      };
+
+      onMount(() => {
+        currentProj = {
+          projectId: project._id,
+          title: project.title,
+          tags: project.tags,
+          shortDesc: project.shortDesc
+        };
+
+        currentMentor = {
+          mentorId: mentor._id,
+          firstName: mentor.firstName,
+          lastName: mentor.lastName,
+          organization: mentor.organization,
+          email: mentor.email,
+          phoneNumber: mentor.phoneNumber,
+        };
+      })
+
+      $: action = { ...action, action: "CREATE", currentProj, currentMentor}
+      async function upload() {
+        
+        const res = await fetch(`/manage-projects/edit/${id}`, {
+            method: "POST",
+            body: JSON.stringify(action)
+        });
+        
+        await goto("/manage-projects")
+      }
 
 </script>
 
@@ -78,7 +91,7 @@
 
           <div class="form-group">
             <label for="subject" class="label">Project Title</label>
-            <input type="text" id="subject" name="subject" required  bind:value={subject}>
+            <input type="text" id="subject" name="subject" required  bind:value={currentProj.title}>
           </div>
 
 
@@ -87,7 +100,7 @@
             <div class="form-group">
               <label for="selected" class="label">Select Tags</label>
               {#each Object.entries(tags) as [id, label]}
-                    <input type="checkbox" value = {id} id="selected" class="checkbox" name="selected" bind:group={selected}/>
+                    <input type="checkbox" value = {id} id="selected" class="checkbox" name="selected" bind:group={currentProj.tags}/>
                     {label}
                   <br />
                 {/each}
@@ -97,33 +110,33 @@
         
           <div class="form-group">
             <label for="mentorFirst" class="label">Mentor First Name</label>
-            <input type="text" id="mentorFirst" name="mentorFirst" required bind:value={mentorFirst}>
+            <input type="text" id="mentorFirst" name="mentorFirst" required bind:value={currentMentor.firstName}>
           </div>
         
           <div class="form-group">
             <label for="mentorLast" class="label">Mentor Last Name</label>
-            <input type="text" id="mentorLast" name="mentorLast" required bind:value={mentorLast}>
+            <input type="text" id="mentorLast" name="mentorLast" required bind:value={currentMentor.lastName}>
           </div>
 
           <div class="form-group">
             <label for="mentorOrg" class="label">Mentor Organization</label>
-            <input type="email" id="mentorOrg" name="mentorOrg" required bind:value={mentorOrg}>
+            <input type="email" id="mentorOrg" name="mentorOrg" required bind:value={currentMentor.organization}>
           </div>
 
           <div class="form-group">
             <label for="mentorEmail" class="label">Mentor Email</label>
-            <input type="email" id="mentorEmail" name="mentorEmail" required bind:value={mentorEmail}>
+            <input type="email" id="mentorEmail" name="mentorEmail" required bind:value={currentMentor.email}>
           </div>
 
           <div class="form-group">
             <label for="mentorPhone" class="label">Mentor Phone</label>
-            <input type="text" id="mentorPhone" name="mentorPhone" required bind:value={mentorPhone}>
+            <input type="text" id="mentorPhone" name="mentorPhone" required bind:value={currentMentor.phoneNumber}>
           </div>
 
 
           <div class="form-group">
             <label for="shortDesc" class="label">Write A Short Description</label>
-            <textarea id="shortDesc" name="shortDesc" rows="3" cols="60" maxlength="200" required bind:value={shortDesc}></textarea>
+            <textarea id="shortDesc" name="shortDesc" rows="3" cols="60" maxlength="200" required bind:value={currentProj.shortDesc}></textarea>
           </div>
 
           

@@ -8,5 +8,5 @@ export const load: PageServerLoad = async ({ params }) => {
     const project = stringifyObjectId(await ProjectSchema.findById(id).lean());
     const mentor = stringifyObjectId(await MentorSchema.findById(project.mentorId).lean())
 
-    return { project, mentor };
+    return { project, mentor, id };
 }

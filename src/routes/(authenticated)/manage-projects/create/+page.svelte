@@ -1,6 +1,6 @@
 <script lang=ts>
     import { goto } from "$app/navigation";
-  import MentorSearcher from "@/client/components/MentorSearcher.svelte";
+    import MentorSearcher from "@/client/components/MentorSearcher.svelte";
     import tags from "@/lib/tags";
 
     interface Action {
