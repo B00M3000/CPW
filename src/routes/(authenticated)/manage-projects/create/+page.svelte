@@ -54,7 +54,7 @@
     let step: number = 1;
     const maxStep: number = 4;
     const minStep: number = 1;
-
+    let manual: boolean = false;
     const nextStep = () => { if(step < maxStep) step += 1 }
     const backStep = () => { if(step > minStep) step -= 1 }
 
@@ -72,9 +72,10 @@
         if(numberOfTags >= 1 && numberOfTags <= 5) return true;
         else return ["Please select between 1 and 5 tags."];
       },
+
       () => {
         if(action.mentorId) return true;
-       ( nonEmptyRegex.test(mentor.firstName) && nonEmptyRegex.test(mentor.lastName) && )
+       ( nonEmptyRegex.test(mentor.firstName) && nonEmptyRegex.test(mentor.lastName))
       }
     ]
 
@@ -96,9 +97,15 @@
     {label}
     <br />
     {/each}
+    
     {:else if step === 3}
+    <button class="quickselect-btn" on:click ={() => {manual = !manual}}> Toggle {#if manual} Manual {:else} Quick Select {/if} </button>
+
+    {#if manual}
     <MentorSearcher on:select={mentorSelected}/>
-    {#if !action.mentorId}
+    {/if}
+    
+    {#if !manual}
     <label for="mentorFirst" class="label">Mentor First Name</label>
     <input type="text" id="mentorFirstName" required bind:value={mentor.firstName}>
     <label for="mentorLast" class="label">Mentor Last Name</label>
@@ -109,6 +116,7 @@
     <input type="email" id="mentorEmail" required bind:value={mentor.email}>
     <label for="mentorPhone" class="label">Mentor Phone</label>
     <input type="text" id="mentorPhone" required bind:value={mentor.phoneNumber}>
+    
     {/if}
     {:else if step === 4}
     <label for="shortDesc" class="label">Write A Short Description</label>
