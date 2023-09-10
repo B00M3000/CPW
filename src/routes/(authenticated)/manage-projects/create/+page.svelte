@@ -142,19 +142,14 @@
     <div id="project-mentor-container">
       <label for="mentorFirst" class="label">Mentor First Name</label>
       <span class="textarea" id="mentorFirstName" bind:innerHTML={mentor.firstName} contenteditable />
-      <br>
       <label for="mentorLast" class="label">Mentor Last Name</label>
       <span class="textarea" id="mentorLastName" bind:innerHTML={mentor.lastName} contenteditable />
-      <br>
       <label for="mentorOrg" class="label">Mentor Organization</label>
       <span class="textarea" id="mentorOrganization" bind:innerHTML={mentor.organization} contenteditable />
-      <br>
       <label for="mentorEmail" class="label">Mentor Email</label>
       <span class="textarea" id="mentorEmail" bind:innerHTML={mentor.email} contenteditable />
-      <br>
       <label for="mentorPhone" class="label">Mentor Phone</label>
       <span class="textarea" id="mentorPhone" bind:innerHTML={mentor.phoneNumber} contenteditable />
-      <br>
     </div>
     {:else}
     <MentorSearcher on:select={mentorSelected}/>
@@ -211,13 +206,7 @@
     
     height: 100%;
 
-    label {
-      font-size: 36px;
-    }
-
     .textarea { 
-      font-size: 36px;  
-
       border: none;
       background-color: transparent;
       border-bottom: 2px solid var(--color-blue-grey-500);
@@ -232,7 +221,12 @@
 
     gap: 1em;
 
+    label {
+      font-size: 36px;
+    }
+
     .textarea {
+      font-size: 36px;  
       min-width: 40vw;
       max-width: 70vw;
       font-size: 1.8rem;
@@ -260,9 +254,16 @@
     justify-content: center;
     align-items: center;
 
+    font-size: 24px;  
+
+    &::before {
+      background: linear-gradient(transparent, inherit);
+    }
+
     .textarea {
       min-width: 30vw;
       max-width: 30vw;
+      margin: 0.5em;
     }
   }
 
@@ -271,6 +272,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    font-size: 24px;  
 
     .textarea {
       min-width: 60vw;
