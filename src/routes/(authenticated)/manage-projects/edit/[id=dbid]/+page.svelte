@@ -66,7 +66,7 @@
           phoneNumber: mentor.phoneNumber,
         };
       })
-
+  
       $: action = { ...action, action: "CREATE", currentProj, currentMentor}
       async function upload() {
         
@@ -91,7 +91,7 @@
 
           <div class="form-group">
             <label for="subject" class="label">Project Title</label>
-            <input type="text" id="subject" name="subject" required  bind:value={currentProj.title}>
+            <input type="text" id="subject" name="subject" required  maxlength="120" minlength="5"  bind:value={currentProj.title}>
           </div>
 
 

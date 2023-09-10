@@ -69,7 +69,7 @@
     {#if step === 1}
     <div class="form-group">
       <label for="subject" class="label">Project Title</label>
-      <input type="text" id="title" required bind:value={project.title}>
+      <input type="text" id="title" maxlength="120" minlength="5"  required bind:value={project.title}>
     </div>
     {:else if step === 2}
     <div class="form-group">
