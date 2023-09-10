@@ -1,6 +1,10 @@
-<script lang=ts>
+<script lang="ts">
     import { goto } from "$app/navigation";
     import tags from "$lib/tags";
+
+    export let data;
+    $: ({ project } = data);
+    
     interface Action {
         action: string;
         title: string;
@@ -16,9 +20,9 @@
         underReview: boolean;
     }
 
-
-    let selected: string[] = [];
-    let subject:string = "";
+    console.log(project)
+    let selected: string[] = project.tags;
+    let subject:string = ""
     let mentorFirst:string = "";
     let mentorLast: string = "";
     let mentorOrg:string = "";
@@ -56,28 +60,18 @@
 
     let actions: Action[] = [];
 
-    let steps: number = 0;
-    let begin: boolean = false;
 
-    function Next() {
-      steps += 1;
-      console.log(steps)
-    }
-    function Back() {
-      steps -= 1;
-    }
-    
-    function Begin() {
-      begin = true;
-    }
 </script>
+
+
+
 
 
 
 <main class="formbar">
   <div class="form-container">
       <div id="inputForm">
-        {#if steps == 0}
+
           <div class="form-group">
             <label for="subject" class="label">Project Title</label>
             <input type="text" id="subject" name="subject" required  bind:value={subject}>
@@ -85,7 +79,7 @@
 
 
           
-        {:else if steps == 1}
+
             <div class="form-group">
               <label for="selected" class="label">Select Tags</label>
               {#each Object.entries(tags) as [id, label]}
@@ -95,7 +89,7 @@
                 {/each}
             </div>
 
-        {:else if steps == 2}
+
         
           <div class="form-group">
             <label for="mentorFirst" class="label">Mentor First Name</label>
@@ -122,7 +116,6 @@
             <input type="text" id="mentorPhone" name="mentorPhone" required bind:value={mentorPhone}>
           </div>
 
-        {:else if steps == 3}
 
           <div class="form-group">
             <label for="shortDesc" class="label">Write A Short Description</label>
@@ -131,21 +124,11 @@
 
           
 
-        {:else if steps == 4}
+
           <div class="form-group button-group">
             <button type="submit" class="submit-button" on:click={upload}> Submit Form</button>
           </div>
-          
-        {/if}
-
-        {#if steps > 0}
-          <button on:click={Back}> Back</button>
-        {/if}
-
-        {#if steps < 4}
-          <button on:click={Next}> Next</button>
-        {/if}
-      
+        
       </div>
   </div>
   
