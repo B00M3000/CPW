@@ -81,8 +81,8 @@
     const stepValidations: validation[] = [
       null,
       () => {
-        if(/.{24,100}/.test(project.title)) return true;
-        else return ["Please enter a project name between 24 and 200 characters."];
+        if(/.{12,100}/.test(project.title)) return true;
+        else return ["Please enter a project name between 12 and 200 characters."];
       },
       () => {
         const numberOfTags= project.tags.length
@@ -99,9 +99,9 @@
           if(!/.+/.test(mentor.lastName)) errorsMessages.push("Please enter the last name of your mentor.");
           if(!/.+/.test(mentor.organization)) errorsMessages.push("Please enter the relevant organization your mentor is associated with for your project.");
           if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(mentor.email)) errorsMessages.push("Please enter a valid mentor email address.");
-          if(!/^[+]{1}(?:[0-9\-\(\)\/\.]\s?){6, 15}[0-9]{1}$/.test(mentor.phoneNumber)) errorsMessages.push("Please enter a valid mentor phone number in the form +1 555-555-5555.");
+          if(!/^\+?\d{0,3}(\s|-)?(\d|-| |\(|\))+$/.test(mentor.phoneNumber)) errorsMessages.push("Please enter a valid mentor phone number in the form +1 555-555-5555.");
 
-          return errorsMessages;
+          return errorsMessages.length > 0 ? errorsMessages : true;
         }
       },
       () => {
@@ -142,7 +142,7 @@
     <label for="mentorLast" class="label">Mentor Last Name</label>
     <input type="text" id="mentorLastName" bind:value={mentor.lastName}>
     <label for="mentorOrg" class="label">Mentor Organization</label>
-    <input type="email" id="mentorOrganization" bind:value={mentor.organization}>
+    <input type="text" id="mentorOrganization" bind:value={mentor.organization}>
     <label for="mentorEmail" class="label">Mentor Email</label>
     <input type="email" id="mentorEmail" bind:value={mentor.email}>
     <label for="mentorPhone" class="label">Mentor Phone</label>
