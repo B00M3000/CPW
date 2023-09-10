@@ -1,5 +1,6 @@
 <script lang=ts>
     import { goto } from "$app/navigation";
+  import InformationBox from "@/client/components/InformationBox.svelte";
     import MentorSearcher from "@/client/components/MentorSearcher.svelte";
     import tags from "@/lib/tags";
 
@@ -55,17 +56,31 @@
     const maxStep: number = 4;
     const minStep: number = 1;
 
-    const nextStep = () => { if(step < maxStep) step += 1 }
-    const backStep = () => { if(step > minStep) step -= 1 }
+    let displayedErrorMessages: string[] = []
 
-    const phoneNumberRegex = /^\+((?:9[679]|8[035789]|6[789]|5[90]|42|3[578]|2[1-689])|9[0-58]|8[1246]|6[0-6]|5[1-8]|4[013-9]|3[0-469]|2[70]|7|1)(?:\W*\d){0,13}\d$/;
+    function nextStep() {
+      if(step < maxStep) {
+        const isValid = stepValidations[step]();
+        if(isValid === true) {
+          step += 1;
+          displayedErrorMessages = []
+        } else {
+          displayedErrorMessages = isValid;
+        }
+      }
+    }
 
-    type validation = () => true | string[];
+    function backStep() {
+      if(step > minStep) step -= 1
+    }
+
+    type validation = null | (() => true | string[]);
 
     const stepValidations: validation[] = [
+      null,
       () => {
         if(/.{24,100}/.test(project.title)) return true;
-        else return ["Please enter a project name between 24 and 200 characters!"];
+        else return ["Please enter a project name between 24 and 200 characters."];
       },
       () => {
         const numberOfTags= project.tags.length
@@ -74,7 +89,21 @@
       },
       () => {
         if(action.mentorId) return true;
-       ( nonEmptyRegex.test(mentor.firstName) && nonEmptyRegex.test(mentor.lastName) && )
+        else {
+          let errorsMessages: string[] = [];
+
+          if(!/.+/.test(mentor.firstName)) errorsMessages.push("Please enter the first name of your mentor.");
+          if(!/.+/.test(mentor.lastName)) errorsMessages.push("Please enter the last name of your mentor.");
+          if(!/.+/.test(mentor.organization)) errorsMessages.push("Please enter the relevant organization your mentor is associated with for your project.");
+          if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(mentor.email)) errorsMessages.push("Please enter a valid mentor email address.");
+          if(!/^[+]{1}(?:[0-9\-\(\)\/\.]\s?){6, 15}[0-9]{1}$/.test(mentor.phoneNumber)) errorsMessages.push("Please enter a valid mentor phone number in the form +1 555-555-5555.");
+
+          return errorsMessages;
+        }
+      },
+      () => {
+        if(/.{100,}/.test(project.shortDesc)) return true;
+        else return ["Please enter a short description with at least 100 characters to start. You can always edit it later."]
       }
     ]
 
@@ -88,7 +117,7 @@
   <form>
     {#if step === 1}
     <label for="subject" class="label">Project Title</label>
-    <input type="text" id="title" required bind:value={project.title}>
+    <input type="text" id="title" bind:value={project.title}>
     {:else if step === 2}
     <label for="selected" class="label">Select Tags</label>
     {#each Object.entries(tags) as [id, label]}
@@ -100,19 +129,30 @@
     <MentorSearcher on:select={mentorSelected}/>
     {#if !action.mentorId}
     <label for="mentorFirst" class="label">Mentor First Name</label>
-    <input type="text" id="mentorFirstName" required bind:value={mentor.firstName}>
+    <input type="text" id="mentorFirstName" bind:value={mentor.firstName}>
     <label for="mentorLast" class="label">Mentor Last Name</label>
-    <input type="text" id="mentorLastName" required bind:value={mentor.lastName}>
+    <input type="text" id="mentorLastName" bind:value={mentor.lastName}>
     <label for="mentorOrg" class="label">Mentor Organization</label>
-    <input type="email" id="mentorOrganization" required bind:value={mentor.organization}>
+    <input type="email" id="mentorOrganization" bind:value={mentor.organization}>
     <label for="mentorEmail" class="label">Mentor Email</label>
-    <input type="email" id="mentorEmail" required bind:value={mentor.email}>
+    <input type="email" id="mentorEmail" bind:value={mentor.email}>
     <label for="mentorPhone" class="label">Mentor Phone</label>
-    <input type="text" id="mentorPhone" required bind:value={mentor.phoneNumber}>
+    <input type="text" id="mentorPhone" bind:value={mentor.phoneNumber}>
     {/if}
     {:else if step === 4}
     <label for="shortDesc" class="label">Write A Short Description</label>
-    <textarea id="shortDesc" rows=3 cols=60 maxlength=200 required bind:value={project.shortDesc}></textarea>
+    <textarea id="shortDesc" bind:value={project.shortDesc}></textarea>
+    {/if}
+
+    {#if displayedErrorMessages.length > 0}
+    <InformationBox 
+      backgroundColor="var(--color-red-100)" 
+      borderColor="var(--color-red-600)" 
+      textColor="var(--color-red-600)" 
+      headingColor="var(--color-red-900)" 
+      heading="Invalid Inputs" 
+      text={displayedErrorMessages.map(m => `  - ${m}`).join('\n')}
+    />
     {/if}
 
     {#if step > minStep}
