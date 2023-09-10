@@ -52,8 +52,8 @@
     const maxStep: number = 4;
     const minStep: number = 1;
 
-    const nextStep = () => { if(step < maxStep) step--; }
-    const backStep = () => { if(step > minStep) step++; }
+    const nextStep = () => { if(step < maxStep) step += 1 }
+    const backStep = () => { if(step > minStep) step -= 1 }
 </script>
 
 <main class="formbar">
