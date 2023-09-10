@@ -14,12 +14,12 @@ export async function POST({ request, locals }) {
     if(action == "CREATE"){
         const project = data.currentProj;
         let schema = await ProjectSchema.findById(project.projectId)
-        console.log(schema)
+
         if(schema){
             schema.title = project.title
             schema.tags = project.tags
             schema.shortDesc = project.shortDesc
-            console.log(schema)
+
             schema.save()
         } else {
           console.log("???????????")
@@ -34,7 +34,7 @@ export async function POST({ request, locals }) {
 }
 
 async function modifyMentor(mentor: any){
-  //console.log(mentor)
+
   const foundMentor = await MentorSchema.findOne({ email: mentor.email});
   console.log(foundMentor)
   if(foundMentor){
