@@ -19,8 +19,8 @@ const schema = new mongoose.Schema(
     tags: { type: [String], required: true },
     mentorId: { type: String, required: true },
     shortDesc: { type: String, required: true },
-    fullReport: { type: String, required: true },
-    underReview: { type: Boolean, required: true}
+    fullReport: { type: String, default: "" },
+    underReview: { type: Boolean, required: true }
   },
   { timestamps: true },
 );

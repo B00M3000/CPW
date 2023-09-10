@@ -1,11 +1,13 @@
 <script lang=ts>
     import { goto } from "$app/navigation";
+  import MentorSearcher from "@/client/components/MentorSearcher.svelte";
     import tags from "@/lib/tags";
 
     interface Action {
       action: string;
       project: ProjectInformation;
       mentor: MentorInformation;
+      mentorId?: string;
     }
 
     interface ProjectInformation {
@@ -36,9 +38,12 @@
       phoneNumber: "",
     };
 
-    $: action = { action: "CREATE", project, mentor };
+    let action: Action;
+
+    $: action = { ...action, action: "CREATE", project, mentor };
 
     async function upload() {
+      console.log(action)
         const res = await fetch('/manage-projects/create', {
             method: "POST",
             body: JSON.stringify(action)
@@ -46,14 +51,17 @@
         await goto('/manage-projects');
     }
 
-    let actions: Action[] = [];
-
     let step: number = 1;
     const maxStep: number = 4;
     const minStep: number = 1;
 
     const nextStep = () => { if(step < maxStep) step += 1 }
     const backStep = () => { if(step > minStep) step -= 1 }
+
+    function mentorSelected(e: CustomEvent) {
+      const { mentorId } = e.detail;
+      action.mentorId = mentorId;
+    }
 </script>
 
 <main class="formbar">
@@ -73,6 +81,8 @@
       {/each}
     </div>
     {:else if step === 3}
+    <MentorSearcher on:select={mentorSelected}/>
+    {#if !action.mentorId}
     <div class="form-group">
       <label for="mentorFirst" class="label">Mentor First Name</label>
       <input type="text" id="mentorFirstName" required bind:value={mentor.firstName}>
@@ -97,6 +107,7 @@
       <label for="mentorPhone" class="label">Mentor Phone</label>
       <input type="text" id="mentorPhone" required bind:value={mentor.phoneNumber}>
     </div>
+    {/if}
     {:else if step === 4}
     <div class="form-group">
       <label for="shortDesc" class="label">Write A Short Description</label>
