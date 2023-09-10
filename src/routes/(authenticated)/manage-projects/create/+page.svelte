@@ -91,8 +91,7 @@
       },
 
       () => {
-        if(action.mentorId) return true;
-        else {
+        if(manual){
           let errorsMessages: string[] = [];
 
           if(!/.+/.test(mentor.firstName)) errorsMessages.push("Please enter the first name of your mentor.");
@@ -102,6 +101,9 @@
           if(!/^\+?\d{0,3}(\s|-)?(\d|-| |\(|\))+$/.test(mentor.phoneNumber)) errorsMessages.push("Please enter a valid mentor phone number in the form +1 555-555-5555.");
 
           return errorsMessages.length > 0 ? errorsMessages : true;
+        } else {
+          if(action.mentorId) return true;
+          else return ["Please select an existing mentor to continue or manually add one if not already exists."]
         }
       },
       () => {
@@ -119,39 +121,59 @@
 <main>
   <form>
     {#if step === 1}
-    <label for="subject" class="label">Project Title</label>
-    <input type="text" id="title" bind:value={project.title}>
+    <div id="project-title-container">
+      <label for="title" class="label">Give your project a title: </label>
+      <span class="textarea" id="title" bind:innerHTML={project.title} contenteditable />
+    </div>
     {:else if step === 2}
-    <label for="selected" class="label">Select Tags</label>
-    {#each Object.entries(tags) as [id, label]}
-    <input type="checkbox" value={id} id="selected" bind:group={project.tags}/>
-    {label}
-    <br />
-    {/each}
-    
+    <div id="project-tags-container">
+      <h1>Select Tags</h1>
+      {#each Object.entries(tags) as [id, label]}
+      <div class="tag-container">
+        <input type="checkbox" value={id} id="selected" bind:group={project.tags}/>
+        <span>{label}</span>
+      </div>
+      {/each}
+    </div>
     {:else if step === 3}
     <button class="quickselect-btn" on:click ={() => {manual = !manual}}> Toggle {#if !manual} Manual {:else} Quick Select {/if} </button>
-
-    {#if !manual}
-    <MentorSearcher on:select={mentorSelected}/>
-    {/if}
     
     {#if manual}
-    <label for="mentorFirst" class="label">Mentor First Name</label>
-    <input type="text" id="mentorFirstName" bind:value={mentor.firstName}>
-    <label for="mentorLast" class="label">Mentor Last Name</label>
-    <input type="text" id="mentorLastName" bind:value={mentor.lastName}>
-    <label for="mentorOrg" class="label">Mentor Organization</label>
-    <input type="text" id="mentorOrganization" bind:value={mentor.organization}>
-    <label for="mentorEmail" class="label">Mentor Email</label>
-    <input type="email" id="mentorEmail" bind:value={mentor.email}>
-    <label for="mentorPhone" class="label">Mentor Phone</label>
-    <input type="text" id="mentorPhone" bind:value={mentor.phoneNumber}>
+    <div id="project-mentor-container">
+      <label for="mentorFirst" class="label">Mentor First Name</label>
+      <span class="textarea" id="mentorFirstName" bind:innerHTML={mentor.firstName} contenteditable />
+      <label for="mentorLast" class="label">Mentor Last Name</label>
+      <span class="textarea" id="mentorLastName" bind:innerHTML={mentor.lastName} contenteditable />
+      <label for="mentorOrg" class="label">Mentor Organization</label>
+      <span class="textarea" id="mentorOrganization" bind:innerHTML={mentor.organization} contenteditable />
+      <label for="mentorEmail" class="label">Mentor Email</label>
+      <span class="textarea" id="mentorEmail" bind:innerHTML={mentor.email} contenteditable />
+      <label for="mentorPhone" class="label">Mentor Phone</label>
+      <span class="textarea" id="mentorPhone" bind:innerHTML={mentor.phoneNumber} contenteditable />
+    </div>
+    {:else}
+    <MentorSearcher on:select={mentorSelected}/>
     {/if}
     {:else if step === 4}
-    <label for="shortDesc" class="label">Write A Short Description</label>
-    <textarea id="shortDesc" bind:value={project.shortDesc}></textarea>
+    <div id="project-short-desc-container">
+      <label for="shortDesc" class="label">Write A Short Description</label>
+      <span class="textarea" id="shortDesc" bind:innerHTML={project.shortDesc} contenteditable />
+    </div>
     {/if}
+
+    <div id="buttons">
+      {#if step > minStep}
+      <button on:click={backStep}>Back</button>
+      {/if}
+
+      {#if step < maxStep}
+      <button on:click={nextStep}>Next</button>
+      {/if}
+
+      {#if step === maxStep}
+      <button type="submit" class="submit-button" on:click={upload}> Submit Form</button>
+      {/if}
+    </div>
 
     {#if displayedErrorMessages.length > 0}
     <InformationBox 
@@ -164,22 +186,103 @@
     />
     {/if}
 
-    {#if step > minStep}
-    <button on:click={backStep}>Back</button>
-    {/if}
-
-    {#if step < maxStep}
-    <button on:click={nextStep}>Next</button>
-    {/if}
-
-    {#if step === maxStep}
-    <button type="submit" class="submit-button" on:click={upload}> Submit Form</button>
-    {/if}
   </form>
 </main>
 
 <style lang="scss">
-  
+  :root {
+    overflow: hidden;
+  }
+
+  main {
+    height: calc(100vh - var(--nav-bar-height));
+  }
+
+  form { 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    height: 100%;
+
+    label {
+      font-size: 36px;
+    }
+
+    .textarea { 
+      font-size: 36px;  
+
+      border: none;
+      background-color: transparent;
+      border-bottom: 2px solid var(--color-blue-grey-500);
+    }
+  }
+
+  #project-title-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 1em;
+
+    .textarea {
+      min-width: 40vw;
+      max-width: 70vw;
+    }
+
+    margin: 1em;
+  }
+
+  #project-tags-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .tag-container {
+      display: flex;
+    }
+
+    margin: 1em;
+  }
+
+  #project-mentor-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .textarea {
+      min-width: 30vw;
+      max-width: 30vw;
+    }
+  }
+
+  #project-short-desc-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .textarea {
+      min-width: 60vw;
+      max-width: 60vw;
+    }
+  }
+
+  button {
+    background-color: var(--color-blue-500);
+    border: none;
+    padding: 0.5em;
+    font-size: 16px;
+    border-radius: 4px;
+  }
+
+  #buttons {
+    display: flex;
+    gap: 1em;
+  }
 </style>
 
 

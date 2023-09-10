@@ -20,6 +20,7 @@
         padding: 1rem;
         border-width: 3px;
         border-style: solid;
+        margin: 1em;
     }
     
     .heading {
