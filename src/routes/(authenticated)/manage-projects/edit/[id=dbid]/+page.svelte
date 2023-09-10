@@ -1,10 +1,32 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import tags from "$lib/tags";
+    import tags from "@/lib/tags";
+    import { onMount } from "svelte";
 
     export let data;
-    $: ({ project } = data);
-    
+    $: ({ project, mentor } = data);
+    let selected: string[] = "";
+    let subject:string = "";
+    let mentorFirst:string = "";
+    let mentorLast: string = "";
+    let mentorOrg:string = "";
+    let mentorEmail:string = "";
+    let mentorPhone:string = "";
+    let shortDesc:string = "";
+    let fullReport:string = "";
+
+    onMount(() => {
+        selected = project.tags;
+        subject = project.title;
+        mentorFirst = mentor.firstName;
+        mentorLast = mentor.lastName;
+        mentorOrg = mentor.organization;
+        mentorEmail = mentor.email;
+        mentorPhone = mentor.phoneNumber;
+        shortDesc = project.shortDesc;
+        fullReport = project.fullReport;    
+    })
+
     interface Action {
         action: string;
         title: string;
@@ -19,47 +41,29 @@
         fullReport: string;
         underReview: boolean;
     }
-
-    console.log(project)
-    let selected: string[] = project.tags;
-    let subject:string = ""
-    let mentorFirst:string = "";
-    let mentorLast: string = "";
-    let mentorOrg:string = "";
-    let mentorEmail:string = "";
-    let mentorPhone:string = "";
-    let shortDesc:string = "";
-    let fullReport:string = "N/A";
-
-
-    async function upload() {
-      actions.push({
-            action: "CREATE",
-            title: subject,
-            year: new Date().getFullYear(),
-            mentorFirst: mentorFirst,
-            mentorLast: mentorLast,
-            mentorOrg: mentorOrg,
-            mentorEmail: mentorEmail,
-            mentorPhone: mentorPhone,
-            tags: selected,
-            shortDescription: shortDesc,
-            fullReport: fullReport,
-            underReview: true
-        })
-        actions = actions;
-        const res = await fetch('/manage-projects/create', {
-            method: "POST",
-            body: JSON.stringify(actions)
-        });
-        goto("/manage-projects")
-    }
-
-
-    
-
     let actions: Action[] = [];
-
+    async function upload() {
+        actions.push({
+                action: "CREATE",
+                title: subject,
+                year: new Date().getFullYear(),
+                mentorFirst: mentorFirst,
+                mentorLast: mentorLast,
+                mentorOrg: mentorOrg,
+                mentorEmail: mentorEmail,
+                mentorPhone: mentorPhone,
+                tags: selected,
+                shortDescription: shortDesc,
+                fullReport: fullReport,
+                underReview: true
+            })
+            actions = actions;
+            const res = await fetch('/manage-projects/create', {
+                method: "POST",
+                body: JSON.stringify(actions)
+            });
+            goto("/manage-projects")
+        }
 
 </script>
 
@@ -83,7 +87,7 @@
             <div class="form-group">
               <label for="selected" class="label">Select Tags</label>
               {#each Object.entries(tags) as [id, label]}
-                    <input type="checkbox" value = {id} id="selected" name="selected" bind:group={selected}/>
+                    <input type="checkbox" value = {id} id="selected" class="checkbox" name="selected" bind:group={selected}/>
                     {label}
                   <br />
                 {/each}
@@ -126,7 +130,8 @@
 
 
           <div class="form-group button-group">
-            <button type="submit" class="submit-button" on:click={upload}> Submit Form</button>
+            <button type="submit" class="submit-button" on:click={upload}> Save Changes</button>
+            <button type="submit" class="submit-button" on:click={() => goto("/manage-projects")}> Discard</button>
           </div>
         
       </div>
@@ -139,7 +144,7 @@
   background-color: #4a5568;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   
-  height: calc(100vh - var(--nav-bar-height)); 
+  height: 100%; 
   display: flex;
   justify-content: center;
 }
@@ -173,6 +178,7 @@ textarea {
   outline: none;
   transition: box-shadow 0.2s, border-color 0.2s;
   color: white;
+  width: 200px;
   background-color: #525252;
 }
 
@@ -182,7 +188,12 @@ textarea:focus {
   border-color: #4299e1;
 }
 
-
+.checkbox{
+    width: auto;
+}
+textarea{
+    width:auto;
+}
 .submit-button {
   padding: 0.5rem 1rem;
   background-color: #2563eb;
