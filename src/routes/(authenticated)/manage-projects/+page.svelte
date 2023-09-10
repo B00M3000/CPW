@@ -147,6 +147,7 @@
         display:flex;
         gap: 2rem;
         justify-content: center;
+        flex-wrap: wrap;
     }
 </style>
 

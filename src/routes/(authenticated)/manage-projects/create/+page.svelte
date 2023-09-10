@@ -142,14 +142,19 @@
     <div id="project-mentor-container">
       <label for="mentorFirst" class="label">Mentor First Name</label>
       <span class="textarea" id="mentorFirstName" bind:innerHTML={mentor.firstName} contenteditable />
+      <br>
       <label for="mentorLast" class="label">Mentor Last Name</label>
       <span class="textarea" id="mentorLastName" bind:innerHTML={mentor.lastName} contenteditable />
+      <br>
       <label for="mentorOrg" class="label">Mentor Organization</label>
       <span class="textarea" id="mentorOrganization" bind:innerHTML={mentor.organization} contenteditable />
+      <br>
       <label for="mentorEmail" class="label">Mentor Email</label>
       <span class="textarea" id="mentorEmail" bind:innerHTML={mentor.email} contenteditable />
+      <br>
       <label for="mentorPhone" class="label">Mentor Phone</label>
       <span class="textarea" id="mentorPhone" bind:innerHTML={mentor.phoneNumber} contenteditable />
+      <br>
     </div>
     {:else}
     <MentorSearcher on:select={mentorSelected}/>
@@ -230,6 +235,8 @@
     .textarea {
       min-width: 40vw;
       max-width: 70vw;
+      font-size: 1.8rem;
+      outline: none;
     }
 
     margin: 1em;
