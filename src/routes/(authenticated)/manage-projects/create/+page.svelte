@@ -130,13 +130,13 @@
     {/each}
     
     {:else if step === 3}
-    <button class="quickselect-btn" on:click ={() => {manual = !manual}}> Toggle {#if manual} Manual {:else} Quick Select {/if} </button>
+    <button class="quickselect-btn" on:click ={() => {manual = !manual}}> Toggle {#if !manual} Manual {:else} Quick Select {/if} </button>
 
-    {#if manual}
+    {#if !manual}
     <MentorSearcher on:select={mentorSelected}/>
     {/if}
     
-    {#if !manual}
+    {#if manual}
     <label for="mentorFirst" class="label">Mentor First Name</label>
     <input type="text" id="mentorFirstName" bind:value={mentor.firstName}>
     <label for="mentorLast" class="label">Mentor Last Name</label>
