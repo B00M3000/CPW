@@ -173,11 +173,11 @@
 
 
     .cancel {
-        background-color: rgb(133, 0, 0);
+        background-color: rgb(255, 0, 0);
     }
 
     .cancel:hover {
-        background-color: rgb(236, 94, 94);
+        background-color: rgb(169, 1, 1);
     }
 </style>
 

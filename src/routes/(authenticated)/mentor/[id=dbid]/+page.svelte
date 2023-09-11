@@ -12,7 +12,7 @@
     <h1 class="title"><strong>{mentor?.firstName} {mentor?.lastName}</strong></h1>
     <p class="subtitle"><em>Please contact Ms. Moss for contact information.</em></p>
     <h3>These are some projects {mentor?.firstName} {mentor?.lastName} has helped facillitate:</h3>
-    <div>
+    <div class="mentor-div">
         {#each projects as project}
             <ProjectCard {project} />
         {/each}
@@ -20,5 +20,11 @@
 </main>
   
 <style>
+.mentor-div {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
 
 </style>
