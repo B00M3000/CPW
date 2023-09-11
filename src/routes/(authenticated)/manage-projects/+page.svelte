@@ -50,6 +50,9 @@
                         <button class="edit-button" on:click={() => goto(`manage-projects/edit/${project._id}`)}>
                             Edit
                         </button>
+                        <button class="fullreport-button" on:click={()=> goto(`manage-projects/report/${project._id}`)}>
+                            {#if project.fullReport == ""} Add {:else} Edit {/if} Full Report
+                        </button>
                         <button class="delete-button" on:click={() => deleteProject(project)}>
                             Delete
                         </button>
@@ -123,24 +126,32 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        gap: 1rem;
+        gap: 2rem;
     }
     .edit-button {
         background-color: #17a2b8;
-        width:120px;
+        width:150px;
         height:50px;
         text-align:center;
         line-height:1.1em;
         font-size:1.1em;
     }
 
-    .delete-button {
-        background-color: #dc3545;
-        width:120px;
+    .fullreport-button{
+        background-color: #8001db;
+        width:150px;
         height:50px;
         text-align:center;
-        line-height:1.1em;
+        font-size: 0.9em;
+    }
+
+    .delete-button {
+        background-color: #dc3545;
+        width:150px;
+        height:50px;
+        text-align:center;
         font-size:1.1em;
+
     }
 
     .card-container{

@@ -43,6 +43,8 @@
 <style lang="scss">
     .mentors {
         background: #eeeeee;
+        max-height: 20vh;
+        overflow-y: scroll;
     }
 
     input { 
@@ -89,7 +91,7 @@
         margin: 10px; 
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
         display: inline-flex;
-
+ 
     }
 
     .mentors{
