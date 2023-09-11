@@ -1,59 +1,43 @@
-// import students from '@/client/data/generated/students.json';
-// import { user } from "@/client/stores/user";
-
-// export async function POST({ request }) {
-//   const formData = await request.formData();
-//   const mentorNames = formData.get('mentor').split(" ")
-//   const name = user.name.split(' ');
-//   const student = students.find(s => s.firstName == name[0] && s.lastName == name[1])
-//   const projectObject = {
-//     studentId: student.studentId,
-//     subject: formData.get('subject'),
-//     year: new Date().getFullYear(),
-//     tags: formData.getAll('selected'),
-//     mentor: {
-//       firstName: mentorNames[0],
-//       lastName: mentorNames[1],
-//       organization: formData.get('mentorOrg'),
-//       email: formData.get('mentorEmail'),
-//       phoneNumber: formData.get('mentorPhone')
-//     },
-//     shortDescription: formData.get('mentorOrg'),
-//     fullReport: formData.get('fullReport')
-//   };
-// }
-
 import { ProjectSchema } from '@/server/mongo/schemas/project';
 import { UserSchema } from '@/server/mongo/schemas/user';
 import { error, json } from '@sveltejs/kit';
 import { MentorSchema } from '@/server/mongo/schemas/mentor';
+import { stringifyObjectId } from "@/lib/utils";
+
 export async function POST({ request, locals }) {
     const data = await request.json();
-    console.log(data)
-    const action = data[0].action?.toUpperCase()
-    if(action == "CREATE"){
-        const project = data[0];
-        console.log(project)
-        await new ProjectSchema({ 
-          title: project.title, 
-          year: project.year, 
-          tags: project.tags, 
-          shortDescription: project.shortDesc, 
-          fullReport: project.fullReport,
-          underReview: project.underReview,
-          mentorId: "12349012734890172340987",
-          studentId: locals.user.id 
-        }).save()
+    const action = data.action.toUpperCase();
+    let mentorId = data.mentorId;
 
-    } else {
-        throw error(400, `Invalid Request Type! Must be CREATE, EDIT or DELETE given ${data.action.toUpperCase()}`)
-    }   
+    if(action != "CREATE") throw error(400, `Invalid Request Type! Must be CREATE given ${data.action.toUpperCase()}`)
+
+    console.log(data, mentorId, !mentorId)
+
+    if(!mentorId) {
+      const mentorSchema = new MentorSchema({
+        ...data.mentor,
+        name: `${data.mentor.firstName} ${data.mentor.lastName}`
+      })
+      const savedMentorSchema = await mentorSchema.save();
+      mentorId = savedMentorSchema._id
+    }
+
+    const project = data.project;
+    let schema = new ProjectSchema({ 
+      title: project.title, 
+      year: new Date().getFullYear(), 
+      tags: project.tags, 
+      shortDesc: project.shortDesc, 
+      fullReport: "",
+      underReview: true,
+      mentorId: mentorId,
+      studentId: locals.user?.id 
+    })
+
+    await schema.save();
 
     return json({ message: "Actions Successfully Executed." });
 }
-
-
-
 
 
 

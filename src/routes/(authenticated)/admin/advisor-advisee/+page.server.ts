@@ -11,6 +11,6 @@ export async function load() {
 }
 
 async function injectAdvisees(advisor: any) {
-    advisor.advisees = stringifyObjectId(await UserSchema.findById(advisor.studentId, 'firstName lastName').lean());
+    advisor.advisees = (await UserSchema.find({ _id: { $in: advisor.adviseeIds } }, 'name email').lean())?.map(stringifyObjectId) || [];
     return advisor;
 }

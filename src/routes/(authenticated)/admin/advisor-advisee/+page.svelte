@@ -3,65 +3,77 @@
     import UserSearcher from "@/client/components/UserSearcher.svelte";
     import { AccessLevel, AccountType } from "@/lib/enums";
 
-    // interface Action {
-    //     email: string;
-    //     adviseeIds: [string]
-    // }
+    interface Action {
+        email: string;
+        adviseeEmails: string[]
+    }
 
-    // export let data;
-    // $: ({ ghosts } = data);
+    export let data;
+    $: ({ advisors } = data);
 
-    // async function upload() {
-    //     const res = await fetch('/admin/ghosts', {
-    //         method: "POST",
-    //         body: JSON.stringify(actions)
-    //     });
-    //     clearActions();
-    //     location.reload();
-    // }
+    async function upload() {
+        const res = await fetch('/admin/advisor-advisee', {
+            method: "POST",
+            body: JSON.stringify(actions)
+        });
+        clearActions();
+        location.reload();
+    }
    
-    // function actionFormSubmit() {
-    //     actions.push({
-    //         email: actionFormEmail,
-
-    //     })
-    //     actions = actions
-    //     actionFormAL = 0;
-    //     actionFormAT = 0;
-    //     actionFormEmail = "";
-    // }
+    function actionFormSubmit() {
+        actions.push({
+            email: actionFormEmail,
+            adviseeEmails: actionFormAdviseeEmails
+        })
+        actions = actions
+        actionFormEmail = ""
+        actionFormAdviseeEmails = [];
+    }
     
-    // function clearActions() {
-    //     actions = []
-    // }
+    function clearActions() {
+        actions = []
+    }
 
-    // let actions: Action[] = [];
+    let actions: Action[] = [];
 
-    // let actionFormEmail: string;
-    // let actionFormAL: number = 0;
-    // let actionFormAT: number = 0;
-    // let actionFormClear: boolean = false;
+    let actionFormEmail: string = "";
+    let actionFormAdviseeEmails: string[] = [];
+
+    function onSelect(e: Event) {
+        const { email } = e.detail
+        if(actionFormAdviseeEmails.find(e => e == email)) return
+        actionFormAdviseeEmails.push(email);
+        actionFormAdviseeEmails = actionFormAdviseeEmails;
+    }   
+
+    function edit(email: string) {
+        actionFormEmail = email;
+        actionFormAdviseeEmails = advisors.find(a => a.email == email)?.advisees?.map(a => a.email)
+    }
 </script>
 
 <main>
     <h1>Admin - Advisor-Advisee Linker</h1>
-
-    <UserSearcher />
-    <!-- <div class="content">
-        <div class="ghosts-container">
-            <h2>Active Ghosts</h2>
-            <div class="ghosts">
-                {#each ghosts as ghost}
-                <div class="ghost">
+    
+    <div class="content">
+        <div class="advisors-container">
+            <h2>Advisors</h2>
+            <div class="advisors">
+                {#each advisors as advisor}
+                <div class="advisor">
                     <div class="info">
-                        <span>Email: {ghost.email}</span>
-                        <span>Account Type: {AccountType[ghost.accountType]}</span>
-                        <span>Access Level: {AccessLevel[ghost.accessLevel]}</span>
+                        <span>Email: {advisor.email}</span>
+                        <span>Advisees: </span>
+                        {#each advisor.advisees as advisee}
+                        <span>{advisee.name}</span>
+                        {:else}
+                        <span>No Advisees.</span>
+                        {/each}
                     </div>
-                    <button on:click={() => deleteAction(ghost.email)}>Delete</button>
+                    <button on:click={() => edit(advisor.email)}>Edit</button>
                 </div>
                 {:else}
-                <h3>No ghosts.</h3>
+                <h3>No Advisors.</h3>
                 {/each}
             </div>
         </div>
@@ -71,10 +83,13 @@
             <div class="actions">
                 {#each actions as action}
                 <div class="action">
-                    <span>Action: {action.action}</span>
                     <span>Email: {action.email}</span>
-                    {#if action.accountType !== undefined}<span>Account Type: {AccountType[action.accountType]}</span>{/if}
-                    {#if action.accessLevel !== undefined}<span>Access Level: {AccessLevel[action.accessLevel]}</span>{/if}
+                    <span>Advisees: </span>
+                    {#each action.adviseeEmails as adviseeEmail}
+                    <span>{adviseeEmail}</span>
+                    {:else}
+                    <span>No Advisees.</span>
+                    {/each}
                 </div>
                 {:else}
                 <h3>No actions queued.</h3>
@@ -85,42 +100,40 @@
         </div>
 
         <div class="action-form">
-            <h2>Add a New Ghost</h2>
+            <h2>Modify Advisor-Advisee Link</h2>
             <label for="email">Email: </label>
             <input id="email" bind:value={actionFormEmail} type="text" disabled/>
-            <label for="at">Account Type: </label>
-            <select id="at"bind:value={actionFormAT}>
-                <option value={AccountType.Unknown}>Unknown</option>
-                <option value={AccountType.Student}>Student</option>
-                <option value={AccountType.Advisor}>Advisor</option>
-            </select>
-            <label for="al">Access Level: </label>
-            <select id="al" bind:value={actionFormAL}>
-                <option value={AccessLevel.Normal}>Normal</option>
-                <option value={AccessLevel.Admin}>Admin</option>
-            </select>
-            <input type="checkbox" bind:checked={actionFormClear}/>
+
+            <div class="duoed">
+                {#each actionFormAdviseeEmails as email}
+                <span>{email}</span>
+                {:else}
+                <span>No Advisees.</span>
+                {/each}
+            </div>
+            <UserSearcher on:select={onSelect} disabled={!actionFormEmail}/>
+
             <button on:click={actionFormSubmit}>Add New User to Queue</button>
         </div>
-    </div> -->
+    </div>
 </main>
 
-<style>
+<style lang="scss">
     .action, .info {
         display: flex;
         flex-direction: column;
         color: grey;
         padding: 1rem;
     }
-    .actions, .ghosts {
+    .actions, .advisors {
         display: flex;
         flex-direction: column;
         background: #e0e0e0;
-        max-height: 55vh;
+        max-height: 65vh;
         min-width: 20vw;
         overflow-y: auto;
     }
-    .ghost {
+    .advisor {
         display: flex;
         justify-content: space-between;
     }
@@ -131,7 +144,7 @@
         display: flex;
         gap: 5rem;
     }
-    .actions-container, .ghosts-container, .action-form {
+    .actions-container, .advisors-container, .action-form {
         display: flex;
         flex-direction: column;
     }
@@ -139,5 +152,14 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+    }
+
+    .duoed {
+        display: flex;
+        flex-direction: column;
+        background: #e0e0e0;
+        &>div:nth-of-type(even) {
+            background: #bababa;
+        }
     }
 </style>

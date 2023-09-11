@@ -30,8 +30,6 @@ export async function GET({ url, cookies, setHeaders }) {
 
   const ghost = await GhostSchema.findOne({ email: google_user.email })
 
-  console.log(ghost)
-
   let accessLevel;
   let accountType;
   if(ghost) {
