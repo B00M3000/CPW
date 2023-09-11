@@ -1,6 +1,7 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import tags from "@/lib/tags";
+    import { error } from "@sveltejs/kit";
     import { onMount } from "svelte";
 
     export let data;
@@ -50,23 +51,27 @@
       };
 
       onMount(() => {
-        currentProj = {
-          projectId: project._id,
-          title: project.title,
-          tags: project.tags,
-          shortDesc: project.shortDesc
-        };
+        if(project && mentor) {
+          currentProj = {
+            projectId: project._id,
+            title: project.title,
+            tags: project.tags,
+            shortDesc: project.shortDesc
+          };
 
-        currentMentor = {
-          mentorId: mentor._id,
-          firstName: mentor.firstName,
-          lastName: mentor.lastName,
-          organization: mentor.organization,
-          email: mentor.email,
-          phoneNumber: mentor.phoneNumber,
-        };
+          currentMentor = {
+            mentorId: mentor._id,
+            firstName: mentor.firstName,
+            lastName: mentor.lastName,
+            organization: mentor.organization,
+            email: mentor.email,
+            phoneNumber: mentor.phoneNumber,
+          };
+        } else {
+          throw error(500, "No Project Found")
+        }
       })
-  
+    
       $: action = { ...action, action: "CREATE", currentProj, currentMentor}
       async function upload() {
         

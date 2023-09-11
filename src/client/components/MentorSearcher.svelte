@@ -15,7 +15,7 @@
 
     const dispatcher = createEventDispatcher()
 
-    let selected;
+    let selected: string;
 
     function select(mentorId: string) {
         dispatcher('select', { mentorId })
