@@ -43,8 +43,9 @@
 <style lang="scss">
     .mentors {
         background: #eeeeee;
-        max-height: 20vh;
-        overflow-y: scroll;
+
+        max-height: 40vh;
+        overflow-y: auto;
     }
 
     input { 
@@ -56,7 +57,6 @@
         width: 40vw;
         margin:1rem;
     }
-
 
     button {
         background-color: #007BFF;
