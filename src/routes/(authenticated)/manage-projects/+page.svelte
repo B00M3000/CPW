@@ -53,7 +53,7 @@
                         <button class="fullreport-button" on:click={()=> goto(`manage-projects/report/${project._id}`)}>
                             {#if project.fullReport == ""} Add {:else} Edit {/if} Full Report
                         </button>
-                        <button class="delete-button" on:click={() => deleteProject(project)}>
+                        <button class="delete-button" on:click={() => {deleteProject(project)}}>
                             Delete
                         </button>
 
@@ -69,12 +69,6 @@
         margin-left: 1rem;
         margin-right: 1rem;
         padding: 4rem;
-    }
-
-    h1 {
-        font-size: 32px;
-        color: #333;
-        margin-bottom: 20px;
     }
 
     .dashboard-actions {

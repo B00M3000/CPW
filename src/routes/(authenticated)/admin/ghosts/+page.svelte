@@ -69,11 +69,11 @@
                 {#each ghosts as ghost}
                 <div class="ghost">
                     <div class="info">
-                        <span>Email: {ghost.email}</span>
-                        <span>Account Type: {AccountType[ghost.accountType]}</span>
-                        <span>Access Level: {AccessLevel[ghost.accessLevel]}</span>
+                        <span>Email: {ghost?.email}</span>
+                        <span>Account Type: {AccountType[ghost?.accountType]}</span>
+                        <span>Access Level: {AccessLevel[ghost?.accessLevel]}</span>
                     </div>
-                    <button on:click={() => deleteAction(ghost.email)}>Delete</button>
+                    <button on:click={() => deleteAction(ghost?.email)}>Delete</button>
                 </div>
                 {:else}
                 <h3>No ghosts.</h3>
