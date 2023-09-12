@@ -3,6 +3,8 @@
 
     import { PUBLIC_GOOGLE_CLIENT_ID, PUBLIC_ORIGIN } from "$env/static/public";
 
+    import { page } from "$app/stores";
+
     async function onTrigger(){
         const params = new URLSearchParams({
             client_id: PUBLIC_GOOGLE_CLIENT_ID,
@@ -10,8 +12,10 @@
             redirect_uri: `${PUBLIC_ORIGIN}/login/redirect`,
             response_type: 'code',
             // prompt: 'none',
-
         });
+
+        const redirect = $page.url.searchParams.get('redirect');
+        if(redirect) params.set('state', redirect)
 
         await goto(`https://accounts.google.com/o/oauth2/v2/auth?${params}`)
     }

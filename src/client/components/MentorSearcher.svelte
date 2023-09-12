@@ -28,17 +28,20 @@
 
 <input type="text" placeholder="Start typing to search..." bind:value={search} on:keyup={update} {disabled}/>
 <br>
-<div class="mentors">
-    {#each mentors as mentor}
-    <div class="mentors-card" style={selected == mentor._id ? "background-color: var(--color-green-600);" : ""}>
-        <div class="info">
-            <span>Name: {mentor.name}</span>
-            <span>Org: {mentor.organization}</span>
-         </div>
-        <button on:click={() => select(mentor._id)}>Select</button>
-    </div>
-    {/each}
-</div>
+{#if mentors.length > 0}
+    <div class="mentors">
+        {#each mentors as mentor}
+        <div class="mentors-card" style={selected == mentor._id ? "background-color: var(--color-green-600);" : ""}>
+            <div class="info">
+                <span>Name: {mentor.name}</span>
+                <span>Org: {mentor.organization}</span>
+            </div>
+            <button on:click={() => select(mentor._id)}>Select</button>
+        </div>
+        {/each}
+    </div> 
+{/if}
+
 
 <style lang="scss">
     .mentors {

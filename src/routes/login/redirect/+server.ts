@@ -60,5 +60,5 @@ export async function GET({ url, cookies, setHeaders }) {
   );
 
   cookies.set('session_id', session_id, { path: '/' })
-  throw redirect(307, redirectURL && !absolute.test(redirectURL) ? redirectURL : "/",)
+  throw redirect(307, redirectURL && !absolute.test(redirectURL) ? redirectURL : "/account",)
 };

@@ -12,11 +12,21 @@
 <div class="project-card">
     <h2>{project.title}</h2>
     
-    <p><strong>Completed by </strong><StudentCard student={project.student} /></p>
-    <p><strong>Mentor: </strong><MentorCard mentor={project.mentor} /></p>
-    <p><strong>Description:</strong> {project.shortDesc}</p>
-    <p><strong>Year: </strong> {project.year}</p>
-    <p><strong><a href="{`/projects/${project._id}`}"> Read More</a></strong></p>
+    <div class="field">
+        <span class="card-gap">Completed by: </span>
+        <StudentCard student={project.student} />
+    </div>
+    <div class="field">
+        <span class="card-gap">Mentor: </span>
+        <MentorCard mentor={project.mentor} />
+    </div>
+    <div class="field"></div>
+    <span>Description: </span>
+    <span>{project.shortDesc}</span>
+    <div class="field"></div>
+    <span>Year: </span>
+    <span>{project.year}</span>
+    <a href="{`/projects/${project._id}`}"> Read More</a>
     <div class="project-card/tags">
         {#each project.tags as tag}
             <Tag text={tags[tag]} />
@@ -24,7 +34,7 @@
     </div>
 </div>
 
-<style>
+<style lang="scss">
     h2 {
         text-align: center;
         margin-top: 0.1rem;
@@ -42,11 +52,19 @@
         background-color: lightgrey;
 
         border-radius: 0.5em;
+
+        .field {
+            display: flex;
+        }
+
+        .card-gap {
+            margin-right: 0.4em;
+        }
     }
 
-    p {
+    span {
         padding: 0;
-        margin: 0.5rem;
+        word-wrap: break-word;
     }
 
-</style>
+</style>    

@@ -1,7 +1,7 @@
 import { error, redirect } from '@sveltejs/kit';
 
-export async function load({ locals, depends }) {
+export async function load({ locals, depends, url }) {
     depends('app:logout');
 
-    if(!locals.user) throw error(403, "Access denied, please login.");
+    if(!locals.user) throw redirect(307, `/login?redirect=${url.pathname}`);
 };

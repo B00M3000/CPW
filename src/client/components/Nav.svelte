@@ -5,7 +5,7 @@
     import { AccessLevel, AccountType } from "@/lib/enums";
 </script>
 
-<nav class="navbar">
+<nav>
     <div class="main-navigation">
         <a href="/">Home</a>
         <a href="/projects">Projects</a>
@@ -19,7 +19,6 @@
         <a href="/admin">Admin</a>
         {/if}
     </div>
-    <h1 class="title">Commonwealth School Project Week Database</h1>
     <div class="user-navigation">
         {#if $user}
             <UserIconMenu />
@@ -33,13 +32,14 @@
     .title {
         align-items: center;
     }
-    .navbar {
+    nav {
         display: flex;
         justify-content: space-between;
         background-color: #a4123f;
         padding: 0rem 1rem;
         color: #fff;
         height: var(--nav-bar-height);
+        z-index: 1; 
     }
 
     .main-navigation {
@@ -49,7 +49,7 @@
 
     .user-navigation {
         display: flex;
-        align-items: center;
+        align-items: center;    
     }
 
     a {
