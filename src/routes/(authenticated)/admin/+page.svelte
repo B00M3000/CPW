@@ -58,12 +58,28 @@
 </script>
 
 <main>
-    <h1 class="title"><strong>Administrator Dashboard</strong></h1>
-    <p class="subtitle">Currently still under development...</p>
-    <h3>Currently Logging {countPub} Published Projects</h3>
-    <h3>Currently Logging {countNotPub} Projects Being Created </h3>
-    <button on:click={gotoGhostManager}>Ghosts Manager</button>
-    <button on:click={gotoAdvisorAdviseeLinker}>Advisor-Advisee Linker</button>
+    <div class="main-container">
+        <div class="dashboard-panel">
+            <h1 class="title"><strong>Administrator Dashboard</strong></h1>
+        </div>
+        
+        <div class="dashboard-panel">
+            <div class="count-panel">
+                <h3 class="count-title">Logging Published Projects</h3>
+                <div class="count-value">{countPub}</div>
+            </div>
+            <hr>
+            <div class="count-panel">
+                <h3 class="count-title">Logging Unfinished Projects</h3>
+                <div class="count-value">{countNotPub}</div>
+            </div>
+        </div>
+
+        <div class="dashboard-panel">
+            <button on:click={gotoGhostManager} class="dashboard-button futuristic-button">Ghosts Manager</button>
+            <button on:click={gotoAdvisorAdviseeLinker} class="dashboard-button futuristic-button">Advisor-Advisee Linker</button>
+        </div>
+    </div>
 </main>
   
 <style>
@@ -72,38 +88,65 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    background-color: #f4f4f4;
+    height: 100vh - var(--nav-bar-height);
+  }
+
+  .dashboard-panel {
+    background-color: #858585; 
+    border: 1px solid #1E1E1E; 
+    border-radius: 5px;
     padding: 20px;
+    margin: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
   }
 
   .title {
     font-size: 2rem;
-    color: #333;
+    color: #ffffff;
     text-align: center;
     margin-bottom: 10px;
   }
 
-  .subtitle {
-    font-size: 1.2rem;
-    color: #888;
+
+  .count-panel {
     text-align: center;
-    margin-bottom: 20px;
   }
 
-  button {
-    background-color: #ff6347;
+  .count-title {
+    font-size: 1.5rem;
+    color: var(--color-blue-grey-100);
+    margin-bottom: 10px;
+  }
+
+  .count-value {
+    font-size: 2.8rem;
+    color: var(--color-red-400); 
+  }
+
+  .dashboard-button {
+    background-color: #0073E6; 
     color: #fff;
     padding: 10px 20px;
     font-size: 1.2rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-bottom: 10px;
+    margin: 10px;
     transition: background-color 0.3s;
+    width: 15rem;
   }
 
-  button:hover {
-    background-color: #ff4500;
+  .dashboard-button:hover {
+    background-color: #005CBF; 
   }
+  .main-container{
+    background-color: var(--color-blue-grey-100); 
+    border: 1px solid #1E1E1E; 
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    margin-top: var(--nav-bar-height);
+  }
+
 </style>
+
