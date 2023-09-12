@@ -3,8 +3,6 @@
 
     const user = data.session.user
 
-    console.log(user)
-
     
 
 </script>
