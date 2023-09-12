@@ -9,30 +9,30 @@
 </script>
 
 <main>
-    <div id="primary">
+    <section id="primary">
         <h1 class="title"><strong>Commonwealth School Project Week Database</strong></h1>
-        <p class="subtitle"> Welcome to the Commonwealth School Project Week collection.
-        </p>
-        <a href="/projects">View Completed Projects</a>
+        <p class="subtitle">Welcome to the Commonwealth School Project Week collection.</p>
+        <a href="/projects" class="btn">View Completed Projects</a>
         {#if !$user}
-        <a class="login-button" href="/login">Log In</a>
+        <a href="/login" class="btn login-button">Log In</a>
         {/if}
-        
-    </div>
+    </section>
 
     <div class="scroll-down">
         <span>Scroll down to view more...</span>
-        <img src="/assets/scroll-down.png">
+        <img src="/assets/scroll-down.png" alt="Scroll Down Icon">
     </div>
 
-    <h1>5 random projects completed by students at Commonwealth.</h1>
-
-    <div id="projects">
-        {#each projects as project}
-            <ProjectCard {project} />
-        {:else}
-            <span>No Projects.</span>
-        {/each}
+    <div class="proj-container">
+        <h2 class="section-title">Here are some projects done by Commonwealth Students:</h2>
+        <div id="projects" class="project-list">
+            
+            {#each projects as project}
+                <ProjectCard {project} />
+            {:else}
+                <span class="no-projects">No Projects.</span>
+            {/each}
+        </div>
     </div>
 </main>
 
@@ -52,13 +52,6 @@
         height: calc(100vh - var(--nav-bar-height));
     } 
 
-    #projects {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 1em;
-    }
-
     .scroll-down {
         position: relative;
         bottom: 7em;
@@ -68,29 +61,71 @@
         align-items: center;
 
         img {
-            width: 13rem;
-            height: 4rem;
+            width: 35rem;
+            height: 6rem;
         }
     }
 
-    .login-button {
+    .section-title {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        text-align: center;
+    }
+
+    .btn {
+        display: inline-block;
         background-color: var(--color-red-600);
+        color: white;
+        padding: 15px 30px;
         border-radius: 5px;
-        padding: 15px;
-        padding-left: 40px;
-        padding-right: 40px;
         text-decoration: none;
-        color: white
+        font-size: 1.2rem;
+        transition: background-color 0.3s;
+        margin: 10px;
+    }
+
+    .btn:hover {
+        background-color: var(--color-red-400);
+    }
+
+    .login-button {
+        background-color: var(--color-blue-600);
     }
 
     .title {
-        font-size: 2rem;
-        padding-top: 0.5rem;
+        font-size: 2.5rem;
+        padding-top: 1rem;
+        margin-bottom: 0.5rem;
+        text-align: center;
     }
 
     .subtitle {
+        font-size: 1.4rem;
+        padding-bottom: 1rem;
+        text-align: center;
+    }
+
+    .no-projects {
         font-size: 1.2rem;
-        padding-top: 0.7rem;
-        padding-bottom: 0.7rem;
+        margin: 1em;
+        text-align: center;
+    }
+
+    .project-list {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1em;
+
+        
+    }
+    .proj-container {
+        background-color: var(--color-blue-grey-200);
+        margin: 3rem;
+        margin-bottom: 2rem;
+        padding: 1rem;
+        border: black solid 3px;
     }
 </style>
