@@ -20,7 +20,7 @@
 
 
     onMount(() => {
-        let speed = 75;
+        let speed = 85;
 
         const animatePub = () => {
             const value = projectCountPublished;
