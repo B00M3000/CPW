@@ -35,3 +35,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	return response;
 };
+
+export async function handleFetch({ event, request, fetch }) {
+	return await fetch(request, {
+		credentials: "same-origin"
+	})
+}
