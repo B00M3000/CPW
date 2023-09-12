@@ -5,7 +5,7 @@
     import { AccessLevel, AccountType } from "@/lib/enums";
 </script>
 
-<nav class="navbar">
+<nav>
     <div class="main-navigation">
         <a href="/">Home</a>
         <a href="/projects">Projects</a>
@@ -33,13 +33,18 @@
     .title {
         align-items: center;
     }
-    .navbar {
+    nav {
+        position: fixed;
         display: flex;
         justify-content: space-between;
         background-color: #a4123f;
         padding: 0rem 1rem;
         color: #fff;
+        width: 100vw;
+        max-width: 100vw;
         height: var(--nav-bar-height);
+        z-index: 1; 
+        margin: 0;
     }
 
     .main-navigation {
