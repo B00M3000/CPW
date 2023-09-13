@@ -4,7 +4,7 @@ import { error, json } from '@sveltejs/kit';
 
 export async function POST({ request }) {
     const data = await request.json();
-
+    console.log(data)
     if(Array.isArray(data)){
         await Promise.all(data.map(handleOne))
     } else {
