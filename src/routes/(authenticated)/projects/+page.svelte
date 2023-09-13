@@ -105,15 +105,7 @@
 
         <div class="results">
             {#if projects.length === 0}
-                <h1 class="no-results"> No Results For "{`${ query.length < 20 ? query : query.slice(0, 17) + "..."}`}" Were Found
-                </h1>
-                <!-- <img
-                    class="random-img"
-                    src="https://media.tenor.com/S9enOIQiZ8gAAAAC/troll-troll-face.gif"
-                    alt="dancing penguin"
-                    width=100%
-                    height=100%
-                /> -->
+                <h1 class="no-results"> No results for "{`${ query.length < 20 ? query : query.slice(0, 17) + "..."}`}" were found.</h1>
             {:else}
                 {#each projects as project}
                     <ProjectCard {project} />
@@ -244,9 +236,6 @@
         opacity: 0.4;
         width: 100%;
         text-align: center;
-    }
-    .random-img {
-        margin-top: -300px;
     }
 
 

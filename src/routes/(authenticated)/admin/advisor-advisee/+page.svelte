@@ -154,12 +154,4 @@
         align-items: center;
     }
 
-    .duoed {
-        display: flex;
-        flex-direction: column;
-        background: #e0e0e0;
-        &>div:nth-of-type(even) {
-            background: #bababa;
-        }
-    }
 </style>

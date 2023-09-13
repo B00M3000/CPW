@@ -1,12 +1,9 @@
 <script lang="ts">
     export let data;
 
-    const user = data.session.user
+    const user = data.user;
 
     console.log(user)
-
-    
-
 </script>
 
 <main>
