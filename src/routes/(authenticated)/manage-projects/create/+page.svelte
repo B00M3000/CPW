@@ -44,7 +44,6 @@
     $: action = { ...action, action: "CREATE", project, mentor };
 
     async function upload() {
-      console.log(action)
         const res = await fetch('/manage-projects/create', {
             method: "POST",
             body: JSON.stringify(action)

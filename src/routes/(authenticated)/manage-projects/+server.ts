@@ -20,7 +20,6 @@ export async function POST({ request }) {
 async function mentorDelete(data: any){
     const mentorId = data.mentorId;
     const projectsOfMentor = await ProjectSchema.find({ mentorId: mentorId}) || [];
-    console.log(projectsOfMentor)
     if(projectsOfMentor.length == 0 ){
         await MentorSchema.deleteOne({ _id: mentorId })
     }

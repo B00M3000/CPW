@@ -6,7 +6,6 @@
     import MentorCard from "@/client/components/MentorCard.svelte";
     
     export let project: Project;
-    //console.log(project)
 </script>
 
 <div class="project-card">

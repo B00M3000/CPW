@@ -23,7 +23,6 @@
     function removeAllTags(){
         for(const option of selectedValuesView){
             removeSelected(option)
-            console.log(option)
         }
     }
     $: displayedTags = options

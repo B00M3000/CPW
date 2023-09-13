@@ -29,9 +29,6 @@
 </nav>
 
 <style lang="scss">
-    .title {
-        align-items: center;
-    }
     nav {
         display: flex;
         justify-content: space-between;
