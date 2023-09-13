@@ -7,7 +7,6 @@ import { stringifyObjectId } from "@/lib/utils";
 export async function POST({ request, locals }) {
     const data = await request.json();
 
-    console.log(data)
     const action = data.action?.toUpperCase()
     modifyMentor(data.currentMentor);
 
@@ -22,7 +21,6 @@ export async function POST({ request, locals }) {
 
             schema.save()
         } else {
-          console.log("???????????")
           throw error(400, 'Something happened when inserting mentor or student.');
         }
 
@@ -34,9 +32,7 @@ export async function POST({ request, locals }) {
 }
 
 async function modifyMentor(mentor: any){
-
   const foundMentor = await MentorSchema.findOne({ email: mentor.email});
-  console.log(foundMentor)
   if(foundMentor){
     foundMentor.firstName = mentor.firstName;
     foundMentor.lastName = mentor.lastName;
