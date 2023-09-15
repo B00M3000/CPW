@@ -105,8 +105,7 @@
 
         <div class="results">
             {#if projects.length === 0}
-                <h1 class="no-results"> No Results For "{`${ query.length < 20 ? query : query.slice(0, 17) + "..."}`}" Were Found
-                </h1>
+                <h1 class="no-results"> No results for "{`${ query.length < 20 ? query : query.slice(0, 17) + "..."}`}" were found.</h1>
             {:else}
                 {#each projects as project}
                     <ProjectCard {project} />
