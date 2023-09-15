@@ -40,7 +40,7 @@
     };
 
     let action: Action;
-
+    let success = false;
     $: action = { ...action, action: "CREATE", project, mentor };
 
     async function upload() {
@@ -48,7 +48,10 @@
             method: "POST",
             body: JSON.stringify(action)
         });
-        await goto('/manage-projects');
+
+        
+        success = true;
+        
     }
 
     let step: number = 1;
@@ -192,6 +195,23 @@
      </div>
     {/if}
 
+    {#if success}
+    <div class="overlay">
+      <div class="info-box">
+          <InformationBox 
+            backgroundColor="var(--color-green-100)" 
+            borderColor="var(--color-green-600)" 
+            textColor="var(--color-green-600)" 
+            headingColor="var(--color-green-500)" 
+            heading="Success!!" 
+            text={"Project was submitted. You should see it on the /manage-project page."}
+          />
+          
+      </div>
+      <div class="info-box-button-submit"> <a data-sveltekit-reload href="/manage-projects" > Got It! </a> </div>
+      
+     </div>
+    {/if}
   </form>
 </main>
 
@@ -287,6 +307,7 @@
       min-width: 60vw;
       max-width: 60vw;
       border: 0;
+      border-bottom: 2px solid var(--color-blue-grey-500);
     }
   }
 
@@ -345,6 +366,29 @@
     background-color: rgba(165, 28, 28, 0.35);
 
  }
+
+ .info-box-button-submit a{
+    margin-top: 0.2rem;
+    text-decoration: none;
+    border: var(--color-green-600) 3px solid;
+    border-radius: 0%;
+    color: white;
+    background-color: transparent;
+    padding: 0.5em;
+    font-size: 16px;
+    border-radius: 4px;
+    
+ }
+ .info-box-button-submit a:hover{
+    background-color: rgba(35, 161, 39, 0.35);
+    
+ }
+
+ .info-box-button-submit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 </style>
 
 
