@@ -64,7 +64,7 @@
 
     function nextStep() {
       if(step < maxStep) {
-        const isValid = stepValidations[step]();
+        const isValid: any = stepValidations[step]!();
         if(isValid === true) {
           step += 1;
           displayedErrorMessages = []
