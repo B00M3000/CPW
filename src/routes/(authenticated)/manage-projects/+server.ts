@@ -7,9 +7,19 @@ export async function POST({ request }) {
     const data = await request.json();
     const project = data[0].project
     const action = data[0].action;
+    const id = project._id;
+    console.log(id)
     if(action == "DELETE"){
-        await ProjectSchema.deleteOne({ _id: project._id });
+        await ProjectSchema.deleteOne({ _id: id });
         mentorDelete(project)
+    } else if (action == "PUBLISH"){
+        let schema = await ProjectSchema.findById(id);
+        if(schema){
+            schema.underReview = !schema.underReview;
+            schema.save();
+        } else {
+          throw error(400, 'Something happened when inserting mentor or student.');
+        }
     } else {
         throw error(400, 'Something happened')
     }

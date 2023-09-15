@@ -3,6 +3,7 @@
     import { goto } from '$app/navigation';
     import type { Project } from '@/interfaces/project.js';
     import { action_destroyer } from 'svelte/internal';
+    import { onMount } from 'svelte';
 
     export let data;
 
@@ -14,10 +15,25 @@
     let actions: Action[] = [];
 
     $: ({ projects } = data);
-
     async function deleteProject(project: Project){
         actions.push({
             action: "DELETE",
+            project: project
+        })
+        actions = actions
+
+        const res = await fetch('/manage-projects', {
+            method: "POST",
+            body: JSON.stringify(actions)
+        });
+
+        location.reload();
+    }
+
+    
+    async function publish(project: Project){
+        actions.push({
+            action: "PUBLISH",
             project: project
         })
         actions = actions
@@ -47,15 +63,22 @@
                         <ProjectCard {project} />
                     </div>
                     <div class="button-container">
+                        <button class="publish-button" on:click={() => {publish(project)}}>
+                            {#if project.underReview} Publish {:else} Unpublish {/if} Project
+                        </button>
                         <button class="edit-button" on:click={() => goto(`manage-projects/edit/${project._id}`)}>
                             Edit
                         </button>
                         <button class="fullreport-button" on:click={()=> goto(`manage-projects/report/${project._id}`)}>
                             {#if project.fullReport == ""} Add {:else} Edit {/if} Full Report
                         </button>
-                        <button class="delete-button" on:click={() => {deleteProject(project)}}>
-                            Delete
-                        </button>
+                        <div class="tooltip">
+                            
+                            <button class="delete-button" on:click={() => {deleteProject(project)}}>
+                                Delete
+                            </button>
+                            <div class="tooltiptext"> ⚠<strong><i><u>CAUTION</u></i>: This Action is <i> IRREVERSIBLE </i> </strong></div>
+                        </div>
 
                     </div>
                 </div>
@@ -120,10 +143,10 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        gap: 2rem;
+        gap: 1.2rem;
     }
     .edit-button {
-        background-color: #17a2b8;
+        background-color: #5783db;
         width:150px;
         height:50px;
         text-align:center;
@@ -132,7 +155,7 @@
     }
 
     .fullreport-button{
-        background-color: #8001db;
+        background-color: #5783db;
         width:150px;
         height:50px;
         text-align:center;
@@ -147,12 +170,63 @@
         font-size:1.1em;
 
     }
+    .delete-button:hover {
+        background-color: hsl(354, 100%, 50%);
+        width:150px;
+        height:50px;
+        text-align:center;
+        font-size:1.1em;
+
+    }
 
     .card-container{
         display:flex;
         gap: 2rem;
         justify-content: center;
         flex-wrap: wrap;
+    }
+
+    .publish-button{
+        background-color: var(--color-green-400);
+        width:150px;
+        height:50px;
+        text-align:center;
+        font-size: 0.81em;
+    }
+
+    .publish-button:hover{
+        background-color: var(--color-green-600);
+        width:150px;
+        height:50px;
+        text-align:center;
+        
+    }
+    .tooltip {
+        position: relative;
+        display: inline-block;
+    }
+
+    
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 180px;
+        background-color: rgb(255, 221, 0);
+        border: #ff0026 solid 5px;
+        color: #ff2c2c;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 0px;
+    
+   
+        position: absolute;
+        z-index: 1;
+    }
+
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+        top: -6px;
+        left: 105%;
     }
 </style>
 
