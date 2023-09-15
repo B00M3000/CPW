@@ -1,7 +1,8 @@
 <script lang="ts">
     export let data;
 
-    const user = data.session.user
+    const user = data;
+    console.log(user)
 
     
 

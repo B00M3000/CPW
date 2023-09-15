@@ -89,6 +89,7 @@
     align-items: center;
     justify-content: center;
     height: 100vh - var(--nav-bar-height);
+    margin-bottom: 1rem;
   }
 
   .dashboard-panel {

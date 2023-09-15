@@ -72,9 +72,9 @@
         }
       })
     
-      $: action = { ...action, action: "CREATE", currentProj, currentMentor}
+      
       async function upload() {
-        
+        action = { ...action, action: "CREATE", currentProj, currentMentor}
         const res = await fetch(`/manage-projects/edit/${id}`, {
             method: "POST",
             body: JSON.stringify(action)
@@ -147,11 +147,13 @@
           
 
 
-          <div class="form-group button-group">
-            <button type="submit" class="submit-button" on:click={upload}> Save Changes</button>
-            <button type="submit" class="submit-button" on:click={() => goto("/manage-projects")}> Discard</button>
-          </div>
+       
         
+      </div>
+      <hr>
+      <div class="form-group button-group">
+        <button type="submit" class="submit-button" on:click={upload}> Save Changes</button>
+        <button type="submit" class="submit-button" on:click={() => goto("/manage-projects")}> Discard</button>
       </div>
   </div>
   
@@ -165,6 +167,8 @@
   height: 100%; 
   display: flex;
   justify-content: center;
+  overflow-y: scroll;
+  
 }
 
 .form-group {
@@ -174,7 +178,8 @@
 
 .form-container {
   
-  padding-top: 1.5rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
 }
 
   #inputForm {

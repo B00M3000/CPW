@@ -81,7 +81,7 @@
     const stepValidations: validation[] = [
       null,
       () => {
-        if(/.{12,100}/.test(project.title)) return true;
+        if(project.title.length < 100 && project.title.length > 12) return true;
         else return ["Please enter a project name between 12 and 200 characters."];
       },
       () => {
@@ -176,14 +176,21 @@
     </div>
 
     {#if displayedErrorMessages.length > 0}
-    <InformationBox 
-      backgroundColor="var(--color-red-100)" 
-      borderColor="var(--color-red-600)" 
-      textColor="var(--color-red-600)" 
-      headingColor="var(--color-red-900)" 
-      heading="Invalid Inputs" 
-      text={displayedErrorMessages.map(m => `  - ${m}`).join('\n')}
-    />
+    <div class="overlay">
+      <div class="info-box">
+          <InformationBox 
+            backgroundColor="var(--color-red-100)" 
+            borderColor="var(--color-red-600)" 
+            textColor="var(--color-red-600)" 
+            headingColor="var(--color-red-900)" 
+            heading="Invalid Inputs" 
+            text={displayedErrorMessages.map(m => `  - ${m}`).join('\n')}
+          />
+          
+      </div>
+      <div class="info-box-button"> <button on:click = {() => displayedErrorMessages.length = 0}> Got It! </button> </div>
+      
+     </div>
     {/if}
 
   </form>
@@ -203,7 +210,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
+    overflow-y: scroll;
     height: 100%;
 
     .textarea { 
@@ -264,6 +271,8 @@
       min-width: 30vw;
       max-width: 30vw;
       margin: 0.5em;
+      border: 0;
+      border-bottom: 2px solid var(--color-blue-grey-500);
     }
   }
 
@@ -278,6 +287,7 @@
     .textarea {
       min-width: 60vw;
       max-width: 60vw;
+      border: 0;
     }
   }
 
@@ -287,12 +297,55 @@
     padding: 0.5em;
     font-size: 16px;
     border-radius: 4px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
   }
 
+  button:hover {
+    background-color: var(--color-blue-400);
+  }
   #buttons {
     display: flex;
+    justify-content: center;
     gap: 1em;
   }
+
+  .overlay {
+    position:fixed;
+    margin: 0;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color:rgba(0, 0, 0, 0.85);
+    z-index:9999;
+  }
+  .info-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25vh;
+  }
+
+  .info-box-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+ .info-box-button button{
+    margin-top: 0.2rem;
+    border: var(--color-red-600) 3px solid;
+    border-radius: 0%;
+    color: white;
+    background-color: transparent;
+    
+ }
+
+ .info-box-button button:hover{
+    background-color: rgba(165, 28, 28, 0.35);
+
+ }
 </style>
 
 
