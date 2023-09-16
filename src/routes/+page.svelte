@@ -2,6 +2,7 @@
   import { goto } from "$app/navigation";
   import ProjectCard from "@/client/components/ProjectCard.svelte";
   import { user } from "@/client/stores/user";
+  import Carousel from "@/client/components/Carousel.svelte";
 
   export let data;
 
@@ -24,7 +25,8 @@
     </div>
 
     <div class="proj-container">
-        <h2 class="section-title">Here are some projects done by Commonwealth Students:</h2>
+        <Carousel {projects} />
+        <!-- <h2 class="section-title">Here are some projects done by Commonwealth Students:</h2>
         <div id="projects" class="project-list">
             
             {#each projects as project}
@@ -32,7 +34,7 @@
             {:else}
                 <span class="no-projects">No Projects.</span>
             {/each}
-        </div>
+        </div> -->
     </div>
 </main>
 

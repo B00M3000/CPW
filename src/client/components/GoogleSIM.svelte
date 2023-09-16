@@ -21,7 +21,8 @@
     }
 </script>
 
-<div class="container" on:click={onTrigger}>
+
+<div class="container" on:click={onTrigger} role="button" aria-pressed="false">
     <img src="/assets/google-icon.png" alt = "Google Icon"/>
     <span class="text">Sign in with Google</span>
 </div>
