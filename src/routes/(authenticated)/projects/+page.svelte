@@ -47,7 +47,7 @@
 </script>
 
 
-
+<svelte:window on:load="{()=>syncFields()}"/>
 <main>
     
     <div class="head">

@@ -56,9 +56,7 @@
     }
 
     a:hover {
-        color: #ccc;
-        background-color: #444;
-        border-radius: 4px;
+        border-bottom: 2px solid;
     }
 
 
