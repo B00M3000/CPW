@@ -9,61 +9,92 @@
 </script>
 
 <div class="project-card">
-    <h2>{project.title}</h2>
+    <h2><a href="{`/projects/${project._id}`}">{project.title}</a></h2>
     
     <div class="field">
-        <span class="card-gap">Completed by: </span>
-        <StudentCard student={project.student} />
+        <span class="card-gap">By: <StudentCard student={project.student}/> </span>
+        <span class="card-gap">Mentor: <MentorCard mentor={project.mentor}/> </span>
+        
     </div>
-    <div class="field">
-        <span class="card-gap">Mentor: </span>
-        <MentorCard mentor={project.mentor} />
-    </div>
-    <div class="field"></div>
-    <span>Description: </span>
-    <span>{project.shortDesc}</span>
-    <div class="field"></div>
-    <span>Year: </span>
-    <span>{project.year}</span>
-    <a href="{`/projects/${project._id}`}"> Read More</a>
-    <div class="project-card/tags">
+
+    <span class="content">{project.shortDesc}</span>
+    <div class="project-card-tags">
         {#each project.tags as tag}
             <Tag text={tags[tag]} />
         {/each}
     </div>
+
 </div>
 
 <style lang="scss">
     h2 {
         text-align: center;
-        margin-top: 0.1rem;
+        margin-top: 0.5rem; 
+        text-decoration: none;
+        font-size: 1.6rem;
     }
+
+    a{
+        color: black;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    p {
+        font-size: small;
+    }
+
     .project-card {
         display: flex;
         flex-direction: column;
-
-        width: 400px;
-        
-        padding: 0.5em;
-        padding-left: 1rem;
-        padding-right: 1rem;
-
-        background-color: lightgrey;
-
+        width: 410px;
+        padding: 0.75rem; 
+        background-color: var(--color-blue-grey-200);
         border-radius: 0.5em;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); 
+    }
 
-        .field {
-            display: flex;
-        }
+    .field {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px; 
+        margin-top: 0.45rem; 
+        gap: 0.35rem;
+        padding:5px;
+    }
 
-        .card-gap {
-            margin-right: 0.4em;
-        }
+    .label {
+        font-weight: bold; 
+        color: var(--color-primary);
+    }
+
+    .content {
+        word-wrap: break-word;
+        color:  #000000;
+        margin: 0.3rem;
+    }
+
+    .card-gap {
+        margin-right: 0.2em;
+        font-size: 15px;
+        font-weight: 900;
     }
 
     span {
         padding: 0;
         word-wrap: break-word;
     }
+
+    .project-card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.2rem; 
+        margin-top: 1.5rem;
+        margin-bottom: 0.6rem; 
+    }
+
 
 </style>    
