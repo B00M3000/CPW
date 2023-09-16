@@ -11,7 +11,7 @@
 <main>
     <h1 class="title"><strong>{mentor?.firstName} {mentor?.lastName}</strong></h1>
     <p class="subtitle"><em>Please contact Ms. Moss for contact information.</em></p>
-    <h4> Click <a href="{`/projects/?yearUpper=2023&yearLower=2019&mentorSearch=${mentor?.firstName}+${mentor?.lastName}`}">here</a> 
+    <h4> Click <a href="{`/projects/?yearUpper=${new Date().getFullYear()}&yearLower=2019&mentorSearch=${mentor?.firstName}+${mentor?.lastName}`}">here</a> 
         to search for projects this mentor has facillitated</h4>
     
 </main>
