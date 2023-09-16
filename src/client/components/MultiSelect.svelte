@@ -142,7 +142,7 @@
         border-radius: 5px;
         box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.4);
         z-index: 50;
-        overflow-y: scroll;
+        overflow-y: auto;
         max-height: 30vh;
     }
 
