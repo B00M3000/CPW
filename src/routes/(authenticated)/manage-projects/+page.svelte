@@ -68,9 +68,15 @@
                                Pending Advisor Review
                             </button>
                         {:else}
-                            <button class="publish-button" on:click={() => {publish(project)}}>
-                                {#if project.underReview} Publish {:else} Unpublish {/if} Project
-                            </button>
+                            {#if project.publish == true}
+                                <button class="unpublish-button" on:click={() => {publish(project)}}>
+                                    Unpublish Project
+                                </button>
+                            {:else}
+                                <button class="publish-button" on:click={() => {publish(project)}}>
+                                    Publish Project
+                                </button>
+                            {/if}
                         {/if}
                         <button class="edit-button" on:click={() => goto(`manage-projects/edit/${project._id}`)}>
                             Edit
@@ -203,6 +209,20 @@
         font-size: 0.81em;
     }
 
+    .unpublish-button{
+        background-color: var(--color-commschool-nav);
+        width:150px;
+        height:50px;
+        text-align:center;
+        font-size: 0.81em;
+    }
+    .unpublish-button:hover{
+        background-color: var(--color-red-400);
+        width:150px;
+        height:50px;
+        text-align:center;
+        
+    }
 
     .disabled-button{
         background-color: gray;
