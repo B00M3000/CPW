@@ -74,6 +74,7 @@
                                 </button>
                             {/if}
                         {/if}
+
                         <button class="edit-button" on:click={() => goto(`manage-projects/edit/${project._id}`)}>
                             Edit
                         </button>
@@ -216,6 +217,14 @@
         align-items: center;
         font-size:1.1em;
         justify-content: center;
+    }
+    .delete-button:hover {
+        background-color: hsl(354, 100%, 50%);
+        width:150px;
+        height:50px;
+        text-align:center;
+        font-size:1.1em;
+
     }
     .delete-button:hover {
         background-color: hsl(354, 100%, 50%);

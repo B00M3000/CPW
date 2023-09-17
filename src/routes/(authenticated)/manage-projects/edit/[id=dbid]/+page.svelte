@@ -102,8 +102,6 @@
       }
 </script>
 
-
-
 <main class="formbar">
   <div class="form-container">
       <div id="inputForm">
