@@ -100,11 +100,6 @@
           
         success = true;
       }
-
-    
-     
-     
-
 </script>
 
 
