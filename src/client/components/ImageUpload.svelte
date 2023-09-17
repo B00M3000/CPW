@@ -1,6 +1,7 @@
 <script lang="ts">
+    export let projects: any[] = [];
 
-    let imageFiles:File[] = [];
+    let imageFiles: File[] = [];
     let imageDescription: String = '';
     
     function handleSubmit() {
@@ -11,25 +12,32 @@
 
 
 <div class="container">
-    <h1>Image Submission</h1>
-    <input
-      type="file"
-      accept="image/*"
-      multiple={true}
-      bind:files={imageFiles}
-    />
+  <h1>Image Submission</h1>
+  <input
+    type="file"
+    accept="image/*"
+    multiple={true}
+    bind:files={imageFiles}
+  />
 
-    <h5>Selected Files:</h5>
-    {#each imageFiles as file}
-        <p><code>{file.name}</code></p>
-    {/each} 
-    <textarea
-      rows="4"
-      placeholder="Image Description"
-      bind:value={imageDescription}
-    ></textarea>
-    <button on:click={handleSubmit}>Submit</button>
-  </div>
+  <label for="project">Project: </label>
+  <select id="project" disabled={projects.length == 1}>
+    {#each projects as project}
+    <option value={project.id}>{project.title}</option>
+    {/each}
+  </select>
+
+  <h5>Selected Files:</h5>
+  {#each imageFiles as file}
+      <p><code>{file.name}</code></p>
+  {/each} 
+  <textarea
+    rows="4"
+    placeholder="Image Description"
+    bind:value={imageDescription}
+  ></textarea>
+  <button on:click={handleSubmit}>Submit</button>
+</div>
   
   
   <style lang="scss">
@@ -86,7 +94,5 @@
   button:hover {
     background-color: #0056b3;
   }
-
-
-  </style>
+</style>
   
