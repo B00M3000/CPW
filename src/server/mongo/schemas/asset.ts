@@ -5,6 +5,7 @@ interface AssetDocumentData {
     data: Buffer;
     desc: string;
     ownerId: string;
+    size: number; // in kb
 }
 
 const schema = new mongoose.Schema(
@@ -12,7 +13,8 @@ const schema = new mongoose.Schema(
     contentType: { type: String, required: true },
     data: { type: Buffer, required: true },
     desc: { type: String, required: true},
-    ownerId: { type: String, required: true }
+    ownerId: { type: String, required: true },
+    size: { type: Number }
   },
   { timestamps: true },
 );
