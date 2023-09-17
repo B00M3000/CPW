@@ -4,13 +4,15 @@ interface AssetDocumentData {
     contentType: string;
     data: Buffer;
     desc: string;
+    ownerId: string;
 }
 
 const schema = new mongoose.Schema(
   {
     contentType: { type: String, required: true },
     data: { type: Buffer, required: true },
-    desc: { type: String, required: true}
+    desc: { type: String, required: true},
+    ownerId: { type: String, required: true }
   },
   { timestamps: true },
 );
