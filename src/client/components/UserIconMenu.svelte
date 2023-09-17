@@ -1,6 +1,8 @@
 <script lang="ts">
     import { user } from "@/client/stores/user";
     import { AccessLevel, AccountType } from "@/lib/enums";
+    import Icon from "@/client/components/Icon.svelte";
+    import Gear from "@/client/icons/Gear";
 </script>
 
 {#if $user}
@@ -21,7 +23,10 @@
         <hr />
         <a href="/">Home</a>
         <hr />
-        <a href="/account">Account</a>
+        <div class="icon-text-group">
+            <Icon src={Gear}/>
+            <a href="/account">Account</a>
+        </div>
         <hr />
         <button class="logout-button" on:click={() => user.logout() }>Log Out</button>
     </div>
@@ -31,6 +36,12 @@
 {/if}
 
 <style lang="scss">
+    .icon-text-group {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
     .dropdown-container {
         display: inline-flex;
         align-items: center;
