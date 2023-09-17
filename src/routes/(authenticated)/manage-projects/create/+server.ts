@@ -28,6 +28,7 @@ export async function POST({ request, locals }) {
       shortDesc: project.shortDesc, 
       fullReport: "",
       underReview: true,
+      publish: false,
       mentorId: mentorId,
       studentId: locals.user?.id 
     })
