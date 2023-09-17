@@ -1,7 +1,7 @@
 import { AssetSchema, type AssetDocument } from '@/server/mongo/schemas/asset'
 import { error, json } from '@sveltejs/kit';
 
-export async function GET({ params: { id }, setHeaders }) {
+export async function GET({ params: { id }, url, setHeaders }) {
     const asset = await AssetSchema.findById(id);   
 
     if(!asset) throw error(404, "No Asset found with that ID");
@@ -14,6 +14,6 @@ export async function GET({ params: { id }, setHeaders }) {
 }
 
 export async function DELETE({ params: { id }}) {
-    const res = AssetSchema.deleteOne({ _id: id });
+    const res = await AssetSchema.deleteOne({ _id: id });
     return json({ message: "Asset has been deleted sucessfully!"}, { status: 200 });
 }

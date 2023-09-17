@@ -1,36 +1,22 @@
 <script lang="ts">
     export let projects: any[] = [];
-    import { user } from "@/client/stores/user";
     import { onMount } from "svelte";
 
     export let data;
-    let userId = data.user.id;
 
     let imageFiles: File[] = [];
     let imageDescription: String = '';
 
-    interface Action {
-      action: string;
-      files: File[];
-      ownerId: string;
-    }
-    let action: Action;
-
-    onMount(() => { 
-      action = {
-        action: "CREATE",
-        files:  imageFiles,
-        ownerId: userId,
-      }
-    });
-
     async function handleSubmit() {
         action.files = imageFiles;
         console.log(action)
-        // const res = await fetch(`/gallery/add`, {
-        //     method: "POST",
-        //     body: JSON.stringify(action)
-        // });
+        const res = await fetch(`/gallery`, {
+            method: "POST",
+            body: JSON.stringify({
+                action: "CREATE",
+                files: imageFiles
+            })
+        });
         return true;
     }
 </script>
@@ -65,7 +51,7 @@
 </div>
   
   
-  <style lang="scss">
+<style lang="scss">
   .container {
     max-width: 400px;
     margin: 0 auto;
