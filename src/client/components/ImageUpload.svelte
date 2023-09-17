@@ -1,11 +1,36 @@
 <script lang="ts">
     export let projects: any[] = [];
+    import { user } from "@/client/stores/user";
+    import { onMount } from "svelte";
+
+    export let data;
+    let userId = data.user.id;
 
     let imageFiles: File[] = [];
     let imageDescription: String = '';
-    
-    function handleSubmit() {
-        
+
+    interface Action {
+      action: string;
+      files: File[];
+      ownerId: string;
+    }
+    let action: Action;
+
+    onMount(() => { 
+      action = {
+        action: "CREATE",
+        files:  imageFiles,
+        ownerId: userId,
+      }
+    });
+
+    async function handleSubmit() {
+        action.files = imageFiles;
+        console.log(action)
+        // const res = await fetch(`/gallery/add`, {
+        //     method: "POST",
+        //     body: JSON.stringify(action)
+        // });
         return true;
     }
 </script>
