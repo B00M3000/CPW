@@ -9,8 +9,10 @@
     <div class="main-navigation">
         <a href="/">Home</a>
         <a href="/projects">Projects</a>
+        <a href="/gallery">Gallery</a>
         {#if $user?.accountType == AccountType.Student}
         <a href="/manage-projects">Manage Projects</a>
+       
         {/if}
         {#if $user?.accountType == AccountType.Advisor}
         <a href="/manage-advisees">Manage Advisees</a>

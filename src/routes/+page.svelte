@@ -25,16 +25,8 @@
     </div>
 
     <div class="proj-container">
+        <h2 class="section-title">Here are some projects done by Commonwealth Students:</h2>
         <Carousel {projects} />
-        <!-- <h2 class="section-title">Here are some projects done by Commonwealth Students:</h2>
-        <div id="projects" class="project-list">
-            
-            {#each projects as project}
-                <ProjectCard {project} />
-            {:else}
-                <span class="no-projects">No Projects.</span>
-            {/each}
-        </div> -->
     </div>
 </main>
 

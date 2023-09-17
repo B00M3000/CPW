@@ -20,7 +20,9 @@ const schema = new mongoose.Schema(
     mentorId: { type: String, required: true },
     shortDesc: { type: String, required: true },
     fullReport: { type: String, default: "" },
-    underReview: { type: Boolean, required: true }
+    underReview: { type: Boolean, required: true },
+    imageIds: { type: String, default: [] },
+    publish: { type: String, default: false }
   },
   { timestamps: true },
 );

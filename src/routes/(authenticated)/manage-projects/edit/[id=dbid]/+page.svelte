@@ -100,14 +100,7 @@
           
         success = true;
       }
-
-    
-     
-     
-
 </script>
-
-
 
 <main class="formbar">
   <div class="form-container">
