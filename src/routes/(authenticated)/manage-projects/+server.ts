@@ -5,10 +5,9 @@ import { MentorSchema } from '@/server/mongo/schemas/mentor';
 
 export async function POST({ request }) {
     const data = await request.json();
-    const project = data[0].project
-    const action = data[0].action;
+    const project = data.project
+    const action = data.action;
     const id = project._id;
-    console.log(id)
     if(action == "DELETE"){
         await ProjectSchema.deleteOne({ _id: id });
         mentorDelete(project)

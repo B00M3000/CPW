@@ -2,29 +2,26 @@
     import ProjectCard from '@/client/components/ProjectCard.svelte';
     import { goto } from '$app/navigation';
     import type { Project } from '@/interfaces/project.js';
-    import { action_destroyer } from 'svelte/internal';
-    import { onMount } from 'svelte';
 
     export let data;
 
-    interface Action {
-        action: string;
-        project: Project;
+    $: ({ projects } = data);
+
+    async function initDeleteProject(i: number) {
+        if(initDeleteConfirm == i) {
+            deleteConfirm = i
+        } else {
+            initDeleteConfirm = i
+        }
     }
 
-    let actions: Action[] = [];
-
-    $: ({ projects } = data);
     async function deleteProject(project: Project){
-        actions.push({
-            action: "DELETE",
-            project: project
-        })
-        actions = actions
-
         const res = await fetch('/manage-projects', {
             method: "POST",
-            body: JSON.stringify(actions)
+            body: JSON.stringify({
+                action: "DELETE",
+                project: project
+            })
         });
 
         location.reload();
@@ -32,21 +29,20 @@
 
     
     async function publish(project: Project){
-        actions.push({
-            action: "PUBLISH",
-            project: project
-        })
-        actions = actions
-
         const res = await fetch('/manage-projects', {
             method: "POST",
-            body: JSON.stringify(actions)
+            body: JSON.stringify({
+                action: "PUBLISH",
+                project: project
+            })
         });
 
         location.reload();
     }
 
-
+    let initDeleteConfirm: number;
+    let deleteConfirm: number;
+    let deleteConfirmInputValue: string;
 </script>
 <main>
     <div class="dashboard-actions">
@@ -56,7 +52,7 @@
         </button>
     </div>
     <div class="card-container">
-        {#each projects as project}
+        {#each projects as project, i}
             <div class="project-card">
                 <div class="project-cards">
                     <div class="card-content">
@@ -84,24 +80,56 @@
                         <button class="fullreport-button" on:click={()=> goto(`manage-projects/report/${project._id}`)}>
                             {#if project.fullReport == ""} Add {:else} Edit {/if} Full Report
                         </button>
-
-
-                        <div class="tooltip">
-                            
-                            <button class="delete-button" on:click={() => {deleteProject(project)}}>
-                                Delete
-                            </button>
-                            <div class="tooltiptext"> ⚠<strong><i><u>CAUTION</u></i>: This Action is <i> IRREVERSIBLE </i> </strong></div>
-                        </div>
-
+ 
+                        <button class="delete-button" on:click={() => {initDeleteProject(i)}}>
+                            {#if initDeleteConfirm == i}
+                            <span class="delete-button-warning blink">
+                                <strong>⚠ Are you sure? This action is IRREVERSIBLE ⚠</strong>
+                            </span>   
+                            {:else}
+                            Delete
+                            {/if}
+                        </button>
                     </div>
                 </div>
             </div>
+
+            {#if deleteConfirm == i}
+            <div class="overlay delete-confirm">
+                <p>Enter the project id to delete. ID: {project._id}</p>
+                <input bind:value={deleteConfirmInputValue} on:paste={(e) => e.preventDefault()}/>
+                {#if deleteConfirmInputValue == project._id}
+                <button class="blink" on:click={deleteProject(project)}>CONFIRM DELETION</button>
+                {/if}
+                <button class="blink" on:click={() => {
+                    deleteConfirm = null;
+                    initDeleteConfirm = null;
+                }}>GO BACK</button>
+            </div>
+            {/if}
         {/each}
     </div>
 </main>
 
 <style lang="scss">
+    .delete-confirm {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        color: white;
+    }
+    .blink {
+        animation: blink-animation 1.5s steps(25, start) infinite;
+    }
+    @keyframes blink-animation {
+        to {
+            color: white;
+        }
+        from {
+            color: red
+        }
+    }
     main {
         margin-left: 1rem;
         margin-right: 1rem;
@@ -168,7 +196,9 @@
         line-height:1.1em;
         font-size:1.1em;
     }
-
+    .delete-button-warning {
+        font-size: 0.6em;
+    }
     .fullreport-button{
         background-color: #5783db;
         width:150px;
@@ -182,8 +212,10 @@
         width:150px;
         height:50px;
         text-align:center;
+        display: flex;
+        align-items: center;
         font-size:1.1em;
-
+        justify-content: center;
     }
     .delete-button:hover {
         background-color: hsl(354, 100%, 50%);
@@ -269,6 +301,17 @@
         visibility: visible;
         top: -6px;
         left: 105%;
+    }
+
+    .overlay {
+        position:fixed;
+        margin: 0;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        background-color:rgba(0, 0, 0, 0.85);
+        z-index:9999;
     }
 </style>
 
