@@ -63,15 +63,23 @@
                         <ProjectCard {project} />
                     </div>
                     <div class="button-container">
-                        <button class="publish-button" on:click={() => {publish(project)}}>
-                            {#if project.underReview} Publish {:else} Unpublish {/if} Project
-                        </button>
+                        {#if project.underReview == true}
+                            <button class="disabled-button" disabled>
+                               Pending Advisor Review
+                            </button>
+                        {:else}
+                            <button class="publish-button" on:click={() => {publish(project)}}>
+                                {#if project.underReview} Publish {:else} Unpublish {/if} Project
+                            </button>
+                        {/if}
                         <button class="edit-button" on:click={() => goto(`manage-projects/edit/${project._id}`)}>
                             Edit
                         </button>
                         <button class="fullreport-button" on:click={()=> goto(`manage-projects/report/${project._id}`)}>
                             {#if project.fullReport == ""} Add {:else} Edit {/if} Full Report
                         </button>
+
+
                         <div class="tooltip">
                             
                             <button class="delete-button" on:click={() => {deleteProject(project)}}>
@@ -193,6 +201,19 @@
         height:50px;
         text-align:center;
         font-size: 0.81em;
+    }
+
+
+    .disabled-button{
+        background-color: gray;
+        width:150px;
+        height:50px;
+        text-align:center;
+        font-size: 0.81em;
+    }
+
+    .disabled-button:hover{
+        background-color: gray;
     }
 
     .publish-button:hover{
