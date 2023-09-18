@@ -8,27 +8,28 @@
       desc: string,
     }
 
-    let imageFiles: File[] = [];
-    let fileDescriptions: string[] = [];
-    let imageDescription: String = '';
+    let images: any[] = [];
 
-    async function toBase64(file: File) {
+    function toBase64(file: File) {
+
+      return new Promise(async (resolve) => {
         const reader = new FileReader();
         reader.onloadend = () => {
-            return reader.result;
+            resolve(reader.result);
         };
         reader.readAsDataURL(file);
+      })
     }
 
     async function handleSubmit() {
       let encodedFilesAndDesc: any[] = [];
 
-      for(let i = 0; i < imageFiles.length; i++) {
-        let encoded = await toBase64(imageFiles[i])
+      for(let i = 0; i < images.length; i++) {
+        let encoded = await toBase64(images[i].file)
         encodedFilesAndDesc.push({
-          type: imageFiles[i].type,
+          type: images[i].file.type,
           src: encoded,
-          desc: fileDescriptions[i] || "N/A",
+          desc: images[i].desc || "N/A",
         })
       }
 
@@ -40,20 +41,32 @@
       });
       return true;
     }
+
+    function mapFiles(e: Event){
+      let imageFiles = e.target.files;
+      images = [];
+      for(let i = 0; i < imageFiles.length; i++){
+        images.push({
+          file: imageFiles[i],
+          desc: "",
+        })
+      }
+      console.log(images)
+    }
 </script>
 
 
 <div class="container">
   <h1>Image Submission</h1>
-  <input type="file" accept="image/*" multiple={true} bind:files={imageFiles}/>
+  <input type="file" accept="image/*" multiple={true} on:change={mapFiles}/>
 
 
-  {#each imageFiles as file}
+  {#each images as image}
     <div id="assets" class="asset">
         <!-- svelte-ignore a11y-img-redundant-alt -->
-        <img src={URL.createObjectURL(file)} alt="uploaded picture"/>
-        <span contenteditable placeholder="Add Description..." bind:innerHTML={fileDescriptions}> </span>
-        <span>{bytesToString(file.size)}</span>
+        <img src={URL.createObjectURL(image.file)} alt="uploaded picture"/>
+        <span contenteditable placeholder="Add Description..." bind:innerHTML={image.desc}> </span>
+        <span>{bytesToString(image.file.size)}</span>
     </div>
   {/each}
 
