@@ -9,10 +9,27 @@
     }
 
     let imageFiles: File[] = [];
+    let encodedFilesAndDesc: any[] = [];
+    let fileDescriptions: string[] = [];
     let imageDescription: String = '';
 
-    
+    async function toBase64(file: File) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            return reader.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
     async function handleSubmit() {
+      
+      for(let i = 0; i < imageFiles.length; i++){
+        let encoded = await toBase64(imageFiles[i])
+        encodedFilesAndDesc.push({
+          src: encoded;
+          desc: fileDescriptions[i] || "N/A";
+        })
+      }
         const res = await fetch(`/gallery`, {
             method: "POST",
             body: JSON.stringify({
@@ -39,7 +56,7 @@
     <div id="assets" class="asset">
         <!-- svelte-ignore a11y-img-redundant-alt -->
         <img src={URL.createObjectURL(file)} alt="uploaded picture"/>
-        <span contenteditable placeholder="Add Description..." bind:innerHTML={file.desc}> </span>
+        <span contenteditable placeholder="Add Description..." bind:innerHTML={}}> </span>
         <span>{bytesToString(file.size)}</span>
     </div>
   {/each}
