@@ -23,14 +23,14 @@
     async function handleSubmit() {
       let encodedFilesAndDesc: any[] = [];
 
-      await Promise.all(imageFiles.forEach(async file => {
-        let encoded = await toBase64(file)
+      for(let i = 0; i < imageFiles.length; i++) {
+        let encoded = await toBase64(imageFiles[i])
         encodedFilesAndDesc.push({
-          type: file.type;
-          src: encoded;
-          desc: fileDescriptions[i] || "N/A";
+          type: imageFiles[i].type,
+          src: encoded,
+          desc: fileDescriptions[i] || "N/A",
         })
-      }))
+      }
 
       const res = await fetch(`/assets/create`, {
           method: "POST",
@@ -45,19 +45,14 @@
 
 <div class="container">
   <h1>Image Submission</h1>
-  <input
-    type="file"
-    accept="image/*"
-    multiple={true}
-    bind:files={imageFiles}
-  />
+  <input type="file" accept="image/*" multiple={true} bind:files={imageFiles}/>
 
 
   {#each imageFiles as file}
     <div id="assets" class="asset">
         <!-- svelte-ignore a11y-img-redundant-alt -->
         <img src={URL.createObjectURL(file)} alt="uploaded picture"/>
-        <span contenteditable placeholder="Add Description..." bind:innerHTML={}}> </span>
+        <span contenteditable placeholder="Add Description..." bind:innerHTML={fileDescriptions}> </span>
         <span>{bytesToString(file.size)}</span>
     </div>
   {/each}

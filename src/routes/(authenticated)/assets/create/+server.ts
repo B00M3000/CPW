@@ -10,7 +10,9 @@ export async function POST({ request, locals, url }) {
 
     for(let i = 0; i < files.length; i++){
         await handleOneFile(files[i], locals, request)
+        console.log("here")
     }
+
     return json({ assetId: res._id, spaceLeftInKB: USER_ASSET_LIMIT_IN_KB - (spaceUsed + size) }, { status: 200 })
 }
 
