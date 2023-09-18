@@ -1,15 +1,18 @@
 <script lang="ts">
     export let projects: any[] = [];
     import { onMount } from "svelte";
+    import { bytesToString } from "@/lib/utils.js";
 
-    export let data;
+    interface Image {
+      file: File,
+      desc: string,
+    }
 
     let imageFiles: File[] = [];
     let imageDescription: String = '';
 
+    
     async function handleSubmit() {
-        action.files = imageFiles;
-        console.log(action)
         const res = await fetch(`/gallery`, {
             method: "POST",
             body: JSON.stringify({
@@ -31,29 +34,39 @@
     bind:files={imageFiles}
   />
 
-  <label for="project">Project: </label>
+
+  {#each imageFiles as file}
+    <div id="assets" class="asset">
+        <!-- svelte-ignore a11y-img-redundant-alt -->
+        <img src={URL.createObjectURL(file)} alt="uploaded picture"/>
+        <span contenteditable placeholder="Add Description..." bind:innerHTML={file.desc}> </span>
+        <span>{bytesToString(file.size)}</span>
+    </div>
+  {/each}
+
+
+  
+  <label for="project"><strong>Project: </strong></label>
   <select id="project" disabled={projects.length == 1}>
     {#each projects as project}
     <option value={project.id}>{project.title}</option>
     {/each}
   </select>
-
-  <h5>Selected Files:</h5>
-  {#each imageFiles as file}
-      <p><code>{file.name}</code></p>
-  {/each} 
-  <textarea
-    rows="4"
-    placeholder="Image Description"
-    bind:value={imageDescription}
-  ></textarea>
-  <button on:click={handleSubmit}>Submit</button>
+  <button class="submit-button" on:click={handleSubmit}>Submit</button>
 </div>
   
   
 <style lang="scss">
+  #project {
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+    background-color: white;
+    border-radius: 2px;
+    padding: 3px;
+    border: black 1px solid;
+  }
   .container {
-    max-width: 400px;
+    max-width: 80vw;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -78,19 +91,8 @@
     box-sizing: border-box;
     max-width: 100%; 
   }
-  textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px; 
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    resize: vertical;
-    height: 100px;
-    box-sizing: border-box;
-    max-width: 100%; 
-  }
 
-  button {
+  .submit-button {
     display: block;
     width: 100%;
     padding: 10px;
@@ -102,8 +104,38 @@
     transition: background-color 0.3s ease;
   }
 
-  button:hover {
+  .submit-button:hover {
     background-color: #0056b3;
   }
+
+  img {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 1rem;
+    }
+
+    #assets {
+        background-color: var(--color-white);
+        padding: 1rem;
+        width: calc(80vw - 2rem);
+    }
+
+    .asset {
+        border: 1px solid #ccc;
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+    span:empty:before{
+      content: attr(placeholder);
+      pointer-events: none;
+      display: block; 
+      font-style: italic;
+      border-bottom: 2px black solid;
+      color: rgba(0, 0, 0, 0.4);
+    }
 </style>
   
