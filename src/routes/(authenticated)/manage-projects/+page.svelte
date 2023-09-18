@@ -75,10 +75,10 @@
                             {/if}
                         {/if}
 
-                        <button class="edit-button" on:click={() => goto(`manage-projects/edit/${project._id}`)}>
+                        <button class="edit-button" on:click={() => goto(`manage-projects/${project._id}/edit`)}>
                             Edit
                         </button>
-                        <button class="fullreport-button" on:click={()=> goto(`manage-projects/report/${project._id}`)}>
+                        <button class="fullreport-button" on:click={()=> goto(`manage-projects/${project._id}/report`)}>
                             {#if project.fullReport == ""} Add {:else} Edit {/if} Full Report
                         </button>
  

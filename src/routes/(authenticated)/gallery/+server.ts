@@ -17,7 +17,7 @@ export async function POST({ request }) {
                 ownerId: data.ownerId,
                 desc: data.desc,
                 data:
-              })
+            })
         }
 
     } else {

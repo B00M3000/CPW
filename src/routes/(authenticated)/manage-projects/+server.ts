@@ -8,6 +8,7 @@ export async function POST({ request }) {
     const project = data.project
     const action = data.action;
     const id = project._id;
+    
     if(action == "DELETE"){
         await ProjectSchema.deleteOne({ _id: id });
         mentorDelete(project)
@@ -20,7 +21,7 @@ export async function POST({ request }) {
           throw error(400, 'Something happened when inserting mentor or student.');
         }
     } else {
-        throw error(400, 'Something happened')
+        throw error(400, `Invalid action type provided. Given ${action}.`)
     }
     
     return json({ message: "Actions Successfully Executed." });
