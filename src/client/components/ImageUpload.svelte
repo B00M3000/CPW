@@ -9,7 +9,6 @@
     }
 
     let imageFiles: File[] = [];
-    let encodedFilesAndDesc: any[] = [];
     let fileDescriptions: string[] = [];
     let imageDescription: String = '';
 
@@ -22,22 +21,24 @@
     }
 
     async function handleSubmit() {
-      
-      for(let i = 0; i < imageFiles.length; i++){
-        let encoded = await toBase64(imageFiles[i])
+      let encodedFilesAndDesc: any[] = [];
+
+      await Promise.all(imageFiles.forEach(async file => {
+        let encoded = await toBase64(file)
         encodedFilesAndDesc.push({
+          type: file.type;
           src: encoded;
           desc: fileDescriptions[i] || "N/A";
         })
-      }
-        const res = await fetch(`/gallery`, {
-            method: "POST",
-            body: JSON.stringify({
-                action: "CREATE",
-                files: imageFiles
-            })
-        });
-        return true;
+      }))
+
+      const res = await fetch(`/assets/create`, {
+          method: "POST",
+          body: JSON.stringify({
+              files: encodedFilesAndDesc
+          })
+      });
+      return true;
     }
 </script>
 
