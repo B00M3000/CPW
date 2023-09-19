@@ -14,7 +14,7 @@
     }
 </script>
 
-<ImageUpload {projects}/>
+
 <main>
 
     <div id="assets">
