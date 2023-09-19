@@ -1,7 +1,7 @@
 <script lang="ts">
     import ImageUpload from "@/client/components/ImageUpload.svelte";
     import { bytesToString } from "@/lib/utils.js";
-
+    import AssetCard from "@/client/components/AssetCard.svelte";
     export let data;
 
     $: ({ assets, projects } = data);
@@ -19,12 +19,14 @@
 
     <div id="assets">
         {#each assets as asset}
-            <div class="asset">
+            <AssetCard {asset} />
+            <!-- <div class="asset">
+
                 <img src="/assets/{asset._id}"/>
                 <span contenteditable="true">{asset.desc || "No Description"}</span>
                 <span>{bytesToString(asset.size * 1000)}</span>
                 <button on:click={() => deleteAsset(asset._id)}>Delete</button>
-            </div>
+            </div> -->
         {/each}
     </div>
 </main>
@@ -45,7 +47,9 @@
     }
 
     #assets {
-        max-width: 80vw;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
         margin: 0 auto;
         padding: 20px;
         border: 1px solid #ccc;
