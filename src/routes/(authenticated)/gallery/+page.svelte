@@ -2,6 +2,7 @@
     import ImageUpload from "@/client/components/ImageUpload.svelte";
     import { bytesToString } from "@/lib/utils.js";
     import AssetCard from "@/client/components/AssetCard.svelte";
+    import { goto } from "$app/navigation";
     export let data;
 
     $: ({ assets, projects } = data);
@@ -21,9 +22,10 @@
         <input type="checkbox" bind:checked={grid}>
         <span class="slider round"></span>
     </label>
+    <button class="add-photos-button" on:click = {() => goto("/gallery/create")}>Add Photos</button>
 </div>
 <main>
-
+    {#if assets.length > 0}
     <div id="assets">
         {#each assets as asset}
             {#if grid == true}
@@ -32,13 +34,14 @@
                 <div class="asset">
 
                     <img src="/assets/{asset._id}"/>
-                    <span contenteditable="true">{asset.desc || "No Description"}</span>
+                    <span>{asset.desc || "No Description"}</span>
                     <span>{bytesToString(asset.size * 1000)}</span>
                     <button on:click={() => deleteAsset(asset._id)}>Delete</button>
                 </div>
             {/if}
         {/each}
     </div>
+    {/if}
 </main>
 
 
@@ -145,5 +148,22 @@
         display: flex;
         text-align: center;
         justify-content: center;
+        gap: 0.75vw;
+    }
+
+    .add-photos-button {
+        align-self: center;
+        background-color: var(--color-blue-grey-400); 
+        color: white; 
+        padding: 10px 20px; 
+        border: none; 
+        margin-left: 0.5vw;
+        border-radius: 5px;
+        cursor: pointer;
+        display: inline-block; 
+    }
+
+    .add-photos-button:hover {
+        background-color: #0056b3; 
     }
 </style>
