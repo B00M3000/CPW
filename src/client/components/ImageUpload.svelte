@@ -1,6 +1,6 @@
 <script lang="ts">
     export let projects: any[] = [];
-    import { onMount } from "svelte";
+    import InformationBox from "./InformationBox.svelte";
     import { bytesToString } from "@/lib/utils.js";
 
     interface Image {

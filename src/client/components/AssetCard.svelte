@@ -1,5 +1,6 @@
 <script lang="ts">
     import { bytesToString } from "@/lib/utils";
+    import { user } from "@/client/stores/user";
     export let asset: any;
   
     async function deleteAsset(id: string) {
@@ -14,10 +15,13 @@
       <img src="/assets/{asset._id}" alt="an asset" class="asset-image" />
     </div>
     <div class="asset-details">
-      <span contenteditable="true" class="asset-description">{asset.desc || "No Description"}</span>
-      <span class="asset-size">{bytesToString(asset.size * 1000)}</span>
+        <h4>Image Caption:</h4>
+        <span class="desc">{asset.desc}</span>
+      <!-- <span class="asset-size">{bytesToString(asset.size * 1000)}</span> -->
     </div>
-    <button on:click={() => deleteAsset(asset._id)} class="delete-button">Delete</button>
+    {#if $user.accessLevel == 1}
+        <button on:click={() => deleteAsset(asset._id)} class="delete-button">Delete</button>
+    {/if}
   </div>
   
 <style lang="scss">
@@ -74,5 +78,14 @@
 
   .delete-button:hover {
     background-color: #cc0000;
+  }
+
+  h4{
+    margin-bottom: 0.2rem;
+  }
+
+  .desc{
+    margin-bottom: 0.2rem;
+    
   }
   </style>
