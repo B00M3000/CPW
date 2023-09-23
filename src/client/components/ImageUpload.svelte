@@ -252,18 +252,21 @@
       align-items: center;
     }
 
-  .info-box-button button{
+    .info-box-button-submit button{
       margin-top: 0.2rem;
+      text-decoration: none;
       border: var(--color-red-600) 3px solid;
       border-radius: 0%;
       color: white;
       background-color: transparent;
+      padding: 0.5em;
+      font-size: 16px;
+      border-radius: 4px;
       
   }
-
-  .info-box-button button:hover{
-      background-color: rgba(165, 28, 28, 0.35);
-
+  .info-box-button-submit button:hover{
+      background-color: rgba(161, 35, 35, 0.35);
+      
   }
 
   .info-box-button-submit a{
