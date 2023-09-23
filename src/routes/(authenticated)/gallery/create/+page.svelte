@@ -1,5 +1,6 @@
 <script lang="ts">
     import ImageUpload from "@/client/components/ImageUpload.svelte";
+    import InformationBox from "@/client/components/InformationBox.svelte";
 
     export let data;
     $: ({projects} = data)
@@ -7,3 +8,9 @@
 
 
 <ImageUpload {projects}/>
+
+
+
+<style lang="scss">
+
+</style>

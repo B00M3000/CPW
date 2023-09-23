@@ -3,6 +3,7 @@
     import { bytesToString } from "@/lib/utils.js";
     import AssetCard from "@/client/components/AssetCard.svelte";
     import { goto } from "$app/navigation";
+    import InformationBox from "@/client/components/InformationBox.svelte";
     export let data;
 
     $: ({ assets, projects } = data);
@@ -42,6 +43,8 @@
         {/each}
     </div>
     {/if}
+
+    
 </main>
 
 
