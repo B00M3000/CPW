@@ -91,21 +91,6 @@
     {/each}
   </select>
   <button class="submit-button" on:click={handleSubmit}>Submit</button>
-
-  <!-- <div class="overlay">
-    <div class="info-box">
-        <InformationBox 
-          backgroundColor="var(--color-green-100)" 
-          borderColor="var(--color-green-600)" 
-          textColor="var(--color-green-600)" 
-          headingColor="var(--color-green-500)" 
-          heading="Success!!" 
-          text={"Project was submitted. You should see it on the /manage-project page."}
-        />
-        
-    </div>
-    <div class="info-box-button-submit"> <a data-sveltekit-reload href="/gallery" > Got It! </a> </div>
-  </div> -->
 </div>
   {#if loading || success || error}
     <div class="overlay">
