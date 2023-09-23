@@ -1,6 +1,4 @@
 import { ProjectSchema } from '@/server/mongo/schemas/project';
-import { UserSchema } from '@/server/mongo/schemas/user';
-import { stringifyObjectId } from "@/lib/utils";
 import { error, json } from '@sveltejs/kit';
 
 export async function POST({ request }) {
