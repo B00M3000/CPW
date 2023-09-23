@@ -1,49 +1,29 @@
 
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import { error } from "@sveltejs/kit";
     import { onMount } from "svelte";
 
     export let data;
-    $: ({ project, id } = data);
+    $: ({ project: { title, fullReport: originaFullReport }, id } = data);
     let fullReport: string = ""; 
-
-   
-    interface Action {
-        action: string;
-        fullReport: string;
-        projectId: string;
-    }
 
     let ctrlDown = false;
     let vDown = false;
     let isChanges = false;
 
-    let action: Action;
     onMount(() => { 
-        if(project){
-            action = {
-                action: "CREATE",
-                fullReport: project.fullReport,
-                projectId: id
-            }
-            fullReport = project.fullReport;
-        } else {
-            throw error(400, "Project not found")
-        }
+        fullReport = originaFullReport
     });
 
     async function handlePaste(){
         fullReport = await navigator.clipboard.readText()
         isChanges = true;
-
     };
 
     async function upload(){
-        action.fullReport = fullReport;
-        const res = await fetch(`/manage-projects/report/${id}`, {
+        const res = await fetch(`/manage-projects/${id}/report`, {
             method: "POST",
-            body: JSON.stringify(action)
+            body: fullReport
         });
         
         await goto("/manage-projects")
@@ -72,12 +52,10 @@
 
         if (ctrlDown && vDown) {
             handlePaste();
-
         }
     }
 
     function onKeyup(event: any) {
-
         switch (event.key) {
             case "Meta":
                 ctrlDown = false;
@@ -102,7 +80,7 @@
 
 <svelte:window on:keydown={onKeydown} on:keyup={onKeyup} />
 <main>
-    <div class="header">Submit Project Report for <u>{project.title}</u></div>
+    <div class="header">Submit Project Report for <u>{title}</u></div>
     <div class="description">To submit or edit your full report, copy your project report and paste it here by 
         pressing the paste keybind on your computer (<code>Meta/Command + V</code> for <code>Mac & Control + V</code> for Windows). 
         if you already submitted a report before, you'll see the old one displayed below. If you accidentally
