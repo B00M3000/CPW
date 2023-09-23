@@ -2,19 +2,10 @@
     import { goto } from "$app/navigation";
     import InformationBox from "@/client/components/InformationBox.svelte";
     import tags from "@/lib/tags";
-    import { error } from "@sveltejs/kit";
     import { onMount } from "svelte";
 
-
     export let data;
-    $: ({ project, mentor, id } = data);
-
-    interface Action {
-      action: string;
-      project: ProjectInformation;
-      mentor: MentorInformation;
-      mentorId?: string;
-    }
+    $: ({ project: originalProject, mentor: originalMentor, id } = data);
 
     interface ProjectInformation {
       projectId: string;
@@ -32,18 +23,16 @@
       phoneNumber: string;
     }
 
-
     let action: Action;
-
     
-    let currentProj: ProjectInformation = {
+    let project: ProjectInformation = {
         projectId: "",
         title: "",
         tags: [],
         shortDesc: ""
       };
 
-      let currentMentor: MentorInformation = {
+      let mentor: MentorInformation = {
         mentorId: "",
         firstName: "",
         lastName: "",
@@ -53,46 +42,28 @@
       };
       
       onMount(() => {
-        if(project && mentor) {
-          currentProj = {
-            projectId: project._id,
-            title: project.title,
-            tags: project.tags,
-            shortDesc: project.shortDesc
-          };
-
-          currentMentor = {
-            mentorId: mentor._id,
-            firstName: mentor.firstName,
-            lastName: mentor.lastName,
-            organization: mentor.organization,
-            email: mentor.email,
-            phoneNumber: mentor.phoneNumber,
-          };
-        } else {
-          throw error(500, "No Project Found")
-        }
+        project = originalProject;
+        mentor = originalMentor;
       })
       
       let success = false;
       let errorsMessages: string[] = [];
       async function upload() {
-        action = { ...action, action: "CREATE", currentProj, currentMentor}
-        const numberOfTags= currentProj.tags.length
+        const numberOfTags= project.tags.length
         
-        if(!/.+/.test(currentMentor.firstName)) errorsMessages.push("Please enter the first name of your mentor.");
-        if(!/.+/.test(currentMentor.lastName)) errorsMessages.push("Please enter the last name of your mentor.");
-        if(!/.+/.test(currentMentor.organization)) errorsMessages.push("Please enter the relevant organization your mentor is associated with for your project.");
-        if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(currentMentor.email)) errorsMessages.push("Please enter a valid mentor email address.");
-        if(!/^\+?\d{0,3}(\s|-)?(\d|-| |\(|\))+$/.test(currentMentor.phoneNumber)) errorsMessages.push("Please enter a valid mentor phone number in the form +1 555-555-5555.");
+        if(!/.+/.test(mentor.firstName)) errorsMessages.push("Please enter the first name of your mentor.");
+        if(!/.+/.test(mentor.lastName)) errorsMessages.push("Please enter the last name of your mentor.");
+        if(!/.+/.test(mentor.organization)) errorsMessages.push("Please enter the relevant organization your mentor is associated with for your project.");
+        if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(mentor.email)) errorsMessages.push("Please enter a valid mentor email address.");
+        if(!/^\+?\d{0,3}(\s|-)?(\d|-| |\(|\))+$/.test(mentor.phoneNumber)) errorsMessages.push("Please enter a valid mentor phone number in the form +1 555-555-5555.");
         if(numberOfTags < 1 || numberOfTags > 5) errorsMessages.push("Please select between 1 and 5 tags.");
-        if(currentProj.title.length > 100 && currentProj.title.length < 12) errorsMessages.push("Please enter a project name between 12 and 200 characters");
-        if(currentProj.shortDesc.length < 3) errorsMessages.push("Please enter a short description with at least 100 characters to start. You can always edit it later.")
+        if(project.title.length > 100 && project.title.length < 12) errorsMessages.push("Please enter a project name between 12 and 200 characters");
+        if(project.shortDesc.length < 3) errorsMessages.push("Please enter a short description with at least 100 characters to start. You can always edit it later.")
  
         if(errorsMessages.length == 0){
-          const res = await fetch(`/manage-projects/edit/${id}`, {
+          const res = await fetch(`/manage-projects/${id}/edit`, {
               method: "POST",
-              body: JSON.stringify(action)
+              body: JSON.stringify({ project, mentor })
           });
         } else {
           return;
@@ -108,54 +79,46 @@
 
           <div class="form-group">
             <label for="subject" class="label">Project Title</label>
-            <input type="text" id="subject" name="subject" required  maxlength="120" minlength="5"  bind:value={currentProj.title}>
+            <input type="text" id="subject" name="subject" required  maxlength="120" minlength="5"  bind:value={project.title}>
           </div>
             <div class="form-group">
               <label for="selected" class="label">Select Tags</label>
               {#each Object.entries(tags) as [id, label]}
-                    <input type="checkbox" value = {id} id="selected" class="checkbox" name="selected" bind:group={currentProj.tags}/>
+                    <input type="checkbox" value = {id} id="selected" class="checkbox" name="selected" bind:group={project.tags}/>
                     {label}
                   <br />
                 {/each}
             </div>
-
-
         
           <div class="form-group">
             <label for="mentorFirst" class="label">Mentor First Name</label>
-            <input type="text" id="mentorFirst" name="mentorFirst" required bind:value={currentMentor.firstName}>
+            <input type="text" id="mentorFirst" name="mentorFirst" required bind:value={mentor.firstName}>
           </div>
         
           <div class="form-group">
             <label for="mentorLast" class="label">Mentor Last Name</label>
-            <input type="text" id="mentorLast" name="mentorLast" required bind:value={currentMentor.lastName}>
+            <input type="text" id="mentorLast" name="mentorLast" required bind:value={mentor.lastName}>
           </div>
 
           <div class="form-group">
             <label for="mentorOrg" class="label">Mentor Organization</label>
-            <input type="email" id="mentorOrg" name="mentorOrg" required bind:value={currentMentor.organization}>
+            <input type="email" id="mentorOrg" name="mentorOrg" required bind:value={mentor.organization}>
           </div>
 
           <div class="form-group">
             <label for="mentorEmail" class="label">Mentor Email</label>
-            <input type="email" id="mentorEmail" name="mentorEmail" required bind:value={currentMentor.email}>
+            <input type="email" id="mentorEmail" name="mentorEmail" required bind:value={mentor.email}>
           </div>
 
           <div class="form-group">
             <label for="mentorPhone" class="label">Mentor Phone</label>
-            <input type="text" id="mentorPhone" name="mentorPhone" required bind:value={currentMentor.phoneNumber}>
+            <input type="text" id="mentorPhone" name="mentorPhone" required bind:value={mentor.phoneNumber}>
           </div>
-
 
           <div class="form-group">
             <label for="shortDesc" class="label">Write A Short Description</label>
-            <textarea id="shortDesc" name="shortDesc" rows="3" cols="60" maxlength="200" required bind:value={currentProj.shortDesc}></textarea>
-          </div>
-
-          
-
-
-       
+            <textarea id="shortDesc" name="shortDesc" rows="3" cols="60" maxlength="200" required bind:value={project.shortDesc}></textarea>
+          </div>       
         
       </div>
       <hr>
@@ -194,7 +157,6 @@
               
           </div>
           <div class="info-box-button-submit"> <a data-sveltekit-reload href="/manage-projects" > Got It! </a> </div>
-          
          </div>
         {/if}
       </div>

@@ -12,7 +12,7 @@ const schema = new mongoose.Schema(
   {
     contentType: { type: String, required: true },
     data: { type: Buffer, required: true },
-    desc: { type: String, required: true},
+    desc: { type: String, required: false },
     ownerId: { type: String, required: true },
     size: { type: Number }
   },
