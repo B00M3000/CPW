@@ -9,6 +9,8 @@
     }
     let loading = false;
     let success = false;
+    let resStat: number;
+    let error = false;
     let images: any[] = [];
 
     function toBase64(file: File) {
@@ -40,11 +42,16 @@
               files: encodedFilesAndDesc
           })
       })
-      .then(() => {
-        loading = false;
+
+      loading = false;
+      if(res.ok){
         success = true;
-      })
-    
+      } else {
+        resStat = res.status;
+        error = true;
+      }
+      
+      
       return true;
     }
 
@@ -100,9 +107,9 @@
     <div class="info-box-button-submit"> <a data-sveltekit-reload href="/gallery" > Got It! </a> </div>
   </div> -->
 </div>
-  {#if loading || success}
+  {#if loading || success || error}
     <div class="overlay">
-        {#if loading}
+        {#if loading == true}
           <div class="info-box">
             <div class="loading-container">
                 <div class="loader"></div>
@@ -110,7 +117,7 @@
           </div>
           <div class="loading-text"> <p><i> Images are uploading; please do not refresh this page. </i></p></div>
           
-        {:else if success}
+        {:else if success == true}
           <div class="info-box">
               <InformationBox 
                 backgroundColor="var(--color-green-100)" 
@@ -123,9 +130,22 @@
               
           </div>
           <div class="info-box-button-submit"> <a data-sveltekit-reload href="/gallery" > Got It! </a> </div>
+        {:else if error == true}
+          <div class="info-box">
+            <InformationBox 
+            backgroundColor="var(--color-red-100)" 
+            borderColor="var(--color-red-600)" 
+            textColor="var(--color-red-600)" 
+            headingColor="var(--color-red-900)" 
+            heading="Invalid Inputs" 
+            text={`Error: ${resStat}`}
+          />
+            
+        </div>
+        <div class="info-box-button-submit"> <button on:click={() => {success = false; loading = false; error = false}} > Ok </button> </div>
         {/if}  
     </div>
-  {/if}
+{/if}
   
 <style lang="scss">
     #project {
