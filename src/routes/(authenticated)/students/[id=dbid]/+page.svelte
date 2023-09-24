@@ -30,7 +30,7 @@
 
 
 <style lang="scss">
-        img {
+    img {
         border-radius: 50%;
         width: 60px;
         height: 60px;
@@ -50,7 +50,7 @@
     }
 
     .profile-picture {
-        flex-shrink: 0; /* Prevent the image from shrinking */
+        flex-shrink: 0; 
     }
 
     .title {
