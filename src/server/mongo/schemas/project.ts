@@ -22,7 +22,7 @@ const schema = new mongoose.Schema(
     fullReport: { type: String, default: "" },
     underReview: { type: Boolean, required: true },
     imageIds: { type: String, default: [] },
-    publish: { type: String, default: false }
+    publish: { type: Boolean, default: false }
   },
   { timestamps: true },
 );

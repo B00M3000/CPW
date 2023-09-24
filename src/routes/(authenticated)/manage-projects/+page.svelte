@@ -20,20 +20,20 @@
             method: "POST",
             body: JSON.stringify({
                 action: "DELETE",
-                project: project
+                projectId: project._id,
+                mentorId: project.mentorId
             })
         });
 
         location.reload();
     }
 
-    
     async function publish(project: Project){
         const res = await fetch('/manage-projects', {
             method: "POST",
             body: JSON.stringify({
                 action: "PUBLISH",
-                project: project
+                projectId: project._id
             })
         });
 
