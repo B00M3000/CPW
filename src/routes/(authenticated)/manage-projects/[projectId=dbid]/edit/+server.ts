@@ -11,7 +11,7 @@ export async function POST({ request  }) {
       ...mentor
     })
 
-    await ProjectSchema.findOneAndUpdate({ _id: project.id }, {
+    await ProjectSchema.findOneAndUpdate({ _id: project._id }, {
       ...project
     })
 

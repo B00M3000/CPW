@@ -4,12 +4,12 @@
     import { onMount } from "svelte";
 
     export let data;
-    $: ({ project: { title, fullReport: originaFullReport }, id } = data);
+    $: ({ project: { title, fullReport: originaFullReport }, projectId } = data);
     let fullReport: string = ""; 
 
     let ctrlDown = false;
     let vDown = false;
-    let isChanges = false;
+    let isChanged = false;
 
     onMount(() => { 
         fullReport = originaFullReport
@@ -17,68 +17,56 @@
 
     async function handlePaste(){
         fullReport = await navigator.clipboard.readText()
-        isChanges = true;
+        isChanged = true;
     };
 
     async function upload(){
-        const res = await fetch(`/manage-projects/${id}/report`, {
+        const res = await fetch(`/manage-projects/${projectId}/report`, {
             method: "POST",
-            body: fullReport
+            body: JSON.stringify({ fullReport })
         });
         
         await goto("/manage-projects")
     }
 
-    function onKeydown(event: any) {
-       
-        if (event.repeat) return;
-        switch (event.key) {
-            case "Meta":
-                ctrlDown = true;
-                event.preventDefault;
-                break; 
+    function onKeydown(event: KeyboardEvent) {
+        const { repeat, key } = event;
 
-            case "Control":
-                ctrlDown = true;
-                event.preventDefault();
-                break;
+        if (repeat) return;
 
-            case "v":
-                vDown = true;
-                event.preventDefault();
-                break;
+        if (key == "Meta" || key == "Control") {
+            ctrlDown = true;
+            event.preventDefault();
         }
 
+        if(key == "v") {
+            vDown = true;
+            event.preventDefault();
+        }
 
         if (ctrlDown && vDown) {
             handlePaste();
         }
     }
 
-    function onKeyup(event: any) {
-        switch (event.key) {
-            case "Meta":
-                ctrlDown = false;
-                event.preventDefault;
-                break; 
+    function onKeyup(event: KeyboardEvent) {
+        const { key } = event;
 
-            case "Control":
-                ctrlDown = false;
+        if (key == "Meta" || key == "Control") {
+            ctrlDown = false;
+            event.preventDefault();
+        }
 
-                event.preventDefault();
-                break;
-
-            case "h":
-                vDown = false;
-
-                event.preventDefault();
-                break;
+        if(key == "v") {
+            vDown = false;
+            event.preventDefault();
         }
     }
 
 </script>
 
 <svelte:window on:keydown={onKeydown} on:keyup={onKeyup} />
+
 <main>
     <div class="header">Submit Project Report for <u>{title}</u></div>
     <div class="description">To submit or edit your full report, copy your project report and paste it here by 
@@ -90,7 +78,7 @@
 
     <div> 
         <button class="cancel" on:click={ () =>  goto("/manage-projects")}> Cancel </button>
-        {#if isChanges}
+        {#if isChanged}
             <button on:click={upload}> Submit </button>
         {/if}
     </div>

@@ -5,10 +5,9 @@
     import { onMount } from "svelte";
 
     export let data;
-    $: ({ project: originalProject, mentor: originalMentor, id } = data);
+    $: ({ project: originalProject, mentor: originalMentor, projectId } = data);
 
     interface ProjectInformation {
-      projectId: string;
       title: string;
       tags: string[];
       shortDesc: string;
@@ -22,55 +21,52 @@
       email: string;
       phoneNumber: string;
     }
-
-    let action: Action;
     
     let project: ProjectInformation = {
-        projectId: "",
-        title: "",
-        tags: [],
-        shortDesc: ""
-      };
+      title: "",
+      tags: [],
+      shortDesc: ""
+    };
 
-      let mentor: MentorInformation = {
-        mentorId: "",
-        firstName: "",
-        lastName: "",
-        organization: "",
-        email: "",
-        phoneNumber: "",
-      };
+    let mentor: MentorInformation = {
+      mentorId: "",
+      firstName: "",
+      lastName: "",
+      organization: "",
+      email: "",
+      phoneNumber: "",
+    };
       
-      onMount(() => {
-        project = originalProject;
-        mentor = originalMentor;
-      })
+    onMount(() => {
+      project = originalProject;
+      mentor = originalMentor;
+    })
+    
+    let success = false;
+    let errorsMessages: string[] = [];
+    async function upload() {
+      const numberOfTags= project.tags.length
       
-      let success = false;
-      let errorsMessages: string[] = [];
-      async function upload() {
-        const numberOfTags= project.tags.length
-        
-        if(!/.+/.test(mentor.firstName)) errorsMessages.push("Please enter the first name of your mentor.");
-        if(!/.+/.test(mentor.lastName)) errorsMessages.push("Please enter the last name of your mentor.");
-        if(!/.+/.test(mentor.organization)) errorsMessages.push("Please enter the relevant organization your mentor is associated with for your project.");
-        if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(mentor.email)) errorsMessages.push("Please enter a valid mentor email address.");
-        if(!/^\+?\d{0,3}(\s|-)?(\d|-| |\(|\))+$/.test(mentor.phoneNumber)) errorsMessages.push("Please enter a valid mentor phone number in the form +1 555-555-5555.");
-        if(numberOfTags < 1 || numberOfTags > 5) errorsMessages.push("Please select between 1 and 5 tags.");
-        if(project.title.length > 100 && project.title.length < 12) errorsMessages.push("Please enter a project name between 12 and 200 characters");
-        if(project.shortDesc.length < 3) errorsMessages.push("Please enter a short description with at least 100 characters to start. You can always edit it later.")
- 
-        if(errorsMessages.length == 0){
-          const res = await fetch(`/manage-projects/${id}/edit`, {
-              method: "POST",
-              body: JSON.stringify({ project, mentor })
-          });
-        } else {
-          return;
-        }
-          
-        success = true;
+      if(!/.+/.test(mentor.firstName)) errorsMessages.push("Please enter the first name of your mentor.");
+      if(!/.+/.test(mentor.lastName)) errorsMessages.push("Please enter the last name of your mentor.");
+      if(!/.+/.test(mentor.organization)) errorsMessages.push("Please enter the relevant organization your mentor is associated with for your project.");
+      if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(mentor.email)) errorsMessages.push("Please enter a valid mentor email address.");
+      if(!/^\+?\d{0,3}(\s|-)?(\d|-| |\(|\))+$/.test(mentor.phoneNumber)) errorsMessages.push("Please enter a valid mentor phone number in the form +1 555-555-5555.");
+      if(numberOfTags < 1 || numberOfTags > 5) errorsMessages.push("Please select between 1 and 5 tags.");
+      if(project.title.length > 100 && project.title.length < 12) errorsMessages.push("Please enter a project name between 12 and 200 characters");
+      if(project.shortDesc.length < 3) errorsMessages.push("Please enter a short description with at least 100 characters to start. You can always edit it later.")
+
+      if(errorsMessages.length == 0){
+        const res = await fetch(`/manage-projects/${projectId}/edit`, {
+            method: "POST",
+            body: JSON.stringify({ project, mentor })
+        });
+      } else {
+        return;
       }
+        
+      success = true;
+    }
 </script>
 
 <main class="formbar">

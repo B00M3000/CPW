@@ -76,7 +76,7 @@
                         {/if}
 
                         <button class="edit-button" on:click={() => goto(`manage-projects/${project._id}/edit`)}>
-                            Edit
+                            Edit Details
                         </button>
                         <button class="fullreport-button" on:click={()=> goto(`manage-projects/${project._id}/report`)}>
                             {#if project.fullReport == ""} Add {:else} Edit {/if} Full Report
@@ -160,6 +160,10 @@
         cursor: pointer;
         font-size: 16px;
         transition: background-color 0.3s ease;
+    }
+
+    button:disabled {
+        cursor: auto;
     }
 
     button:hover {

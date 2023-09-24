@@ -2,10 +2,10 @@ import { ProjectSchema } from "@/server/mongo/schemas/project";
 import { stringifyObjectId } from "@/lib/utils";
 import { MentorSchema } from "@/server/mongo/schemas/mentor";
 
-export const load = async ({ params }) => {
-    const id = params.id;
-    const project = stringifyObjectId(await ProjectSchema.findById(id).lean());
+export const load = async ({ params, parent }) => {
+    const { project } = await parent();
+
     const mentor = stringifyObjectId(await MentorSchema.findById(project?.mentorId).lean())
 
-    return { project, mentor, id };
+    return { mentor };
 }
