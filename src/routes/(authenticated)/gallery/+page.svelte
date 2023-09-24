@@ -1,5 +1,4 @@
 <script lang="ts">
-    import ImageUpload from "@/client/components/ImageUpload.svelte";
     import { bytesToString } from "@/lib/utils.js";
     import AssetCard from "@/client/components/AssetCard.svelte";
     import { goto } from "$app/navigation";

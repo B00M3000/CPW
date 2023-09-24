@@ -14,3 +14,7 @@ export function bytesToString(bytes: number){
     if(bytes < (1000 * 1000)) return `${Math.ceil(bytes / 1000)} KB`;
     if(bytes < (1000 * 1000 * 1000)) return `${Math.ceil(bytes / (1000 * 1000))} MB`;
 }
+
+export const zip = (a: unknown[], b: unknown[]) => a.map((k, i) => [k, b[i]]);
+
+export const sum = (a: number[]) => a.reduce((a, b) => a + b, 0);
