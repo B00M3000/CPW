@@ -1,9 +1,10 @@
+import { AssetSchema } from "@/server/mongo/schemas/asset.js";
 import { ProjectSchema } from "@/server/mongo/schemas/project";
-import { user } from "@/client/stores/user";
 
-export async function load(){
+export async function load({ locals }){
 
-    const projectCountPublished = await ProjectSchema.count({ publish: true, studentId: user.id });
-    const projectCountNotPublished = await ProjectSchema.count({ publish: false, studentId: user.id})
-    return { projectCountPublished, projectCountNotPublished };
+    const projectCount = await ProjectSchema.count({ studentId: locals.user?.id });
+    const projectCountNotPublished = await ProjectSchema.count({ publish: false, studentId: locals.user?.id})
+    const assetCount =  await AssetSchema.count({ ownderId: locals.user?.id })
+    return { projectCount, projectCountNotPublished, assetCount};
 }

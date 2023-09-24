@@ -59,7 +59,7 @@
     }
 </script>
 
-<form bind:this={form} on:submit={handleSubmit}>
+<form class="container" bind:this={form} on:submit={handleSubmit}>
   <h1>Image Submission</h1>
   <input type="file" name="images" accept="image/png,image/jpeg,image/gif" multiple={true} on:change={mapFiles} required/>
 

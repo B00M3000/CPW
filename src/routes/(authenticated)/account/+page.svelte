@@ -3,8 +3,8 @@
     export let data;
 
     const user = data.user;
-
-    console.log(user)
+    $: ({ projectCountNotPublished, projectCount, assetCount } = data)
+    
 
     let totalProjects = 15
     let pendingProjects = 20
@@ -16,11 +16,11 @@
         <div class="account-details">
             <div class="profile">
                 <div class="profile-picture">
-                    <img src={user.picture} alt="pfp">
+                    <img src={user?.picture} alt="pfp">
                 </div>
                 <div class="student-info">
-                    <h1 class="title">{user.name}</h1>
-                    <h1 class="title">{user.email}</h1>
+                    <h1 class="title">{user?.name}</h1>
+                    <h1 class="title">{user?.email}</h1>
                     <h2 class="title"> {AccountType[user.accountType]} - {AccessLevel[user.accessLevel]}</h2>
                 </div>
             </div>
@@ -28,17 +28,17 @@
           
         <div class="panel">
           <h2>Projects</h2>
-          <p>Total projects: {totalProjects}</p>
+          <p>Total projects: {projectCount}</p>
         </div>
       
         <div class="panel">
           <h2>Pending Projects</h2>
-          <p>Pending projects: {pendingProjects}</p>
+          <p>Pending projects: {projectCountNotPublished}</p>
         </div>
 
         <div class="panel">
             <h2> Photos </h2>
-            <p> Number of Photos: {pendingProjects}</p>
+            <p> Number of Photos: {assetCount}</p>
         </div>
         
       
