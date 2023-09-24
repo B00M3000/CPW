@@ -3,6 +3,7 @@
     import UserIconMenu from "@/client/components/UserIconMenu.svelte";
 
     import { AccessLevel, AccountType } from "@/lib/enums";
+    import Credits from "@/client/components/Credits.svelte";
 </script>
 
 <nav>
@@ -27,6 +28,7 @@
         {:else}
             <a class="login-button" href="/login">Log In</a>
         {/if}
+        <Credits />
     </div>
 </nav>
 
