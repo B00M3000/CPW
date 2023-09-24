@@ -1,4 +1,5 @@
 import { AssetSchema, type AssetDocument } from '@/server/mongo/schemas/asset'
+import { ProjectSchema } from '@/server/mongo/schemas/project.js';
 import { error, json } from '@sveltejs/kit';
 
 export async function GET({ params: { id }, url, setHeaders }) {
@@ -15,5 +16,6 @@ export async function GET({ params: { id }, url, setHeaders }) {
 
 export async function DELETE({ params: { id }}) {
     const res = await AssetSchema.deleteOne({ _id: id });
+    ProjectSchema.findOneAndUpdate({}, { $pull: { imageIds: { $in: [ id ]} } })
     return json({ message: "Asset has been deleted sucessfully!"}, { status: 200 });
 }
