@@ -12,7 +12,18 @@
     <section id="primary">
         <h1 class="title"><strong>Commonwealth School Project Week Database</strong></h1>
         <p class="subtitle">Welcome to the Commonwealth School Project Week collection.</p>
-        <a href="/projects" class="btn">View Completed Projects</a>
+        
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Search projects...">
+            <button class="search-button">Search</button>
+            
+        </div>
+        <div class="redirects">
+            <a class="btn" on:click={() => goto("/projects")}>View Completed Projects</a>
+            <a class="btn" on:click={() => goto("/projects")}>Browse Photos</a>
+        </div>
+        
+        
         {#if !$user}
         <a href="/login" class="btn login-button">Log In</a>
         {/if}
@@ -73,7 +84,7 @@
 
     .btn {
         display: inline-block;
-        background-color: var(--color-red-600);
+        background-color: var(--color-blue-grey-400);
         color: white;
         padding: 15px 30px;
         border-radius: 5px;
@@ -84,7 +95,7 @@
     }
 
     .btn:hover {
-        background-color: var(--color-red-400);
+        background-color: var(--color-blue-grey-200);
     }
 
     .login-button {
@@ -93,9 +104,7 @@
 
     .title {
         font-size: 2.5rem;
-        padding-top: 1rem;
         margin-bottom: 0.5rem;
-        text-align: center;
     }
 
     .subtitle {
@@ -119,10 +128,49 @@
         
     }
     .proj-container {
-        background-color: var(--color-blue-grey-200);
+        background-color: white;
+        border: 1px solid var(--color-blue-grey-400);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         margin: 3rem;
         margin-bottom: 2rem;
         padding: 1rem;
         border: black solid 3px;
+    }
+    .search-bar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 45vw;
+        margin: 20px 0;
+    }
+
+    .search-input {
+        width: 55vw;
+        padding: 15px;
+        font-size: 1rem;
+        border: 1px solid var(--color-blue-600);
+        border-radius: 5px 0 0 5px;
+        outline: none;
+    }
+
+    .search-button {
+        background-color: var(--color-blue-500);
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+    }
+
+    .search-button:hover {
+        background-color: var(--color-blue-400);
+    }
+
+
+    .redirects{
+        display: flex;
+        flex-direction: row;
     }
 </style>
