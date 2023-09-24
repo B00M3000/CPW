@@ -33,8 +33,8 @@ export async function GET({ url, cookies, setHeaders }) {
   let accessLevel;
   let accountType;
   if(ghost) {
-    if(ghost.accessLevel) accessLevel = ghost.accessLevel
-    if(ghost.accountType) accountType = ghost.accountType
+    accessLevel = ghost.accessLevel;
+    accountType = ghost.accountType;
     ghost.deleteOne({ email: google_user.email });
   }
 
