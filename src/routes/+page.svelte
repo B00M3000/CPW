@@ -10,6 +10,7 @@
   let search: string;
 </script>
 
+<div class="bg-img"></div>
 <main>
     <div class="search-title">
         <h1 class="title"><strong>Commonwealth School Project Week Database</strong></h1>
@@ -41,15 +42,28 @@
 
 </main>
 
-<style lang="scss">
 
+<style lang="scss">
+    .bg-img{
+        background-image: url("/assets/boston.avif");
+        position: fixed;
+        height: 100vh;
+        width: 100%;
+        top: 0;
+        background-size: cover;
+        background-position: center;
+        filter: blur(8px) grayscale(10%);
+        z-index: -1;
+
+    }
+    // }
     .search-title{
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
        
-        background: linear-gradient(0deg, var(--color-blue-grey-300) 1%, transparent);
+       // background: linear-gradient(0deg, var(--color-blue-grey-300) 1%, transparent);
         width: calc(100vw - (100vw - 100%));
         padding: 50px 0px;
     }
@@ -155,10 +169,6 @@
     }
 
 
-    .primary {
-        background-color: #f0f0f0;
-        padding: 20px;
-    }
 
     .subtitle {
         font-size: 1.5rem;
@@ -169,7 +179,7 @@
 
     .primary {
         padding: 20px;
-        background-color: var(--color-blue-grey-300);
+        //background-color: var(--color-blue-grey-300);
 
     }
 
