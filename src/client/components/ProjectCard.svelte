@@ -32,22 +32,20 @@
     </div>
 
     <span class="short-description">{project.shortDesc}</span>
-
-    <button on:click={gotoProject}>Learn More</button>
+    <div class="button-container">
+        <button on:click={gotoProject}>Learn More</button>
+    </div>
 </div>
 
 <style lang="scss">
     .card {
-        display: inline-flex;
+        display: flex;
         flex-direction: column;
-        align-items: center;
-
+        width: 410px;
+        padding: 0.75rem; 
         background-color: aliceblue;
-
-        margin: 1rem;
-        padding: 2rem;
-
-        border-radius: 2rem;
+        border-radius: 0.5em;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 
         .title {
             font-size: 26px;
@@ -87,6 +85,7 @@
             text-overflow: ellipsis;
             overflow-y: hidden;
             display: inline-flex;
+            padding: 5px 0px;
 
             &::before {
                 content: '';
@@ -104,6 +103,7 @@
         button {
             display: inline-flex;
             align-items: center;
+            width: 8rem;
             justify-content: center;
             border-radius: 0.5rem;
             color: white;
@@ -111,6 +111,12 @@
             border: none;
             cursor: pointer;
             padding: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .button-container{
+            display: flex;
+            justify-content: center;;
         }
     }
 </style>    
