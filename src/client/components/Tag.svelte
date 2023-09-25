@@ -14,9 +14,11 @@
 
         margin: 0.25em;
 
-        background-color: lightcyan;
+        background-color: lightblue;
 
         border-radius: 0.2em;
+
+        
     }
 
     .text {

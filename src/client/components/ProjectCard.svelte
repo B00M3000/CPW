@@ -12,7 +12,7 @@
     <h2><a href="{`/projects/${project._id}`}">{project.title}</a></h2>
     
     <div class="field">
-        <span class="card-gap">By: <StudentCard student={project.student}/> </span>
+        <span class="card-gap">Student: <StudentCard student={project.student}/> </span>
         <span class="card-gap">Mentor: <MentorCard mentor={project.mentor}/> </span>
         
     </div>
@@ -52,9 +52,10 @@
         flex-direction: column;
         width: 410px;
         padding: 0.75rem; 
-        background-color: var(--color-blue-grey-200);
+        background-color: aliceblue;
         border-radius: 0.5em;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); 
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        outline: 2px solid black;
     }
 
     .field {
@@ -75,6 +76,7 @@
         word-wrap: break-word;
         color:  #000000;
         margin: 0.3rem;
+        text-align: center;
     }
 
     .card-gap {
@@ -94,6 +96,7 @@
         gap: 0.2rem; 
         margin-top: 1.5rem;
         margin-bottom: 0.6rem; 
+        justify-content: center ;
     }
 
 

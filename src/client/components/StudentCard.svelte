@@ -25,6 +25,7 @@
         background-color: rgb(113, 151, 201);
 
         border-radius: 0.2em;
+        
     }
 
     .text {
