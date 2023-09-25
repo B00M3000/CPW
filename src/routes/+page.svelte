@@ -8,19 +8,24 @@
   $: ({ projects } = data);
 
   let search: string;
+
+  async function gotoSearch(event: Event) {
+    event.preventDefault();
+    await goto(`/projects?yearUpper=2023&yearLower=2019&query=${search || ''}`)
+  }
 </script>
 
 <div class="bg-img"></div>
 <main>
     <div class="search-title">
-        <h1 class="title"><strong>Commonwealth School Project Week Database</strong></h1>
-        <div class="search-bar">
+        <h1 class="title"><strong>Commonwealth Project Week</strong></h1>
+        <form class="search-bar" on:submit={gotoSearch}>
             <input type="text" class="search-input" placeholder="Search projects..." bind:value={search}>
-            <button class="search-button" on:click={() => goto(`/projects?yearUpper=2023&yearLower=2019&query=${search}`)}>Search</button>
-        </div>
+            <button class="search-button" type="submit">Search</button>
+        </form>
         <div class="redirects">
-            <a class="btn" on:click={() => goto("/projects")}>View Completed Projects</a>
-            <a class="btn" on:click={() => goto("/gallery")}>Browse Photos</a>
+            <a class="btn" href="/projects">View Completed Projects</a>
+            <a class="btn" href="/gallery">Browse Photos</a>
         </div>
     </div>
     <section class="primary">
@@ -52,16 +57,21 @@
         top: 0;
         background-size: cover;
         background-position: center;
-        filter: blur(8px) grayscale(10%);
+        filter: blur(8px) grayscale(20%);
         z-index: -1;
 
     }
-    // }
     .search-title{
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+
+        color: white;
+        
+        .title {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
        
        // background: linear-gradient(0deg, var(--color-blue-grey-300) 1%, transparent);
         width: calc(100vw - (100vw - 100%));
@@ -93,7 +103,6 @@
         transition: background-color 0.3s;
         margin: 10px;
         cursor: pointer;
-        outline: 2px black solid;
     }
 
     .btn:hover {
