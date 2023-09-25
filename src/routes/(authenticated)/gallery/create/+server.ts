@@ -44,7 +44,7 @@ export async function POST({ request, locals }) {
             data,
             desc: image.desc?.slice(0, USER_DESC_LIMIT_IN_CHAR),
             ownerId: locals.user.id,
-            size: image.image.size
+            size: data.byteLength
         })
 
         const res = await schema.save();
