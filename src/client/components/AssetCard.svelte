@@ -39,7 +39,6 @@
   .asset-image-container {
     width: 400px; 
     height: 225px;
-    background-color: #000;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -44,7 +44,7 @@
         <div class="asset">
             <img src="/assets/{asset._id}"/>
             <span>{asset.desc || "No Description"}</span>
-            <span>{bytesToString(asset.size * 1000)}</span>
+            <span>{bytesToString(asset.size)}</span>
             <button on:click={() => deleteAsset(asset._id)}>Delete</button>
         </div>
         {:else}
