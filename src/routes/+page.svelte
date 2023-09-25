@@ -30,27 +30,25 @@
     </div>
     <section class="primary">
         <p class="subtitle">Welcome to the Commonwealth School Project Week collection</p>
-      
+        
         {#if !user}
-          <a href="/login" class="login-button">Log In</a>
+            <a href="/login" class="login-button">Log In</a>
         {/if}
 
         <div class="proj-container">
-          <h2 class="section-title">Here are some projects done by Commonwealth Students:</h2>
-          <div id="projects" class="project-list">
+            <h2 class="section-title">Here are some projects done by Commonwealth Students:</h2>
+            <div id="projects" class="project-list">
             {#each projects as project}
-              <ProjectCard {project} />
+                <ProjectCard {project} />
             {/each}
-          </div>
+            </div>
         </div>
-      </section>
-
+    </section>
 </main>
 
 
 <style lang="scss">
     .bg-img{
-        background-image: url("/assets/boston.avif");
         position: fixed;
         height: 100vh;
         width: 100%;
@@ -59,7 +57,7 @@
         background-position: center;
         filter: blur(8px) grayscale(20%);
         z-index: -1;
-
+        background-image: url("/assets/boston.avif");
     }
     .search-title{
         display: flex;

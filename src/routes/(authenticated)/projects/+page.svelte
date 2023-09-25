@@ -18,7 +18,6 @@
     let selected: string[];
 
     function syncFields(searchParams: URLSearchParams){
-        console.log(searchParams)
         query = searchParams?.get("query") || "";
         yearUpper = ((yu: string | null) => yu ? parseInt(yu) : undefined || new Date().getFullYear())(searchParams?.get("yearUpper"));
         yearLower = ((yl: string | null) => yl ? parseInt(yl) : undefined || 2019)(searchParams?.get("yearLower"));
