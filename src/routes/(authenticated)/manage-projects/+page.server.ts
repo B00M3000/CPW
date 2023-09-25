@@ -9,7 +9,7 @@ export const load: PageServerLoad = async ({ locals }) => {
     const student = stringifyObjectId(await UserSchema.findById(studentId).lean())
     const projects = (await ProjectSchema.find({studentId}).lean()).map(stringifyObjectId).map(p => ({ ...p, student })) || [];
     const inflatedProjects = await Promise.all(projects.map(injectMentor));
-    return { projects }
+    return { projects };
 }
 
 async function injectMentor(project: any) {
