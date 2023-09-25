@@ -29,7 +29,7 @@ export async function load({ url }) {
     let cachedMentors: any = {};
 
     async function injectStudentAndMentor(project: any) {
-        project.student = cachedStudents[project.studentId] || stringifyObjectId(await UserSchema.findById(project.studentId, 'firstName lastName').lean());
+        project.student = cachedStudents[project.studentId] || stringifyObjectId(await UserSchema.findById(project.studentId, 'firstName lastName picture').lean());
         project.mentor = cachedMentors[project.mentorId] || stringifyObjectId(await MentorSchema.findById(project.mentorId, 'firstName lastName').lean());
         return project;
     }
@@ -51,7 +51,7 @@ export async function load({ url }) {
     const studentSearch = searchParams.get('studentSearch');
     if(studentSearch){
         const studentRegex = buildRegex(studentSearch.split(" "))
-        const students = (await UserSchema.find({ name: studentRegex }, 'firstName lastName').lean())?.map(stringifyObjectId);
+        const students = (await UserSchema.find({ name: studentRegex }, 'firstName lastName picture').lean())?.map(stringifyObjectId);
         if(students.length > 0){
             students.forEach(s => cachedMentors[s._id] = s)
             dbQuery.studentId = { $in: students.map(s => s._id)}

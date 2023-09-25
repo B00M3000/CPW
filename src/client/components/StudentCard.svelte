@@ -1,30 +1,46 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import type { Student } from '@/interfaces/project';
 
     export let student: Student;
+
+    async function gotoStudent() {
+        await goto(`/students/${student._id}`)
+    }
 </script>
 
-<div class="student-card">
+<button class="student-card" on:click={gotoStudent}>
     {#if student}
-        <a href={`/students/${student._id}`} class="text">{student.firstName} {student.lastName}</a> 
+        <img src={student.picture}>
+        <span class="text">{student.firstName} {student.lastName}</span> 
     {:else}
         <span class="text">Student Not Found!</span>
     {/if}
-</div>
+</button>
 
-<style>
+<style lang="scss">
+    img {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+    }   
+
     .student-card {
+        cursor: pointer;
+
         display: inline-flex;
         
         padding: 0.3em;
 
         font-size: large;
 
-        margin: -0.1em;
+        background-color: var(--color-blue-grey-200);
 
-        background-color: rgb(113, 151, 201);
+        border-radius: 2rem;
 
-        border-radius: 0.2em;
+        gap: 0.2rem;
+
+        border: none;
     }
 
     .text {

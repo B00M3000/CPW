@@ -1,30 +1,39 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import type { Mentor } from '@/interfaces/project';
 
     export let mentor: Mentor;
+
+    async function gotoMentor() {
+        await goto(`/mentor/${mentor._id}`);
+    }
 </script>
 
-<div class="mentor-card">
+<button class="mentor-card" on:click={gotoMentor}>
     {#if mentor}
-        <a href={`/mentor/${mentor._id}`} class="text">{mentor.firstName} {mentor.lastName}</a> 
+        <span class="text">{mentor.firstName} {mentor.lastName}</span> 
     {:else}
         <span class="text">Mentor Not Found!</span>
     {/if}
-</div>
+</button>
 
 <style>
     .mentor-card {
+        cursor: pointer;
+
         display: inline-flex;
         
         padding: 0.3em;
 
         font-size: large;
 
-        margin: -0.1em;
+        background-color: var(--color-blue-grey-200);
 
-        background-color: rgb(113, 151, 201);
+        border-radius: 2rem;
 
-        border-radius: 0.2em;
+        gap: 0.2rem;
+
+        border: none;
     }
 
     .text {

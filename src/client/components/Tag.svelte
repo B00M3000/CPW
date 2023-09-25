@@ -14,7 +14,7 @@
 
         margin: 0.25em;
 
-        background-color: lightcyan;
+        background-color: lightskyblue;
 
         border-radius: 0.2em;
     }
