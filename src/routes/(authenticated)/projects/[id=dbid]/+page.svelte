@@ -10,63 +10,57 @@
 </script>
 
 
-  <main>
-    <div class="sidebar">
-        <h1>{project?.title}</h1>
-        <h3> Mentor: <MentorCard {mentor} /> </h3>
-        <h3> Completed By: <StudentCard {student} /> </h3>
-        <h3>Description: </h3>
-        <span> {project?.shortDesc}</span>
+<main>
+  <div class="sidebar">
+      <h1>{project?.title}</h1>
+      <h3>Mentor: <MentorCard {mentor} /> </h3>
+      <h3>Completed By: <StudentCard {student} /> </h3>
+      <h3>Description: </h3>
+      <span> {project?.shortDesc}</span>
 
-        <h3>Tags</h3>
-        {#each project.tags as tag}
-            <Tag text={tags[tag]} />
-        {/each}
+      <h3>Tags</h3>
+      {#each project.tags as tag}
+          <Tag text={tags[tag]} />
+      {/each}
+  </div>
 
-    </div>
-  
-    <div class="content">
-        {#if project?.fullReport.length > 5}
-            <p>{project?.fullReport}</p>
-        {:else}
-            <h1> Sorry, no report has been published for this project.</h1>
-        {/if}
-    </div>
-  </main>
+  <div class="content">
+      {#if project?.fullReport.length > 5}
+          <div class="report">{project?.fullReport}</div>
+      {:else}
+          <h1> Sorry, no report has been published for this project.</h1>
+      {/if}
+  </div>
+</main>
 
 
-  <style>
-    main {
-      display: flex;
-      max-height: calc(100vh - var(--nav-bar-height));
-      overflow: hidden;
-    }
-  
+<style lang="scss">
+  main {
+    display: flex;
+
     .sidebar {
-      width: 400px;
-      flex: 0 0 450px;
-      height: calc(100vh - var(--nav-bar-height));
+      display: flex;
+      flex-direction: column;
+      
+      width: 30vw;
+      height: 100%;
       background-color: #f0f0f0; 
-      z-index: 0;
-      word-break: break-all;
+      word-wrap: break-word;
       padding: 25px;
     }
 
+    .content {
+      width: auto;
+      padding: 20px; 
 
-    p {
+      .report {
         white-space: pre-wrap; 
         word-break: break-word; 
         font-size: 16px;
         background-color: #f4f4f4;
-        padding: 10px;
+        padding: 1rem;
         border-radius: 5px;
+      }
     }
-  
-    .content {
-      padding: 20px; 
-      min-width: auto;
-      overflow-y: auto;
-      max-height: calc(100vh - var(--nav-bar-height));
-    }
-  </style>
-  
+  }
+</style>
