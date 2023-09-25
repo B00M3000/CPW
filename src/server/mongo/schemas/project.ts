@@ -21,7 +21,7 @@ const schema = new mongoose.Schema(
     shortDesc: { type: String, required: true },
     fullReport: { type: String, default: "" },
     underReview: { type: Boolean, required: true },
-    imageIds: { type: String, default: [] },
+    imageIds: { type: [String], default: [] },
     publish: { type: Boolean, default: false }
   },
   { timestamps: true },
