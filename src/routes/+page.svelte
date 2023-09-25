@@ -6,60 +6,53 @@
   export let data;
 
   $: ({ projects } = data);
+
+  let search: string;
 </script>
 
 <main>
-    <section id="primary">
+    <div class="search-title">
         <h1 class="title"><strong>Commonwealth School Project Week Database</strong></h1>
-        <p class="subtitle">Welcome to the Commonwealth School Project Week collection.</p>
-        
         <div class="search-bar">
-            <input type="text" class="search-input" placeholder="Search projects...">
-            <button class="search-button">Search</button>
-            
+            <input type="text" class="search-input" placeholder="Search projects..." bind:value={search}>
+            <button class="search-button" on:click={() => goto(`/projects?yearUpper=2023&yearLower=2019&query=${search}`)}>Search</button>
         </div>
         <div class="redirects">
             <a class="btn" on:click={() => goto("/projects")}>View Completed Projects</a>
-            <a class="btn" on:click={() => goto("/projects")}>Browse Photos</a>
+            <a class="btn" on:click={() => goto("/gallery")}>Browse Photos</a>
         </div>
-        
-        
-        {#if !$user}
-        <a href="/login" class="btn login-button">Log In</a>
+    </div>
+    <section class="primary">
+        <p class="subtitle">Welcome to the Commonwealth School Project Week collection</p>
+      
+        {#if !user}
+          <a href="/login" class="login-button">Log In</a>
         {/if}
-    </section>
 
-    <div class="scroll-down">
-        <span>Scroll down to view more...</span>
-        <img src="/assets/scroll-down.png" alt="Scroll Down Icon">
-    </div>
-
-    <div class="proj-container">
-        <h2 class="section-title">Here are some projects done by Commonwealth Students:</h2>
-        <div id="projects" class="project-list">
+        <div class="proj-container">
+          <h2 class="section-title">Here are some projects done by Commonwealth Students:</h2>
+          <div id="projects" class="project-list">
             {#each projects as project}
-                <ProjectCard {project} />
+              <ProjectCard {project} />
             {/each}
+          </div>
         </div>
-    </div>
+      </section>
+
 </main>
 
 <style lang="scss">
-    main {
+
+    .search-title{
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+       
+        background: linear-gradient(0deg, var(--color-blue-grey-300) 1%, transparent);
+        width: calc(100vw - (100vw - 100%));
+        padding: 50px 0px;
     }
-
-    #primary {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: calc(100vh - var(--nav-bar-height));
-    } 
-
     .scroll-down {
         position: relative;
         bottom: 7em;
@@ -74,17 +67,10 @@
         }
     }
 
-    .section-title {
-        font-size: 1.8rem;
-        font-weight: bold;
-        margin-top: 2em;
-        margin-bottom: 1em;
-        text-align: center;
-    }
 
     .btn {
         display: inline-block;
-        background-color: var(--color-blue-grey-400);
+        background-color: transparent;
         color: white;
         padding: 15px 30px;
         border-radius: 5px;
@@ -92,19 +78,27 @@
         font-size: 1.2rem;
         transition: background-color 0.3s;
         margin: 10px;
+        cursor: pointer;
+        outline: 2px black solid;
     }
 
     .btn:hover {
-        background-color: var(--color-blue-grey-200);
+        background-color: var(--color-blue-grey-400);
     }
 
     .login-button {
-        background-color: var(--color-blue-600);
+        background-color: var(--color-blue-500);
+    }
+
+
+    .login-button:hover {
+        background: transparent;
+        outline: 1px solid black;
     }
 
     .title {
-        font-size: 2.5rem;
-        margin-bottom: 0.5rem;
+        font-size: 3rem;
+        margin-bottom: 1.2rem;
     }
 
     .subtitle {
@@ -113,20 +107,6 @@
         text-align: center;
     }
 
-    .no-projects {
-        font-size: 1.2rem;
-        margin: 1em;
-        text-align: center;
-    }
-
-    .project-list {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 1em;
-
-        
-    }
     .proj-container {
         background-color: white;
         border: 1px solid var(--color-blue-grey-400);
@@ -173,4 +153,55 @@
         display: flex;
         flex-direction: row;
     }
+
+
+    .primary {
+        background-color: #f0f0f0;
+        padding: 20px;
+    }
+
+    .subtitle {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+
+    .primary {
+        padding: 20px;
+        background-color: var(--color-blue-grey-300);
+
+    }
+
+    .subtitle {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        color:white;
+    }
+
+ 
+    .proj-container {
+        margin-top: 30px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        color: white;
+        text-transform: uppercase;
+    }
+
+    .project-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+
 </style>
