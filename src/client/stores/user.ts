@@ -4,7 +4,7 @@ import { derived } from 'svelte/store';
 
 const { subscribe } = derived(
   page,
-  ({ data: { user } }): any => (user),
+  ({ data: { user } }): any => user,
 );
 
 export const user = {

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { bytesToString } from "@/lib/utils";
     import { user } from "@/client/stores/user";
     export let asset: any;
   
