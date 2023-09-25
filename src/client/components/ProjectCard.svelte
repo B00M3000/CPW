@@ -44,7 +44,7 @@
 
         background-color: aliceblue;
 
-        margin: 2rem;
+        margin: 1rem;
         padding: 2rem;
 
         border-radius: 2rem;

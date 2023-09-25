@@ -224,8 +224,6 @@
         max-width: calc(100vw - (100vw - 100%));
         gap: 1em;
         overflow-y: scroll;
-        padding-top: 20px;
-        padding-bottom: 10px;
         height: calc(100vh - 8vh - var(--nav-bar-height) - 20px - 10px);
     }
 
