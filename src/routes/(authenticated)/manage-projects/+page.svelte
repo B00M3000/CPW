@@ -11,7 +11,7 @@
         if(initDeleteConfirm == i) {
             deleteConfirm = i
         } else {
-            initDeleteConfirm = i
+            initDeleteConfirm = i;
         }
     }
 
