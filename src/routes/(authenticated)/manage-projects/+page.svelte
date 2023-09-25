@@ -9,7 +9,7 @@
 
     async function initDeleteProject(i: number) {
         if(initDeleteConfirm == i) {
-            deleteConfirm = i
+            deleteConfirm = i;
         } else {
             initDeleteConfirm = i;
         }
