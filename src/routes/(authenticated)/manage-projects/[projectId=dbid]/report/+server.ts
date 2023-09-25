@@ -6,7 +6,7 @@ export async function POST({ request, params: { projectId } }) {
 
     await ProjectSchema.findOneAndUpdate({
         _id: projectId
-    }, { fullReport })
+    }, { fullReport });
 
     return json({ message: "Report updated successfully!" });
 }
