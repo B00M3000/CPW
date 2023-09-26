@@ -4,6 +4,7 @@ import { error, json } from '@sveltejs/kit';
 
 export async function GET({ params: { id }, url, setHeaders }) {
     const asset = await AssetSchema.findById(id);   
+    console.log(id)
 
     if(!asset) throw error(404, "No Asset found with that ID");
 

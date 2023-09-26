@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from "$app/navigation";
     import { user } from "@/client/stores/user";
     export let asset: any;
   
@@ -21,6 +22,7 @@
     {#if $user.accessLevel == 1}
         <button on:click={() => deleteAsset(asset._id)} class="delete-button">Delete</button>
     {/if}
+        <button on:click={() => goto(`/gallery/${asset._id}`)} class="delete-button">See More</button>
   </div>
   
 <style lang="scss">

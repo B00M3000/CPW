@@ -82,7 +82,7 @@
             position: relative;
             margin: 0.5rem;
             word-wrap: break-word;  
-            max-height: 10em;
+            max-height: 3em;
             text-overflow: ellipsis;
             overflow-y: hidden;
             display: inline-flex;
@@ -95,7 +95,7 @@
                 position: absolute;
                 left: 0;
                 top: 0;
-                background: linear-gradient(transparent 7em, aliceblue);
+                background: linear-gradient(transparent 2em, aliceblue);
             }
 
             border-bottom: 2px solid grey;

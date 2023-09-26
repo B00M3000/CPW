@@ -113,7 +113,7 @@
 
           <div class="form-group">
             <label for="shortDesc" class="label">Write A Short Description</label>
-            <textarea id="shortDesc" name="shortDesc" rows="3" cols="60" maxlength="200" required bind:value={project.shortDesc}></textarea>
+            <textarea id="shortDesc" name="shortDesc" rows="3" cols="60" maxlength="2000" required bind:value={project.shortDesc}></textarea>
           </div>       
         
       </div>

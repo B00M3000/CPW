@@ -16,7 +16,7 @@
     </div>
     <div class="info">
 
-        <p><strong>Student:</strong> <StudentCard {student}/> </p>
+        <span><strong>Student:</strong>  </span> <StudentCard {student}/>
     </div>
 </main>
   
@@ -29,6 +29,10 @@ main {
 
 .image-container {
     margin: 20px;
+    padding: 20px;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: var(--color-blue-grey-200);
 }
 
 img {
