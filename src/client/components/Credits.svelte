@@ -2,6 +2,7 @@
     import Icon from "@/client/components/Icon.svelte";
     import Information from "@/client/icons/Information";
     import Close from "@/client/icons/Close";
+    import { PUBLIC_BUILD_NUMBER } from "$env/static/public";
 
     let isOpen = false;
 
@@ -18,13 +19,14 @@
 <div class="overlay">  
     <div class="container">
         <div class="heading">
-            <h1>Credits</h1>
+            <h1>Information</h1>
             <div on:click={toggleState}>
                 <Icon src={Close} size="2em" color="white"/>
             </div>
         </div>
         <p>Authored by Thomas Zhou (26')</p>
         <p>Co-Authored by Ethan Wu (26')</p>
+        <p>Build Number {PUBLIC_BUILD_NUMBER}</p>
     </div>
 </div>
 {/if}
