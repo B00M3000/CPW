@@ -30,7 +30,7 @@
         formData.set(`desc${i}`, image.desc)
         })
 
-        const res = await fetch(`/assets/create`, {
+        const res = await fetch(`/gallery/create`, {
             method: "POST",
             body: formData
         })

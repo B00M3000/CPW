@@ -26,6 +26,8 @@
 		"dotenv": "^16.3.1",
 		"mongoose": "^7.5.1",
 		"sass": "^1.66.1",
+		"sharp": "^0.32.6",
+		"svelte-local-storage-store": "^0.6.0",
 		"uuid": "^9.0.0"
 	}
 }
