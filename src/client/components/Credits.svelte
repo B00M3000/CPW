@@ -26,7 +26,7 @@
         </div>
         <p>Authored by Thomas Zhou (26')</p>
         <p>Co-Authored by Ethan Wu (26')</p>
-
+    
         <p>Build #{PUBLIC_BUILD_NUMBER}</p>
         <p>Svelte - {pkgJSON.devDependencies.svelte}</p>
         <p>Svelte Kit - {pkgJSON.devDependencies["@sveltejs/kit"]}</p>

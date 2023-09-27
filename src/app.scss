@@ -48,5 +48,6 @@
     @include colors();
     font-family: 'Monospace', 'Trebuchet MS', Arial, sans-serif;
     background-color: var(--color-blue-grey-100);
+    overflow-x: auto;
 }
 
