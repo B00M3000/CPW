@@ -121,19 +121,25 @@
         color: white;
     }
     .blink {
-        animation: blink-animation 1.5s steps(25, start) infinite;
+        animation: blink-animation 1s steps(25, start) infinite;
     }
     @keyframes blink-animation {
         to {
+            color: red;
+        }
+        25% {
+            color: white;
+        }
+        75% {
             color: white;
         }
         from {
-            color: red
+            color:red;
         }
     }
     main {
-        margin-left: 1rem;
-        margin-right: 1rem;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
         padding: 4rem;
         overflow-x: hidden;
     }

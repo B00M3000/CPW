@@ -42,7 +42,7 @@
       display: flex;
       flex-direction: column;
       
-      width: 20vw;
+      width: 33vw;
       height: 100%;
       min-height: calc(100vh - var(--nav-bar-height) - 50px);
       background-color: #f0f0f0; 
