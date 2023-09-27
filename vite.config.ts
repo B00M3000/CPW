@@ -1,10 +1,13 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
-
+import { readFileSync } from 'fs';
 import path from 'path';
-
 import dotenv from 'dotenv';
+
+
 dotenv.config()
+
+const pkgJSON = JSON.parse(readFileSync(path.join(__dirname, "package.json"), 'utf8'));
 
 export default defineConfig({
 	plugins: [sveltekit()],
@@ -18,9 +21,12 @@ export default defineConfig({
 		},
 	},
 
+	define: { pkgJSON },
+
 	server: {
 		port: process.env.PORT ? parseInt(process.env.PORT) : 3000,
 	},
+
 	build: {
         chunkSizeWarningLimit: 1600,
     },

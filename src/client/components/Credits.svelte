@@ -26,7 +26,17 @@
         </div>
         <p>Authored by Thomas Zhou (26')</p>
         <p>Co-Authored by Ethan Wu (26')</p>
-        <p>Build Number {PUBLIC_BUILD_NUMBER}</p>
+
+        <p>Build #{PUBLIC_BUILD_NUMBER}</p>
+        <p>Svelte - {pkgJSON.devDependencies.svelte}</p>
+        <p>Svelte Kit - {pkgJSON.devDependencies["@sveltejs/kit"]}</p>
+        <p>Svelte Node Adapter - {pkgJSON.devDependencies["@sveltejs/adapter-node"]}</p>
+        <p>Vite - {pkgJSON.devDependencies.vite}</p>
+        <p>Typescript - {pkgJSON.devDependencies.typescript}</p>
+        <p>Mongoose - {pkgJSON.dependencies.mongoose}</p>
+        <p>Sass - {pkgJSON.dependencies.sass}</p>
+        <p>Sharp - {pkgJSON.dependencies.sharp}</p>
+
     </div>
 </div>
 {/if}
