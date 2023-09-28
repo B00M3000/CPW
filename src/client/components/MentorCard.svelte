@@ -1,6 +1,11 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import type { Mentor } from '@/interfaces/project';
+
+    interface Mentor {
+        _id: string;
+        firstName: string;
+        lastName: string;
+    }
 
     export let mentor: Mentor;
 

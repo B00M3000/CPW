@@ -1,7 +1,13 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import { user } from "@/client/stores/user";
-    export let asset: any;
+
+    interface Asset {
+      _id: string;
+      desc: string;
+    }
+
+    export let asset: Asset;
   
     async function deleteAsset(id: string) {
         await fetch(`/assets/${id}`, {

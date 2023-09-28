@@ -2,7 +2,7 @@
     import StudentCard from '@/client/components/StudentCard.svelte';
     import MentorCard from '@/client/components/MentorCard.svelte';
     import Tag from '@/client/components/Tag.svelte';
-    import tags from '@/lib/tags.js';
+    import { getTagString } from '@/lib/tags.js';
     export let data;
 
     $: ({ project, mentor, student } = data);
@@ -20,7 +20,7 @@
 
       <h3>Tags</h3>
       {#each project.tags as tag}
-          <Tag text={tags[tag]} />
+          <Tag text={getTagString(tag)} />
       {/each}
   </div>
 

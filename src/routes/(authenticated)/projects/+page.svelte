@@ -2,7 +2,7 @@
     import { goto } from "$app/navigation";
     import YearFilter from "@/client/components/YearFilter.svelte";
     import MultiSelect from "@/client/components/MultiSelect.svelte";
-    import tags from "@/lib/tags.js";
+    import { getTagString, tags } from "@/lib/tags";
     import ProjectCard from "@/client/components/ProjectCard.svelte";
     import { page } from "$app/stores";
 
@@ -94,7 +94,7 @@
 
             <h1 class="filter-labels">
                 Filter by tags:
-                <MultiSelect options={Object.entries(tags).map(([key, value]) => ({ key, value, }))} bind:selectedValues={selected} />
+                <MultiSelect options={Array.from(tags.entries()).map(([key, value]) => ({ key, value, }))} bind:selectedValues={selected} />
             </h1>
             <div>
                 <button on:click = {search}>Search</button>

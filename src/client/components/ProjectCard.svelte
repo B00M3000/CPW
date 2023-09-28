@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Project } from "@interfaces/project";
-    import tags from "@/lib/tags";
+    import { getTagString } from "@/lib/tags";
     import Tag from "@/client/components/Tag.svelte";
     import StudentCard from "@/client/components/StudentCard.svelte";
     import MentorCard from "@/client/components/MentorCard.svelte";
@@ -18,7 +18,7 @@
 
     <div class="tags">
         {#each project.tags as tag}
-            <Tag text={tags[tag]} />
+            <Tag text={getTagString(tag)} />
         {/each}
     </div>
 

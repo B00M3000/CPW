@@ -9,16 +9,13 @@
 <style>
     .tag {
         display: inline-flex;
-        
-        padding: 0.3em;
 
+        padding: 0.3em;
         margin: 0.25em;
 
         background-color: lightskyblue;
 
-        border-radius: 0.2em;
-
-        
+        border-radius: 0.2em;        
     }
 
     .text {
