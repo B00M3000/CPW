@@ -55,7 +55,7 @@
     }
 
     let step: number = 1;
-    const maxStep: number = 5;
+    const maxStep: number = 4;
     const minStep: number = 1;
     let manual: boolean = false;
 
