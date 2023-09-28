@@ -17,7 +17,7 @@ export async function POST({ request, locals }) {
 
     const spaceUsed = (await AssetSchema.find({ ownerId: locals.user.id }, 'size'))?.reduce((a, b) => a + b.size, 0) || 0;
 
-
+    const projectId = formData.find(([k, v]) => k === "projectId")
 
     if(spaceUsed + sum(images.map(image => image.image.size)) > USER_ASSET_LIMIT) throw error(400, `You do not have enough space! Each user is limited to ${USER_ASSET_LIMIT} B of storage in assets.`);
     
@@ -57,8 +57,8 @@ export async function POST({ request, locals }) {
 
     const assetIds = await Promise.all(images.map(handleOneImage));
 
-    const projectId = formData.find(([k, v]) => k === "projectId")
-    if(projectId) ProjectSchema.findOneAndUpdate({ _id: projectId, studentId: locals.user.id }, { $push: { imageIds: { $each: assetIds }}})
+   
+   // if(projectId) ProjectSchema.findOneAndUpdate({ _id: projectId, studentId: locals.user.id }, { $push: { imageIds: { $each: assetIds }}})
     
     return json({ assetIds }, { status: 200 })
 }
