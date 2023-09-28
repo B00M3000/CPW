@@ -2,7 +2,7 @@
     import { goto } from "$app/navigation";
   import InformationBox from "@/client/components/InformationBox.svelte";
     import MentorSearcher from "@/client/components/MentorSearcher.svelte";
-    import tags from "@/lib/tags";
+    import { tags } from "@/lib/tags";
 
     interface Action {
       action: string;
@@ -130,7 +130,7 @@
     {:else if step === 2}
     <div id="project-tags-container">
       <h1>Select Tags</h1>
-      {#each Object.entries(tags) as [id, label]}
+      {#each Array.from(tags.entries()) as [id, label]}
       <div class="tag-container">
         <input type="checkbox" value={id} id="selected" bind:group={project.tags}/>
         <span>{label}</span>

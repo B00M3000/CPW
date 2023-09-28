@@ -1,7 +1,7 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import InformationBox from "@/client/components/InformationBox.svelte";
-    import tags from "@/lib/tags";
+    import { tags } from "@/lib/tags";
     import { onMount } from "svelte";
 
     export let data;
@@ -79,7 +79,7 @@
           </div>
             <div class="form-group">
               <label for="selected" class="label">Select Tags</label>
-              {#each Object.entries(tags) as [id, label]}
+              {#each Array.from(tags.entries()) as [id, label]}
                     <input type="checkbox" value = {id} id="selected" class="checkbox" name="selected" bind:group={project.tags}/>
                     {label}
                   <br />
