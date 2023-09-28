@@ -50,8 +50,6 @@
       if(!/.+/.test(mentor.firstName)) errorsMessages.push("Please enter the first name of your mentor.");
       if(!/.+/.test(mentor.lastName)) errorsMessages.push("Please enter the last name of your mentor.");
       if(!/.+/.test(mentor.organization)) errorsMessages.push("Please enter the relevant organization your mentor is associated with for your project.");
-      if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(mentor.email)) errorsMessages.push("Please enter a valid mentor email address.");
-      if(!/^\+?\d{0,3}(\s|-)?(\d|-| |\(|\))+$/.test(mentor.phoneNumber)) errorsMessages.push("Please enter a valid mentor phone number in the form +1 555-555-5555.");
       if(numberOfTags < 1 || numberOfTags > 5) errorsMessages.push("Please select between 1 and 5 tags.");
       if(project.title.length > 100 && project.title.length < 12) errorsMessages.push("Please enter a project name between 12 and 200 characters");
       if(project.shortDesc.length < 3) errorsMessages.push("Please enter a short description with at least 100 characters to start. You can always edit it later.")
@@ -59,7 +57,7 @@
       if(errorsMessages.length == 0){
         const res = await fetch(`/manage-projects/${projectId}/edit`, {
             method: "POST",
-            body: JSON.stringify({ project, mentor })
+            body: JSON.stringify({ project })
         });
       } else {
         return;
@@ -86,30 +84,22 @@
                 {/each}
             </div>
         
+          <h1>To Modify Mentor Information, Contact Ms. Moss</h1>
           <div class="form-group">
             <label for="mentorFirst" class="label">Mentor First Name</label>
-            <input type="text" id="mentorFirst" name="mentorFirst" required bind:value={mentor.firstName}>
+            <input type="text" id="mentorFirst" name="mentorFirst" required bind:value={mentor.firstName} disabled>
           </div>
         
           <div class="form-group">
             <label for="mentorLast" class="label">Mentor Last Name</label>
-            <input type="text" id="mentorLast" name="mentorLast" required bind:value={mentor.lastName}>
+            <input type="text" id="mentorLast" name="mentorLast" required bind:value={mentor.lastName} disabled>
           </div>
 
           <div class="form-group">
             <label for="mentorOrg" class="label">Mentor Organization</label>
-            <input type="email" id="mentorOrg" name="mentorOrg" required bind:value={mentor.organization}>
+            <input type="email" id="mentorOrg" name="mentorOrg" required bind:value={mentor.organization} disabled>
           </div>
 
-          <div class="form-group">
-            <label for="mentorEmail" class="label">Mentor Email</label>
-            <input type="email" id="mentorEmail" name="mentorEmail" required bind:value={mentor.email}>
-          </div>
-
-          <div class="form-group">
-            <label for="mentorPhone" class="label">Mentor Phone</label>
-            <input type="text" id="mentorPhone" name="mentorPhone" required bind:value={mentor.phoneNumber}>
-          </div>
 
           <div class="form-group">
             <label for="shortDesc" class="label">Write A Short Description</label>

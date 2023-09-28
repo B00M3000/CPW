@@ -7,10 +7,6 @@ import { stringifyObjectId } from "@/lib/utils";
 export async function POST({ request  }) {
     const { mentor, project } = await request.json();
 
-    await MentorSchema.findOneAndUpdate({ email: mentor.email }, {
-      ...mentor
-    })
-
     await ProjectSchema.findOneAndUpdate({ _id: project._id }, {
       ...project
     })
