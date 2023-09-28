@@ -4,6 +4,7 @@
     import AssetCard from "@/client/components/AssetCard.svelte";
     import { goto } from "$app/navigation";
     import { persisted as storageWritable } from 'svelte-local-storage-store'
+    import { AccountType } from "@/lib/enums";
 
     export let data;
 
@@ -43,8 +44,8 @@
         <div class="asset">
             <img src="/assets/{asset._id}"/>
             <span>{asset.desc || "No Description"}</span>
-            <span>{bytesToString(asset.size)}</span>
-            {#if $user.accessLevel == 1}
+            <span>{bytesToString(asset.size)}</span>\
+            {#if $user._id == asset.ownerId}
                 <button on:click={() => deleteAsset(asset._id)}>Delete</button>
             {/if}
         </div>

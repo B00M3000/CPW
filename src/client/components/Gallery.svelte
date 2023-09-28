@@ -5,9 +5,9 @@
     import { goto } from "$app/navigation";
     import { persisted as storageWritable } from 'svelte-local-storage-store'
 
-    export let data;
 
-    $: ({ assets } = data);
+    export let assets: any;
+
 
     async function deleteAsset(id: string) {
         await fetch(`/assets/${id}`, {
@@ -39,18 +39,18 @@
     {#if assets.length > 0}
     <div id="assets">
         {#each assets as asset}
-        {#if $isRowView}
-        <div class="asset">
-            <img src="/assets/{asset._id}"/>
-            <span>{asset.desc || "No Description"}</span>
-            <span>{bytesToString(asset.size)}</span>
-            {#if $user.accessLevel == 1}
-                <button on:click={() => deleteAsset(asset._id)}>Delete</button>
+            {#if $isRowView}
+            <div class="asset">
+                <img src="/assets/{asset._id}"/>
+                <span>{asset.desc || "No Description"}</span>
+                <span>{bytesToString(asset.size)}</span>\
+                {#if $user._id == asset.ownerId}
+                    <button on:click={() => deleteAsset(asset._id)}>Delete</button>
+                {/if}
+            </div>
+            {:else}
+                <AssetCard {asset} />
             {/if}
-        </div>
-        {:else}
-        <AssetCard {asset} />
-        {/if}
         {/each}
     </div>
     {/if}
