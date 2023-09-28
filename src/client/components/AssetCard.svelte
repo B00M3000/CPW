@@ -19,10 +19,7 @@
         <span class="desc">{asset.desc}</span>
       <!-- <span class="asset-size">{bytesToString(asset.size * 1000)}</span> -->
     </div>
-    {#if $user.accessLevel == 1}
-        <button on:click={() => deleteAsset(asset._id)} class="delete-button">Delete</button>
-    {/if}
-        <button on:click={() => goto(`/gallery/${asset._id}`)} class="delete-button">See More</button>
+      <button on:click={() => goto(`/gallery/${asset._id}`)} class="seemore-button">See More</button>
   </div>
   
 <style lang="scss">
@@ -66,8 +63,8 @@
     color: #555;
   }
 
-  .delete-button {
-    background-color: #ff0000;
+  .seemore-button {
+    background-color: var(--color-blue-500);
     color: #fff;
     border: none;
     padding: 5px 10px;
@@ -76,8 +73,8 @@
     margin-top: 10px;
   }
 
-  .delete-button:hover {
-    background-color: #cc0000;
+  .seemore-button:hover {
+    background-color: var(--color-blue-400);
   }
 
   h4{
