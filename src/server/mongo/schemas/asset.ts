@@ -14,6 +14,7 @@ const schema = new mongoose.Schema(
     data: { type: Buffer, required: true },
     desc: { type: String, required: false },
     ownerId: { type: String, required: true },
+    projectId: { type: String, required: true },
     size: { type: Number }
   },
   { timestamps: true },

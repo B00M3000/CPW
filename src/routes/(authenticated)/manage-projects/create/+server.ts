@@ -30,7 +30,7 @@ export async function POST({ request, locals }) {
       underReview: true,
       publish: false,
       mentorId: mentorId,
-      studentId: locals.user?.id 
+      studentId: locals.user?.id
     })
 
     await schema.save();
