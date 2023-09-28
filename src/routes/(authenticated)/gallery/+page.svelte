@@ -1,10 +1,9 @@
 <script lang="ts">
     import { bytesToString } from "@/lib/utils.js";
+    import { user } from "@/client/stores/user";
     import AssetCard from "@/client/components/AssetCard.svelte";
     import { goto } from "$app/navigation";
-    import { browser } from "$app/environment";
     import { persisted as storageWritable } from 'svelte-local-storage-store'
-  import { onMount } from "svelte";
 
     export let data;
 
@@ -45,7 +44,9 @@
             <img src="/assets/{asset._id}"/>
             <span>{asset.desc || "No Description"}</span>
             <span>{bytesToString(asset.size)}</span>
-            <button on:click={() => deleteAsset(asset._id)}>Delete</button>
+            {#if $user.accessLevel == 1}
+                <button on:click={() => deleteAsset(asset._id)}>Delete</button>
+            {/if}
         </div>
         {:else}
         <AssetCard {asset} />
