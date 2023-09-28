@@ -24,19 +24,26 @@
                 <Icon src={Close} size="2em" color="white"/>
             </div>
         </div>
-        <p>Authored by Thomas Zhou (26')</p>
-        <p>Co-Authored by Ethan Wu (26')</p>
-    
-        <p>Build #{PUBLIC_BUILD_NUMBER}</p>
-        <p>Svelte - {pkgJSON.devDependencies.svelte}</p>
-        <p>Svelte Kit - {pkgJSON.devDependencies["@sveltejs/kit"]}</p>
-        <p>Svelte Node Adapter - {pkgJSON.devDependencies["@sveltejs/adapter-node"]}</p>
-        <p>Vite - {pkgJSON.devDependencies.vite}</p>
-        <p>Typescript - {pkgJSON.devDependencies.typescript}</p>
-        <p>Mongoose - {pkgJSON.dependencies.mongoose}</p>
-        <p>Sass - {pkgJSON.dependencies.sass}</p>
-        <p>Sharp - {pkgJSON.dependencies.sharp}</p>
+        <span>Authored by Thomas Zhou (26')</span>
+        <span>Co-Authored by Ethan Wu (26')</span>
 
+        <br>
+
+        <span>Build #{PUBLIC_BUILD_NUMBER}</span>
+
+        <br>
+    
+        <span>Dependencies: </span>
+        <ul>
+            <span class="package">Svelte - {pkgJSON.devDependencies.svelte}</span>
+            <span class="package">Svelte Kit - {pkgJSON.devDependencies["@sveltejs/kit"]}</span>
+            <span class="package">Svelte Node Adapter - {pkgJSON.devDependencies["@sveltejs/adapter-node"]}</span>
+            <span class="package">Vite - {pkgJSON.devDependencies.vite}</span>
+            <span class="package">Typescript - {pkgJSON.devDependencies.typescript}</span>
+            <span class="package">Mongoose - {pkgJSON.dependencies.mongoose}</span>
+            <span class="package">Sass - {pkgJSON.dependencies.sass}</span>
+            <span class="package">Sharp - {pkgJSON.dependencies.sharp}</span>
+        </ul>
     </div>
 </div>
 {/if}
@@ -66,6 +73,14 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+            }
+
+            ul {
+                display: flex;
+                flex-direction: column;
+                .package {
+                    font-size: small;
+                }
             }
         }
     }
