@@ -1,34 +1,39 @@
+<!-- REFACTORED 9/29/2023 by Thomas -->
+
 <script lang="ts">
     import { user } from "@/client/stores/user";
     import { AccessLevel, AccountType } from "@/lib/enums";
+
     import Icon from "@/client/components/Icon.svelte";
     import Gear from "@/client/icons/Gear";
 </script>
 
 {#if $user}
-<div class="dropdown-container">
-    <div class="dropdown-initiator">
+<div id="dropdown-container">
+    <div id="dropdown-initiator">
         <img src={$user.picture} alt="User Profile" />
     </div>
 
-    <div class="dropdown-content">
-        <div class="brief-profile">
-            <img src={$user.picture} alt="User Profile" />
-            <div style="line-height: 1; flex-direction: column; padding-left: 5px;">
-                <h1> {$user.name}</h1>
-                <p> {$user.email}</p>
-                <p> {AccountType[$user.accountType]} - {AccessLevel[$user.accessLevel]}</p>
+    <div id="dropdown-content-container">
+        <div id="dropdown-content">
+            <div id="brief-profile">
+                <img src={$user.picture} alt="User Profile" />
+                <div style="line-height: 1; flex-direction: column; padding-left: 5px;">
+                    <h1> {$user.name}</h1>
+                    <p> {$user.email}</p>
+                    <p> {AccountType[$user.accountType]} - {AccessLevel[$user.accessLevel]}</p>
+                </div>
             </div>
+            <hr />
+            <a href="/">Home</a>
+            <hr />
+            <div class="icon-text-group">
+                <Icon src={Gear}/>
+                <a href="/account">Account</a>
+            </div>
+            <hr />
+            <button class="logout-button" on:click={() => user.logout() }>Log Out</button>
         </div>
-        <hr />
-        <a href="/">Home</a>
-        <hr />
-        <div class="icon-text-group">
-            <Icon src={Gear}/>
-            <a href="/account">Account</a>
-        </div>
-        <hr />
-        <button class="logout-button" on:click={() => user.logout() }>Log Out</button>
     </div>
 </div>
 {:else}
@@ -36,13 +41,7 @@
 {/if}
 
 <style lang="scss">
-    .icon-text-group {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-    }
-    .dropdown-container {
+    #dropdown-container {
         display: inline-flex;
         align-items: center;
         position: relative;
@@ -53,22 +52,57 @@
         &:hover {
             background-color: rgba(255, 255, 255, 0.1);
 
-            .dropdown-content {
+            #dropdown-content-container {
                 display: flex;
+            }
+        }
+
+        #dropdown-initiator {
+            display: inline-flex;
+            border: 2px soild blue;
+
+            img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+            }
+        }
+
+        #dropdown-content-container {
+            display: none;
+            position: absolute;
+            
+            border-radius: 2px;
+            padding: 1rem;
+            right: 0;
+            top: calc(100% - 1rem);
+
+            #dropdown-content {
+                display: flex;
+                flex-direction: column;
+
+                background-color: #fff;
+                box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.4);
+
+                z-index: 50;
+                min-width: 150px;
+
+                white-space: nowrap;
+
+                #brief-profile {
+                    
+                }
             }
         }
     }
 
-    img {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
+    .icon-text-group {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
     }
 
-    .dropdown-initiator {
-        display: inline-flex;
-        border: 2px soild blue;
-    }
     a {
         text-align: center;
         text-decoration: none; 
@@ -120,18 +154,7 @@
     }
 
     .dropdown-content {
-        display:none;
-        flex-direction: column;
-        position: absolute;
-        overflow: auto;
-        background-color: #fff;
-        border-radius: 2px;
-        box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.4);
-        z-index: 50;
-        min-width: 150px;
-        right: 0;
-        top: 100%;
-        white-space: nowrap;
+        
     }
 
 </style>

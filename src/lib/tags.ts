@@ -1,4 +1,4 @@
-export const tags = new Map<string, string>()
+export const tags = new Map<string, string>();
 
 tags.set("10456", "Writing and Literature")
 tags.set("19242", "Communications")

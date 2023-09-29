@@ -10,7 +10,7 @@ const { subscribe } = derived(
 export const user = {
   subscribe,
   async logout(): Promise<void> {
-    await fetch('/logout.json');
+    await fetch('/logout');
     await invalidate('app:logout');
   }
 };

@@ -9,7 +9,7 @@
 
     async function update() {
         if(!search || search.endsWith("&#8291")) return;
-        const res = await fetch(`/students.json?query=${search}`);
+        const res = await fetch(`/api/students?query=${search}`);
         ({ students } = await res.json());
     }
 
