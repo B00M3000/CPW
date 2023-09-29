@@ -1,10 +1,9 @@
 <script lang="ts">
-  export let data;
-  $: ({ projects } = data);
-
   import InformationBox from "@/client/components/InformationBox.svelte";
   import { bytesToString } from "@/lib/utils.js";
 
+  export let data;
+  $: ({ projects } = data);
   interface Image {
     file: File;
     desc: string;
@@ -26,7 +25,8 @@
     const formData = new FormData(form);
 
     loading = true;
-
+   
+   
     images.forEach((image, i) => {
       formData.set(`desc${i}`, image.desc);
     });
@@ -60,6 +60,7 @@
       });
     }
   }
+
 </script>
 
 <form class="container" bind:this={form} on:submit={handleSubmit}>
@@ -87,16 +88,16 @@
   {/each}
 
   <label for="project"><strong>Project: </strong></label>
-  <select
-    id="project"
-    name="projectId"
-    disabled={projects.length == 1}
-    required
-    bind:value={projectId}
-  >
+    <select
+      id="project"
+      name="projectId"
+      disabled={projects.length == 0}
+      required
+      bind:value={projectId}
+    >
     <option disabled selected value="default">Please select a project!</option>
     {#each projects as project}
-      <option value={project.id}>{project.title}</option>
+      <option value={project._id}>{project.title}</option>
     {/each}
   </select>
   <button class="submit-button" type="submit">Submit</button>

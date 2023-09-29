@@ -218,6 +218,7 @@
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
+        margin: 0.5rem 0;
         width: calc(100vw - 240px);
         max-width: calc(100vw - (100vw - 100%));
         gap: 1em;
