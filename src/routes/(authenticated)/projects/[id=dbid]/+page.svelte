@@ -15,6 +15,7 @@
       <h1>{project?.title}</h1>
       <h3>Mentor: <MentorCard {mentor} /> </h3>
       <h3>Completed By: <StudentCard {student} /> </h3>
+      <h3>View Photo Gallery: <a href={`/projects/${project._id}/gallery`}> Project Photos</a> </h3>
       <h3>Description: </h3>
       <span> {project?.shortDesc}</span>
 
@@ -42,7 +43,7 @@
       display: flex;
       flex-direction: column;
       
-      width: 33vw;
+      width: 21vw;
       height: 100%;
       min-height: calc(100vh - var(--nav-bar-height) - 50px);
       background-color: #f0f0f0; 

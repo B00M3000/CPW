@@ -1,9 +1,10 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import StudentCard from '@/client/components/StudentCard.svelte';
 
     export let data;
 
-    $: ({ asset, student} = data);
+    $: ({ asset, student, project} = data);
 
 
 </script>
@@ -17,6 +18,10 @@
     <div class="info">
 
         <span><strong>Student:</strong>  </span> <StudentCard {student}/>
+    </div>
+
+    <div class="info">
+        <button on:click={()=> goto(`/projects/${project._id}`)} class="viewproj-btn" > View Project </button>
     </div>
 </main>
   
@@ -42,5 +47,21 @@ img {
 
 .info {
     text-align: center;
+    margin: 0.5rem;
+}
+
+.viewproj-btn{
+    background-color: var(--color-blue-500);
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    
+}
+
+.viewproj-btn:hover{
+    background-color: var(--color-blue-400);
 }
 </style>
