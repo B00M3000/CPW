@@ -48,7 +48,7 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 
         .title {
-            font-size: 26px;
+            font-size: 22px;
             text-align: center;
         }
 
@@ -81,7 +81,8 @@
         .short-description {
             position: relative;
             margin: 0.5rem;
-            word-wrap: break-word;  
+            word-wrap: break-word; 
+            word-break: break-all; 
             max-height: 3em;
             text-overflow: ellipsis;
             overflow-y: hidden;

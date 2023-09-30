@@ -15,7 +15,7 @@
                     <h3> {student.student.name}</h3>
                     <h4> {student.student.email}</h4>
                 </div>
-                <button on:click={() => goto('${}')} class="advisee-button">
+                <button on:click={() => goto(`manage-advisees/${student.student._id}`)} class="advisee-button">
                     <span>View Advisee</span>
                     {#if student.counter > 0}
                         <span class="button-badge">!</span>
