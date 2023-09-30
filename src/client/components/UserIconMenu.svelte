@@ -6,33 +6,36 @@
 
     import Icon from "@/client/components/Icon.svelte";
     import Gear from "@/client/icons/Gear";
+    import { goto } from "$app/navigation";
+
+    async function gotoAccount() {
+        await goto('/account');
+    }
 </script>
 
 {#if $user}
 <div id="dropdown-container">
     <div id="dropdown-initiator">
-        <img src={$user.picture} alt="User Profile" />
+        <img src={$user.picture} alt="" />
     </div>
 
     <div id="dropdown-content-container">
         <div id="dropdown-content">
             <div id="brief-profile">
-                <img src={$user.picture} alt="User Profile" />
-                <div style="line-height: 1; flex-direction: column; padding-left: 5px;">
-                    <h1> {$user.name}</h1>
-                    <p> {$user.email}</p>
-                    <p> {AccountType[$user.accountType]} - {AccessLevel[$user.accessLevel]}</p>
+                <img src={$user.picture} alt="" />
+                <div id="brief-account-details">
+                    <span class="name"> {$user.name}</span>
+                    <span class="email"> {$user.email}</span>
+                    <span class="account-information"> {AccountType[$user.accountType]} - {AccessLevel[$user.accessLevel]}</span>
                 </div>
             </div>
-            <hr />
-            <a href="/">Home</a>
-            <hr />
-            <div class="icon-text-group">
-                <Icon src={Gear}/>
-                <a href="/account">Account</a>
+            <div id="dropdown-menu-options">
+                <button class="dropdown-menu-option" on:click={gotoAccount}>
+                    <Icon src={Gear}/>
+                    <a href="/account">Account</a>
+                </button>
             </div>
-            <hr />
-            <button class="logout-button" on:click={() => user.logout() }>Log Out</button>
+            <button id="logout-button" on:click={() => user.logout() }>Log Out</button>
         </div>
     </div>
 </div>
@@ -56,95 +59,113 @@
                 display: flex;
             }
         }
+    }
 
-        #dropdown-initiator {
-            display: inline-flex;
-            border: 2px soild blue;
+    #dropdown-initiator {
+        display: inline-flex;
+        border: 2px soild blue;
 
-            img {
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-            }
-        }
+        img {
+            width: 40px;
+            height: 40px;
 
-        #dropdown-content-container {
-            display: none;
-            position: absolute;
-            
-            border-radius: 2px;
-            padding: 1rem;
-            right: 0;
-            top: calc(100% - 1rem);
-
-            #dropdown-content {
-                display: flex;
-                flex-direction: column;
-
-                background-color: #fff;
-                box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.4);
-
-                z-index: 50;
-                min-width: 150px;
-
-                white-space: nowrap;
-
-                #brief-profile {
-                    
-                }
-            }
+            border-radius: 50%;
         }
     }
 
-    .icon-text-group {
+    #dropdown-content-container {
+        display: none;
+        position: absolute;
+
+        right: 0;
+        top: calc(100% - 1rem);
+        
+        border-radius: 2px;
+        padding: 1rem;
+    }
+
+    #dropdown-content {
         display: flex;
-        align-items: center;
-        justify-content: center;
+        flex-direction: column;
+
+        z-index: 50;
+        min-width: 150px;
         gap: 0.5rem;
+        padding: 1rem;
+
+        background-color: #fff;
+        box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.4);
+
+        white-space: nowrap;
     }
 
-    a {
-        text-align: center;
-        text-decoration: none; 
-     }
-    .brief-profile {
-        font-weight: 900;
-        color: black;
-        font-size: medium;
-        align-items: center;
-        padding: 5px;
+    #brief-profile {
         display: flex;
+        justify-content: space-between;
+        
+        align-items: center;
+        padding: 0.25rem;
+        
         padding-bottom: 1px;
+
+        img {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 50%;
+        }
     }
 
-    
-    hr {
-        width:99%;
-        margin-left:0
-    }
+    #brief-account-details {
+        display: flex;
+        flex-direction: column;
 
+        padding-left: 5px;
 
-    .brief-profile {
-        p {
-            margin: 0; 
-            padding: 0px; 
-            font-weight: 100;
+        color: black;
+
+        .name {
+            font-size: 16px;
+        }
+
+        .email, .account-information {
             font-size: 12px;
         }
-        h1 {
-            font-size: 16px;
-            margin: 0; 
-            padding: 0px; 
+    }
+
+    #dropdown-menu-options {
+        display: inline-flex;
+        justify-content: center;
+    }
+
+    .dropdown-menu-option {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+
+        &:hover {
+            background-color: aliceblue;
         }
     }
 
-    .logout-button {
+    button {
+        border: none;
+        background: inherit;
+
+        cursor: pointer;
+    }
+
+    #logout-button {
+        display: inline-flex;
+        justify-content: center;
         background-color: #ff6347;
         color: #fff;
         border: none;
         border-radius: 2px;
-        padding: 5px 10px;
-        cursor: pointer;
+        padding: 0.25rem;
         width: 98%;
         margin: 1px;
 
@@ -152,9 +173,4 @@
             background-color: #0056b3;
         }
     }
-
-    .dropdown-content {
-        
-    }
-
 </style>

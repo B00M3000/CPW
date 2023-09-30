@@ -4,7 +4,6 @@ import { readFileSync } from 'fs';
 import path from 'path';
 import dotenv from 'dotenv';
 
-
 dotenv.config()
 
 const pkgJSON = JSON.parse(readFileSync(path.join(__dirname, "package.json"), 'utf8'));
