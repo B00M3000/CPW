@@ -1,5 +1,6 @@
 <script lang="ts">
     import StudentCard from '@/client/components/StudentCard.svelte';
+    import { goto } from "$app/navigation";
     export let data;
     $: ({students} = data);
 
@@ -17,7 +18,7 @@
                 <button on:click={() => goto('${}')} class="advisee-button">
                     <span>View Advisee</span>
                     {#if student.counter > 0}
-                        <span class="button-badge">{student.counter}</span>
+                        <span class="button-badge">!</span>
                     {/if}
                  </button>
             </div>
