@@ -24,7 +24,7 @@ export default defineConfig({
 	define: { pkgJSON },
 
 	server: {
-		port: process.env.PORT ? parseInt(process.env.PORT) : 3000,
+		port: process.env.PORT ? parseInt(process.env.PORT) : 80,
 	},
 
 	build: {
