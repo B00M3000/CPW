@@ -158,11 +158,6 @@
         transition: background-color 0.3s ease;
     }
 
-    .divider {
-        width: calc(100vw - (100vw - 100%));
-        border-bottom: 2px solid black;
-    }
-
 
     button:hover {
         background-color: #0056b3;
