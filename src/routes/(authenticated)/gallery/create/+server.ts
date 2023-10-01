@@ -6,7 +6,6 @@ import sharp from 'sharp'
 
 const USER_ASSET_LIMIT = 1000 * 1000 * 5; // in b (5 MB)
 const USER_DESC_LIMIT_IN_CHAR = 400;
-const regex = /^data:.+\/(.+);base64,(.*)$/;
 
 const mergeImagesAndDescs = (images: File[], descs: string[]) => images.map((image, i) => ({ image, desc: descs[i] }));
 
