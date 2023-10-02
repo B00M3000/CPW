@@ -1,15 +1,14 @@
 <script lang="ts">
     import Gallery from "@/client/components/Gallery.svelte";
 
-
     export let data;
 
-    $: ({ assets } = data);
+    $: ({ images } = data);
 
 </script>
 
 <main>
-    <Gallery {assets} />
+    <Gallery {images} />
 </main>
 
 

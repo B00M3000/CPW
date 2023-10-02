@@ -5,6 +5,7 @@ import { AWS_S3_IMAGES_BUCKET, USER_IMAGE_SPACE_LIMIT, USER_IMAGE_DESCRIPTION_LI
 
 import { ImageSchema } from '@/server/mongo/schemas/image';
 import { ProjectSchema } from '@/server/mongo/schemas/project';
+import sharp from 'sharp';
 
 const isValidImageType = /image\/(png|jpeg)/
 
@@ -39,7 +40,25 @@ export async function PUT({ request, locals }) {
 
     if(totalSize + imageFile.size > _USER_IMAGE_SPACE_LIMIT) throw error(400, { message: "You exceed your alloted amount of space by uploading this image. Please ask website administrators for an expanded quota or manage your assets accordingly." })
 
-    const object = await uploadObject(AWS_S3_IMAGES_BUCKET, `${new Date().getTime()}-${Math.floor(Math.random() * 1000)}.${imageFile.type.split('/')[1]}`, Buffer.from(await imageFile.arrayBuffer()))
+    let imageBuffer = Buffer.from(await imageFile.arrayBuffer())
+
+    if(/image\/jpeg/.test(imageFile.type)) {
+        const compressed = await sharp(imageBuffer).jpeg({ quality: 20 }).toBuffer();
+        if(compressed.byteLength < imageBuffer.byteLength) imageBuffer = compressed
+    }
+
+    if(/image\/png/.test(imageFile.type)) {
+        const compressed = await sharp(imageBuffer).png({ compressionLevel: 9 }).toBuffer();
+        if(compressed.byteLength < imageBuffer.byteLength) imageBuffer = compressed
+    }
+
+    // no compression for gif's
+    // if(/image\/gifs/.test(image.image.type)) {
+    //     const compressed = await sharp(data).jpeg({ quality: 10 }).toBuffer();
+    //     if(compressed.byteLength < data.byteLength) data = compressed
+    // }
+
+    const object = await uploadObject(AWS_S3_IMAGES_BUCKET, `${new Date().getTime()}-${Math.floor(Math.random() * 1000)}.${imageFile.type.split('/')[1]}`, imageBuffer)
 
     await new ImageSchema({
         type: imageFile.type,

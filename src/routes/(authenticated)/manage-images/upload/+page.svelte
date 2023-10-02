@@ -43,7 +43,7 @@
 
         statuses[index] = Status.Uploading;
 
-        const response = await fetch('/images', {
+        const response = await fetch('/manage-images/upload', {
             method: "PUT",
             body: formData
         })
@@ -77,11 +77,15 @@
         {#each files as file, i}
         <form class="uploaded-image" on:submit={(event) => upload(event, i)}>
             <img src={URL.createObjectURL(file)} />
+            {#if statuses[i] == Status.NotUploaded}
             <span
                 contenteditable
                 placeholder="Add Description..."
                 bind:innerHTML={descriptions[i]}
             />
+            {:else}
+            <span>{descriptions[i] || "N/A"}</span>
+            {/if}
             <span>{bytesToString(file.size)}</span>
             {#if statuses[i] == Status.NotUploaded}
             <button type="submit">Upload</button>
@@ -135,12 +139,12 @@
     }
 
     .loader {
-        border: 8px solid rgba(255, 255, 255, 0.6);
-        border-top: 8px solid var(--color-blue-500);
+        border: 4px solid rgba(255, 255, 255, 0.6);
+        border-top: 4px solid var(--color-blue-500);
         border-radius: 50%;
         width: 10px;
         height: 10px;
-        animation: spin 2s linear infinite;
+        animation: spin 1s linear infinite;
     }
 
     @keyframes spin {

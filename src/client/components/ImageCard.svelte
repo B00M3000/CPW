@@ -2,12 +2,12 @@
     import { goto } from "$app/navigation";
     import { user } from "@/client/stores/user";
 
-    interface Asset {
-      _id: string;
-      desc: string;
+    interface Image {
+        _id: string;
+        description: string;
     }
 
-    export let asset: Asset;
+    export let image: Image;
   
     async function deleteAsset(id: string) {
         await fetch(`/assets/${id}`, {
@@ -29,7 +29,7 @@
   </div>
   
 <style lang="scss">
-.asset-card {
+  .asset-card {
     border: 2px solid #000000;
     border-radius: 4px;
     padding: 10px;
