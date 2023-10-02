@@ -15,17 +15,18 @@
         })
         location.reload();
     }
+
   </script>
 <div class="asset-card">
     <div class="asset-image-container">
-      <img src="/assets/{asset._id}" alt="an asset" class="asset-image" />
+      <img src="/images/{image._id}" alt="an asset" class="asset-image" />
     </div>
     <div class="asset-details">
         <h4>Image Caption:</h4>
-        <span class="desc">{asset.desc}</span>
+        <span class="desc">{image.description}</span>
       <!-- <span class="asset-size">{bytesToString(asset.size * 1000)}</span> -->
     </div>
-      <button on:click={() => goto(`/gallery/${asset._id}`)} class="seemore-button">See More</button>
+      <button on:click={() => goto(`/images/${image._id}`)} class="seemore-button">See More</button>
   </div>
   
 <style lang="scss">
