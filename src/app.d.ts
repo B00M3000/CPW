@@ -21,6 +21,7 @@ interface User {
 	sessionId: string;
 	accountType: number;
 	accessLevel: number;
+	adviseeIds: string[];
 }
 
 export {};

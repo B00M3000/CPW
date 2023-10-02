@@ -9,6 +9,22 @@
     $: projectUnapproved = projects.filter((project) => project.underReview == true);
     $: projectsApproved = projects.filter((project) => project.underReview == false);
 
+    async function changeApproval(project: any, approval: boolean){
+
+        const res = await fetch(`${student._id}/${project._id}/approval`, {
+            method: "POST",
+            body: JSON.stringify({
+                action: approval ? "APPROVE" : "UNAPPROVE",
+                projectId: project._id
+            })
+        });
+
+        await location.reload();
+    }
+
+
+
+
 </script>
 
 <main>
@@ -17,31 +33,26 @@
             <div class="project-card">
                 <ProjectCard {project} />
                 <div class="button-container">
-                    <button class="fullreport-button" >
+                    <button class="fullreport-button" on:click={async () => await goto(`${student._id}/${project._id}/report`)}>
                         View Full Report
                     </button> 
 
-                    <button class="accept-button" >
+                    <button class="accept-button" on:click = {() => changeApproval(project, true)}>
                         Approve Project
                     </button>
                     
                 </div>
             </div>
         {/each}
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="card-container">
         {#each projectsApproved as project}
             <div class="project-card">
                 <ProjectCard {project} />
                 <div class="button-container">
-                    <button class="fullreport-button" on:click={() => goto(`/${student.student._Id}/${project._id}/report`)}>
+                    <button class="fullreport-button" on:click={async () => await goto(`${student._id}/${project._id}/report`)}>
                         View Full Report
                     </button> 
 
-                    <button class="deny-button" disabled>
+                    <button class="deny-button" on:click = {() =>  changeApproval(project, false)}>
                         Unapprove Project
                     </button>
                 </div>
@@ -54,7 +65,6 @@
 <style lang="scss">
     .card-container{
         display:flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
         margin-top: 2rem;
@@ -146,11 +156,6 @@
         cursor: pointer;
         font-size: 16px;
         transition: background-color 0.3s ease;
-    }
-
-    .divider {
-        width: calc(100vw - (100vw - 100%));
-        border-bottom: 2px solid black;
     }
 
 

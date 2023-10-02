@@ -5,7 +5,7 @@ import { ProjectSchema } from '@/server/mongo/schemas/project.js';
 import { MentorSchema } from '@/server/mongo/schemas/mentor';
 
 export async function load({ locals, params }) {
-    const id = params.id;
+    const id = params.studentId;
     const student = stringifyObjectId(await UserSchema.findById(id).lean())
     const projects = (await ProjectSchema.find({ studentId: id }).lean()).map(stringifyObjectId).map(p => ({ ...p, student })) || [];
 

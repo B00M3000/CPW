@@ -23,7 +23,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 					picture: user?.picture,
 					sessionId: user?.sessionId,
 					accountType: user?.accountType,
-					accessLevel: user?.accessLevel
+					accessLevel: user?.accessLevel,
+					adviseeIds: user?.adviseeIds
 				};
 			} else {
 				//TBA: clear session cookie

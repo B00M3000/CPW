@@ -5,9 +5,10 @@ import { ProjectSchema } from '@/server/mongo/schemas/project.js';
 import { MentorSchema } from '@/server/mongo/schemas/mentor';
 
 export async function load({ locals, params }) {
-    const id = params.id;
-    const project = stringifyObjectId(await ProjectSchema.findById(id).lean());
+    const projectId = params.projectId;
+    const studentId = params.studentId;
+    const project = stringifyObjectId(await ProjectSchema.findById(projectId).lean());
 
-    return { project }
+    return { project, studentId }
 };
 
