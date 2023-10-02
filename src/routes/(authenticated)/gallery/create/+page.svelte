@@ -88,13 +88,13 @@
   {/each}
 
   <label for="project"><strong>Project: </strong></label>
-    <select
-      id="project"
-      name="projectId"
-      disabled={projects.length == 0}
-      required
-      bind:value={projectId}
-    >
+  <select
+    id="project"
+    name="projectId"
+    disabled={projects.length == 0}
+    required
+    bind:value={projectId}
+  >
     <option disabled selected value="default">Please select a project!</option>
     {#each projects as project}
       <option value={project._id}>{project.title}</option>

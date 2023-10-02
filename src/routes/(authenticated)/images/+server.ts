@@ -18,8 +18,6 @@ export async function PUT({ request, locals }) {
     const descriptionField = formData.get('description')
     const projectIdField = formData.get('projectId')
 
-    console.log(projectIdField)
-
     if(descriptionField) {
         if(!(typeof descriptionField == "string")) throw error(400, { message: "Description must be a string." })
         if(descriptionField.length > _USER_IMAGE_DESCRIPTION_LIMIT) throw error(400, { message: `Description must be less than ${USER_IMAGE_DESCRIPTION_LIMIT} characters.` })

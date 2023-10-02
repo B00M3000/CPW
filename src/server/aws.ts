@@ -35,8 +35,21 @@ export async function getObject(bucket: string, key: string): Promise<AWS.S3.Get
             if(err) {
                 reject(err)
                 console.error(err)
-            }
-            resolve(data)
+            } else resolve(data)
+        })
+    })
+}
+
+export async function deleteObject(bucket: string, key: string): Promise<AWS.S3.DeleteObjectOutput> {
+    return new Promise((resolve, reject) => {
+        s3.deleteObject({
+            Bucket: bucket,
+            Key: key,
+        }, function(err: Error, data: AWS.S3.DeleteObjectOutput) {
+            if(err) {
+                reject(err)
+                console.error(err)
+            } else resolve(data)
         })
     })
 }
