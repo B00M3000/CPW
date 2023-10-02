@@ -1,7 +1,7 @@
 import Papa from 'papaparse';
 
 interface CSVObject {
-  [key: string]: string;
+  [column: string]: string;
 }
 
 export async function parseCSV(file: File): Promise<CSVObject[]> {
