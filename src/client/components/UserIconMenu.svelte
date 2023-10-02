@@ -11,6 +11,10 @@
     async function gotoAccount() {
         await goto('/account');
     }
+
+    async function gotoManageImages() {
+        await goto('/manage-images')
+    }
 </script>
 
 {#if $user}
@@ -33,6 +37,9 @@
                 <button class="dropdown-menu-option" on:click={gotoAccount}>
                     <Icon src={Gear}/>
                     <a href="/account">Account</a>
+                </button>
+                <button class="dropdown-menu-option" on:click={gotoManageImages}>
+                    <a href="/manage-images">Manage Images</a>
                 </button>
             </div>
             <button id="logout-button" on:click={() => user.logout() }>Log Out</button>
@@ -87,6 +94,7 @@
     #dropdown-content {
         display: flex;
         flex-direction: column;
+        justify-content: center;
 
         z-index: 50;
         min-width: 150px;
@@ -95,8 +103,6 @@
 
         background-color: #fff;
         box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.4);
-
-        white-space: nowrap;
     }
 
     #brief-profile {
@@ -114,6 +120,8 @@
 
             border-radius: 50%;
         }
+
+        white-space: nowrap;
     }
 
     #brief-account-details {
@@ -135,6 +143,7 @@
 
     #dropdown-menu-options {
         display: inline-flex;
+        flex-direction: column;
         justify-content: center;
     }
 
