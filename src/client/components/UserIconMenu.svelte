@@ -38,9 +38,11 @@
                     <Icon src={Gear}/>
                     <a href="/account">Account</a>
                 </button>
+                {#if $user.accountType == AccountType.Student}
                 <button class="dropdown-menu-option" on:click={gotoManageImages}>
                     <a href="/manage-images">Manage Images</a>
                 </button>
+                {/if}
             </div>
             <button id="logout-button" on:click={() => user.logout() }>Log Out</button>
         </div>
