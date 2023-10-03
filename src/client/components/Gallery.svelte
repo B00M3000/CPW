@@ -38,7 +38,9 @@
         {#each images as image, i}
         <div class="image-container">
             <div class="lazy-image-container" style={autoHeightAndWidth ? `width: auto; height: auto;   ` : ""}>
-                <LazyImage src="/images/{image._id}" alt={image.description || ""} />
+                <div class="image-container"></div>
+                    <LazyImage src="/images/{image._id}" alt={image.description || ""} />
+                </div>
             </div>
             <div class="image-popup">
                 {#if image.description}<span>Description: {image.description}</span>{/if}
@@ -179,7 +181,21 @@
             }
             .lazy-image-container {
                 filter: blur(5px);
+         
             }
+        }
+
+        .image-container {
+            width: 400px; 
+            height: 225px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; 
+            padding: 4px;
+            outline: 2px solid black;
+            border-radius: 10px;
+            background-color: rgb(118, 118, 118);
         }
     }
 </style>

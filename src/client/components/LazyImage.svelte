@@ -56,13 +56,12 @@
     });
 </script>
 
-<div class="image-container">
-  {#if browser}
-  <img {alt} bind:this={image} src={visible ? src : undefined} class:loaded />
-  {:else}
-  <img {alt} {src} loading="lazy" />
-  {/if}
-</div>
+
+{#if browser}
+<img {alt} bind:this={image} src={visible ? src : undefined} class:loaded />
+{:else}
+<img {alt} {src} loading="lazy" />
+{/if}
 
 <style>
     img {
@@ -74,17 +73,5 @@
     img.loaded,
     img[loading='lazy'] {
         opacity: 1;
-    }
-    .image-container {
-      width: 400px; 
-      height: 225px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden; 
-      padding: 4px;
-      outline: 2px solid black;
-      border-radius: 10px;
-      background-color: rgb(118, 118, 118);
     }
 </style>
