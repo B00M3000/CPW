@@ -67,8 +67,8 @@
     img {
         opacity: 0;
         transition: opacity ease 0.5s;
-        max-width: 100%;
-        max-height: 100%;
+        width: 100%;
+        height: 100%;
     }
     img.loaded,
     img[loading='lazy'] {

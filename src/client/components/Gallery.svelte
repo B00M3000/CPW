@@ -100,13 +100,14 @@
         align-items: center;
 
         overflow-y: auto;
+
+        background-color: #ddd;
     }
 
     #images {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        background-color: aliceblue;
     }
 
     .upload-images {
@@ -156,11 +157,9 @@
         align-items: center;
         justify-content: center;
         margin: 0.25rem;
-        width: 400px; 
-        padding: 4px;
-        outline: 2px solid black;
-        border-radius: 10px;
-        background-color: rgb(118, 118, 118);
+        padding: 0.5rem;
+        border-radius: 2rem;
+        background-color: #f4f4f4;
 
         cursor: pointer;
 
