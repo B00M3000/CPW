@@ -2,12 +2,10 @@
     export let text: string;
 </script>
 
-<div class="tag">
-    <span class="text">{text}</span>
-</div>
+<span id="tag">{text}</span>
 
 <style>
-    .tag {
+    #tag {
         display: inline-flex;
 
         padding: 0.3em;
@@ -15,10 +13,8 @@
 
         background-color: lightskyblue;
 
-        border-radius: 0.2em;        
-    }
+        border-radius: 0.2em; 
 
-    .text {
         font-size: 12px;
     }
 </style>

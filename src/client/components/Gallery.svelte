@@ -12,17 +12,29 @@
     }
 
     export let images: Image[];
+    export let projectPage: boolean;
 
     async function gotoProject(id: string) {
         await goto(`/projects/${id}`);
     }
+
+    function toggleOverlay(index: number, value: boolean, event?: Event) {
+        if(value) {
+            overlay[index] = true
+        } else {
+            console.log(event)
+            if(event?.target.nodeName == "DIV") overlay[index] = false
+        }   
+    }
+
+    let overlay: boolean[] = images.map(() => false);
 </script>
 
 <div id="gallery">
     <h1>Image Gallery</h1>
     {#if images.length > 0}
     <div id="images">
-        {#each images as image}
+        {#each images as image, i}
         <div class="image-container">
             <div class="lazy-image-container">
                 <LazyImage src="/images/{image._id}" alt={image.description || ""} />
@@ -30,9 +42,19 @@
             <div class="image-popup">
                 {#if image.description}<span>Description: {image.description}</span>{/if}
                 <span>Project: {image.project?.title}</span>
+                <button on:click={() => toggleOverlay(i, true)}>View Enlarged</button>
+                {#if !projectPage}
                 <button on:click={() => gotoProject(image.projectId)}>Visit Project</button>
+                {/if}
             </div>
         </div>
+        {#if overlay[i]}
+        <div class="image-overlay" on:click={(event) => toggleOverlay(i, false, event)}>
+            <div class='image-overlay-container'>
+                <img src="/images/{image._id}" />
+            </div>
+        </div>
+        {/if}
         {/each}
     </div>
     {/if}
@@ -41,8 +63,37 @@
 
 
 <style lang="scss">
+    .image-overlay {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+
+        left: 0;
+        top: 0;
+        z-index: 9999;
+        
+        width: 100vw;
+        height: 100vh;
+
+        background: rgba(1, 1, 1, 0.2);
+
+        .image-overlay-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 75vw;
+            height: 75vh;
+
+            img {
+                
+                object-fit: contain;
+            }
+        }
+    }
+
     #gallery {
-        width: calc(100vw - (100vw - 100%));
         display: flex;
         justify-content: center;
         flex-direction: column;
@@ -103,7 +154,7 @@
             padding: 0.5rem;
             border-radius: 1rem;
 
-            max-width: 75%;
+            max-width: 18rem;
         }
 
         &:hover {

@@ -24,7 +24,7 @@
         <button on:click={gotoManageImages}>Manage Images</button>
     </div>
     {/if}
-    <Gallery {images} />
+    <Gallery {images} projectPage={false} />
 </main>
 
 <style lang='scss'>

@@ -27,7 +27,7 @@
 
       <h3>Gallery</h3>
 
-      <Gallery {images} /> 
+      <Gallery {images} projectPage={true} /> 
   </div>
 
   <div class="content">
