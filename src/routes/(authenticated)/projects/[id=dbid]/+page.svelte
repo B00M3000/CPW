@@ -3,9 +3,11 @@
     import MentorCard from '@/client/components/MentorCard.svelte';
     import Tag from '@/client/components/Tag.svelte';
     import { getTagString } from '@/lib/tags.js';
-    export let data;
+    import Gallery from '@/client/components/Gallery.svelte';
 
-    $: ({ project, mentor, student } = data);
+    export let data: any;
+
+    $: ({ project, mentor, student, images } = data);
 
 </script>
 
@@ -15,7 +17,6 @@
       <h1>{project?.title}</h1>
       <h3>Mentor: <MentorCard {mentor} /> </h3>
       <h3>Completed By: <StudentCard {student} /> </h3>
-      <h3>View Photo Gallery: <a href={`/projects/${project._id}/gallery`}> Project Photos</a> </h3>
       <h3>Description: </h3>
       <span> {project?.shortDesc}</span>
 
@@ -23,6 +24,10 @@
       {#each project.tags as tag}
           <Tag text={getTagString(tag)} />
       {/each}
+
+      <h3>Gallery</h3>
+
+      <Gallery {images} /> 
   </div>
 
   <div class="content">

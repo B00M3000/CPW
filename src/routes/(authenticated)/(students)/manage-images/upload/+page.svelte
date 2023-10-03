@@ -138,7 +138,7 @@
     }
 
     main {
-        display: flex;
+        display: block;
         flex-direction: column;
     }
 
@@ -147,7 +147,6 @@
         flex-direction: column;;
         margin: 1rem;
         background-color: white;
-        width: 100%;
         padding: 2rem;
         gap: 2rem;
     }

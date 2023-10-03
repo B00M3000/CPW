@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
+    import { goto } from "$app/navigation";
     import Gallery from "@/client/components/Gallery.svelte";
     import { user } from "@/client/stores/user";
     import { AccountType } from "@/lib/enums";
