@@ -23,6 +23,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"aws-sdk": "^2.1467.0",
 		"cookie": "^0.5.0",
 		"dotenv": "^16.3.1",
 		"fs": "^0.0.1-security",
