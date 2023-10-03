@@ -37,10 +37,8 @@
     <div id="images">
         {#each images as image, i}
         <div class="image-container">
-            <div class="lazy-image-container" style={autoHeightAndWidth ? `width: auto; height: auto;   ` : ""}>
-                <div class="image-container"></div>
-                    <LazyImage src="/images/{image._id}" alt={image.description || ""} />
-                </div>
+            <div class="lazy-image-container" style={autoHeightAndWidth ? `width: auto; height: auto;` : ""}>
+                <LazyImage src="/images/{image._id}" alt={image.description || ""} />
             </div>
             <div class="image-popup">
                 {#if image.description}<span>Description: {image.description}</span>{/if}
@@ -85,7 +83,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-
             width: 75vw;
             height: 75vh;
 
@@ -109,6 +106,7 @@
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
+        background-color: aliceblue;
     }
 
     .upload-images {
@@ -146,6 +144,8 @@
     .lazy-image-container {
         display: inline-flex;    
         background-color: inherit;
+        align-items: center;
+        justify-content: center;
         width: 24rem;
         height: 18rem;
     }
@@ -156,6 +156,11 @@
         align-items: center;
         justify-content: center;
         margin: 0.25rem;
+        width: 400px; 
+        padding: 4px;
+        outline: 2px solid black;
+        border-radius: 10px;
+        background-color: rgb(118, 118, 118);
 
         cursor: pointer;
 
@@ -184,17 +189,6 @@
             }
         }
 
-        .image-container {
-            width: 400px; 
-            height: 225px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden; 
-            padding: 4px;
-            outline: 2px solid black;
-            border-radius: 10px;
-            background-color: rgb(118, 118, 118);
-        }
+
     }
 </style>
