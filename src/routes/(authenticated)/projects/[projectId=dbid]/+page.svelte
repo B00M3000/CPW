@@ -66,7 +66,7 @@
     }
 
     .view-nav {
-      padding: 5px;
+      padding: 10px;
       background-color: var(--color-blue-grey-200);
     }
 
