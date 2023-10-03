@@ -52,7 +52,7 @@
         {#if overlay[i]}
         <div class="image-overlay" on:click={(event) => toggleOverlay(i, false, event)}>
             <div class='image-overlay-container'>
-                <img src="/images/{image._id}" />
+                <img src="/images/{image._id}" alt={image.description}/>
             </div>
         </div>
         {/if}
