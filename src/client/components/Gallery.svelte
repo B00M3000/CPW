@@ -13,6 +13,7 @@
 
     export let images: Image[];
     export let projectPage: boolean;
+    export let autoHeightAndWidth: boolean = false;
 
     async function gotoProject(id: string) {
         await goto(`/projects/${id}`);
@@ -36,7 +37,7 @@
     <div id="images">
         {#each images as image, i}
         <div class="image-container">
-            <div class="lazy-image-container">
+            <div class="lazy-image-container" style={autoHeightAndWidth ? `width: auto; height: auto;   ` : ""}>
                 <LazyImage src="/images/{image._id}" alt={image.description || ""} />
             </div>
             <div class="image-popup">
@@ -87,7 +88,6 @@
             height: 75vh;
 
             img {
-                
                 object-fit: contain;
             }
         }
