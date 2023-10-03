@@ -18,12 +18,12 @@
         await goto(`/projects/${id}`);
     }
 
-    function toggleOverlay(index: number, value: boolean, event?: Event) {
+    function toggleOverlay(index: number, value: boolean, event?: PointerEvent) {
         if(value) {
             overlay[index] = true
         } else {
             console.log(event)
-            if(event?.target.nodeName == "DIV") overlay[index] = false
+            if(event?.target?.nodeName == "DIV") overlay[index] = false
         }   
     }
 
