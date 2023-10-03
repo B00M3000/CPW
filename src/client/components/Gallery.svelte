@@ -125,6 +125,22 @@
         }
     }
 
+    button{
+        padding: 5px;
+        margin: 5px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 300;
+        background-color: var(--color-blue-grey-300);
+        color: white;
+        font-weight: 600;
+    }
+
+    button:hover{
+        background-color: var(--color-blue-grey-200);
+    }
+
     .lazy-image-container {
         display: inline-flex;    
         background-color: inherit;
