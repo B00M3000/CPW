@@ -3,7 +3,7 @@
     export let data;
 
     const user = data.user;
-    $: ({ projectCountNotPublished, projectCount, assetCount } = data)
+    $: ({ projectCountNotPublished, projectCount, imageCount } = data)
     
 
     let totalProjects = 15
@@ -38,7 +38,7 @@
 
         <div class="panel">
             <h2> Photos </h2>
-            <p> Number of Photos: {assetCount}</p>
+            <p> Number of Photos: {imageCount}</p>
         </div>
         
       
