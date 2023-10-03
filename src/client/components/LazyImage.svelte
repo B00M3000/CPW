@@ -56,7 +56,6 @@
     });
 </script>
 
-
 {#if browser}
 <img {alt} bind:this={image} src={visible ? src : undefined} class:loaded />
 {:else}

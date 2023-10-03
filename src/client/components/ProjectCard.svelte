@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Project } from "@interfaces/project";
     import { getTagString } from "@/lib/tags";
-    import Tag from "@/client/components/Tag.svelte";
+    import Tags from "@/client/components/Tags.svelte";
     import StudentCard from "@/client/components/StudentCard.svelte";
     import MentorCard from "@/client/components/MentorCard.svelte";
     import { goto } from "$app/navigation";
@@ -16,11 +16,9 @@
 <div class="card">
     <span class="title">{project.title}</span>
 
-    <div class="tags">
-        {#each project.tags as tag}
-            <Tag text={getTagString(tag)} />
-        {/each}
-    </div>
+    <div id="tags">
+        <Tags tagIds={project.tags} />
+    </div> 
 
     <div class="persons">
         <div class="person">
@@ -52,7 +50,7 @@
             text-align: center;
         }
 
-        .tags {
+        #tags {
             display: flex;
             flex-wrap: wrap;
             align-items: center;

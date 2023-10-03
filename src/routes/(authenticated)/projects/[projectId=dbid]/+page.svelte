@@ -1,7 +1,7 @@
 <script lang=ts>
     import StudentCard from '@/client/components/StudentCard.svelte';
     import MentorCard from '@/client/components/MentorCard.svelte';
-    import Tag from '@/client/components/Tag.svelte';
+    import Tags from '@/client/components/Tags.svelte';
     import { getTagString } from '@/lib/tags.js';
     import Gallery from '@/client/components/Gallery.svelte';
 
@@ -21,33 +21,30 @@
 <main>
   <div class="sidebar">
     <h1>{project?.title}</h1>
-    <h3>Mentor: <MentorCard {mentor} /> </h3>
-    <h3>Completed By: <StudentCard {student} /> </h3>
+    <span>Mentor: <MentorCard {mentor} /></span>
+    <span>Completed By: <StudentCard {student} /></span>
+    <h3>Tags</h3>
+    <Tags tagIds={project.tags} />
     <h3>Description: </h3>
     <span> {project?.shortDesc}</span>
-
-    <h3>Tags</h3>
-    {#each project.tags as tag}
-        <Tag text={getTagString(tag)} />
-    {/each}
   </div>
-  <div class="report-image-container">
+  <div class="content">
     <div class="view-nav">
-        <button class={view == Views.FullReport ? "active" : ""} on:click = {() => view  = Views.FullReport}> View Full Report</button>
-        <button class={view == Views.Images ? "active" : ""} on:click = {() => view = Views.Images}> View Images</button>
-
+      <button class={view == Views.FullReport ? "active" : ""} on:click = {() => view = Views.FullReport}>View Full Report</button>
+      <button class={view == Views.Images ? "active" : ""} on:click = {() => view = Views.Images}>View Images</button>
     </div> 
-    {#if view == Views.FullReport}
-      <div class="report">
-          {project?.fullReport || "Sorry, no report has been published for this project."}
-      </div>
-
-    {:else if view == Views.Images }
-      <div class="gallery-container">
-        <Gallery {images} />
-      </div>
-    {/if}
-  </div>  
+    <div class="report-image-container">
+      {#if view == Views.FullReport}
+        <div class="report">
+            {project?.fullReport || "Sorry, no report has been published for this project."}
+        </div>
+      {:else if view == Views.Images}
+        <div class="gallery-container">
+          <Gallery projectPage={true} {images} />
+        </div>
+      {/if}
+    </div>  
+  </div>
 </main>
 
 
@@ -74,6 +71,7 @@
       padding: 10px;
       background-color: var(--color-blue-grey-200);
       position: relative;
+      word-wrap: none;
     }
 
     .report {
@@ -86,7 +84,6 @@
       padding: 20px; 
       overflow-y: auto;
     }
-
 
     .report-image-container{
       max-height: calc(100vh - var(--nav-bar-height));
@@ -103,7 +100,6 @@
       border: 0px transparent;
       color: white;
       font-size: large;
-      width: 10rem;
       font-weight: 800;
     }
 
@@ -126,9 +122,7 @@
       border-left: 8px solid transparent;
       border-right: 8px solid transparent;
       border-top: 8px solid blue;
-    
     }
-
   }
 
   @media(max-width: 1200px) {
