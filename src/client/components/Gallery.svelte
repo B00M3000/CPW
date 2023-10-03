@@ -127,7 +127,7 @@
         }
     }
 
-    button{
+    button {
         padding: 5px;
         margin: 5px;
         border: none;
@@ -181,7 +181,6 @@
             }
             .lazy-image-container {
                 filter: blur(5px);
-         
             }
         }
 
