@@ -20,6 +20,6 @@
     }
 </script>
 
-<svg width={size} height={size} stroke-width="0" {...src.attributes} {...attributes} xmlns="http://www.w3.org/2000/svg">
+<svg  {...src.attributes} width={size} height={size} stroke-width="0" {...attributes} xmlns="http://www.w3.org/2000/svg">
     {@html src.source}
 </svg>
