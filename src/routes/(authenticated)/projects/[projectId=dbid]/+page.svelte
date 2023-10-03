@@ -14,7 +14,7 @@
 
 
 <main>
-  <div class="sidebar left">
+  <div class="sidebar">
       <h1>{project?.title}</h1>
       <h3>Mentor: <MentorCard {mentor} /> </h3>
       <h3>Completed By: <StudentCard {student} /> </h3>
@@ -60,12 +60,9 @@
       flex-direction: column;  
       padding: 25px;
       height: calc(100vh - var(--nav-bar-height) - 50px);
-
-      &.left {
-        word-wrap: break-word;
-        overflow-y: auto;
-        
-      }
+      word-wrap: break-word;
+      overflow-y: auto;
+      border-right: 2px black solid;
     }
 
     .view-nav {
@@ -95,11 +92,17 @@
     }
 
     button {
-      background-color: white;
+      background-color: transparent;
       padding: 3px;
-      border: 1px black solid;
+      border: 0px transparent;
+      color: white;
+      font-size: large;
       width: 10rem;
       font-weight: 800;
+    }
+
+    button:hover{
+      color: rgb(129, 129, 255)
     }
     
     .active{
