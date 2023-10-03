@@ -1,59 +1,61 @@
 <script lang="ts">
-    import { user } from "@/client/stores/user";
-    import ImageCard from "@/client/components/ImageCard.svelte";
     import { goto } from "$app/navigation";
-    import { AccountType } from "@/lib/enums";
+    import LazyImage from "@/client/components/LazyImage.svelte";
 
     interface Image {
         _id: string;
         description: string;
+        projectId: string;
+        project?: {
+            title: string;
+        };
     }
 
     export let images: Image[];
 
-    async function gotoImageUpload() {
-        await goto("/manage-images/upload");
+    async function gotoProject(id: string) {
+        await goto(`/projects/${id}`);
     }
 </script>
 
-{#if $user.accountType == AccountType.Student}
-<button class="upload-images" on:click={gotoImageUpload}>Upload Images</button>
-{/if}
-<main>
+<div id="gallery">
+    <h1>Image Gallery</h1>
     {#if images.length > 0}
     <div id="images">
         {#each images as image}
-        <ImageCard {image} />
+        <div class="image-container">
+            <div class="lazy-image-container">
+                <LazyImage src="/images/{image._id}" alt={image.description || ""} />
+            </div>
+            <div class="image-popup">
+                {#if image.description}<span>Description: {image.description}</span>{/if}
+                <span>Project: {image.project?.title}</span>
+                <button on:click={() => gotoProject(image.projectId)}>Visit Project</button>
+            </div>
+        </div>
         {/each}
     </div>
     {/if}
-</main>
+</div>
 
 
 
 <style lang="scss">
-    main {
+    #gallery {
         width: calc(100vw - (100vw - 100%));
         display: flex;
         justify-content: center;
-    }
-    
-    img {
-        width: 3rem;
-        height: 3rem;
-        border-radius: 1rem;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        overflow-y: auto;
     }
 
     #images {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        margin: 0 auto;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        background-color: #fff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .upload-images {
@@ -69,6 +71,48 @@
 
         &:hover {
             background-color: #0056b3; 
+        }
+    }
+
+    .lazy-image-container {
+        display: inline-flex;    
+        background-color: inherit;
+        width: 24rem;
+        height: 18rem;
+    }
+
+    .image-container {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0.25rem;
+
+        cursor: pointer;
+
+        .image-popup {
+            position: absolute;
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+            visibility: hidden;
+            background-color: white;
+            padding: 0.5rem;
+            border-radius: 1rem;
+
+            max-width: 75%;
+        }
+
+        &:hover {
+            .image-popup {
+                visibility: visible;
+            }
+            .lazy-image-container {
+                filter: blur(5px);
+            }
         }
     }
 </style>
