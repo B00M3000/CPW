@@ -37,7 +37,7 @@
     <div id="images">
         {#each images as image, i}
         <div class="image-container">
-            <div class="lazy-image-container" style={autoHeightAndWidth ? `width: auto; height: auto;   ` : ""}>
+            <div class="lazy-image-container" style={autoHeightAndWidth ? `width: auto; height: auto;` : ""}>
                 <LazyImage src="/images/{image._id}" alt={image.description || ""} />
             </div>
             <div class="image-popup">
@@ -52,7 +52,7 @@
         {#if overlay[i]}
         <div class="image-overlay" on:click={(event) => toggleOverlay(i, false, event)}>
             <div class='image-overlay-container'>
-                <img src="/images/{image._id}" />
+                <img src="/images/{image._id}" alt={image.description}/>
             </div>
         </div>
         {/if}
@@ -83,7 +83,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-
             width: 75vw;
             height: 75vh;
 
@@ -101,6 +100,8 @@
         align-items: center;
 
         overflow-y: auto;
+
+        background-color: #ddd;
     }
 
     #images {
@@ -125,9 +126,27 @@
         }
     }
 
+    button {
+        padding: 5px;
+        margin: 5px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 300;
+        background-color: var(--color-blue-grey-300);
+        color: white;
+        font-weight: 600;
+    }
+
+    button:hover{
+        background-color: var(--color-blue-grey-200);
+    }
+
     .lazy-image-container {
         display: inline-flex;    
         background-color: inherit;
+        align-items: center;
+        justify-content: center;
         width: 24rem;
         height: 18rem;
     }
@@ -138,6 +157,9 @@
         align-items: center;
         justify-content: center;
         margin: 0.25rem;
+        padding: 0.5rem;
+        border-radius: 2rem;
+        background-color: #f4f4f4;
 
         cursor: pointer;
 
@@ -165,5 +187,7 @@
                 filter: blur(5px);
             }
         }
+
+
     }
 </style>

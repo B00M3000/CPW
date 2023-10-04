@@ -29,6 +29,8 @@
         cursor: pointer;
 
         display: inline-flex;
+
+        align-items: center;
         
         padding: 0.3em;
 
