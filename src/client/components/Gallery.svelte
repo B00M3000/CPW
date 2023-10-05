@@ -58,6 +58,8 @@
         {/if}
         {/each}
     </div>
+    {:else}
+    <h3>No Images Uploaded.</h3>
     {/if}
 </div>
 

@@ -36,13 +36,14 @@
     </div> 
     <div class="report-image-container">
       {#if view == Views.FullReport}
-        <div class="report">
-            {project?.fullReport || "Sorry, no report has been published for this project."}
-        </div>
+      <h1>Full Report</h1>
+      <div class="report">
+          {project?.fullReport || "Sorry, no report has been published for this project."}
+      </div>
       {:else if view == Views.Images}
-        <div class="gallery-container">
-          <Gallery projectPage={true} {images} />
-        </div>
+      <div class="gallery-container">
+        <Gallery projectPage={true} {images} />
+      </div>
       {/if}
     </div>  
   </div>
@@ -100,6 +101,10 @@
     .report-image-container{
       max-height: calc(100vh - var(--nav-bar-height) - 2rem - 20px);
       overflow-y: scroll;
+
+      h1 {
+        text-align: center;
+      }
     }
 
     .gallery-container{
