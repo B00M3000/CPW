@@ -42,7 +42,7 @@
             </div>
             <div class="image-popup">
                 {#if image.description}<span>Description: {image.description}</span>{/if}
-                <span>Project: {image.project?.title}</span>
+                <span><strong>Project:</strong> {image.project?.title}</span>
                 <button on:click={() => toggleOverlay(i, true)}>View Enlarged</button>
                 {#if !projectPage}
                 <button on:click={() => gotoProject(image.projectId)}>Visit Project</button>
@@ -83,11 +83,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 75vw;
-            height: 75vh;
+            max-width: 25vw;
+            max-height: 25vh;
 
             img {
                 object-fit: contain;
+                max-width: 75vw;
+                max-height: 75vh;
+                border: black solid 1px;
+                border-radius: 5px;
             }
         }
     }
@@ -143,10 +147,11 @@
     }
 
     .lazy-image-container {
-        display: inline-flex;    
         background-color: inherit;
+        display: flex;
         align-items: center;
         justify-content: center;
+        overflow: hidden; 
         width: 24rem;
         height: 18rem;
     }
