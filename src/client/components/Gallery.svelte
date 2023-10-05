@@ -143,10 +143,11 @@
     }
 
     .lazy-image-container {
-        display: inline-flex;    
         background-color: inherit;
+        display: flex;
         align-items: center;
         justify-content: center;
+        overflow: hidden; 
         width: 24rem;
         height: 18rem;
     }
