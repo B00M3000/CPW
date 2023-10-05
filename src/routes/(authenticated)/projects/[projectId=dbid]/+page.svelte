@@ -31,6 +31,7 @@
   <div class="content">
     <div class="view-nav">
       <button class={view == Views.FullReport ? "active" : ""} on:click = {() => view = Views.FullReport}>View Full Report</button>
+      <div class="divider"></div>
       <button class={view == Views.Images ? "active" : ""} on:click = {() => view = Views.Images}>View Images</button>
     </div> 
     <div class="report-image-container">
@@ -72,6 +73,17 @@
       background-color: var(--color-blue-grey-200);
       position: relative;
       word-wrap: none;
+      max-height: 2rem;
+      height: 2rem;
+      display: flex;
+      flex-direction: row;
+      gap: 1.2rem;
+    }
+
+    .divider{
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+      background-color: black;
     }
 
     .report {
@@ -86,7 +98,7 @@
     }
 
     .report-image-container{
-      max-height: calc(100vh - var(--nav-bar-height));
+      max-height: calc(100vh - var(--nav-bar-height) - 2rem - 20px);
       overflow-y: scroll;
     }
 
@@ -108,21 +120,34 @@
     }
     
     .active{
-      border-bottom: 5px blue solid;
+      position: relative;
+      padding-bottom: 0.25rem;
+      margin: 0;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        height: 0.8rem;
+        background: blue;
+        clip-path: polygon(
+          0 0,
+          calc(50% - 0.3rem) 0,
+          50% calc(0px),
+          calc(50% + 0.3rem) 0,
+          100% 0,
+          100% 5px,
+          calc(50% + 0.3rem + 2.5px) 5px,
+          50% 100%,
+          calc(50% - 0.3rem - 2.5px) 5px,
+          0 5px
+        );
+      }
     }
 
-    .active::after {
-      content: " ";
-      position: absolute;
-      display: block;
-      margin-left: 4rem;
-      margin-top: 7px;
-      width: 0;
-      height: 0;
-      border-left: 8px solid transparent;
-      border-right: 8px solid transparent;
-      border-top: 8px solid blue;
-    }
+
   }
 
   @media(max-width: 1200px) {
