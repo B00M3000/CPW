@@ -28,7 +28,7 @@
         return valid
     }
 
-    async function onChange() {
+    async function onFileChange() {
         const { files } = fileInputElement;
         if(!files || !files[0]) return;
         const parsedCSV = (await parseCSV(files[0])).map(r => r.map(s => s.trim()));
@@ -36,10 +36,18 @@
         entries = parsedCSV;
         errors = []
     }
+
+    // let link: string;
+
+    // async function onLinkChange() {
+
+    //     const file = 
+    // }
 </script>
 
-<main class="container">
-    <input bind:this={fileInputElement} type="file" multiple={false} accept="text/csv" on:change={onChange} />
+<input bind:this={fileInputElement} type="file" multiple={false} accept="text/csv" on:change={onFileChange} />
+
+<!-- <input on:change={onLinkChange} placeholder="Enter Google Sheet URL" bind:value={link} /> -->
 
     {#if entries.length > 0}
         <table>

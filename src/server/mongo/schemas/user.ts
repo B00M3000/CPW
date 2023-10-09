@@ -10,7 +10,7 @@ interface UserDocumentData {
   sessionId: string;
   accountType: number;
   accessLevel: number;
-  advisees: string[];
+  adviseeIds: string[];
 }
 
 const schema = new mongoose.Schema(
