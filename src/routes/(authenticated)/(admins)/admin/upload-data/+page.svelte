@@ -38,18 +38,23 @@
     }
 </script>
 
-<input bind:this={fileInputElement} type="file" multiple={false} accept="text/csv" on:change={onChange} />
+<main class="container">
+    <input bind:this={fileInputElement} type="file" multiple={false} accept="text/csv" on:change={onChange} />
 
-<table>
-    <tr>
-        {#each headings as heading, headingIndex}<th class="{headingValidation(heading) ? "valid" : "invalid"}">{heading}</th>{/each}
-    </tr>
-    {#each entries as entry, entryIndex}
-    <tr>
-        {#each entry as part, headingIndex}<td class="{partValidation(headings[headingIndex], part) ? "valid" : "invalid"}">{part}</td>{/each}
-    </tr>
-    {/each}
-</table>
+    {#if entries.length > 0}
+        <table>
+            <tr>
+                {#each headings as heading, headingIndex}<th class="{headingValidation(heading) ? "valid" : "invalid"}">{heading}</th>{/each}
+            </tr>
+            {#each entries as entry, entryIndex}
+            <tr>
+                {#each entry as part, headingIndex}<td class="{partValidation(headings[headingIndex], part) ? "valid" : "invalid"}">{part}</td>{/each}
+            </tr>
+            {/each}
+        </table>
+    {/if}
+
+</main>
 
 {#if errors.length > 0}
 <h1>Errors: </h1>
@@ -59,19 +64,40 @@
 {/if}
 
 <style lang='scss'>
-    table {
-        padding: 1rem;
-        border-radius: 1rem;
-        background-color: #fff;
-        tr {
-            th, td {
-                padding: 0.5rem 1rem;
-            }
-            &:nth-child(even) {
-                background-color: #ddd;
-            }
+  
+    .container {
+        align-self: center;
+        width: calc(100vw - (100vw - 100%));
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 1rem;
+
+        
+        input[type="file"] {
+            border: 1px solid #007bff; 
+            padding: 10px;
+            background-color: #ffffff;
+            color: #007bff;
+            border-radius: 5px;
+            cursor: pointer;
         }
-    }   
+
+        table {
+            padding: 1rem;
+            border-radius: 1rem;
+            background-color: #fff;
+            tr {
+                th, td {
+                    padding: 0.5rem 1rem;
+                }
+                &:nth-child(even) {
+                    background-color: #ddd;
+                }
+            }
+        } 
+    }
+   
     .valid { color: green; }
     .invalid { color: red; }
 </style>
