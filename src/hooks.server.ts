@@ -1,18 +1,34 @@
-import type { Handle } from '@sveltejs/kit';
+import { json, type Handle } from '@sveltejs/kit';
 import mongo from '@/server/mongo';
+import { UserSchema } from '@/server/mongo/schemas/user';
 
 const dbPromise = mongo();
 
 export const handle: Handle = async ({ event, resolve }) => {
-	try {
-		await dbPromise;
+	await dbPromise;
 
-		return await resolve(event);
-	} catch (error) {
-		console.error(error);
+	const sessionId = event.cookies.get('session_id');
 
-		return new Response(null, { status: 500 });
+	if(sessionId) {
+		const user = await UserSchema.findOne({ sessionId });
+
+		if(user) {
+			event.locals.user = {
+				id: user._id.toString(),
+				name: user.name,
+				email: user.email,
+				picture: user.picture,
+				sessionId: user.sessionId,
+				accountType: user.accountType,
+				accessLevel: user.accessLevel,
+				adviseeIds: user.adviseeIds
+			};
+		} else {
+			event.cookies.delete('session_id');
+		}
 	}
+
+	return await resolve(event);
 };
 
 export async function handleFetch({ request, fetch }) {

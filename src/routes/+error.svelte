@@ -4,7 +4,7 @@
 
 <main>
     <span class="status">{$page.status}</span>
-    <span class="message">{$page.error.message}</span>
+    <span class="message">{$page.error?.message}</span>
 </main>
 
 <style lang="scss">
