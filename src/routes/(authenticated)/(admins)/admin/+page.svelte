@@ -11,6 +11,9 @@
         await goto('/admin/advisor-advisee');
     }
 
+    async function gotoMentorSearch() {
+      await goto('/admin/mentor-search')
+    }
     export let data;
 
     $: ({ projectCountPublished, projectCountNotPublished} = data)
@@ -78,6 +81,7 @@
         <div class="dashboard-panel">
             <button on:click={gotoGhostManager} class="dashboard-button futuristic-button">Ghosts Manager</button>
             <button on:click={gotoAdvisorAdviseeLinker} class="dashboard-button futuristic-button">Advisor-Advisee Linker</button>
+            <button on:click={gotoMentorSearch} class="dashboard-button">Mentor Searcher</button>
         </div>
     </div>
 </main>

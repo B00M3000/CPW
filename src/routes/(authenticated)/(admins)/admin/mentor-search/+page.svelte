@@ -16,6 +16,10 @@
         email = searchParams?.get("email") || ""
     }
 
+    async function clear(){
+       await goto("mentor-search");
+    }
+
     $: syncFields($page.url.searchParams);
 
     async function search(e: Event){
@@ -58,6 +62,7 @@
             type="text"
         />
         <button class="button" on:click={search}>Search</button>
+        <button class="button" on:click={clear}>Clear</button>
     </div>
     <div class="mentor-container">
         <h1> Mentors: </h1>
