@@ -1,15 +1,28 @@
 <script lang="ts">
-    import type { DataImport, Fields } from "@/lib/data-import";
+    import type { DataUpload, Fields } from "@/lib/data-upload";
     import { parseCSV } from "@/lib/utils";
     import { onMount } from "svelte";
 
-    export let dataImport: DataImport;
+    import Icon from "@/client/components/Icon.svelte";
+    import Valid from "@/client/icons/Valid";
+    import Invalid from "@/client/icons/Invalid";
+
+    export let dataUpload: DataUpload;
     export let endpoint: string;
 
     let fields: Fields;
 
+    enum UploadStatus {
+        NotUploaded,
+        Uploading,
+        Uploaded,
+        Failed
+    }
+
+    let uploadStatus: UploadStatus = UploadStatus.NotUploaded;
+
     onMount(() => {
-        fields = dataImport.fields;
+        fields = dataUpload.fields;
     })
 
     let headings: string[] = [];
@@ -47,18 +60,32 @@
         else if(length > 1) errors.push(`Duplicate "${fieldName}" field.`)
     }))(headings)
 
-    function uploadData() {
+    async function uploadData() {
+        uploadStatus = UploadStatus.Uploading;
 
+        const res = await fetch(endpoint, {
+            method: 'POST',
+            body: file,
+            headers: {
+                'Content-type': 'text/csv'
+            }
+        })
+
+        if(res.ok) {
+            uploadStatus = UploadStatus.Uploaded
+        } else {
+            uploadStatus = UploadStatus.Failed
+        }
     }
 </script>
 
-<div id="data-import">
-    <h3>Import <em>{dataImport.name}</em> Data</h3>
+<div id="data-upload">
+    <h3>Upload <em>{dataUpload.name}</em> Data</h3>
 
     <input type='file' multiple={false} accept="text/csv" bind:files={files}/>
 
     {#if file}
-    <div id="data-import-result">
+    <div id="data-upload-result">
         <table>
             <tr>
                 {#each headings as heading}
@@ -87,18 +114,36 @@
         </div>
         {/if}
     </div>
-    {/if}
 
-    {#if file && errors.length == 0}
-    <div id="submit">
-        <button on:click={uploadData}>Upload Data</button>
-        <!-- Add Spinner and Success Message -->
+    {#if errors.length > 0}
+    <div id="validation-message">
+        <Icon src={Invalid} color="red"/>
+        <span class="invalid">Data Validation Failed - Check Errors</span>
     </div>
-    {/if}
+    {:else}
+    <div id="validation-message">
+        <Icon src={Valid} color="green"/>
+        <span class="valid">Data Validation Passed - Click to Upload</span>
+    </div>
+    <div id="upload-button">
+        <button on:click={uploadData} disabled={uploadStatus != UploadStatus.NotUploaded}>Upload Data</button>
+        {#if uploadStatus == UploadStatus.Uploading}
+        <div class="loader" />
+        <span>Processing...</span>
+        {:else if uploadStatus == UploadStatus.Uploaded}
+        <Icon src={Valid} color="green"/>
+        <span class="valid">Uploaded</span>
+        {:else if uploadStatus == UploadStatus.Failed}
+        <Icon src={Invalid} color="red"/>
+        <span class="invalid">Failed</span>
+        {/if}
+    </div>
+    {/if}  
+    {/if}  
 </div>
 
 <style lang='scss'>
-    #data-import {
+    #data-upload {
         display: flex;
         flex-direction: column;
 
@@ -107,7 +152,7 @@
         margin: 2rem;
     }
 
-    #data-import-result {
+    #data-upload-result {
         display: flex;
         flex-wrap: wrap;
 
@@ -139,7 +184,6 @@
 
         tr {
             th, td {
-                // display: inline-table;
                 text-align: left;
                 padding: 0.5rem 1rem;
             }
@@ -148,6 +192,47 @@
             }
         }
     }   
+
     .valid { color: green; }
     .invalid { color: red; }
+
+    #validation-message {
+        display: flex;
+        align-items: center;
+
+        margin: 1rem;
+
+        span {
+            margin: 0 0.25rem;
+        }
+    }
+
+    #upload-button {
+        display: flex;
+        align-items: center;
+
+        gap: 0.5rem;
+
+        button {
+            margin-right: 1rem;
+        }
+    }
+
+    .loader {
+        border: 4px solid rgba(255, 255, 255, 0.6);
+        border-top: 4px solid var(--color-blue-500);
+        border-radius: 50%;
+        width: 1rem;
+        height: 1rem;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 </style>

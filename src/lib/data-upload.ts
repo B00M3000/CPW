@@ -1,11 +1,11 @@
 export type Fields = Record<string, RegExp>;
 
-export interface DataImport {
+export interface DataUpload {
     name: string;
     fields: Fields;
 }
 
-export const studentDataImport: DataImport = {
+export const studentDataUpload: DataUpload = {
     name: "Student",
     fields: {
         "Identifier": /(T|S)(\d+)/,
@@ -14,7 +14,7 @@ export const studentDataImport: DataImport = {
     }
 }
 
-export const teacherDataImport: DataImport = {
+export const teacherDataUpload: DataUpload = {
     name: "Teacher",
     fields: {
         "Identifier": /(T|S)(\d+)/,
@@ -23,8 +23,8 @@ export const teacherDataImport: DataImport = {
     }
 }
 
-export const advisorLinkageDataImport: DataImport = {
-    name: "Advisee-Advisor Linkages",
+export const advisorLinkageDataUpload: DataUpload = {
+    name: "Advisor Linkages",
     fields: {
         "Advisee Identifier": /(S)(\d+)/,
         "Advisor Identifier": /(T)(\d+)/,
