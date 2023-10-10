@@ -17,7 +17,7 @@
         <h1> Incomplete Projects</h1>
         <tr>
             <th>
-                <span>Project Title</span>   
+                <span>Title</span>   
             </th>
             <th>
                 <span>Student </span>
@@ -47,7 +47,7 @@
         <h1> Completed Projects</h1>
         <tr>
             <th>
-                <span>Project Title</span>   
+                <span>Title</span>   
             </th>
             <th>
                 <span>Student </span>
