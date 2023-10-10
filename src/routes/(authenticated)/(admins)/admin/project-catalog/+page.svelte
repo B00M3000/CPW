@@ -20,7 +20,7 @@
                 <span>Project Title</span>   
             </th>
             <th>
-                <span>Student Name </span>
+                <span>Student </span>
             </th>
             <th>
                 <span>Status</span>
@@ -50,7 +50,7 @@
                 <span>Project Title</span>   
             </th>
             <th>
-                <span>Student Name </span>
+                <span>Student </span>
             </th>
             <th>
                 <span>Status</span>
@@ -66,7 +66,7 @@
                 <span> <StudentCard student={project.student} /> </span>
             </td>
             <td>
-                <span>Complete</span>
+                <span>Completed </span>
             </td>
         </tr>
         {/each}

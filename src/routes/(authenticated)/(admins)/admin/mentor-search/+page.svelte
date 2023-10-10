@@ -60,13 +60,40 @@
         <button class="button" on:click={search}>Search</button>
     </div>
     <div class="mentor-container">
-        {#each mentors as mentor}
-            <div class="mentor-card">
-                <span>Name: <MentorCard {mentor}/> </span>
-                <span>Organization: {mentor.organization}</span>
-                <span>Email: {mentor.email}</span>
-            </div>
-        {/each}
+        <table>
+            <h1> Mentors: </h1>
+            <tr>
+                <th>
+                    <span>Name</span>   
+                </th>
+                <th>
+                    <span>Organization </span>
+                </th>
+                <th>
+                    <span>Email</span>
+                </th>
+                <th>
+                    <span>Phone</span>
+                </th>
+            </tr>
+        
+            {#each mentors as mentor}
+            <tr>
+                <td>
+                    <span><MentorCard {mentor} /> </span>
+                </td>
+                <td>
+                    <span> {mentor.organization} </span>
+                </td>
+                <td>
+                    <span> {mentor.email} </span>
+                </td>
+                <td>
+                    <span> {mentor.phoneNumber} </span>
+                </td>
+            </tr>
+            {/each}
+        </table>
     </div>
 </main>
 
@@ -104,14 +131,28 @@
     }
 
     .mentor-container {
-        align-items: center;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        table {
+            padding: 2rem;
+            background-color: #fff;
+            outline: 1px black solid;
+            gap: 2rem;
+
+            tr {
+                th, td {
+                    text-align: left;
+                    padding: 0.5rem 1rem;
+                }
+                &:nth-child(even) {
+                    background-color: #ddd;
+                }
+                
+                &:nth-child(odd) {
+                    background-color: #e9e9e9;
+                }
+            }
+        }  
     }
-    .mentor-card{
-        display: flex;
-        padding: 1rem;
-        gap: 5rem;
-        background-color: aliceblue;
-    }
+
 </style>
