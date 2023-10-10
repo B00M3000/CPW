@@ -54,7 +54,7 @@
         width: 100%;
         top: 0;
         background-size: cover;
-        background-position: center;
+        background-position: centzdcsdfdcszfcxzsczxer;
         filter: blur(8px) grayscale(20%);
         z-index: -1;
         background-image: url("/assets/boston.avif");
