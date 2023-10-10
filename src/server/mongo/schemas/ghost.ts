@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 
 interface GhostDocumentData {
+    schoolId: string;
+    graduationYear?: number;
     email: string;
     accountType: number;
     accessLevel: number;
@@ -8,9 +10,11 @@ interface GhostDocumentData {
 
 const schema = new mongoose.Schema(
   {
-    email: { type: String, required: true, unique: true },
+    schoolId: { type: String, required: true, unique: true },
+    email: { type: String, required: true },
     accountType: { type: Number, required: true },
-    accessLevel: { type: Number, required: true }
+    accessLevel: { type: Number, required: true },
+    graduationYear: { type: Number },
   },
   { timestamps: true },
 );

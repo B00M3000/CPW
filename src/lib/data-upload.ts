@@ -8,7 +8,7 @@ export interface DataUpload {
 export const studentDataUpload: DataUpload = {
     name: "Student",
     fields: {
-        "Identifier": /(T|S)(\d+)/,
+        "Identifier": /S(\d+)/,
         "Email": /.+@.+\..+/,
         "Graduation Year": /\d{4}/
     }
@@ -17,7 +17,7 @@ export const studentDataUpload: DataUpload = {
 export const teacherDataUpload: DataUpload = {
     name: "Teacher",
     fields: {
-        "Identifier": /(T|S)(\d+)/,
+        "Identifier": /T(\d+)/,
         "Email": /.+@.+\..+/,
         "Administrator Access": /(|No|Yes)/ 
     }
@@ -26,8 +26,8 @@ export const teacherDataUpload: DataUpload = {
 export const advisorLinkageDataUpload: DataUpload = {
     name: "Advisor Linkages",
     fields: {
-        "Advisee Identifier": /(S)(\d+)/,
-        "Advisor Identifier": /(T)(\d+)/,
+        "Advisee Identifier": /S(\d+)/,
+        "Advisor Identifier": /T(\d+)/,
     }
 }
 
