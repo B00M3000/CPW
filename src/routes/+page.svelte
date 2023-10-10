@@ -56,6 +56,7 @@
         background-size: cover;
         background-position: center;
         filter: blur(8px) grayscale(20%);
+        transform: scale(1.1); 
         z-index: -1;
         background-image: url("/assets/boston.avif");
     }
@@ -71,7 +72,6 @@
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
        
-       // background: linear-gradient(0deg, var(--color-blue-grey-300) 1%, transparent);
         width: calc(100vw - (100vw - 100%));
         padding: 50px 0px;
     }
@@ -186,8 +186,6 @@
 
     .primary {
         padding: 20px;
-        //background-color: var(--color-blue-grey-300);
-
     }
 
     .subtitle {
