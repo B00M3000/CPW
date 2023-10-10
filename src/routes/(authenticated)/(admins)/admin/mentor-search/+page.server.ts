@@ -19,11 +19,11 @@ export async function load({ url }) {
         dbQuery.organization = buildRegex(organization);
     }
 
-    const email = searchParams.get('organization');
+    const email = searchParams.get('email');
     if(email){
-        dbQuery.organization = buildRegex([email]);
+        dbQuery.email = buildRegex([email]);
     }
-    
+
     const filteredMentors: MentorDocumentData[] = await MentorSchema.find(dbQuery).lean() || [];
     const mentors = filteredMentors.map(stringifyObjectId)
 
