@@ -17,7 +17,7 @@
             'Category 3'           
         ],
         includeScore: true, 
-        threshold: 0.7, 
+        threshold: 0.35, 
     };
 
     let searchResults = allProjects;
