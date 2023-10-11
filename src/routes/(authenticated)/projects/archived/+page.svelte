@@ -35,6 +35,7 @@
 
     function clear() {
         searchResults = allProjects;
+        searchQuery = "";
     }
 </script>
 
