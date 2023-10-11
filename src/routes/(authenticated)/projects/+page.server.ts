@@ -3,7 +3,7 @@ import { MentorSchema } from '@/server/mongo/schemas/mentor';
 import { UserSchema } from '@/server/mongo/schemas/user';
 import { buildRegex, stringifyObjectId } from '@/lib/utils';
 
-import lowRelevance from "@/client/data/generated/low-relevance.json";
+import lowRelevance from "@/client/lib/lowRelevance";
 import type { FilterQuery } from 'mongoose';
 
 export async function load({ url }) {
