@@ -3,7 +3,7 @@ import { studentDataUpload } from '@/lib/data-upload';
 import { error, json } from '@sveltejs/kit';
 import { validateCSV } from '@/lib/utils';
 import { AccessLevel, AccountType } from '@/lib/enums';
-import { GhostSchema } from '@/server/mongo/schemas/ghost';
+import { UserSchema } from '@/server/mongo/schemas/user';
 
 const { fields: studentDataUploadFields } = studentDataUpload;
 
@@ -18,7 +18,7 @@ export async function POST({ request }) {
 
     const operations = generateOperations(headings, entries);
 
-    await GhostSchema.bulkWrite(operations);
+    await UserSchema.bulkWrite(operations);
 
     return json({ message: "Data uploaded successfully!" }, { status: 200 });
 }

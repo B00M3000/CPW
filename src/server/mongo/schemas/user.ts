@@ -28,7 +28,7 @@ const schema = new mongoose.Schema(
     accountType: { type: Number, required: true, default: 0 },
     accessLevel: { type: Number, required: true, default: 0 },
     adviseeIds: { type: [String], required: true, default: [] },
-    graduationYear: { type: Number, required: true }
+    graduationYear: { type: Number }
   },
   { timestamps: true },
 );
