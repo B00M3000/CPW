@@ -1,13 +1,14 @@
 <script lang=ts>
+    import { goto } from "$app/navigation";
     import ProjectCard from "@/client/components/ProjectCard.svelte";
     import StudentCard from "@/client/components/StudentCard.svelte";
 
     export let data;
 
-    $: ({projects} = data)
+    $: ({inflatedProjects} = data)
 
-    $: completedProjects = projects.filter((p) => p.underReview == false);
-    $: uncompletedProjects = projects.filter((p) => p.underReview == true);
+    $: completedProjects = inflatedProjects.filter((p) => p.underReview == false);
+    $: uncompletedProjects = inflatedProjects.filter((p) => p.underReview == true);
 </script>
 
 
@@ -28,7 +29,7 @@
         </tr>
     
         {#each uncompletedProjects as project}
-        <tr>
+        <tr on:click ={()  => goto(`project-catalog/${project._id}`)}>
             <td>
                 <span>{project.title}</span>
             </td>
@@ -58,7 +59,7 @@
         </tr>
     
         {#each completedProjects as project}
-        <tr>
+        <tr on:click={()  => goto(`project-catalog/${project._id}`)}>
             <td>
                 <span>{project.title}</span>
             </td>
@@ -80,11 +81,10 @@
         table {
             padding: 2rem;
             background-color: #fff;
-            outline: 1px black solid;
             gap: 2rem;
 
             tr {
-                th, td {
+                td {
                     text-align: left;
                     padding: 0.5rem 1rem;
                 }
@@ -94,8 +94,23 @@
                 
                 &:nth-child(odd) {
                     background-color: #e9e9e9;
-                }
+                } 
+            }
+            tr:hover {
+                    background-color: rgb(163, 230, 185);
+                    cursor: pointer;
+            }
+
+            th{
+                text-align: left;
+                padding: 0.5rem 1rem;
+                background-color: rgb(163, 162, 162);
             }
         }  
+
+        h1 {
+            background-color: white;
+            margin: 0;
+        } 
     } 
 </style>

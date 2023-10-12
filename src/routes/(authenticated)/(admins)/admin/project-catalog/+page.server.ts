@@ -12,6 +12,6 @@ async function injectStudentAndMentor(project: any) {
 export const load: PageServerLoad = async ({ }) => {
     const projects = (await ProjectSchema.find({ year:  new Date().getFullYear() }).lean())
     const inflatedProjects = await Promise.all(projects.map(stringifyObjectId).map(injectStudentAndMentor))
-    return { projects };
+    return { inflatedProjects };
 
 }
