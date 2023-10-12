@@ -82,7 +82,7 @@
                 </th>
         
             {#each mentors as mentor}
-            <tr on:click ={()  => goto(`/mentor/${mentor._id}`)}>
+            <tr on:click ={()  => goto(`mentor-search/${mentor._id}`)}>
                 <td>
                     <span> {mentor.name} </span>
                 </td>
