@@ -66,7 +66,7 @@
 
 <main>
     <div class="main-container">
-        <div class="dashboard-panel">
+        <div class="dashboard-panel-head">
             <h1 class="title"><strong>Administrator Dashboard</strong></h1>
         </div>
         
@@ -82,11 +82,16 @@
             </div>
         </div>
 
-        <div class="dashboard-panel">
+        <div class="dashboard-panel-button">
+          <div class="dashboard-panel-button-1">
             <button on:click={gotoGhostManager} class="dashboard-button">Ghosts Manager</button>
             <button on:click={gotoAdvisorAdviseeLinker} class="dashboard-button">Advisor-Advisee Linker</button>
+           
+          </div>
+          <div class="dashboard-panel-button-2">
             <button on:click={gotoMentorSearch} class="dashboard-button">Mentor Searcher</button>
             <button on:click={gotoProjectCatalog} class="dashboard-button">Project Catalog</button>
+          </div>
         </div>
     </div>
 </main>
@@ -101,8 +106,31 @@
     margin-bottom: 1rem;
   }
 
+  .dashboard-panel-head {
+    background-color: #858585; 
+    border: 1px solid #1E1E1E; 
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+  }
   .dashboard-panel {
     background-color: #858585; 
+    display: flex;
+    gap: 2rem;
+    border: 1px solid #1E1E1E; 
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+  }
+
+  .dashboard-panel-button {
+    background-color: #858585; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     border: 1px solid #1E1E1E; 
     border-radius: 5px;
     padding: 20px;
@@ -139,11 +167,11 @@
     padding: 10px 20px;
     font-size: 1.2rem;
     border: none;
+    width: 20vw;
     border-radius: 5px;
     cursor: pointer;
     margin: 10px;
     transition: background-color 0.3s;
-    width: 15rem;
   }
 
   .dashboard-button:hover {
