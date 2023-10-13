@@ -16,9 +16,25 @@
 
     async function saveReport() {
         inflatedProject.fullReport = editedFullReport;
-        const res = await fetch(`/project-catalog/${inflatedProject._id}`, {
+        const res = await fetch(`/admin/project-catalog/${inflatedProject._id}`, {
             method: "POST",
-            body: JSON.stringify({ fullReport: editedFullReport })
+            body: JSON.stringify({ 
+                Action: "SAVE",
+                fullReport: editedFullReport
+             })
+        })
+        toggleEditing();
+        //location.reload();
+    }
+
+
+    async function changePublish() {
+        const res = await fetch(`/admin/project-catalog/${inflatedProject._id}`, {
+            method: "POST",
+            body: JSON.stringify({
+                Action: "PUBLISH",
+                publish: !inflatedProject.publish 
+            })
         })
         toggleEditing();
         location.reload();
@@ -27,7 +43,11 @@
 
 <main>
     <h1>{inflatedProject.title}</h1>
-    <button class="unpublish-button" on:click={toggleEditing}>Unpublish Project</button>
+    {#if inflatedProject.publish}
+        <button class="unpublish-button" on:click={changePublish}>Unpublish Project</button>
+    {:else if inflatedProject.underReview == false}
+        <button class="unpublish-button" on:click={changePublish}>Publish Project</button>
+    {/if}
     <p class="year"><strong>Year:</strong> {inflatedProject.year}</p>
     <p class="mentor"><strong>Mentor:</strong> {inflatedProject.mentor.firstName} {inflatedProject.mentor.lastName}</p>
     <p class="mentor"><strong>Mentor Info:</strong> {inflatedProject.mentor.email}, {inflatedProject.mentor.phoneNumber}</p>
