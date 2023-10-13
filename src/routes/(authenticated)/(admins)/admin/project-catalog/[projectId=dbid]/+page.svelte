@@ -24,7 +24,7 @@
              })
         })
         toggleEditing();
-        //location.reload();
+        location.reload();
     }
 
 
