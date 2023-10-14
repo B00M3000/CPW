@@ -1,3 +1,9 @@
+/*
+ * Created on Fri Oct 13 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 import { uploadObject } from '@/server/aws';
 import { error, json } from '@sveltejs/kit';
 

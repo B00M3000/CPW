@@ -1,3 +1,9 @@
+/*
+ * Created on Fri Oct 13 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 import type { Handle } from '@sveltejs/kit';
 import mongo from '@/server/mongo';
 import cookie from 'cookie';

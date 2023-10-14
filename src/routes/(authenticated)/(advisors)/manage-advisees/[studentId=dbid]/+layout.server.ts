@@ -1,3 +1,9 @@
+/*
+ * Created on Fri Oct 13 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 import { error } from '@sveltejs/kit';
 
 export async function load({ locals, params }) {

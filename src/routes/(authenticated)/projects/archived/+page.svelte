@@ -1,3 +1,9 @@
+<!--
+ Created on Fri Oct 13 2023
+
+ Copyright (c) 2023 Thomas Zhou
+-->
+
 <script lang=ts>
     import projects20 from "@client/data/projects20.json";
     import projects22 from "@client/data/projects22.json";

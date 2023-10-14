@@ -1,3 +1,9 @@
+/*
+ * Created on Fri Oct 13 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 export function buildRegex(keywords: string[]){
     return new RegExp(keywords.map((w:string) => `(?=.*?${w})`).join("") + ".*",   "i");
 }

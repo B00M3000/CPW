@@ -1,3 +1,9 @@
+/*
+ * Created on Fri Oct 13 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 import { AccountType } from "@/lib/enums";
 import { stringifyObjectId } from "@/lib/utils";
 import { UserSchema } from "@/server/mongo/schemas/user";

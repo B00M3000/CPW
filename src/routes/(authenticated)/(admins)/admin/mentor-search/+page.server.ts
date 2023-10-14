@@ -1,3 +1,8 @@
+/*
+ * Created on Fri Oct 13 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
 
 import { MentorSchema, type MentorDocument, type MentorDocumentData } from '@/server/mongo/schemas/mentor';
 import { buildRegex, stringifyObjectId } from '@/lib/utils';

@@ -1,3 +1,9 @@
+/*
+ * Created on Fri Oct 13 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 import { getObject } from '@/server/aws';
 import { ImageSchema } from '@/server/mongo/schemas/image';
 import { error } from '@sveltejs/kit';

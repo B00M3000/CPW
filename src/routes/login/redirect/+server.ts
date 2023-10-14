@@ -1,3 +1,9 @@
+/*
+ * Created on Fri Oct 13 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 import { error, redirect } from '@sveltejs/kit';
 import { UserSchema } from '@/server/mongo/schemas/user';
 import { v4 as uuidv4 } from 'uuid';

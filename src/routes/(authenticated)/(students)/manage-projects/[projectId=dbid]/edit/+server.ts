@@ -1,3 +1,9 @@
+/*
+ * Created on Fri Oct 13 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 import { ProjectSchema } from '@/server/mongo/schemas/project';
 import { UserSchema } from '@/server/mongo/schemas/user';
 import { error, json } from '@sveltejs/kit';

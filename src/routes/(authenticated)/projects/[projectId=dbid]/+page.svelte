@@ -1,3 +1,9 @@
+<!--
+ Created on Fri Oct 13 2023
+
+ Copyright (c) 2023 Thomas Zhou
+-->
+
 <script lang=ts>
     import StudentCard from '@/client/components/StudentCard.svelte';
     import MentorCard from '@/client/components/MentorCard.svelte';

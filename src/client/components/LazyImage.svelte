@@ -1,3 +1,9 @@
+<!--
+ Created on Fri Oct 13 2023
+
+ Copyright (c) 2023 Thomas Zhou
+-->
+
 <!-- Imported from https://github.com/B00M3000/Mindustry-Schematics on 10/2/2023 -->
 <!-- Modified by Thomas Zhou <https://github.com/B00M3000> on 10/2/2023 -->
 
