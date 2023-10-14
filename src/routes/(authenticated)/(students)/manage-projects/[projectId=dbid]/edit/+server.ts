@@ -11,7 +11,7 @@ import { MentorSchema } from '@/server/mongo/schemas/mentor';
 import { stringifyObjectId } from "@/lib/utils";
 
 export async function POST({ request  }) {
-    const { mentor, project } = await request.json();
+    const { project } = await request.json();
 
     await ProjectSchema.findOneAndUpdate({ _id: project._id }, {
       ...project
