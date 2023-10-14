@@ -30,8 +30,8 @@
                 <Icon src={Close} size="2em" color="white"/>
             </div>
         </div>
-        <span>Authored by Thomas Zhou (26')</span>
-        <span>Co-Authored by Ethan Wu (26')</span>
+        <span>Project Owner, Engineering Lead, Code Owner: Thomas Zhou (26')</span>
+        <span>Contributors: Ethan Wu (26')</span>
 
         <br>
 
