@@ -62,7 +62,7 @@
                 id="search-box"
                 class="search-box"
                 bind:value={query}
-                type="text"
+                type="search"
             />
             <button class="button" on:click={search}>Search</button>
 
@@ -150,18 +150,19 @@
     }
 
     .SearchFilter {
-        background-color: #525252;
+        background-color: rgb(245, 245, 245);
         color: white;
-        padding: 2px;
+        padding: 5px;
         font-size: 16px;
-        border-radius: 5px;
+        border-radius: 4px;
         margin-bottom: 1rem;
-        border: 2px solid black;
-        border-radius: 5px;
+        margin-top: 0.2rem;
+        border: 0px solid black;
     }
 
     .filter-labels {
         margin-top: 1rem;
+        margin-bottom: 0.2rem;
         font-size: 15px;
         font-weight: 900;
     }
@@ -197,10 +198,11 @@
         flex: 0 0 240px;
         max-width: 240px;
         height: calc(100vh - 8vh - var(--nav-bar-height));
-        background-color: #777777;
+        background-color: #d0d0d0;
         padding-left: 2rem;
         overflow-y: hidden;
         padding-top: 0px;
+        border-right: 2px solid black;
     }
 
     .sidebar h1 {
