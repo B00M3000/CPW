@@ -2,6 +2,7 @@
 	"name": "cws-project-week-database",
 	"version": "0.0.1",
 	"private": true,
+	"author": "Thomas Zhou <doomking9000@gmail.com> (tzhou.xyz)",
 	"scripts": {
 		"dev": "vite dev --host",
 		"build": "vite build",
@@ -27,6 +28,7 @@
 		"cookie": "^0.5.0",
 		"dotenv": "^16.3.1",
 		"fs": "^0.0.1-security",
+		"fuse.js": "^6.6.2",
 		"mongoose": "^7.5.1",
 		"papaparse": "^5.4.1",
 		"sass": "^1.66.1",

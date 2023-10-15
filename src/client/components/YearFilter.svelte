@@ -1,3 +1,9 @@
+<!--
+ Created on Fri Oct 13 2023
+
+ Copyright (c) 2023 Thomas Zhou
+-->
+
 <script lang="ts">
     export let yearLowerBound: number = 2019;
     export let yearUpperBound: number = new Date().getFullYear();

@@ -1,3 +1,9 @@
+<!--
+ Created on Fri Oct 13 2023
+
+ Copyright (c) 2023 Thomas Zhou
+-->
+
 <script>
     import { user } from "@/client/stores/user";
     import UserIconMenu from "@/client/components/UserIconMenu.svelte";

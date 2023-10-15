@@ -1,3 +1,9 @@
+/*
+ * Created on Fri Oct 13 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 import { buildRegex, stringifyObjectId } from '@/lib/utils';
 import { MentorSchema } from '@/server/mongo/schemas/mentor.js';
 import { error, json } from '@sveltejs/kit';

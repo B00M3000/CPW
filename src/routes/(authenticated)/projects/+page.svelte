@@ -1,3 +1,9 @@
+<!--
+ Created on Fri Oct 13 2023
+
+ Copyright (c) 2023 Thomas Zhou
+-->
+
 <script lang="ts">
     import { goto } from "$app/navigation";
     import YearFilter from "@/client/components/YearFilter.svelte";
@@ -17,7 +23,7 @@
     let studentSearch: string;
     let selected: string[];
 
-    function syncFields(searchParams: URLSearchParams){
+    function syncFields(searchParams?: URLSearchParams){
         query = searchParams?.get("query") || "";
         yearUpper = ((yu: string | null) => yu ? parseInt(yu) : undefined || new Date().getFullYear())(searchParams?.get("yearUpper"));
         yearLower = ((yl: string | null) => yl ? parseInt(yl) : undefined || 2019)(searchParams?.get("yearLower"));
@@ -65,6 +71,12 @@
                 syncFields();
             }}>Clear</button>
         </div>
+        <button class="button" on:click={async () => {
+                await goto(`/projects/archived`);
+            }}>
+            See Archived Projects
+        </button>
+
     </div>
 
 
@@ -119,7 +131,7 @@
 <style lang="scss">
     .head {
         display: flex;
-        flex-direction: column;
+        flex-direction: space-between;
         justify-content: center;
         align-items: left;
         background-color: #d0d0d0;

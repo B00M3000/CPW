@@ -1,4 +1,10 @@
-[
+/*
+ * Created on Fri Oct 13 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
+export default [
     "a",
     "an",
     "and",

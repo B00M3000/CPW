@@ -1,3 +1,9 @@
+/*
+ * Created on Fri Oct 13 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 import { AccountType } from '@/lib/enums.js';
 import mongoose from 'mongoose';
 import mongo from '@/server/mongo';

@@ -1,9 +1,15 @@
+/*
+ * Created on Fri Oct 13 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 import { ProjectSchema, type ProjectDocument, type ProjectDocumentData } from '@/server/mongo/schemas/project';
 import { MentorSchema } from '@/server/mongo/schemas/mentor';
 import { UserSchema } from '@/server/mongo/schemas/user';
 import { buildRegex, stringifyObjectId } from '@/lib/utils';
 
-import lowRelevance from "@/client/data/generated/low-relevance.json";
+import lowRelevance from "@/lib/lowRelevance";
 import type { FilterQuery } from 'mongoose';
 
 export async function load({ url }) {

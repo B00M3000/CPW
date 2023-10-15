@@ -1,3 +1,9 @@
+/*
+ * Created on Fri Oct 13 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 import mongoose from 'mongoose';
 
 import { MONGO_URI } from '$env/static/private';

@@ -1,3 +1,9 @@
+/*
+ * Created on Fri Oct 13 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 import { invalidate } from '$app/navigation';
 import { page } from '$app/stores';
 import { derived } from 'svelte/store';

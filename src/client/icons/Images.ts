@@ -1,3 +1,9 @@
+/*
+ * Created on Fri Oct 13 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 import type { SVG } from './types'
 
 // <svg width="30" height="30" stroke-width="0" class="" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
