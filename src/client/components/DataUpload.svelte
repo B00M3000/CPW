@@ -1,3 +1,9 @@
+<!--
+ Created on Fri Oct 15 2023
+
+ Copyright (c) 2023 Thomas Zhou
+-->
+
 <script lang="ts">
     import type { DataUpload, Fields } from "@/lib/data-upload";
     import { parseCSV } from "@/lib/utils";

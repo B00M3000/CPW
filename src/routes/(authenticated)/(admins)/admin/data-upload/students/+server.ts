@@ -1,3 +1,9 @@
+/*
+ * Created on Sun Oct 15 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 import { parseCSV } from '@/lib/utils.js';
 import { studentDataUpload } from '@/lib/data-upload';
 import { error, json } from '@sveltejs/kit';

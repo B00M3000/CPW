@@ -1,3 +1,9 @@
+<!--
+ Created on Fri Oct 15 2023
+
+ Copyright (c) 2023 Thomas Zhou
+-->
+
 <script lang="ts">
     import DataImport from "@/client/components/DataUpload.svelte";
     import { studentDataUpload } from "@/lib/data-upload";

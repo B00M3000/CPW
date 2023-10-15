@@ -1,3 +1,9 @@
+/*
+ * Created on Sun Oct 15 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 export type Fields = Record<string, RegExp>;
 
 export interface DataUpload {
