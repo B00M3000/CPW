@@ -89,15 +89,8 @@
         </div>
 
         <div class="dashboard-panel-button">
-          <div class="dashboard-panel-button-1">
-            <button on:click={gotoGhostManager} class="dashboard-button">Ghosts Manager</button>
-            <button on:click={gotoAdvisorAdviseeLinker} class="dashboard-button">Advisor-Advisee Linker</button>
-           
-          </div>
-          <div class="dashboard-panel-button-2">
             <button on:click={gotoMentorSearch} class="dashboard-button">Mentor Searcher</button>
             <button on:click={gotoProjectCatalog} class="dashboard-button">Project Catalog</button>
-          </div>
         </div>
     </div>
 </main>

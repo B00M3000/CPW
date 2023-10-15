@@ -16,7 +16,9 @@ interface UserDocumentData {
   sessionId: string;
   accountType: number;
   accessLevel: number;
-  advisees: string[];
+  adviseeIds: string[];
+  schoolId: string;
+  graduationYear: number;
 }
 
 const schema = new mongoose.Schema(
@@ -25,12 +27,14 @@ const schema = new mongoose.Schema(
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     picture: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
+    email: { type: String, required: true },
     sessionId: { type: String, unique: true },
     googleId: { type: String, required: true, unique: true },
+    schoolId: { type: String, required: true, unique: true },
     accountType: { type: Number, required: true, default: 0 },
     accessLevel: { type: Number, required: true, default: 0 },
-    adviseeIds: { type: [String], required: true, default: [] }
+    adviseeIds: { type: [String], required: true, default: [] },
+    graduationYear: { type: Number }
   },
   { timestamps: true },
 );

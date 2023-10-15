@@ -5,8 +5,8 @@
  */
 
 import { stringifyObjectId } from '@/lib/utils.js';
-import { GhostSchema } from '@/server/mongo/schemas/ghost.js';
-import { UserSchema } from '@/server/mongo/schemas/user.js';
+import { GhostSchema } from '@/server/mongo/schemas/ghost';
+import { UserSchema } from '@/server/mongo/schemas/user';
 import { error, json } from '@sveltejs/kit';
 
 export async function POST({ request }) {
