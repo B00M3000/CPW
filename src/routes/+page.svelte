@@ -35,14 +35,13 @@
         </div>
     </div>
     <section class="primary">
-        <p class="subtitle">Welcome to the Commonwealth School Project Week collection</p>
+        <p class="subtitle">Welcome to the Commonwealth School Project Week Collection</p>
         
         {#if !user}
             <a href="/login" class="login-button">Log In</a>
         {/if}
 
         <div class="proj-container">
-            <h2 class="section-title">Here are some projects done by Commonwealth Students:</h2>
             <div id="projects" class="project-list">
             {#each projects as project}
                 <ProjectCard {project} />
@@ -104,13 +103,14 @@
         border-radius: 5px;
         text-decoration: none;
         font-size: 1.2rem;
-        transition: background-color 0.3s;
+        transition: background-color 0.8s;
         margin: 10px;
         cursor: pointer;
+
     }
 
     .btn:hover {
-        background-color: var(--color-blue-grey-400);
+        background-color: rgba(0, 0, 0, 0.5);
     }
 
     .login-button {
@@ -134,15 +134,6 @@
         text-align: center;
     }
 
-    .proj-container {
-        background-color: white;
-        border: 1px solid var(--color-blue-grey-400);
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin: 3rem;
-        margin-bottom: 2rem;
-        padding: 1rem;
-        border: black solid 3px;
-    }
     .search-bar {
         display: flex;
         justify-content: center;
@@ -197,18 +188,21 @@
     .subtitle {
         font-size: 1.5rem;
         font-weight: bold;
-        margin-bottom: 30px;
+        margin-bottom: 5px;
+        margin-top: 1.4rem;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         color:white;
     }
 
  
     .proj-container {
-        margin-top: 30px;
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
+        
+        background-color: transparent;
         padding: 20px;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        margin: 3rem;
+        margin-top: 5px;
+        margin-bottom: 2rem;
+        padding: 1rem;
     }
 
     .section-title {

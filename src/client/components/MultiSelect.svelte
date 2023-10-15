@@ -124,15 +124,15 @@
     }
 
     .dropbtn {
-        background-color: #525252;
+        background-color: rgb(245, 245, 245);
         color: white;
-        padding: 2px;
+        padding: 5px;
         font-size: 16px;
         border-radius: 5px;
         border: 2px solid black;
         border-radius: 5px;
         margin-right: 2px;
-
+        border: 0px solid black;
     }
 
     .dropdown {
