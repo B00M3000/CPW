@@ -17,8 +17,6 @@ export async function POST({ request }) {
     if(!validateCSV(headings, entries, advisorLinkageDataUploadFields)) throw error(400, { message: "Data failed validation." })
 
     await UserSchema.updateMany({ accountType: AccountType.Advisor }, { adviseeIds: [] });
-
-
 }
 
 interface Operation {

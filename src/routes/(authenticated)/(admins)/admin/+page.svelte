@@ -76,8 +76,7 @@
         </div>
 
         <div class="dashboard-panel">
-            <button on:click={gotoGhostManager} class="dashboard-button futuristic-button">Ghosts Manager</button>
-            <button on:click={gotoAdvisorAdviseeLinker} class="dashboard-button futuristic-button">Advisor-Advisee Linker</button>
+
         </div>
     </div>
 </main>

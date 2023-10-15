@@ -22,7 +22,17 @@ export async function GET({ url, cookies, setHeaders }) {
   const session_id = uuidv4();
 
   const userByGoogleId = await UserSchema.findOneAndUpdate(
-    { googleId: google_user.id },
+    {
+      $and: [
+        { googleId: google_user.id },
+        { 
+          $or: [
+            { schoolId: /T\d+/ },
+            { graduationYear: { $exists: true, $gte: new Date().getFullYear() - 1} }
+          ]
+        }
+      ]
+    },
     {
       email: google_user.email,
       firstName: google_user.given_name,
