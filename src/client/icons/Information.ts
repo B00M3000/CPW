@@ -1,3 +1,9 @@
+/*
+ * Created on Fri Oct 13 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 import type { SVG } from './types'
 
 // <?xml version="1.0" encoding="iso-8859-1"?>

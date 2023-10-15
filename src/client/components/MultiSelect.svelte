@@ -1,3 +1,9 @@
+<!--
+ Created on Fri Oct 13 2023
+
+ Copyright (c) 2023 Thomas Zhou
+-->
+
 <script lang="ts">
     export let options: any[] = [];
     export let selectedValues: any[] = [];
@@ -118,15 +124,15 @@
     }
 
     .dropbtn {
-        background-color: #525252;
+        background-color: rgb(245, 245, 245);
         color: white;
-        padding: 2px;
+        padding: 5px;
         font-size: 16px;
         border-radius: 5px;
         border: 2px solid black;
         border-radius: 5px;
         margin-right: 2px;
-
+        border: 0px solid black;
     }
 
     .dropdown {

@@ -1,7 +1,13 @@
+<!--
+ Created on Fri Oct 13 2023
+
+ Copyright (c) 2023 Thomas Zhou
+-->
+
 <script lang="ts">
     import type { Project } from "@interfaces/project";
     import { getTagString } from "@/lib/tags";
-    import Tag from "@/client/components/Tag.svelte";
+    import Tags from "@/client/components/Tags.svelte";
     import StudentCard from "@/client/components/StudentCard.svelte";
     import MentorCard from "@/client/components/MentorCard.svelte";
     import { goto } from "$app/navigation";
@@ -16,11 +22,9 @@
 <div class="card">
     <span class="title">{project.title}</span>
 
-    <div class="tags">
-        {#each project.tags as tag}
-            <Tag text={getTagString(tag)} />
-        {/each}
-    </div>
+    <div id="tags">
+        <Tags tagIds={project.tags} />
+    </div> 
 
     <div class="persons">
         <div class="person">
@@ -46,13 +50,14 @@
         background-color: aliceblue;
         border-radius: 0.5em;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-
+        max-height: 300px;
+        min-height: 300px;
         .title {
             font-size: 22px;
             text-align: center;
         }
 
-        .tags {
+        #tags {
             display: flex;
             flex-wrap: wrap;
             align-items: center;

@@ -1,3 +1,9 @@
+/*
+ * Created on Fri Oct 13 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 import type { SVG } from './types'
 
 // <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">

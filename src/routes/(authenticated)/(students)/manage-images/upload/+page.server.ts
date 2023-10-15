@@ -1,3 +1,9 @@
+/*
+ * Created on Fri Oct 13 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 import { stringifyObjectId } from "@/lib/utils.js";
 import { ImageSchema } from "@/server/mongo/schemas/image";
 import { ProjectSchema } from "@/server/mongo/schemas/project";

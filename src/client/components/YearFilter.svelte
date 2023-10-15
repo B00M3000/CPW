@@ -1,3 +1,9 @@
+<!--
+ Created on Fri Oct 13 2023
+
+ Copyright (c) 2023 Thomas Zhou
+-->
+
 <script lang="ts">
     export let yearLowerBound: number = 2019;
     export let yearUpperBound: number = new Date().getFullYear();
@@ -25,7 +31,6 @@
 
 <div class="filter-container">
     <label>
-        From:
         <select
             class="yearFilter"
             bind:value={yearLowerBound}
@@ -36,8 +41,8 @@
             {/each}
         </select>
     </label>
+    <p> to </p>
     <label>
-        To:
         <select
             class="yearFilter"
             bind:value={yearUpperBound}
@@ -54,29 +59,32 @@
     .filter-container {
         display: flex;
         align-items: center;
-        justify-content: center;
-        gap: 20px;
-        width: 215px;
-        background-color: #525252;
-        padding: 2px;
+        justify-content: space-between;
+        width: 160px;
         border-radius: 5px;
         margin-bottom: 2rem;
+        margin-top: 0.3rem;
+    }
+
+    p {
+        padding: 0px;
+        margin: 0px;
+        font-weight: 900;
+        font-size: 14px;
     }
 
     .yearFilter {
-        padding: 1px;
-        border: 1px solid gray;
+        padding: 4px;
+        border: 1px solid rgb(245, 245, 245);
         border-radius: 4px;
-        background-color: gray;
+        background-color: rgb(245, 245, 245);
         font-weight: 800;
-        color: white;
+        color: black;
         
     }
     label {
-        color: white;
-        font-weight: 900;
-        background-color: gray;
-        padding-left: 5px;
+        color: black;
+        background-color: rgb(245, 245, 245);
         border-radius: 5px;
     }
 </style>

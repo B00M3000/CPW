@@ -1,46 +1,40 @@
+/*
+ * Created on Fri Oct 13 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 import type { Handle } from '@sveltejs/kit';
 import mongo from '@/server/mongo';
-import cookie from 'cookie';
 import { UserSchema } from '@/server/mongo/schemas/user';
 
 const dbPromise = mongo();
 
 export const handle: Handle = async ({ event, resolve }) => {
-	try {
-		await dbPromise;
+	await dbPromise;
 
-		const cookies = cookie.parse(event.request.headers.get('cookie') || '');
-		const session_id = cookies.session_id;
+	const sessionId = event.cookies.get('session_id');
 
-		if (session_id) {
-			const user = await UserSchema.findOne({ sessionId: session_id });
+	if(sessionId) {
+		const user = await UserSchema.findOne({ sessionId });
 
-			if (user) {
-				event.locals.user = {
-					id: user?._id.toString(),
-					name: user?.name,
-					email: user?.email,
-					picture: user?.picture,
-					sessionId: user?.sessionId,
-					accountType: user?.accountType,
-					accessLevel: user?.accessLevel,
-					adviseeIds: user?.adviseeIds
-				};
-			} else {
-				//TBA: clear session cookie
-			}
+		if(user) {
+			event.locals.user = {
+				id: user._id.toString(),
+				name: user.name,
+				email: user.email,
+				picture: user.picture,
+				sessionId: user.sessionId,
+				accountType: user.accountType,
+				accessLevel: user.accessLevel,
+				adviseeIds: user.adviseeIds
+			};
 		} else {
-			//TBA: clear session cookie
-		}	
-
-		const response = await resolve(event);
-
-		return response;
-	} catch (error) {
-		console.error(error);
-
-		return new Response(null, { status: 500 });
+			event.cookies.delete('session_id');
+		}
 	}
+
+	return await resolve(event);
 };
 
 export async function handleFetch({ request, fetch }) {

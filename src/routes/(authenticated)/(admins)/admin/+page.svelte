@@ -1,16 +1,25 @@
+<!--
+ Created on Fri Oct 13 2023
+
+ Copyright (c) 2023 Thomas Zhou
+-->
+
 <script lang="ts">
     import { goto } from "$app/navigation";
     import { user } from "@/client/stores/user";
     import { onMount } from "svelte";
 
-    async function gotoGhostManager() {
-        await goto('/admin/ghosts');
+    async function gotoDataUpload() {
+        await goto('/admin/data-upload');
     }
 
-    async function gotoAdvisorAdviseeLinker() {
-        await goto('/admin/advisor-advisee');
+    async function gotoMentorSearch() {
+      await goto('/admin/mentor-search')
     }
 
+    async function gotoProjectCatalog() {
+      await goto('/admin/project-catalog')
+    }
     export let data;
 
     $: ({ projectCountPublished, projectCountNotPublished} = data)
@@ -59,7 +68,7 @@
 
 <main>
     <div class="main-container">
-        <div class="dashboard-panel">
+        <div class="dashboard-panel-head">
             <h1 class="title"><strong>Administrator Dashboard</strong></h1>
         </div>
         
@@ -75,9 +84,10 @@
             </div>
         </div>
 
-        <div class="dashboard-panel">
-            <button on:click={gotoGhostManager} class="dashboard-button futuristic-button">Ghosts Manager</button>
-            <button on:click={gotoAdvisorAdviseeLinker} class="dashboard-button futuristic-button">Advisor-Advisee Linker</button>
+        <div class="dashboard-panel-button">
+          <button on:click={gotoDataUpload} class="dashboard-button">Data Upload</button>
+            <button on:click={gotoMentorSearch} class="dashboard-button">Mentor Searcher</button>
+            <button on:click={gotoProjectCatalog} class="dashboard-button">Project Catalog</button>
         </div>
     </div>
 </main>
@@ -92,8 +102,31 @@
     margin-bottom: 1rem;
   }
 
+  .dashboard-panel-head {
+    background-color: #858585; 
+    border: 1px solid #1E1E1E; 
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+  }
   .dashboard-panel {
     background-color: #858585; 
+    display: flex;
+    gap: 2rem;
+    border: 1px solid #1E1E1E; 
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+  }
+
+  .dashboard-panel-button {
+    background-color: #858585; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     border: 1px solid #1E1E1E; 
     border-radius: 5px;
     padding: 20px;
@@ -130,11 +163,11 @@
     padding: 10px 20px;
     font-size: 1.2rem;
     border: none;
+    width: 20vw;
     border-radius: 5px;
     cursor: pointer;
     margin: 10px;
     transition: background-color 0.3s;
-    width: 15rem;
   }
 
   .dashboard-button:hover {

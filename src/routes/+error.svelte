@@ -1,10 +1,16 @@
+<!--
+ Created on Fri Oct 13 2023
+
+ Copyright (c) 2023 Thomas Zhou
+-->
+
 <script lang="ts">
     import { page } from "$app/stores";
 </script>
 
 <main>
     <span class="status">{$page.status}</span>
-    <span class="message">{$page.error.message}</span>
+    <span class="message">{$page.error?.message}</span>
 </main>
 
 <style lang="scss">

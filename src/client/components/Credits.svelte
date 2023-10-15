@@ -1,3 +1,9 @@
+<!--
+ Created on Fri Oct 13 2023
+
+ Copyright (c) 2023 Thomas Zhou
+-->
+
 <script lang="ts">
     import Icon from "@/client/components/Icon.svelte";
     import Information from "@/client/icons/Information";
@@ -24,8 +30,8 @@
                 <Icon src={Close} size="2em" color="white"/>
             </div>
         </div>
-        <span>Authored by Thomas Zhou (26')</span>
-        <span>Co-Authored by Ethan Wu (26')</span>
+        <span>Project Owner, Engineering Lead, Code Owner: Thomas Zhou (26')</span>
+        <span>Co-Author: Ethan Wu (26')</span>
 
         <br>
 
