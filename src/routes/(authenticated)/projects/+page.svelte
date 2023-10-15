@@ -62,20 +62,17 @@
                 id="search-box"
                 class="search-box"
                 bind:value={query}
-                type="text"
+                type="search"
             />
             <button class="button" on:click={search}>Search</button>
+            <button class="button button-archive" on:click={async () => {
+                    await goto(`/projects/archived`);
+                }}>
+                See Archived Projects
+            </button>
 
-            <button class="button" on:click={async () => {
-                await goto(`/projects`);
-                syncFields();
-            }}>Clear</button>
         </div>
-        <button class="button" on:click={async () => {
-                await goto(`/projects/archived`);
-            }}>
-            See Archived Projects
-        </button>
+
 
     </div>
 
@@ -150,35 +147,67 @@
     }
 
     .SearchFilter {
-        background-color: #525252;
+        background-color: rgb(245, 245, 245);
         color: white;
-        padding: 2px;
+        padding: 5px;
         font-size: 16px;
-        border-radius: 5px;
+        border-radius: 4px;
         margin-bottom: 1rem;
-        border: 2px solid black;
-        border-radius: 5px;
+        margin-top: 0.2rem;
+        border: 0px solid black;
     }
 
     .filter-labels {
         margin-top: 1rem;
+        margin-bottom: 0.2rem;
         font-size: 15px;
         font-weight: 900;
     }
 
     .search-box {
-        padding: 10px 20px;
-        margin: 8px 2rem;
+        padding: 12px 20px;
+        margin: 8px 0rem;
         box-sizing: border-box;
-        border: 2px solid rgb(0, 0, 0);
-        border-radius: 0px;
+        border: 0px solid rgb(0, 0, 0);
+        border-radius: 5px 0px 0px 5px;
+        margin-left: 2rem;
     }
 
-    .button {
-        padding: 10px 5px;
-        margin: 8px;
-        box-sizing: border-box;
+    *:focus {
+        outline: 1px solid rgba(49, 49, 255, 0.213);
     }
+    .button {
+        background-color: var(--color-blue-500);
+        color: white;
+        padding: 11px 20px;
+        border: none;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        font-size: 15px;
+        transition: background-color 0.3s;
+
+    }
+
+
+    .button:hover {
+        background-color: var(--color-blue-400);
+
+    }
+
+    .button-archive {
+        background-color: var(--color-blue-grey-300);
+        border-radius: 5px 5px 5px 5px;
+        cursor: pointer;
+        margin-left: 1vw;
+    }
+
+    .button-archive:hover {
+        background-color: var(--color-blue-grey-200);
+        border-radius: 5px 5px 5px 5px;
+        cursor: pointer;
+        margin-left: 1vw;
+    }
+
 
     main {
         display: flex;
@@ -197,10 +226,11 @@
         flex: 0 0 240px;
         max-width: 240px;
         height: calc(100vh - 8vh - var(--nav-bar-height));
-        background-color: #777777;
+        background-color: #d0d0d0;
         padding-left: 2rem;
         overflow-y: hidden;
         padding-top: 0px;
+        border-right: 2px solid black;
     }
 
     .sidebar h1 {

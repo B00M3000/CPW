@@ -171,7 +171,7 @@
         justify-content: center;
         margin: 0.25rem;
         padding: 0.5rem;
-        border-radius: 2rem;
+        border-radius: 0.4rem;
         background-color: #f4f4f4;
 
         cursor: pointer;
