@@ -9,10 +9,11 @@
 <script lang="ts">
     import { user } from "@/client/stores/user";
     import { AccessLevel, AccountType } from "@/lib/enums";
+    import { goto } from "$app/navigation";
 
     import Icon from "@/client/components/Icon.svelte";
     import Gear from "@/client/icons/Gear";
-    import { goto } from "$app/navigation";
+    import Images from "@/client/icons/Images";
 
     async function gotoAccount() {
         await goto('/account');
@@ -41,16 +42,17 @@
             </div>
             <div id="dropdown-menu-options">
                 <button class="dropdown-menu-option" on:click={gotoAccount}>
-                    <Icon src={Gear}/>
+                    <Icon src={Gear} size="1.25rem"/>
                     <a href="/account">Account</a>
                 </button>
                 {#if $user.accountType == AccountType.Student}
                 <button class="dropdown-menu-option" on:click={gotoManageImages}>
+                    <Icon src={Images} size="1.25rem"/>
                     <a href="/manage-images">Manage Images</a>
                 </button>
                 {/if}
             </div>
-            <button id="logout-button" on:click={() => user.logout() }>Log Out</button>
+            <button id="logout-button" on:click={() => user.logout()}>Log Out</button>
         </div>
     </div>
 </div>
@@ -152,14 +154,12 @@
     #dropdown-menu-options {
         display: inline-flex;
         flex-direction: column;
-        justify-content: center;
+        align-items: center;
     }
 
     .dropdown-menu-option {
         display: flex;
-        align-items: center;
         justify-content: space-between;
-        gap: 0.5rem;
         padding: 0.5rem;
         border-radius: 0.5rem;
 
