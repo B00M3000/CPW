@@ -50,7 +50,7 @@
         background-color: aliceblue;
         border-radius: 0.5em;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-
+        max-height: 300px;
         .title {
             font-size: 22px;
             text-align: center;

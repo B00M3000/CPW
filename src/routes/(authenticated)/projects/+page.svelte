@@ -65,17 +65,14 @@
                 type="search"
             />
             <button class="button" on:click={search}>Search</button>
+            <button class="button button-archive" on:click={async () => {
+                    await goto(`/projects/archived`);
+                }}>
+                See Archived Projects
+            </button>
 
-            <button class="button" on:click={async () => {
-                await goto(`/projects`);
-                syncFields();
-            }}>Clear</button>
         </div>
-        <button class="button" on:click={async () => {
-                await goto(`/projects/archived`);
-            }}>
-            See Archived Projects
-        </button>
+
 
     </div>
 
@@ -168,18 +165,49 @@
     }
 
     .search-box {
-        padding: 10px 20px;
-        margin: 8px 2rem;
+        padding: 12px 20px;
+        margin: 8px 0rem;
         box-sizing: border-box;
-        border: 2px solid rgb(0, 0, 0);
-        border-radius: 0px;
+        border: 0px solid rgb(0, 0, 0);
+        border-radius: 5px 0px 0px 5px;
+        margin-left: 2rem;
     }
 
-    .button {
-        padding: 10px 5px;
-        margin: 8px;
-        box-sizing: border-box;
+    *:focus {
+        outline: 1px solid rgba(49, 49, 255, 0.213);
     }
+    .button {
+        background-color: var(--color-blue-500);
+        color: white;
+        padding: 11px 20px;
+        border: none;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        font-size: 15px;
+        transition: background-color 0.3s;
+
+    }
+
+
+    .button:hover {
+        background-color: var(--color-blue-400);
+
+    }
+
+    .button-archive {
+        background-color: var(--color-blue-grey-300);
+        border-radius: 5px 5px 5px 5px;
+        cursor: pointer;
+        margin-left: 1vw;
+    }
+
+    .button-archive:hover {
+        background-color: var(--color-blue-grey-200);
+        border-radius: 5px 5px 5px 5px;
+        cursor: pointer;
+        margin-left: 1vw;
+    }
+
 
     main {
         display: flex;
