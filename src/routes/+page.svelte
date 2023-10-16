@@ -60,10 +60,10 @@
         top: 0;
         background-size: cover;
         background-position: center;
-        filter: blur(8px) grayscale(20%);
+        filter: blur(4px) grayscale(0%);
         transform: scale(1.1); 
         z-index: -1;
-        background-image: url("/assets/boston.avif");
+        background-image: url("/assets/CommonwealthSchool.jpg");
     }
     .search-title{
         display: flex;
@@ -97,7 +97,7 @@
 
     .btn {
         display: inline-block;
-        background-color: transparent;
+        background-color: rgba(0, 0, 0, 0.3);
         color: white;
         padding: 15px 30px;
         border-radius: 5px;
@@ -110,7 +110,7 @@
     }
 
     .btn:hover {
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(0, 0, 0, 0.8);
     }
 
     .login-button {
