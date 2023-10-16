@@ -9,12 +9,8 @@
     import { user } from "@/client/stores/user";
     import { onMount } from "svelte";
 
-    async function gotoGhostManager() {
-        await goto('/admin/ghosts');
-    }
-
-    async function gotoAdvisorAdviseeLinker() {
-        await goto('/admin/advisor-advisee');
+    async function gotoDataUpload() {
+        await goto('/admin/data-upload');
     }
 
     async function gotoMentorSearch() {
@@ -89,15 +85,9 @@
         </div>
 
         <div class="dashboard-panel-button">
-          <div class="dashboard-panel-button-1">
-            <button on:click={gotoGhostManager} class="dashboard-button">Ghosts Manager</button>
-            <button on:click={gotoAdvisorAdviseeLinker} class="dashboard-button">Advisor-Advisee Linker</button>
-           
-          </div>
-          <div class="dashboard-panel-button-2">
+          <button on:click={gotoDataUpload} class="dashboard-button">Data Upload</button>
             <button on:click={gotoMentorSearch} class="dashboard-button">Mentor Searcher</button>
             <button on:click={gotoProjectCatalog} class="dashboard-button">Project Catalog</button>
-          </div>
         </div>
     </div>
 </main>

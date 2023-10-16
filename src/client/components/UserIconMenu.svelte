@@ -9,10 +9,11 @@
 <script lang="ts">
     import { user } from "@/client/stores/user";
     import { AccessLevel, AccountType } from "@/lib/enums";
+    import { goto } from "$app/navigation";
 
     import Icon from "@/client/components/Icon.svelte";
     import Gear from "@/client/icons/Gear";
-    import { goto } from "$app/navigation";
+    import Images from "@/client/icons/Images";
 
     async function gotoAccount() {
         await goto('/account');
@@ -39,18 +40,25 @@
                     <span class="account-information"> {AccountType[$user.accountType]} - {AccessLevel[$user.accessLevel]}</span>
                 </div>
             </div>
-            <div id="dropdown-menu-options">
-                <button class="dropdown-menu-option" on:click={gotoAccount}>
-                    <Icon src={Gear}/>
-                    <a href="/account">Account</a>
-                </button>
-                {#if $user.accountType == AccountType.Student}
-                <button class="dropdown-menu-option" on:click={gotoManageImages}>
-                    <a href="/manage-images">Manage Images</a>
-                </button>
-                {/if}
+            <div id="dropdown-menu-options-container">
+                <div id="dropdown-menu-options">
+                    <button class="dropdown-menu-option" on:click={gotoAccount}>
+                        <Icon src={Gear} size="1.25rem"/>
+                        <div class="dropdown-menu-option-link-container">
+                            <a href="/account">Account</a>
+                        </div>
+                    </button>
+                    {#if $user.accountType == AccountType.Student}
+                    <button class="dropdown-menu-option" on:click={gotoManageImages}>
+                        <Icon src={Images} size="1.25rem"/>
+                        <div class="dropdown-menu-option-link-container">
+                            <a href="/manage-images">Manage Images</a>
+                        </div>
+                    </button>
+                    {/if}
+                </div>
             </div>
-            <button id="logout-button" on:click={() => user.logout() }>Log Out</button>
+            <button id="logout-button" on:click={() => user.logout()}>Log Out</button>
         </div>
     </div>
 </div>
@@ -149,22 +157,42 @@
         }
     }
 
-    #dropdown-menu-options {
-        display: inline-flex;
-        flex-direction: column;
+    #dropdown-menu-options-container {
+        display: flex;
         justify-content: center;
     }
 
-    .dropdown-menu-option {
-        display: flex;
+    #dropdown-menu-options {
+        display: inline-flex;
+        flex-direction: column;
         align-items: center;
-        justify-content: space-between;
-        gap: 0.5rem;
-        padding: 0.5rem;
-        border-radius: 0.5rem;
 
-        &:hover {
-            background-color: aliceblue;
+        .dropdown-menu-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+
+            width: 100%;
+
+            &:hover {
+                background-color: aliceblue;
+            }
+
+            .dropdown-menu-option-link-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                width: 100%;
+
+                a {
+                    margin-left: 1rem;
+                    // text-decoration: none;
+                    // color: black;
+                }
+            }
         }
     }
 

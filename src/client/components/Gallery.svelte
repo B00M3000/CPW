@@ -98,8 +98,6 @@
                 object-fit: contain;
                 max-width: 75vw;
                 max-height: 75vh;
-                border: black solid 1px;
-                border-radius: 5px;
             }
         }
     }

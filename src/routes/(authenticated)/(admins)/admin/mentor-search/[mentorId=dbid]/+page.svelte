@@ -1,3 +1,9 @@
+<!--
+ Created on Fri Oct 13 2023
+
+ Copyright (c) 2023 Thomas Zhou
+-->
+
 <script lang="ts">
     import InformationBox from '@/client/components/InformationBox.svelte';
     import { onMount } from 'svelte';
@@ -15,11 +21,12 @@
 
     
     $: ({mentor: originalMentor, mentorId} = data)
-    $: console.log(originalMentor)
+
     let mentor: MentorInformation = {
       mentorId: "",
       firstName: "",
       lastName: "",
+      name: "",
       organization: "",
       email: "",
       phoneNumber: "",
@@ -31,6 +38,7 @@
     let mentorOrg: string;
     let mentorEmail: string;
     let mentorPhone: string;
+    let name: string;
 
     onMount(() => {
         mentor = originalMentor;
@@ -38,6 +46,7 @@
 
     let success = false
     async function updateMentorInfo(){
+        mentor.name = mentor.firstName + " " + mentor.lastName;
         const res = await fetch(`/admin/mentor-search/${mentorId}`, {
             method: "POST",
             body: JSON.stringify({mentor})

@@ -1,8 +1,14 @@
+/*
+ * Created on Sat Oct 14 2023
+ *
+ * Copyright (c) 2023 Thomas Zhou
+ */
+
 import { ProjectSchema } from '@/server/mongo/schemas/project';
 import { json } from '@sveltejs/kit';
 
 export async function POST({ request, params: { projectId } }) {
-    const req= await request.json();
+    const req = await request.json();
     if(req.Action == "SAVE"){
         const fullReport = req.fullReport
         await ProjectSchema.findOneAndUpdate({
