@@ -133,10 +133,10 @@
         align-items: left;
         background-color: #d0d0d0;
         width: 100%;
-        height: 8vh;
+        height: calc(8vh - 2px);
         max-height: 8vh;
-        outline: 2px solid black;
         z-index: 20;
+        border-top: 2px solid black;
     }
 
     .search {
@@ -230,7 +230,7 @@
         padding-left: 2rem;
         overflow-y: hidden;
         padding-top: 0px;
-        border-right: 2px solid black;
+        box-shadow: 2px 0px 5px var(--color-blue-grey-200);
     }
 
     .sidebar h1 {
