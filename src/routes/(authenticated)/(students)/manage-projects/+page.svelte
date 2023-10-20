@@ -300,33 +300,6 @@
         text-align:center;
         
     }
-    .tooltip {
-        position: relative;
-        display: inline-block;
-    }
-
-    
-
-    .tooltip .tooltiptext {
-        visibility: hidden;
-        width: 180px;
-        background-color: rgb(255, 221, 0);
-        border: #ff0026 solid 5px;
-        color: #ff2c2c;
-        text-align: center;
-        padding: 5px 0;
-        border-radius: 0px;
-    
-   
-        position: absolute;
-        z-index: 1;
-    }
-
-    .tooltip:hover .tooltiptext {
-        visibility: visible;
-        top: -6px;
-        left: 105%;
-    }
 
     .overlay {
         position:fixed;
