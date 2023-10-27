@@ -80,19 +80,6 @@
         width: calc(100vw - (100vw - 100%));
         padding: 50px 0px;
     }
-    .scroll-down {
-        position: relative;
-        bottom: 7em;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        img {
-            width: 35rem;
-            height: 6rem;
-        }
-    }
 
 
     .btn {
