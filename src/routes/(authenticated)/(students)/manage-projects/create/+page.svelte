@@ -115,7 +115,7 @@
         }
       },
       () => {
-        if(/.{100,}/.test(project.shortDesc)) return true;
+        if(project.shortDesc.length > 100) return true;
         else return ["Please enter a short description with at least 100 characters to start. You can always edit it later."]
       }
     ]
@@ -131,7 +131,7 @@
     {#if step === 1}
     <div id="project-title-container">
       <label for="title" class="label">Give your project a title: </label>
-      <span class="textarea" id="title" bind:innerHTML={project.title} contenteditable />
+      <input class="textarea" id="title" bind:value={project.title} contenteditable />
     </div>
     {:else if step === 2}
     <div id="project-tags-container">
@@ -144,20 +144,21 @@
       {/each}
     </div>
     {:else if step === 3}
+    <h3 class="label">Fill in mentor miformation:</h3>
     <button class="quickselect-btn" on:click ={() => {manual = !manual}}> Toggle {#if !manual} Manual {:else} Quick Select {/if} </button>
     
     {#if manual}
     <div id="project-mentor-container">
       <label for="mentorFirst" class="label">Mentor First Name</label>
-      <span class="textarea" id="mentorFirstName" bind:innerHTML={mentor.firstName} contenteditable />
+      <input class="textarea" id="mentorFirstName" bind:value={mentor.firstName} contenteditable />
       <label for="mentorLast" class="label">Mentor Last Name</label>
-      <span class="textarea" id="mentorLastName" bind:innerHTML={mentor.lastName} contenteditable />
+      <input class="textarea" id="mentorLastName" bind:value={mentor.lastName} contenteditable />
       <label for="mentorOrg" class="label">Mentor Organization</label>
-      <span class="textarea" id="mentorOrganization" bind:innerHTML={mentor.organization} contenteditable />
+      <input class="textarea" id="mentorOrganization" bind:value={mentor.organization} contenteditable />
       <label for="mentorEmail" class="label">Mentor Email</label>
-      <span class="textarea" id="mentorEmail" bind:innerHTML={mentor.email} contenteditable />
+      <input class="textarea" id="mentorEmail" bind:value={mentor.email} contenteditable />
       <label for="mentorPhone" class="label">Mentor Phone</label>
-      <span class="textarea" id="mentorPhone" bind:innerHTML={mentor.phoneNumber} contenteditable />
+      <input class="textarea" id="mentorPhone" bind:value={mentor.phoneNumber} contenteditable />
     </div>
     {:else}
     <MentorSearcher on:select={mentorSelected}/>
@@ -165,11 +166,11 @@
     {:else if step === 4}
     <div id="project-short-desc-container">
       <label for="shortDesc" class="label">Write A Short Description</label>
-      <span class="textarea" id="shortDesc" bind:innerHTML={project.shortDesc} contenteditable />
+      <input class="textarea" id="shortDesc" bind:value={project.shortDesc} contenteditable />
     </div>
     {/if}
 
-    <div id="buttons">
+    <div id="buttons"> 
       {#if step > minStep}
       <button on:click={backStep}>Back</button>
       {/if}
@@ -293,11 +294,12 @@
     }
 
     .textarea {
+      font-size: 36px;  
       min-width: 30vw;
       max-width: 30vw;
-      margin: 0.5em;
-      border: 0;
-      border-bottom: 2px solid var(--color-blue-grey-500);
+      font-size: 1.8rem;
+      outline: none;
+      margin-bottom: 1rem;
     }
   }
 
@@ -313,6 +315,7 @@
       min-width: 60vw;
       max-width: 60vw;
       border: 0;
+      font-size: 1.8rem;
       border-bottom: 2px solid var(--color-blue-grey-500);
     }
   }
@@ -394,6 +397,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  h3 {
+    font-size: 36px;
+    font-weight: normal;
   }
 </style>
 
