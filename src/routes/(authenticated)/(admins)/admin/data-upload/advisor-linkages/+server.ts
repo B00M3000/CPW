@@ -26,7 +26,7 @@ export async function POST({ request }) {
 
     const operations = generateOperations(headings, entries);
 
-
+    await UserSchema.bulkWrite(operations);
 
     return json({ message: "Data uploaded successfully!" }, { status: 200 });
 }
