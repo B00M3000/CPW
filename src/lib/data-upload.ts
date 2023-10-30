@@ -14,26 +14,26 @@ export interface DataUpload {
 export const studentDataUpload: DataUpload = {
     name: "Student",
     fields: {
-        "Identifier": /S(\d+)/,
+        "SID": /S(\d+)/,
         "Email": /^([a-z]|\d|-)+@.+\..+$/,
-        "Graduation Year": /\d{4}/
+        "GY": /\d{4}/
     }
 }
 
 export const teacherDataUpload: DataUpload = {
     name: "Teacher",
     fields: {
-        "Identifier": /T(\d+)/,
+        "TID": /T(\d+)/,
         "Email": /^([a-z]|\d|-)+@.+\..+$/,
-        "Administrator Access": /(|No|Yes)/ 
+        "AA": /(|No|Yes)/ 
     }
 }
 
 export const advisorLinkageDataUpload: DataUpload = {
     name: "Advisor Linkages",
     fields: {
-        "Advisee Identifier": /S(\d+)/,
-        "Advisor Identifier": /T(\d+)/,
+        "SID": /S(\d+)/,
+        "TID": /T(\d+)/,
     }
 }
 
