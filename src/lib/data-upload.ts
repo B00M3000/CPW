@@ -15,7 +15,7 @@ export const studentDataUpload: DataUpload = {
     name: "Student",
     fields: {
         "Identifier": /S(\d+)/,
-        "Email": /.+@.+\..+/,
+        "Email": /([a-z]|\d)+@.+\..+/,
         "Graduation Year": /\d{4}/
     }
 }
@@ -24,7 +24,7 @@ export const teacherDataUpload: DataUpload = {
     name: "Teacher",
     fields: {
         "Identifier": /T(\d+)/,
-        "Email": /.+@.+\..+/,
+        "Email": /([a-z]|\d)+@.+\..+/,
         "Administrator Access": /(|No|Yes)/ 
     }
 }
