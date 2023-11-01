@@ -15,10 +15,10 @@ These are links to the relevant documentation for usage of our website:
 
 ## Credits
 
-### Authors
+### Authors (in alphabetical order)
 
-- Author: Thomas Zhou
-- Co-Author: Ethan Wu
+- Ethan Wu
+- Thomas Zhou
 
 ### Other Contributors
 
