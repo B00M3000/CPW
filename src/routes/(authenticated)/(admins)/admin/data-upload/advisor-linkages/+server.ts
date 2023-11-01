@@ -6,7 +6,7 @@
 
 import { parseCSV } from '@/lib/utils.js';
 import { advisorLinkageDataUpload } from '@/lib/data-upload';
-import { error } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 import { validateCSV } from '@/lib/utils';
 import { UserSchema } from '@/server/mongo/schemas/user.js';
 import { AccountType } from '@/lib/enums.js';
@@ -23,6 +23,12 @@ export async function POST({ request }) {
     if(!validateCSV(headings, entries, advisorLinkageDataUploadFields)) throw error(400, { message: "Data failed validation." })
 
     await UserSchema.updateMany({ accountType: AccountType.Advisor }, { adviseeIds: [] });
+
+    const operations = generateOperations(headings, entries);
+
+    await UserSchema.bulkWrite(operations);
+
+    return json({ message: "Data uploaded successfully!" }, { status: 200 });
 }
 
 interface Operation {
@@ -47,8 +53,8 @@ function generateOperations(headings: string[], entries: string[][]): Operation[
     let advisors: Record<string, string[]> = {}
 
     entries.forEach(entry => {
-        const advisorId = entry[headingsIndexes["Advisor ID"]];
-        const adviseeId = entry[headingsIndexes["Advisee ID"]];
+        const advisorId = entry[headingsIndexes["TID"]];
+        const adviseeId = entry[headingsIndexes["SID"]];
         if(!advisors[advisorId]) advisors[advisorId] = [adviseeId];
         else advisors[advisorId].push(adviseeId);
     })
@@ -58,14 +64,10 @@ function generateOperations(headings: string[], entries: string[][]): Operation[
     Object.entries(advisors).forEach(([advisor, adviseeIds]) => operations.push({
         updateOne: {
             filter: {
-                _id: entry[headingsIndexes["Identifier"]] // problem how do we know they have already logged in, i think we need separate table
+                schoolId: advisor
             },
             update: {
-                schoolId: entry[headingsIndexes["Identifier"]],
-                email: entry[headingsIndexes["Email"]],
-                graduationYear: entry[headingsIndexes["Graduation Year"]],
-                accessLevel: AccessLevel.Normal,
-                accountType: AccountType.Student
+                adviseeIds
             },
             upsert: true
         }
