@@ -52,3 +52,6 @@ We would like to thank Ms. Moss, Ms. Jackman, and Mr. Hinterlang for their suppo
 ## Feedback
 
 If you have feedback, concerns, or would like to report a bug, email us at tzhou@commschool.org or ewu@commschool.org.
+
+<hr/>
+~README Written By Ethan Wu
