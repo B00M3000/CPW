@@ -22,7 +22,7 @@ These are links to the relevant documentation for usage of our website:
 
 ### Other Contributors
 
-The following people provided helpful and valuable feedback about UI/UX design for the website and provided suggestions for improving usability.
+The following people (in alphabetical order by last name) provided helpful and valuable feedback about UI/UX design for the website and provided suggestions for improving usability.
 
 - Aditya Anand ('26)
 - Brian Li ('26)
