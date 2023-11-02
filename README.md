@@ -6,4 +6,4 @@ Please contact *Thomas Zhou* <tzhou@commschool.org> for instructions for hosting
 
 ## Acknowledgements
 
-Thanks to Ethan for contributing to the project under the mentorship of Thomas Zhou.
+Huge thanks to Ethan for assisting with the project under the mentorship of Thomas Zhou.
