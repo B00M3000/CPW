@@ -4,5 +4,4 @@ Project Owner, Code Owner, Engineering Lead: Thomas Zhou
 
 Please contact *Thomas Zhou* <tzhou@commschool.org> for instructions for hosting.
 
-## Contributors:
-- Ethan Wu
+Contributor: Ethan Wu
