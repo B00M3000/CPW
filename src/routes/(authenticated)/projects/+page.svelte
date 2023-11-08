@@ -102,7 +102,7 @@
             </label>
 
             <h1 class="filter-labels">
-                Filter by tags:
+                Filter by Tags:
                 <MultiSelect options={Array.from(tags.entries()).map(([key, value]) => ({ key, value, }))} bind:selectedValues={selected} />
             </h1>
             <div>
