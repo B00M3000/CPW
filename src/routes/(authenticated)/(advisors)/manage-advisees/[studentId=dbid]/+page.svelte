@@ -27,13 +27,10 @@
 
         await location.reload();
     }
-
-
-
-
 </script>
 
 <main>
+    <h1>Adivsee Projects</h1>
     <div class="card-container">
         {#each projectUnapproved as project}
             <div class="project-card">

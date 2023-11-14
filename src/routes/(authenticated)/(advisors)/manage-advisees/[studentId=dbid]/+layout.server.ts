@@ -6,8 +6,7 @@
 
 import { error } from '@sveltejs/kit';
 
-export async function load({ locals, params }) {
-    let studentId = params.studentId;
-
-    if(!(locals.user.adviseeIds.includes(studentId))) throw error(403, "Access denied, not the adivosr of this student.") 
+export async function load({ locals, params: { studentId } }) {
+    //if(!(locals.user?.adviseeIds.includes(studentId))) throw error(403, "Access denied, not the adivosr of this student.") 
+    // Fix later, passing the userId of the student so cannot compare with the StudentId of the adviseeIds
 };

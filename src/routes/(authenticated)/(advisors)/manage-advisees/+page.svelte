@@ -8,6 +8,8 @@
     import { goto } from "$app/navigation";
     export let data;
     $: ({ students } = data);
+
+    $: console.log(students)
 </script>
 
 <main>
@@ -16,10 +18,10 @@
         {#each students as student}
             <div id="student-card-container" class="notification">
                 <div class="advisee-info-container">
-                    <h3> {student.student.name}</h3>
-                    <h4> {student.student.email}</h4>
+                    <h3> {student.name}</h3>
+                    <h4> {student.email}</h4>
                 </div>
-                <button on:click={() => goto(`manage-advisees/${student.student._id}`)} class="advisee-button">
+                <button on:click={() => goto(`manage-advisees/${student._id}`)} class="advisee-button">
                     <span>View Advisee</span>
                     {#if student.counter > 0}
                         <span class="button-badge">!</span>
