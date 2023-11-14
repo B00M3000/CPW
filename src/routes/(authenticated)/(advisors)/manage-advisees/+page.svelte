@@ -5,11 +5,9 @@
 -->
 
 <script lang="ts">
-    import StudentCard from '@/client/components/StudentCard.svelte';
     import { goto } from "$app/navigation";
     export let data;
-    $: ({students} = data);
-
+    $: ({ students } = data);
 </script>
 
 <main>

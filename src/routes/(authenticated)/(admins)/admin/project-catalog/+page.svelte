@@ -6,7 +6,6 @@
 
 <script lang=ts>
     import { goto } from "$app/navigation";
-    import ProjectCard from "@/client/components/ProjectCard.svelte";
     import StudentCard from "@/client/components/StudentCard.svelte";
 
     export let data;
@@ -15,9 +14,9 @@
 
     $: completedProjects = inflatedProjects.filter((p) => p.underReview == false);
     $: uncompletedProjects = inflatedProjects.filter((p) => p.underReview == true);
+
+    $: console.log(inflatedProjects);
 </script>
-
-
 
 <main>
     <table>
