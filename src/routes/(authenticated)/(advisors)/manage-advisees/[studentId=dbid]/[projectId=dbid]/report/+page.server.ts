@@ -4,11 +4,10 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
-import { AccessLevel } from '@/lib/enums';
-import { UserSchema } from '@/server/mongo/schemas/user.js';
+
 import { stringifyObjectId } from '@/lib/utils';
 import { ProjectSchema } from '@/server/mongo/schemas/project.js';
-import { MentorSchema } from '@/server/mongo/schemas/mentor';
+
 
 export async function load({ locals, params }) {
     const projectId = params.projectId;

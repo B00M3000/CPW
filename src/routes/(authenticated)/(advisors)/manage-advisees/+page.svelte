@@ -8,8 +8,6 @@
     import { goto } from "$app/navigation";
     export let data;
     $: ({ students } = data);
-
-    $: console.log(students)
 </script>
 
 <main>

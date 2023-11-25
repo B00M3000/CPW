@@ -5,8 +5,12 @@
  */
 
 import { error } from '@sveltejs/kit';
+import { UserSchema } from '@/server/mongo/schemas/user.js';
+import { stringifyObjectId } from '@/lib/utils.js';
+
 
 export async function load({ locals, params: { studentId } }) {
-    //if(!(locals.user?.adviseeIds.includes(studentId))) throw error(403, "Access denied, not the adivosr of this student.") 
-    // Fix later, passing the userId of the student so cannot compare with the StudentId of the adviseeIds
+    const student = stringifyObjectId(await UserSchema.findOne({ _id: studentId }).lean())
+    if(!(locals.user?.adviseeIds.includes(student.schoolId))) throw error(403, "Access denied, not the adivosr of this student.") 
+
 };
