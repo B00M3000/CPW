@@ -57,7 +57,7 @@
             <span>{image.description || "No description."}</span>
             <span>{bytesToString(image.size)}</span>
             {#if image.status == Status.Unchanged}
-            <button on:click={() => deleteImage(image._id)}>Delete</button>
+            <button class="delete" on:click={() => deleteImage(image._id)}>Delete</button>
             {:else if image.status == Status.Deleting }
             <div class="loader" />
             {:else if image.status == Status.Deleted}
@@ -73,7 +73,15 @@
     img { 
         width: 5rem;
         height: 5rem;
-        border-radius: 1rem;
+        border-radius: 0.5rem;
+    }
+
+    .delete{
+        border: 0;
+        padding: 8px 10px;
+        background-color: red;
+        color: white;
+        border-radius: 5px;
     }
 
     #upload-images-button-container {
@@ -86,13 +94,16 @@
         button {
             cursor: pointer;
 
-            background-color: #ff6347;
+            background-color: #478aff;
             color: #fff;
             border: none;
             border-radius: 2px;
             padding: 0.25rem;
             width: 98%;
             margin: 1px;
+        }
+        button:hover{
+            background-color: #7fa8f1;
         }
     }
 
@@ -124,7 +135,7 @@
         justify-content: space-between;
         border: 2px solid grey;
         margin: 1rem;
-        padding: 2rem;
+        padding: 1rem;
     }
 </style>
 

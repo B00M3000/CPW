@@ -133,13 +133,16 @@
         button {
             cursor: pointer;
 
-            background-color: #ff6347;
+            background-color: #478aff;
             color: #fff;
             border: none;
             border-radius: 2px;
             padding: 0.25rem;
             width: 98%;
             margin: 1px;
+        }
+        button:hover{
+            background-color: #7fa8f1;
         }
     }
 

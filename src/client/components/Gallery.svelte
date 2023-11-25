@@ -111,7 +111,6 @@
 
         overflow-y: auto;
 
-        background-color: #ddd;
     }
 
     #images {
