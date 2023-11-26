@@ -14,7 +14,7 @@ export async function load({ locals, params }) {
     let project = await ProjectSchema.findById(projectId);
     if(project){
         let student = await UserSchema.findById(project.studentId);
-        if(!(locals.user.adviseeIds.includes(student.schoolId))) throw error(403, "Access denied, not the adivosr of this student.") 
+        if(!(locals.user?.adviseeIds.includes(student.schoolId))) throw error(403, "Access denied, not the adivosr of this student.") 
     } else {
         throw error(404, 'Invalid Project')
     }

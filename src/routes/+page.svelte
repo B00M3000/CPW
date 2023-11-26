@@ -192,13 +192,6 @@
         padding: 1rem;
     }
 
-    .section-title {
-        font-size: 1.5rem;
-        margin-bottom: 20px;
-        color: white;
-        text-transform: uppercase;
-    }
-
     .project-list {
         display: flex;
         flex-wrap: wrap;

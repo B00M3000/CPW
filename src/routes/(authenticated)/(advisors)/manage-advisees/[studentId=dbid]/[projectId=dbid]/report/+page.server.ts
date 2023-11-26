@@ -7,13 +7,13 @@
 
 import { stringifyObjectId } from '@/lib/utils';
 import { ProjectSchema } from '@/server/mongo/schemas/project.js';
+import type { Project } from '@/interfaces/project.js';
 
-
-export async function load({ locals, params }) {
+export async function load({ params }) {
     const projectId = params.projectId;
     const studentId = params.studentId;
-    const project = stringifyObjectId(await ProjectSchema.findById(projectId).lean());
-
+    const project : Project = stringifyObjectId(await ProjectSchema.findById(projectId).lean())!;
+    console.log(project)
     return { project, studentId }
 };
 

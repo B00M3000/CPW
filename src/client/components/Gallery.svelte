@@ -29,7 +29,6 @@
         if(value) {
             overlay[index] = true
         } else {
-            console.log(event)
             if(event?.target?.nodeName == "DIV") overlay[index] = false
         }   
     }

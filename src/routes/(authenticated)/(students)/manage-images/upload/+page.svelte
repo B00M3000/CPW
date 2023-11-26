@@ -5,8 +5,9 @@
 -->
 
 <script lang="ts">
-  import { goto } from '$app/navigation';
+    import { goto } from '$app/navigation';
     import { bytesToString } from '@/lib/utils'
+    
 
     enum Status {
         NotUploaded,
@@ -93,7 +94,7 @@
         <div id="uploaded-images">
             {#each files as file, i}
             <form class="uploaded-image" on:submit={(event) => upload(event, i)}>
-                <img src={URL.createObjectURL(file)} />
+                <img src={URL.createObjectURL(file)}  alt="related to project"/>
                 {#if statuses[i] == Status.NotUploaded}
                 <span
                     contenteditable

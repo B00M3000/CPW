@@ -7,7 +7,6 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import ProjectCard from '@/client/components/ProjectCard.svelte';
-    import { onMount } from 'svelte';
     export let data;
 
     $: ({student, projects} = data);

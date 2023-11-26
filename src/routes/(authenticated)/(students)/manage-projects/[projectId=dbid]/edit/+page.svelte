@@ -46,6 +46,7 @@
     onMount(() => {
       project = originalProject;
       mentor = originalMentor;
+      console.log(originalProject);
     })
     
     let success = false;

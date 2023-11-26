@@ -15,7 +15,6 @@
     $: completedProjects = inflatedProjects.filter((p) => p.underReview == false);
     $: uncompletedProjects = inflatedProjects.filter((p) => p.underReview == true);
 
-    $: console.log(inflatedProjects);
 </script>
 
 <main>

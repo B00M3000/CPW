@@ -8,7 +8,6 @@
     export let data;
 
     $: ({project, studentId} = data);
-    $: fullReport = project.fullReport;
 
 
     async function changeApproval(project: any, approval: boolean){
