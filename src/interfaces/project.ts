@@ -6,10 +6,12 @@
 
 
 export interface Student {
+    _id: string
     studentId: string; // unique identifier
     firstName: string;
     lastName: string;
     yearOfGraduation: number;
+    picture: string;
 }
 
 export interface Project {

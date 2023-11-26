@@ -17,18 +17,18 @@
     }
 </script>
 
-<div on:click={toggleState}>
+<button on:click={toggleState}>
     <Icon src={Information} />
-</div>
+</button>
 
 {#if isOpen}
 <div class="overlay">  
     <div class="container">
         <div class="heading">
             <h1>Information</h1>
-            <div on:click={toggleState}>
+            <button on:click={toggleState}>
                 <Icon src={Close} size="2em" color="white"/>
-            </div>
+            </button>
         </div>
         
         <span>Project Owner, Engineering Lead, Code Owner: Thomas Zhou (26')</span>
@@ -56,6 +56,12 @@
 {/if}
 
 <style lang="scss">
+    button {
+            background: none;
+            background-color: transparent;
+            border: none;
+    }
+    
     .overlay {
         position: fixed;
         top: 0;
@@ -67,6 +73,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
+        button {
+            background: none;
+            background-color: transparent;
+            border: none;
+        }
 
         .container {
             display: flex;

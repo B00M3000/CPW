@@ -43,10 +43,12 @@
        
         <div class="dropdown-content">
             {#each displayedTags as option}
+                <hr class="divider"/>
                 <button class="option" on:click={() => {addToSelected(option)}}>
                     {option.value}
                 </button>
             {/each}
+            <hr class="divider"/>
         </div>
     </div>
     <button class="clearallbtn" on:click = {removeAllTags}> × </button>
@@ -55,10 +57,7 @@
             {#each selectedValuesView as selectedValue}
                 <div class="bubble">
                     {selectedValue.value}
-                    <span
-                        class="remove-icon"
-                        on:click={() => removeSelected(selectedValue)}>×</span
-                    >
+                    <button class="remove-icon" on:click={() => removeSelected(selectedValue)}>×</button>
                 </div>
             {/each}
         </div>
@@ -83,21 +82,24 @@
     .clearallbtn:hover {
         background-color: gray;
     }
+
     .option {
         cursor: pointer;
         display: block;
         color: #000000;
         padding: 5px;
         text-decoration: none;
-        padding: 5px 30px;
+        padding: 5px 10px;
         border: 0.5px solid;
-        width:100%;
+        width: 100%;
+        background: transparent;
+        border: none;
     }
 
     .option:hover {
-        color: #0a0a23;
-        background-color: #ddd;
-        border-radius: 5px;
+        color: rgba(0, 6, 73, 0.745);
+        background-color: #e8e1e1;
+        border-radius: 1px;
     }
 
     .selected-bubbles {
@@ -121,8 +123,16 @@
     .remove-icon {
         margin-left: 8px;
         cursor: pointer;
+        padding:0px;
+        background: transparent;
+        border:none;
     }
 
+    .divider{
+        width: 99%;
+        color: black;
+        border: 0.5px solid black;
+    }
     .dropbtn {
         background-color: rgb(245, 245, 245);
         color: white;
@@ -144,12 +154,27 @@
         display: none;
         position: absolute;
         overflow: auto;
-        background-color: #fff;
+        background-color: white;
         border-radius: 5px;
         box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.4);
         z-index: 50;
         overflow-y: auto;
         max-height: 30vh;
+        &::-webkit-scrollbar {
+            width: 0.4rem;
+            background-color: #ececec;
+            border-radius: 3px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: rgba(100, 97, 97, 0.47);        
+            border-radius: 3px;
+
+            &:hover {
+                background: rgba(44, 43, 43, 0.2);
+            }
+        }
+
     }
 
     .dropdown:hover .dropdown-content {

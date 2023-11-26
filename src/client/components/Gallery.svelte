@@ -25,15 +25,16 @@
         await goto(`/projects/${id}`);
     }
 
-    function toggleOverlay(index: number, value: boolean, event?: PointerEvent) {
+    function toggleOverlay(index: number, value: boolean) {
         if(value) {
             overlay[index] = true
         } else {
-            if(event?.target?.nodeName == "DIV") overlay[index] = false
+            overlay[index] = false
         }   
     }
 
     let overlay: boolean[] = images.map(() => false);
+
 </script>
 
 <div id="gallery">
@@ -55,11 +56,11 @@
             </div>
         </div>
         {#if overlay[i]}
-        <div class="image-overlay" on:click={(event) => toggleOverlay(i, false, event)}>
+        <button class="image-overlay" on:click={() => toggleOverlay(i, false)}>
             <div class='image-overlay-container'>
                 <img src="/images/{image._id}" alt={image.description}/>
             </div>
-        </div>
+        </button>
         {/if}
         {/each}
     </div>
@@ -83,8 +84,8 @@
         
         width: 100vw;
         height: 100vh;
-
         background: rgba(1, 1, 1, 0.2);
+        border: none;
 
         .image-overlay-container {
             display: flex;
@@ -118,37 +119,7 @@
         flex-wrap: wrap;
     }
 
-    .upload-images {
-        align-self: center;
-        background-color: var(--color-blue-grey-400); 
-        color: white; 
-        padding: 10px 20px; 
-        border: none; 
-        margin-left: 0.5vw;
-        border-radius: 5px;
-        cursor: pointer;
-        display: inline-block; 
-
-        &:hover {
-            background-color: #0056b3; 
-        }
-    }
-
-    button {
-        padding: 5px;
-        margin: 5px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: 300;
-        background-color: var(--color-blue-grey-300);
-        color: white;
-        font-weight: 600;
-    }
-
-    button:hover{
-        background-color: var(--color-blue-grey-200);
-    }
+  
 
     .lazy-image-container {
         background-color: inherit;
@@ -186,6 +157,21 @@
             border-radius: 1rem;
 
             max-width: 18rem;
+            button {
+                padding: 5px;
+                margin: 5px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: 300;
+                background-color: var(--color-blue-grey-300);
+                color: white;
+                font-weight: 600;
+            }
+
+            button:hover{
+                background-color: var(--color-blue-grey-200);
+            }
         }
 
         &:hover {

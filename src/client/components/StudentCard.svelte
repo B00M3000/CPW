@@ -17,7 +17,7 @@
 
 <button class="student-card" on:click={gotoStudent}>
     {#if student}
-        <img src={student.picture}>
+        <img src={student.picture} alt={`image of ${student.firstName} ${student.lastName}`}>
         <span class="text">{student.firstName} {student.lastName}</span> 
     {:else}
         <span class="text">Student Not Found!</span>

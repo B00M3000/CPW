@@ -5,8 +5,7 @@
 -->
 
 <script lang="ts">
-    import type { Project } from "@interfaces/project";
-    import { getTagString } from "@/lib/tags";
+    import type { Project } from "@/interfaces/project";
     import Tags from "@/client/components/Tags.svelte";
     import StudentCard from "@/client/components/StudentCard.svelte";
     import MentorCard from "@/client/components/MentorCard.svelte";
