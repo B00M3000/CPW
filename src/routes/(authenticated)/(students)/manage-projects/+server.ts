@@ -8,6 +8,7 @@ import { error, json } from '@sveltejs/kit';
 import { ProjectSchema } from '@/server/mongo/schemas/project';
 import type { Project } from '@/interfaces/project.js';
 import { MentorSchema } from '@/server/mongo/schemas/mentor';
+import { ImageSchema } from '@/server/mongo/schemas/image.js';
 
 export async function POST({ request, locals }) {
     const data = await request.json();
@@ -22,6 +23,7 @@ export async function POST({ request, locals }) {
         if(projectsOfMentor.length == 0){
             await MentorSchema.deleteOne({ _id: mentorId })
         }
+        await ImageSchema.deleteMany({ projectId: projectId })
     } else if (action == "PUBLISH"){
         let schema = await ProjectSchema.findOne({ _id: projectId, studentId: locals.user.id }, 'publish');
 

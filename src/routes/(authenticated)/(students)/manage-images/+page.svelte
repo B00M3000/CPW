@@ -5,9 +5,9 @@
 -->
 
 <script lang="ts">
-  import { goto } from "$app/navigation";
+    import { goto } from "$app/navigation";
     import { bytesToString } from "@/lib/utils";
-
+    
     interface PageData {
         images: {
             _id: string;
@@ -29,7 +29,6 @@
     export let data: PageData;
 
     $: images = data.images.map(image => ({ ...image, status: Status.Unchanged }))
-
     async function deleteImage(id: string) {
         const imageIndex = images.findIndex(image => image._id == id)
 

@@ -31,7 +31,7 @@
         </form>
         <div class="redirects">
             <a class="btn" href="/projects">View Completed Projects</a>
-            <a class="btn" href="/gallery">Browse Photos</a>
+            <a class="btn" href="/images">Browse Photos</a>
         </div>
     </div>
     <section class="primary">
