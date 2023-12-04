@@ -135,7 +135,7 @@
     }
     .dropbtn {
         background-color: rgb(245, 245, 245);
-        color: white;
+        color: rgb(0, 0, 0);
         padding: 5px;
         font-size: 16px;
         border-radius: 5px;
