@@ -9,6 +9,7 @@ import type { PageServerLoad } from "./$types";
 import { stringifyObjectId } from "@/lib/utils";
 import { UserSchema } from "@/server/mongo/schemas/user";
 import { MentorSchema } from "@/server/mongo/schemas/mentor";
+import type { Project } from "@/interfaces/project";
 
 export const load: PageServerLoad = async ({ locals }) => {
     const studentId = locals.user?.id;

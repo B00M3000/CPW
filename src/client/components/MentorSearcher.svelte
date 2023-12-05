@@ -32,10 +32,11 @@
     $: if(disabled) search = "";
 </script>
 
-<input type="text" placeholder="Start typing to search..." bind:value={search} on:keyup={update} {disabled}/>
-<br>
-{#if mentors.length > 0}
+
+<main>
+    <input type="text" placeholder="Start typing to search..." bind:value={search} on:keyup={update} {disabled}/>
     <div class="mentors">
+        
         {#each mentors as mentor}
         <div class="mentors-card" style={selected == mentor._id ? "background-color: var(--color-green-600);" : ""}>
             <div class="info">
@@ -46,25 +47,29 @@
         </div>
         {/each}
     </div> 
-{/if}
+</main>
 
 
 <style lang="scss">
-    .mentors {
-        background: #eeeeee;
-
-        max-height: 40vh;
-        overflow-y: auto;
+    main {
+        background-color: rgba(255, 255, 255, 0.401); 
+        border-radius: 8px; 
+        padding: 20px; 
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+        display: flex;
+        flex-direction:column;
+        display: inline-flex;
+        align-items: center;
     }
 
     input { 
-        padding: 6px; 
         border: 1px solid #ccc;
         border-radius: 4px;
         font-size: 16px;
         margin-bottom: 20px;
-        width: 40vw;
-        margin:1rem;
+        width: 35vw;
+        padding: 5px 20px; 
+        margin: 10px; 
     }
 
     button {
@@ -100,21 +105,40 @@
         margin: 10px; 
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
         display: inline-flex;
+        width: 35vw;
  
     }
 
     .mentors{
         background-color: #ffffff; 
-        border: 1px solid #e0e0e0; 
         border-radius: 8px; 
         padding: 20px; 
-        margin: 10px; 
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+        
         display: flex;
         flex-direction:column;
-        margin: 1rem;
         display: inline-flex;
+        width: 40vw;
+        height: 20vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+        align-items: center;
+        
+        &::-webkit-scrollbar {
+            width: 0.4rem;
+            height: 0.1rem;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: rgba(100, 97, 97, 0.47);        
+            border-radius: 3px;
+
+            &:hover {
+                background: rgba(44, 43, 43, 0.2);
+            }
+        }
     }
+
+
 
 </style>
 

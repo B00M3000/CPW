@@ -4,7 +4,7 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
-import { ProjectSchema, type ProjectDocumentData } from "@/server/mongo/schemas/project";
+import { ProjectSchema } from "@/server/mongo/schemas/project";
 import { stringifyObjectId } from "@/lib/utils";
 import { error } from "@sveltejs/kit";
 

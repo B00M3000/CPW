@@ -177,9 +177,6 @@
         padding: 2rem;
     }
 
-    #submit {
-        display: flex;
-    }
 
     table {
         padding: 1rem;

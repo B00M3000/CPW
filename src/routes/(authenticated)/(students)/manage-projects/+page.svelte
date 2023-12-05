@@ -9,9 +9,13 @@
     import { goto } from '$app/navigation';
     import type { Project } from '@/interfaces/project.js';
 
+
     export let data;
 
     $: ({ projects } = data);
+
+
+
 
     async function initDeleteProject(i: number) {
         if(initDeleteConfirm == i) {
@@ -46,8 +50,8 @@
         location.reload();
     }
 
-    let initDeleteConfirm: number;
-    let deleteConfirm: number;
+    let initDeleteConfirm: number | null;
+    let deleteConfirm: number | null;
     let deleteConfirmInputValue: string;
 </script>
 <main>
@@ -103,9 +107,9 @@
 
             {#if deleteConfirm == i}
             <div class="overlay delete-confirm">
-                <p>Enter the project id to delete. ID: {project._id}</p>
+                <p>Enter the project title to delete. Type: {project.title}</p>
                 <input bind:value={deleteConfirmInputValue} on:paste={(e) => e.preventDefault()}/>
-                {#if deleteConfirmInputValue == project._id}
+                {#if deleteConfirmInputValue == project.title}
                 <button class="blink" on:click={deleteProject(project)}>CONFIRM DELETION</button>
                 {/if}
                 <button class="blink" on:click={() => {
@@ -124,6 +128,7 @@
         align-items: center;
         flex-direction: column;
         justify-content: center;
+        gap:1.5rem;
         color: white;
     }
     .blink {

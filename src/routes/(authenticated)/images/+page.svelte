@@ -27,7 +27,7 @@
     {#if $user.accountType == AccountType.Student}
     <div id="upload-images-button-container">
         <button on:click={gotoImageUpload}>Upload Images</button>
-        <button on:click={gotoManageImages}>Manage Images</button>
+        <button on:click={gotoManageImages}>Manage Your Images</button>
     </div>
     {/if}
     <Gallery {images} projectPage={false} />
@@ -43,10 +43,10 @@
     }
 
     #upload-images-button-container {
-        background-color: grey;
-        padding: 1rem;
+        background-color: rgb(191, 189, 189);
+        padding: 0.5rem 8rem;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
         justify-content: center;
 
@@ -55,13 +55,17 @@
         button {
             cursor: pointer;
 
-            background-color: #ff6347;
+            background-color: #478aff;
             color: #fff;
             border: none;
             border-radius: 2px;
             padding: 0.25rem;
             width: 98%;
             margin: 1px;
+        }
+
+        button:hover{
+            background-color: #7fa8f1;
         }
     }
 </style>

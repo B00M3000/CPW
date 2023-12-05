@@ -31,7 +31,7 @@
         </form>
         <div class="redirects">
             <a class="btn" href="/projects">View Completed Projects</a>
-            <a class="btn" href="/gallery">Browse Photos</a>
+            <a class="btn" href="/images">Browse Photos</a>
         </div>
     </div>
     <section class="primary">
@@ -190,13 +190,6 @@
         margin-top: 5px;
         margin-bottom: 2rem;
         padding: 1rem;
-    }
-
-    .section-title {
-        font-size: 1.5rem;
-        margin-bottom: 20px;
-        color: white;
-        text-transform: uppercase;
     }
 
     .project-list {

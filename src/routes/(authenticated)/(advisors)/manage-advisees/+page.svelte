@@ -8,8 +8,6 @@
     import { goto } from "$app/navigation";
     export let data;
     $: ({ students } = data);
-
-    $: console.log(students)
 </script>
 
 <main>
@@ -20,6 +18,9 @@
                 <div class="advisee-info-container">
                     <h3> {student.name}</h3>
                     <h4> {student.email}</h4>
+                </div>
+                <div class="advisee-info-container">
+                    <h3> Pending Projects: {student.counter}</h3>
                 </div>
                 <button on:click={() => goto(`manage-advisees/${student._id}`)} class="advisee-button">
                     <span>View Advisee</span>
@@ -36,24 +37,35 @@
 
 <style lang="scss">
     main{
-        margin: 2rem;
+        margin: 2rem 8rem;
     }
     #student-card-container{
         padding: 20px;
         border: 2px black solid;
-        background-color: var(--color-blue-grey-200);
+        background-color: #F2F2F2;
         display: flex;
         justify-content: space-between;
-        align-items: center
+        align-items: center;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+ 
+
+    .advisee-info-container {
+        padding: 2;
     }
 
-    #advisee-container{
-        background-color: var(--color-blue-grey-200);
-        padding: 1rem;
-        border-radius: 5px;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
+    .advisee-info-container h3 {
+        margin-bottom: 5px;
+        font-size: 1.2rem;
+    }
+
+    .advisee-info-container h4 {
+        color: #555;
+        font-size: 1rem;
+        
     }
 
     .advisee-button {
@@ -64,12 +76,13 @@
         width: 150px;
         height: 50px;
         color: #333333;
-        background: #dddddd;
+        background: #a8a8a8;
         border: none;
         outline: none;
         border-radius: 5px;
         color: white;
         font-weight: bold;
+        padding: 5px;
     }
 
     .advisee-button:hover {
