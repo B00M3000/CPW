@@ -5,8 +5,9 @@
 -->
 
 <script lang="ts">
-  import { goto } from '$app/navigation';
+    import { goto } from '$app/navigation';
     import { bytesToString } from '@/lib/utils'
+    
 
     enum Status {
         NotUploaded,
@@ -93,7 +94,7 @@
         <div id="uploaded-images">
             {#each files as file, i}
             <form class="uploaded-image" on:submit={(event) => upload(event, i)}>
-                <img src={URL.createObjectURL(file)} />
+                <img src={URL.createObjectURL(file)}  alt="related to project"/>
                 {#if statuses[i] == Status.NotUploaded}
                 <span
                     contenteditable
@@ -133,13 +134,16 @@
         button {
             cursor: pointer;
 
-            background-color: #ff6347;
+            background-color: #478aff;
             color: #fff;
             border: none;
             border-radius: 2px;
             padding: 0.25rem;
             width: 98%;
             margin: 1px;
+        }
+        button:hover{
+            background-color: #7fa8f1;
         }
     }
 

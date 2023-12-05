@@ -105,8 +105,13 @@
                 Filter by Tags:
                 <MultiSelect options={Array.from(tags.entries()).map(([key, value]) => ({ key, value, }))} bind:selectedValues={selected} />
             </h1>
-            <div>
-                <button on:click = {search}>Search</button>
+            <div class="search-and-clear">
+                <div>
+                    <button on:click = {search}>Search</button>
+                </div>
+                <div>
+                    <button on:click = {() => goto("/projects")}>Clear</button>
+                </div>
             </div>
         </div>
 
@@ -148,7 +153,7 @@
 
     .SearchFilter {
         background-color: rgb(245, 245, 245);
-        color: white;
+        color: rgb(0, 0, 0);
         padding: 5px;
         font-size: 16px;
         border-radius: 4px;
@@ -278,6 +283,19 @@
     }
 
 
+    .search-and-clear{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        button {
+            border: none;
+            padding: 5px;
+            margin: 1px;
+            background-color: #5d5d5d;
+            color: white;
+            border-radius: 2px;
+        }
 
+    }
  
 </style>

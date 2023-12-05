@@ -27,10 +27,10 @@
     }
 </script>
 
-<div class="container" on:click={onTrigger} role="button" aria-pressed="false">
+<button class="container" on:click={onTrigger}>
     <img src="/assets/google-icon.png" alt = "Google Icon"/>
     <span class="text">Sign in with Google</span>
-</div>
+</button>
 
 <style> 
     @font-face {
@@ -45,6 +45,7 @@
         cursor: pointer;
         background: white;
         justify-content: center;
+        border: none;
     }
     img {
         width: 20px;

@@ -5,10 +5,8 @@
  */
 
 import { ProjectSchema } from '@/server/mongo/schemas/project';
-import { UserSchema } from '@/server/mongo/schemas/user';
-import { error, json } from '@sveltejs/kit';
-import { MentorSchema } from '@/server/mongo/schemas/mentor';
-import { stringifyObjectId } from "@/lib/utils";
+import { json } from '@sveltejs/kit';
+
 
 export async function POST({ request  }) {
     const { project } = await request.json();
