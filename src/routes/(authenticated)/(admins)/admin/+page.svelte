@@ -22,46 +22,46 @@
     }
     export let data;
 
-    $: ({ projectCountPublished, projectCountNotPublished} = data)
+    $: ({ projectCountPublished, projectCountNotPublished } = data)
 
-    $: countPub = 0;
-    $: countNotPub = 0;
+    $: countPub = projectCountPublished//0;
+    $: countNotPub = projectCountNotPublished//0;
 
 
-    onMount(() => {
-        let speed = 85;
+    // onMount(() => {
+    //     let speed = 85;
 
-        const animatePub = () => {
-            const value = projectCountPublished;
+    //     const animatePub = () => {
+    //         const value = projectCountPublished;
             
-            const time = value / speed;
-            if(countPub < value) {
-                countPub = Math.ceil(countPub + time);
-                setTimeout(animatePub, speed);
-                speed = speed*0.99
-            }else{
-                countPub = value;
-            }
+    //         const time = value / speed;
+    //         if(countPub < value) {
+    //             countPub = Math.ceil(countPub + time);
+    //             setTimeout(animatePub, speed);
+    //             speed = speed*0.99
+    //         }else{
+    //             countPub = value;
+    //         }
             
-        }
+    //     }
 
-        const animateUnPub = () => {
-            const value = projectCountNotPublished;
-            const data = countNotPub;
+    //     const animateUnPub = () => {
+    //         const value = projectCountNotPublished;
+    //         const data = countNotPub;
             
-            const time = value / speed;
-            if(countNotPub < value) {
-                countNotPub = Math.ceil(countNotPub + time);
-                setTimeout(animateUnPub, speed);
-                speed = speed*0.99
-            }else{
-                countNotPub = value;
-            }
-        }
+    //         const time = value / speed;
+    //         if(countNotPub < value) {
+    //             countNotPub = Math.ceil(countNotPub + time);
+    //             setTimeout(animateUnPub, speed);
+    //             speed = speed*0.99
+    //         }else{
+    //             countNotPub = value;
+    //         }
+    //     }
    
-        animatePub();
-        animateUnPub();
-    });
+    //     animatePub();
+    //     animateUnPub();
+    // });
 
 
 </script>

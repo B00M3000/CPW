@@ -9,13 +9,9 @@
     import { goto } from '$app/navigation';
     import type { Project } from '@/interfaces/project.js';
 
-
     export let data;
 
     $: ({ projects } = data);
-
-
-
 
     async function initDeleteProject(i: number) {
         if(initDeleteConfirm == i) {

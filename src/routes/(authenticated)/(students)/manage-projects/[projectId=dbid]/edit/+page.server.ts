@@ -12,6 +12,6 @@ export const load = async ({ parent }) => {
     const { project } = await parent();
 
     const mentor = stringifyObjectId(await MentorSchema.findById(project?.mentorId).lean())
-
+ 
     return { mentor };
 }

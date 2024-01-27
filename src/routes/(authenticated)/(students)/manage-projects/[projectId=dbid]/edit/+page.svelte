@@ -21,11 +21,8 @@
 
     interface MentorInformation {
       mentorId: string;
-      firstName: string;
-      lastName: string;
+      name: string;
       organization: string;
-      email: string;
-      phoneNumber: string;
     }
     
     let project: ProjectInformation = {
@@ -36,11 +33,8 @@
 
     let mentor: MentorInformation = {
       mentorId: "",
-      firstName: "",
-      lastName: "",
+      name: "",
       organization: "",
-      email: "",
-      phoneNumber: "",
     };
       
     onMount(() => {
@@ -52,10 +46,7 @@
     let errorsMessages: string[] = [];
     async function upload() {
       const numberOfTags= project.tags.length
-      
-      if(!/.+/.test(mentor.firstName)) errorsMessages.push("Please enter the first name of your mentor.");
-      if(!/.+/.test(mentor.lastName)) errorsMessages.push("Please enter the last name of your mentor.");
-      if(!/.+/.test(mentor.organization)) errorsMessages.push("Please enter the relevant organization your mentor is associated with for your project.");
+  
       if(numberOfTags < 1 || numberOfTags > 5) errorsMessages.push("Please select between 1 and 5 tags.");
       if(project.title.length > 100 && project.title.length < 12) errorsMessages.push("Please enter a project name between 12 and 200 characters");
       if(project.shortDesc.length < 3) errorsMessages.push("Please enter a short description with at least 100 characters to start. You can always edit it later.")
@@ -76,7 +67,6 @@
 <main class="formbar">
   <div class="form-container">
       <div id="inputForm">
-
           <div class="form-group">
             <label for="subject" class="label">Project Title</label>
             <input type="text" id="subject" name="subject" required  maxlength="120" minlength="5"  bind:value={project.title}>
@@ -90,28 +80,21 @@
                 {/each}
             </div>
         
-          <h1>To Modify Mentor Information, Contact Ms. Moss</h1>
-          <div class="form-group">
-            <label for="mentorFirst" class="label">Mentor First Name</label>
-            <input type="text" id="mentorFirst" name="mentorFirst" required bind:value={mentor.firstName} disabled>
+          <h1>To Modify Mentor Information, Contact Ms. Moss</h1> 
+          <!-- remind to enter corectly first time, because later can only be changed by ms. moss -->
+          {#if !mentor}
+          <h1>Mentor Not Found!</h1>
+          {:else}
+          <div class="info">
+            <span>Name: {mentor.name}</span>
+            <span>Org: {mentor.organization}</span>
           </div>
-        
-          <div class="form-group">
-            <label for="mentorLast" class="label">Mentor Last Name</label>
-            <input type="text" id="mentorLast" name="mentorLast" required bind:value={mentor.lastName} disabled>
-          </div>
-
-          <div class="form-group">
-            <label for="mentorOrg" class="label">Mentor Organization</label>
-            <input type="email" id="mentorOrg" name="mentorOrg" required bind:value={mentor.organization} disabled>
-          </div>
-
+          {/if}
 
           <div class="form-group">
             <label for="shortDesc" class="label">Write A Short Description</label>
             <textarea id="shortDesc" name="shortDesc" rows="3" cols="60" maxlength="2000" required bind:value={project.shortDesc}></textarea>
-          </div>       
-        
+          </div>
       </div>
       <hr>
       <div class="form-group button-group">

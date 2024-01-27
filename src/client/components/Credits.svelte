@@ -31,7 +31,7 @@
             </button>
         </div>
         
-        <span>Project Owner, Engineering Lead, Code Owner: Thomas Zhou (26')</span>
+        <span>Project and Code Owner, Lead-Author: Thomas Zhou (26')</span>
         <span>Co-Author: Ethan Wu (26')</span>
 
         <br>

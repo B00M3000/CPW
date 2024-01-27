@@ -5,7 +5,6 @@
 -->
 
 <script lang=ts>
-    import { goto } from "$app/navigation";
   import InformationBox from "@/client/components/InformationBox.svelte";
     import MentorSearcher from "@/client/components/MentorSearcher.svelte";
     import { tags } from "@/lib/tags";
@@ -54,10 +53,8 @@
             method: "POST",
             body: JSON.stringify(action)
         });
-
         
         success = true;
-        
     }
 
     let step: number = 1;
@@ -94,8 +91,8 @@
       },
       () => {
         const numberOfTags= project.tags.length
-        if(numberOfTags >= 1 && numberOfTags <= 5) return true;
-        else return ["Please select between 1 and 5 tags."];
+        if(numberOfTags >= 1 && numberOfTags <= 7) return true;
+        else return ["Please select between 1 and 7 tags."];
       },
 
       () => {
@@ -144,9 +141,8 @@
       {/each}
     </div>
     {:else if step === 3}
-    <h3 class="label">Fill in mentor miformation:</h3>
+    <h3 class="label">Fill in mentor information:</h3>
     <button class="quickselect-btn" on:click ={() => {manual = !manual}}> Toggle {#if !manual} Manual {:else} Quick Select {/if} </button>
-    
     {#if manual}
     <div id="project-mentor-container">
       <label for="mentorFirst" class="label">Mentor First Name</label>
