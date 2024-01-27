@@ -10,16 +10,20 @@
 
     import { AccessLevel, AccountType } from "@/lib/enums";
     import Credits from "@/client/components/Credits.svelte";
+
+    import { page } from "$app/stores";
+
+    $: section = $page.url.pathname.split("/")[1];
 </script>
 
 <nav>
     <div class="main-navigation">
-        <a href="/">Home</a>
-        <a href="/projects">Projects</a>
-        <a href="/images">Photos</a>
-        {#if $user?.accountType == AccountType.Student}<a href="/manage-projects">Manage Projects</a>{/if}
-        {#if $user?.accountType == AccountType.Advisor}<a href="/manage-advisees">Manage Advisees</a>{/if}
-        {#if $user?.accessLevel == AccessLevel.Admin}<a href="/admin">Admin</a>{/if}
+        <a href="/" class={section == "" ? "active" : ""}>Home</a>
+        <a href="/projects" class={section == "projects" ? "active" : ""}>Projects</a>
+        <a href="/images" class={section == "images" ? "active" : ""}>Photos</a>
+        {#if $user?.accountType == AccountType.Student}<a href="/manage-projects" class={section == "manage-projects" ? "active" : ""}>Manage Projects</a>{/if}
+        {#if $user?.accountType == AccountType.Advisor}<a href="/manage-advisees" class={section == "manage-advisees" ? "active" : ""}>Manage Advisees</a>{/if}
+        {#if $user?.accessLevel == AccessLevel.Admin}<a href="/admin" class={section == "admin" ? "active" : ""}>Admin</a>{/if}
     </div>
     <div class="user-navigation">
         {#if $user}
@@ -59,9 +63,7 @@
         text-decoration: none;
     }
 
-    a:hover {
+    a:hover, .active {
         border-bottom: 2px solid;
     }
-
-
 </style>
