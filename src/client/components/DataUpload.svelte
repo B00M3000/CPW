@@ -132,7 +132,7 @@
         <span class="valid">Data Validation Passed - Click to Upload</span>
     </div>
     <div id="upload-button">
-        <button on:click={uploadData} disabled={uploadStatus == UploadStatus.Uploading || uploadStatus == UploadStatus.Uploaded}>Upload Data</button>
+        <button class="bg-slate-200 rounded-sm border-2 border-black p-1" on:click={uploadData} disabled={uploadStatus == UploadStatus.Uploading || uploadStatus == UploadStatus.Uploaded}>Upload Data</button>
         {#if uploadStatus == UploadStatus.Uploading}
         <div class="loader" />
         <span>Processing...</span>

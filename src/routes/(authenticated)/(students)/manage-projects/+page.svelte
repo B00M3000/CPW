@@ -174,6 +174,9 @@
     }
 
     button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         background-color: #007BFF;
         color: white;
         padding: 12px 24px;
