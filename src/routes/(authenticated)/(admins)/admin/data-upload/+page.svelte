@@ -14,7 +14,3 @@
 <DataImport dataUpload={studentDataUpload} endpoint="/admin/data-upload/students"/>
 <DataImport dataUpload={teacherDataUpload} endpoint="/admin/data-upload/teachers"/>
 <DataImport dataUpload={advisorLinkageDataUpload} endpoint="/admin/data-upload/advisor-linkages"/>
-
-<style lang='scss'>
-
-</style>
