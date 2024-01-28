@@ -18,19 +18,21 @@
 </script>
 
 <button on:click={toggleState}>
-    <Icon src={Information} />
+    <Icon src={Information} color="white" size="1.25em"/>
 </button>
 
 {#if isOpen}
-<div class="overlay">  
-    <div class="container">
-        <div class="heading">
-            <h1>Information</h1>
+<div class="fixed top-0 left-0 bg-opacity-65 bg-black z-10 w-screen h-screen flex items-center justify-center">  
+    <div class="flex flex-col p-8 bg-slate-300 rounded-xl text-black w-[45vw] min-w-[22rem] max-w-[32rem]">
+        <div class="flex justify-between items-center">
+            <h1 class="text-xl font-bold">Information</h1>
             <button on:click={toggleState}>
-                <Icon src={Close} size="2em" color="white"/>
+                <Icon src={Close} size="2em"/>
             </button>
         </div>
         
+        <br>
+
         <span>Project and Code Owner, Lead-Author: Thomas Zhou (26')</span>
         <span>Co-Author: Ethan Wu (26')</span>
 
@@ -40,8 +42,8 @@
 
         <br>
     
-        <span>Dependencies: </span>
-        <ul>
+        <span class="text-lg">Dependencies: </span>
+        <ul class="flex flex-col px-3 py-1">
             <span class="package">Svelte - {pkgJSON.devDependencies.svelte}</span>
             <span class="package">Svelte Kit - {pkgJSON.devDependencies["@sveltejs/kit"]}</span>
             <span class="package">Svelte Node Adapter - {pkgJSON.devDependencies["@sveltejs/adapter-node"]}</span>
@@ -62,18 +64,6 @@
             border: none;
     }
     
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        background-color: rgba(0, 0, 0, 0.65);
-        z-index: 9999;
-        height: 100vh;
-        width: 100vw;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
         button {
             background: none;
             background-color: transparent;
@@ -102,5 +92,4 @@
                 }
             }
         }
-    }
 </style>
