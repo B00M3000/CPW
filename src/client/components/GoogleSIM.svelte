@@ -46,6 +46,7 @@
         background: white;
         justify-content: center;
         border: none;
+        align-items: center;
     }
     img {
         width: 20px;
