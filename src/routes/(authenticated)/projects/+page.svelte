@@ -79,7 +79,7 @@
 
     <div class="leftright">
         <div class="sidebar">
-            <h1>Refine Search</h1>
+            <h1 class="text-2xl">Refine Search</h1>
             <hr />
             <h1 class="filter-labels">
                 Filter by Year:
@@ -228,13 +228,14 @@
     }
 
     .sidebar {
-        flex: 0 0 240px;
-        max-width: 240px;
+        max-width: 280px;
+        align-items: center;
         height: calc(100vh - 8vh - var(--nav-bar-height));
         background-color: #d0d0d0;
         padding-left: 2rem;
+        padding-right: 2rem;
         overflow-y: hidden;
-        padding-top: 0px;
+        padding-top: 2rem;
         box-shadow: 2px 0px 5px var(--color-blue-grey-200);
     }
 
