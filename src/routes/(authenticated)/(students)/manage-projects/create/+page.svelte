@@ -162,7 +162,7 @@
     {:else if step === 4}
     <div id="project-short-desc-container">
       <label for="shortDesc" class="label">Write A Short Description</label>
-      <input class="textarea" id="shortDesc" bind:value={project.shortDesc} contenteditable />
+      <span class="textarea" id="shortDesc" bind:innerHTML={project.shortDesc} contenteditable />
     </div>
     {/if}
 
