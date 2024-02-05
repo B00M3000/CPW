@@ -62,7 +62,7 @@
             {/each}
             {#each inflatedUnapprovedProjects as project}
                 <div class="attention-list-element gap-2">
-                    <button class="rounded-md bg-slate-300 flex gap-2 items-center justify-center p-1 hover:bg-slate-400" on:click={() => goto(`/admin/project-catalog/${project._id}`)}>
+                    <button class="rounded-md bg-slate-300 flex gap-2 items-center justify-center p-1 hover:bg-slate-400" on:click={() => window.open(`/admin/project-catalog/${project._id}`, "_blank")}>
                         <Icon src={Open} size="1.5rem"/>
                         <span>Open</span>
                     </button>

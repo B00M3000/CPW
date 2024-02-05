@@ -23,7 +23,7 @@
     }
 </script>
 
-<main>
+<main class="h-full">
     {#if $user.accountType == AccountType.Student}
     <div id="upload-images-button-container">
         <button on:click={gotoImageUpload}>Upload Images</button>
@@ -39,12 +39,12 @@
         flex-direction: column;
         justify-content: center;
 
-        // height: calc(100vh - var(--nav-bar-height));
+        height: calc(100vh - var(--nav-bar-height));
     }
 
     #upload-images-button-container {
         background-color: rgb(191, 189, 189);
-        padding: 0.5rem 8rem;
+        padding: 1rem 8rem;
         display: flex;
         flex-direction: row;
         align-items: center;
