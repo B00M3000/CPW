@@ -60,7 +60,8 @@
     <p class="student"><strong>Student:</strong> {inflatedProject.student.firstName} {inflatedProject.student.lastName}</p>
     <p class="student"><strong>Student Email:</strong> {inflatedProject.student.email}</p>
     <p class="student"><strong>Short Description:</strong> {inflatedProject.shortDesc}</p>
-    <p class="created-at"><strong>Created On: {new Date(inflatedProject.createdAt).toLocaleDateString()}</strong> </p>
+    <p class="created-at"><strong>Created: {new Date(inflatedProject.createdAt).toLocaleString()}</strong></p>
+    <p class="created-at"><strong>Last Modified: {new Date(inflatedProject.updatedAt).toLocaleString()}</strong></p>
   
     {#if editing}
       <div class="full-report-edit">
