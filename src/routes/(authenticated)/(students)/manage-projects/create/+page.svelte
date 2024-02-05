@@ -220,12 +220,8 @@
 </main>
 
 <style lang="scss">
-  :root {
-    overflow: hidden;
-  }
-
-  main {
-    height: calc(100vh - var(--nav-bar-height));
+  main, form {
+    min-height: calc(100vh - var(--nav-bar-height));
   }
 
   form { 
@@ -233,7 +229,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 100%;
 
     .textarea { 
@@ -273,6 +269,7 @@
 
     .tag-container {
       display: flex;
+      flex-wrap: wrap;
     }
 
     margin: 1em;
