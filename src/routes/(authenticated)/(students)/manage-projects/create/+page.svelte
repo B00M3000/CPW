@@ -145,7 +145,7 @@
     <button class="quickselect-btn" on:click ={() => {manual = !manual}}> Toggle {#if !manual} Manual {:else} Quick Select {/if} </button>
     {#if manual}
     <div id="project-mentor-container">
-      <span>Important: Please make sure information is correct, mentor information cannot be modified later by you. You will need to contact Anna Moss reguarding any changes.</span>
+      <span>Important: Please make sure information is correct, mentor information cannot be modified later. You will need to contact Anna Moss reguarding any changes.</span>
       <label for="mentorFirst" class="label">Mentor First Name</label>
       <input class="textarea" id="mentorFirstName" bind:value={mentor.firstName} contenteditable />
       <label for="mentorLast" class="label">Mentor Last Name</label>

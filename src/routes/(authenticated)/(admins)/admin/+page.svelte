@@ -20,6 +20,11 @@
     async function gotoProjectCatalog() {
       await goto('/admin/project-catalog')
     }
+
+    async function gotoYearStatus() {
+      await goto('/admin/year-status')
+    }
+
     export let data;
 
     $: ({ projectCountPublished, projectCountNotPublished } = data)
@@ -86,8 +91,9 @@
 
         <div class="dashboard-panel-button">
           <button on:click={gotoDataUpload} class="dashboard-button">Data Upload</button>
-            <button on:click={gotoMentorSearch} class="dashboard-button">Mentor Searcher</button>
-            <button on:click={gotoProjectCatalog} class="dashboard-button">Project Catalog</button>
+          <button on:click={gotoMentorSearch} class="dashboard-button">Mentor Searcher</button>
+          <button on:click={gotoProjectCatalog} class="dashboard-button">Project Catalog</button>
+          <button on:click={gotoYearStatus} class="dashboard-button">Year Status</button>
         </div>
     </div>
 </main>
