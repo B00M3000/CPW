@@ -56,12 +56,12 @@ function generateOperations(headings: string[], entries: string[][]): Operation[
     entries.forEach(entry => operations.push({
         updateOne: {
             filter: {
-                schoolId: entry[headingsIndexes["Identifier"]]
+                schoolId: entry[headingsIndexes["TID"]]
             },
             update: {
-                schoolId: entry[headingsIndexes["Identifier"]],
+                schoolId: entry[headingsIndexes["TID"]],
                 email: entry[headingsIndexes["Email"]],
-                accessLevel: /Yes/.test(entry[headingsIndexes["Administrator Access"]]) ? AccessLevel.Admin : AccessLevel.Normal,
+                accessLevel: /Yes/.test(entry[headingsIndexes["AA"]]) ? AccessLevel.Admin : AccessLevel.Normal,
                 accountType: AccountType.Advisor
             },
             upsert: true

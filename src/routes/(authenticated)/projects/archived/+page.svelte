@@ -4,12 +4,15 @@
  Copyright (c) 2023 Thomas Zhou
 -->
 
-<script lang=ts>
+<script lang="ts">
+    import Fuse from 'fuse.js';
+
     import projects20 from "@client/data/projects20.json";
     import projects22 from "@client/data/projects22.json";
     import projects23 from "@client/data/projects23.json";
+
     const allProjects = [...projects20, ...projects22, ...projects23];
-    import Fuse from 'fuse.js';
+    
     const fuseOptions = {
         keys: [
             'Name First',          
@@ -28,10 +31,11 @@
 
     let searchResults = allProjects;
     let searchQuery: string = '';
+
     const fuse = new Fuse(allProjects, fuseOptions);
 
-
     function performSearch() {
+        if(searchQuery == "") return searchResults = allProjects;
         const results = fuse.search(searchQuery);
         searchResults = [];
         results.forEach((result) => {
@@ -45,22 +49,24 @@
     }
 </script>
 
-
 <main>
     <div class="searching">
-        <input
-            placeholder="Search ..."
-            size="120"
-            id="search-box"
-            class="search-box"
-            bind:value={searchQuery}
-            type="text"
-        />
-        <button class="button" on:click={performSearch}>Search</button>
-        <button class="button" on:click={clear}>Clear</button>
+        <form on:submit|preventDefault={performSearch}>
+            <input
+                placeholder="Search ..."
+                size="120"
+                id="search-box"
+                class="search-box"
+                bind:value={searchQuery}
+                type="text"
+            />
+            <button class="button" type="submit">Search</button>
+            <button class="button" on:click={clear}>Clear</button>
+        </form>
     </div>
     <div class="mentor-container">
         <table>
+            <tr>
                 <th>
                     <span>Project Subject</span>   
                 </th>
@@ -73,8 +79,7 @@
                 <th>
                     <span>Mentor Organization</span>
                 </th>
-
-        
+            </tr>
             {#each searchResults as result}
             <tr>
                 <td>
@@ -89,15 +94,14 @@
                 <td>
                     <span> {result["Mentor Organization"]} </span>
                 </td>
-
             </tr>
             {/each}
         </table>
     </div>
 </main>
 
-<style lang=scss>
-    .searching{
+<style lang="scss">
+    .searching {
         display: flex;
         justify-content: center;
         padding: 1.5rem 0rem;
@@ -122,16 +126,16 @@
             background-color: var(--color-blue-grey-400);
             border-radius: 2px;
         }
+
         button:hover {
             background-color: var(--color-blue-grey-300);
         }
-
- 
     }
 
     .mentor-container {
         display: flex;
         flex-direction: column;
+
         table {
             padding: 2rem;
             background-color: #fff;
@@ -150,12 +154,13 @@
                     background-color: #e9e9e9;
                 } 
             }
+
             tr:hover {
                     background-color: rgb(163, 230, 185);
                     cursor: pointer;
             }
 
-            th{
+            th {
                 text-align: left;
                 padding: 0.5rem 1rem;
                 background-color: rgb(163, 162, 162);
@@ -167,7 +172,5 @@
             background-color: white;
             margin: 0;
         }
-
     }
-
 </style>

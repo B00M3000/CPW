@@ -5,7 +5,6 @@
 -->
 
 <script lang=ts>
-    import { goto } from "$app/navigation";
   import InformationBox from "@/client/components/InformationBox.svelte";
     import MentorSearcher from "@/client/components/MentorSearcher.svelte";
     import { tags } from "@/lib/tags";
@@ -54,10 +53,8 @@
             method: "POST",
             body: JSON.stringify(action)
         });
-
         
         success = true;
-        
     }
 
     let step: number = 1;
@@ -94,8 +91,8 @@
       },
       () => {
         const numberOfTags= project.tags.length
-        if(numberOfTags >= 1 && numberOfTags <= 5) return true;
-        else return ["Please select between 1 and 5 tags."];
+        if(numberOfTags >= 1 && numberOfTags <= 7) return true;
+        else return ["Please select between 1 and 7 tags."];
       },
 
       () => {
@@ -144,11 +141,11 @@
       {/each}
     </div>
     {:else if step === 3}
-    <h3 class="label">Fill in mentor miformation:</h3>
+    <h3 class="label">Fill in mentor information:</h3>
     <button class="quickselect-btn" on:click ={() => {manual = !manual}}> Toggle {#if !manual} Manual {:else} Quick Select {/if} </button>
-    
     {#if manual}
     <div id="project-mentor-container">
+      <span>Important: Please make sure information is correct, mentor information cannot be modified later. You will need to contact Anna Moss reguarding any changes.</span>
       <label for="mentorFirst" class="label">Mentor First Name</label>
       <input class="textarea" id="mentorFirstName" bind:value={mentor.firstName} contenteditable />
       <label for="mentorLast" class="label">Mentor Last Name</label>
@@ -166,7 +163,7 @@
     {:else if step === 4}
     <div id="project-short-desc-container">
       <label for="shortDesc" class="label">Write A Short Description</label>
-      <input class="textarea" id="shortDesc" bind:value={project.shortDesc} contenteditable />
+      <span class="textarea" id="shortDesc" bind:innerHTML={project.shortDesc} contenteditable />
     </div>
     {/if}
 
@@ -223,12 +220,8 @@
 </main>
 
 <style lang="scss">
-  :root {
-    overflow: hidden;
-  }
-
-  main {
-    height: calc(100vh - var(--nav-bar-height));
+  main, form {
+    min-height: calc(100vh - var(--nav-bar-height));
   }
 
   form { 
@@ -236,7 +229,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 100%;
 
     .textarea { 
@@ -276,6 +269,7 @@
 
     .tag-container {
       display: flex;
+      flex-wrap: wrap;
     }
 
     margin: 1em;

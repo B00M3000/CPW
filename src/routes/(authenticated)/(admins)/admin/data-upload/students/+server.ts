@@ -57,12 +57,12 @@ function generateOperations(headings: string[], entries: string[][]): Operation[
     entries.forEach(entry => operations.push({
         updateOne: {
             filter: {
-                schoolId: entry[headingsIndexes["Identifier"]]
+                schoolId: entry[headingsIndexes["SID"]]
             },
             update: {
-                schoolId: entry[headingsIndexes["Identifier"]],
+                schoolId: entry[headingsIndexes["SID"]],
                 email: entry[headingsIndexes["Email"]],
-                graduationYear: parseInt(entry[headingsIndexes["Graduation Year"]]),
+                graduationYear: parseInt(entry[headingsIndexes["GY"]]),
                 accessLevel: AccessLevel.Normal,
                 accountType: AccountType.Student
             },

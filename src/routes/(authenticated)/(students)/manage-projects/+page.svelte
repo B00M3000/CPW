@@ -9,13 +9,9 @@
     import { goto } from '$app/navigation';
     import type { Project } from '@/interfaces/project.js';
 
-
     export let data;
 
     $: ({ projects } = data);
-
-
-
 
     async function initDeleteProject(i: number) {
         if(initDeleteConfirm == i) {
@@ -54,6 +50,7 @@
     let deleteConfirm: number | null;
     let deleteConfirmInputValue: string;
 </script>
+
 <main>
     <div class="dashboard-actions">
         <h2>Manage Projects</h2>
@@ -61,6 +58,11 @@
             Create New Project
         </button>
     </div>
+
+    <div style="background-color: lightgrey; padding: 3rem; padding-top: 0; margin-bottom: 3rem;">
+        <span style="text-align: center;"><strong>Disclaimer: </strong>Completing the forms on google classroom and submitting your project report as a google document is still required. (As of Project Week 2024) </span>
+    </div>
+
     <div class="card-container">
         {#each projects as project, i}
             <div class="project-card">
@@ -159,7 +161,10 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 20px;
+
+        padding: 3rem;
+
+        background-color: lightgrey;
     }
 
     .dashboard-actions h2 {
@@ -169,6 +174,9 @@
     }
 
     button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         background-color: #007BFF;
         color: white;
         padding: 12px 24px;

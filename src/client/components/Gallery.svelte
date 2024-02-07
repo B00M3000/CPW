@@ -37,8 +37,7 @@
     let overlay: boolean[] = images.map(() => false);
 </script>
 
-<div id="gallery">
-    <h1>Image Gallery</h1>
+<div id="gallery" class="h-full">
     {#if images.length > 0}
     <div id="images">
         {#each images as image, i}
@@ -65,7 +64,8 @@
         {/each}
     </div>
     {:else}
-    <h3>No Images Uploaded.</h3>
+    <img src="https://static-00.iconduck.com/assets.00/shrug-icon-512x370-5melpg84.png" width="30%" />
+    <h3 class="text-3xl mt-10">No Images Uploaded.</h3>
     {/if}
 </div>
 
@@ -108,6 +108,8 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+
+        width: 100%;
 
         overflow-y: auto;
 

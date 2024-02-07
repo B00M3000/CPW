@@ -26,13 +26,23 @@
 
 <main>
   <div class="sidebar">
-    <h1>{project?.title}</h1>
-    <span>Mentor: <MentorCard {mentor} /></span>
-    <span>Completed By: <StudentCard {student} /></span>
-    <h3>Tags</h3>
+    <h1 class="text-xl mb-3">{project?.title}</h1>
+
+    <div class="inline-flex items-center gap-2 m-1">
+      <span>Mentor: </span>
+      <MentorCard {mentor} />
+    </div>
+
+    <div class="inline-flex items-center gap-2 m-1">
+      <span>Student: </span>
+      <StudentCard {student} />
+    </div>
+
+    <h3 class="my-1">Tags</h3>
     <Tags tagIds={project.tags} />
-    <h3>Description: </h3>
-    <span> {project?.shortDesc}</span>
+
+    <h3 class="my-1">Description: </h3>
+    <span class="my-1">{project?.shortDesc}</span>
   </div>
   <div class="content">
     <div class="view-nav">
@@ -40,16 +50,18 @@
       <div class="divider"></div>
       <button class={view == Views.Images ? "active" : ""} on:click = {() => view = Views.Images}>View Images</button>
     </div> 
-    <div class="report-image-container">
+    <div class="report-image-container flex flex-col items-center">
       {#if view == Views.FullReport}
-      <h1>Full Report</h1>
-      <div class="report">
-          {project?.fullReport || "Sorry, no report has been published for this project."}
+      <div class="max-w-[21cm] mt-5 bg-white whitespace-pre-wrap break-words p-[1in]">
+        {#if project?.fullReport}
+          <h4 class="text-2xl text-center">{project.title}</h4>
+          <p class="text-sm">{project?.fullReport}</p>
+        {:else}
+          <span>Sorry, no report has been published for this project.</span>
+        {/if}
       </div>
       {:else if view == Views.Images}
-      <div class="gallery-container">
         <Gallery projectPage={true} {images} />
-      </div>
       {/if}
     </div>  
   </div>
@@ -69,10 +81,11 @@
       display: flex;
       flex-direction: column;  
       padding: 25px;
-      height: calc(100vh - var(--nav-bar-height) - 50px);
+      height: calc(100vh - var(--nav-bar-height));
       word-wrap: break-word;
       overflow-y: auto;
       border-right: 2px black solid;
+      background-color: lightgrey;
     }
 
     .view-nav {
@@ -80,8 +93,7 @@
       background-color: var(--color-blue-grey-200);
       position: relative;
       word-wrap: none;
-      max-height: 2rem;
-      height: 2rem;
+      height: 4rem;
       display: flex;
       flex-direction: row;
       gap: 1.2rem;
@@ -93,28 +105,13 @@
       background-color: black;
     }
 
-    .report {
-      white-space: pre-wrap; 
-      word-break: break-word; 
-      font-size: 16px;
-      background-color: #f9f9f9;
-      padding: 1rem;
-      border-radius: 5px;
-      padding: 20px; 
-      overflow-y: auto;
-    }
-
     .report-image-container{
-      max-height: calc(100vh - var(--nav-bar-height) - 2rem - 20px);
-      overflow-y: scroll;
+      height: calc(100vh - var(--nav-bar-height) - 2rem - 20px);
+      overflow-y: auto;
 
       h1 {
         text-align: center;
       }
-    }
-
-    .gallery-container{
-      background-color: white;
     }
 
     button {

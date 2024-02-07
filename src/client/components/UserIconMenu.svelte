@@ -26,18 +26,18 @@
 
 {#if $user}
 <div id="dropdown-container">
-    <div id="dropdown-initiator">
-        <img src={$user.picture} alt="" />
+    <div class="inline-flex">
+        <img class="w-10 h-10 rounded-full" src={$user.picture} alt="" />
     </div>
 
-    <div id="dropdown-content-container">
+    <div id="dropdown-content-container" class="text-black">
         <div id="dropdown-content">
             <div id="brief-profile">
-                <img src={$user.picture} alt="" />
+                <img class="w-10 h-10 rounded-full" src={$user.picture} alt="" />
                 <div id="brief-account-details">
-                    <span class="name"> {$user.name}</span>
-                    <span class="email"> {$user.email}</span>
-                    <span class="account-information"> {AccountType[$user.accountType]} - {AccessLevel[$user.accessLevel]}</span>
+                    <span class="name">{$user.name}</span>
+                    <span class="email">{$user.email}</span>
+                    <span class="account-information">{AccountType[$user.accountType]} - {AccessLevel[$user.accessLevel]}</span>
                 </div>
             </div>
             <div id="dropdown-menu-options-container">
@@ -58,7 +58,7 @@
                     {/if}
                 </div>
             </div>
-            <button id="logout-button" on:click={() => user.logout()}>Log Out</button>
+            <button class="inline-flex justify-center items-center bg-[#ff6347] text-white rounded-sm p-1 hover:bg-[#0056b3]" on:click={() => user.logout()}>Log Out</button>
         </div>
     </div>
 </div>
@@ -79,20 +79,8 @@
             background-color: rgba(255, 255, 255, 0.1);
 
             #dropdown-content-container {
-                display: flex;
+                display: inline-flex;
             }
-        }
-    }
-
-    #dropdown-initiator {
-        display: inline-flex;
-        border: 2px soild blue;
-
-        img {
-            width: 40px;
-            height: 40px;
-
-            border-radius: 50%;
         }
     }
 
@@ -124,11 +112,9 @@
     #brief-profile {
         display: flex;
         justify-content: space-between;
-        
         align-items: center;
-        padding: 0.25rem;
-        
-        padding-bottom: 1px;
+
+        gap: 0.5rem;
 
         img {
             width: 40px;
@@ -189,33 +175,8 @@
 
                 a {
                     margin-left: 1rem;
-                    // text-decoration: none;
-                    // color: black;
                 }
             }
-        }
-    }
-
-    button {
-        border: none;
-        background: inherit;
-
-        cursor: pointer;
-    }
-
-    #logout-button {
-        display: inline-flex;
-        justify-content: center;
-        background-color: #ff6347;
-        color: #fff;
-        border: none;
-        border-radius: 2px;
-        padding: 0.25rem;
-        width: 98%;
-        margin: 1px;
-
-        &:hover {
-            background-color: #0056b3;
         }
     }
 </style>

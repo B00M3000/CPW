@@ -1,6 +1,6 @@
 # Commonwealth School Project Week Website
 
-Author: Thomas Zhou
+Lead-Author: Thomas Zhou
 
 Co-Author: Ethan Wu
 

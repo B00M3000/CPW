@@ -38,20 +38,22 @@
 </script>
 
 <div class="multi-select">
-    <div class="dropdown">
-        <input id="search-tag" class="dropbtn" type="search" placeholder="Search Tags" bind:value={searchQuery}/> 
-       
-        <div class="dropdown-content">
-            {#each displayedTags as option}
+    <div class="flex">
+        <div class="dropdown">
+            <input id="search-tag" class="dropbtn" type="search" placeholder="Search Tags" bind:value={searchQuery}/> 
+        
+            <div class="dropdown-content">
+                {#each displayedTags as option}
+                    <hr class="divider"/>
+                    <button class="option" on:click={() => {addToSelected(option)}}>
+                        {option.value}
+                    </button>
+                {/each}
                 <hr class="divider"/>
-                <button class="option" on:click={() => {addToSelected(option)}}>
-                    {option.value}
-                </button>
-            {/each}
-            <hr class="divider"/>
+            </div>
         </div>
+        <button class="clearallbtn" on:click = {removeAllTags}> × </button>
     </div>
-    <button class="clearallbtn" on:click = {removeAllTags}> × </button>
     <div class="selected-container">
         <div class="selected-bubbles">
             {#each selectedValuesView as selectedValue}
@@ -71,7 +73,6 @@
     }
     
     .clearallbtn {
-        
         background-color: transparent;
         border: 2px solid black;
         border-radius: 5px;

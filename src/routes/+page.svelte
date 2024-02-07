@@ -21,10 +21,10 @@
   }
 </script>
 
-<div class="bg-img"></div>
-<main>
-    <div class="search-title">
-        <h1 class="title"><strong>Commonwealth Project Week</strong></h1>
+<div class="fixed left-0 top-0 w-screen h-screen bg-cover bg-center blur-sm scale-110 -z-10 bg-[url('/assets/CommonwealthSchool.jpg')]"></div>
+<main class="flex justify-center items-center h-[85vh]">
+    <div class="flex flex-col items-center justify-center search-title text-white w-[calc(100vw - (100vw - 100%))]">
+        <h1 class="text-5xl font-bold [text-shadow:_0_2px_4px_rgba(0,0,0,0.5)] mb-5">Commonwealth Project Week</h1>
         <form class="search-bar" on:submit={gotoSearch}>
             <input type="text" class="search-input" placeholder="Search projects..." bind:value={search}>
             <button class="search-button" type="submit">Search</button>
@@ -34,12 +34,8 @@
             <a class="btn" href="/images">Browse Photos</a>
         </div>
     </div>
-    <section class="primary">
+    <!-- <section class="primary">
         <p class="subtitle">Welcome to the Commonwealth School Project Week Collection</p>
-        
-        {#if !user}
-            <a href="/login" class="login-button">Log In</a>
-        {/if}
 
         <div class="proj-container">
             <div id="projects" class="project-list">
@@ -48,40 +44,11 @@
             {/each}
             </div>
         </div>
-    </section>
+    </section> -->
 </main>
 
 
 <style lang="scss">
-    .bg-img{
-        position: fixed;
-        height: 100vh;
-        width: 100%;
-        top: 0;
-        background-size: cover;
-        background-position: center;
-        filter: blur(4px) grayscale(0%);
-        transform: scale(1.1); 
-        z-index: -1;
-        background-image: url("/assets/CommonwealthSchool.jpg");
-    }
-    .search-title{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        color: white;
-        
-        .title {
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-       
-        width: calc(100vw - (100vw - 100%));
-        padding: 50px 0px;
-    }
-
-
     .btn {
         display: inline-block;
         background-color: rgba(0, 0, 0, 0.3);
@@ -90,29 +57,13 @@
         border-radius: 5px;
         text-decoration: none;
         font-size: 1.2rem;
-        transition: background-color 0.8s;
+        transition: background-color 0.4s;
         margin: 10px;
         cursor: pointer;
 
-    }
-
-    .btn:hover {
-        background-color: rgba(0, 0, 0, 0.8);
-    }
-
-    .login-button {
-        background-color: var(--color-blue-500);
-    }
-
-
-    .login-button:hover {
-        background: transparent;
-        outline: 1px solid black;
-    }
-
-    .title {
-        font-size: 3rem;
-        margin-bottom: 1.2rem;
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
     }
 
     .subtitle {
@@ -183,7 +134,6 @@
 
  
     .proj-container {
-        
         background-color: transparent;
         padding: 20px;
         margin: 3rem;
@@ -198,5 +148,4 @@
         justify-content: center;
         gap: 1rem;
     }
-
 </style>
