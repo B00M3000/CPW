@@ -205,7 +205,5 @@
         width: 100%;
         margin-bottom: 16px;
     }
-
-
  
 </style>

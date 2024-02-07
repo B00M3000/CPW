@@ -5,18 +5,33 @@
     const markdownContents = md;
 </script>
 
-<div class="markdown-content">
-    {@html marked(markdownContents)}
-</div>
+<main>
+    <div class="markdown-content">
+        {@html marked(markdownContents)}
+    </div>
+</main>
+
 
 
 
 <style lang="scss" scoped>
+    main{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        justify-self: center;
+        align-items: center;
+    }
+    
     .markdown-content{
         margin: 5rem;
         padding-left: 10rem;
         padding-right: 10rem;
+        max-width: 70rem;
+
     }
+
+
     .markdown-content :global(h1){
         font-size: 32px;
         font-weight: bold;
