@@ -19,9 +19,12 @@ These are links to the relevant documentation for usage of our website:
 - Author: Thomas Zhou
 - Co-Author: Ethan Wu
 
-### Other Contributors
 
-The following people (in alphabetical order by last name) provided helpful and valuable feedback about UI/UX design for the website and provided suggestions for improving usability.
+### Acknowledgements 
+
+We would like to thank Ms. Moss, Ms. Jackman, and Mr. Hinterlang for their support. They provided important information about how student data is stored, support for hosting the website, and suggestions for improving or adding different features. Additionally, thanks to Moe Frumkin ('23) for reviewing the documentation and Ms. Tomer for sending us the Commonwealth branding guide. 
+
+Additionally, the following people (in alphabetical order by last name) provided helpful and valuable feedback about UI/UX design for the website and provided suggestions for improving usability.
 
 - Aditya Anand ('26)
 - Brian Li ('26)
@@ -31,21 +34,6 @@ The following people (in alphabetical order by last name) provided helpful and v
 - Will Stokes ('27)
 - Zach Walton ('25)
 
-### Acknowledgements 
-
-We would like to thank Ms. Moss, Ms. Jackman, and Mr. Hinterlang for their support. They provided important information about how student data is stored, support for hosting the website, and suggestions for improving or adding different features. Additionally, thanks to Moe Frumkin ('23) for reviewing the documentation and Ms. Tomer for sending us the Commonwealth branding guide. 
-
-
-### Libraries/Technology Used
-
-- Svelte 4.2.0 & Svelte Kit 1.24.1 & Svelte Node Adapter 1.3.1
-- TypeScript 5.0.0
-- Vite 4.4.9
-- Papaparse 5.3.9
-- FuseJS 6.6.2
-- Mongoose 7.5.1
-- Sharp 0.32.6
-- Sass 1.66.1
 
 
 ## Feedback
