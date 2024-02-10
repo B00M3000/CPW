@@ -13,23 +13,40 @@
 
     import { page } from "$app/stores";
 
+    import Icon from "./Icon.svelte";
+    import CaretRight from "../icons/CaretRight";
+    import FileText from "../icons/FileText";
+    import AiFile from "../icons/AiFile";
+    import Images from "../icons/Images";
+    import Home from "../icons/Home";
+    import Gear from "../icons/Gear";
+
     $: section = $page.url.pathname.split("/")[1];
+
+    const navBarElements = [
+        { icon: Home, name: "Home", link: "/", section: "" },
+        { icon: FileText, name: "Projects", link: "/projects", section: "projects" },
+        { icon: Images, name: "Photos", link: "/images", section: "images" },
+        { icon: Gear, name: "Admin", link: "/admin", section: "admin", predicate: () => $user?.accessLevel == AccessLevel.Admin },
+        { icon: AiFile, name: "Docs", link: "/docs", section: "docs" }
+    ]
 </script>
 
 <nav>
     <div class="main-navigation">
-        <a href="/" class={section == "" ? "active" : ""}>Home</a>
-        <a href="/projects" class={section == "projects" ? "active" : ""}>Projects</a>
-        <a href="/images" class={section == "images" ? "active" : ""}>Photos</a>
-        
-        {#if $user?.accountType == AccountType.Student}<a href="/manage-projects" class={section == "manage-projects" ? "active" : ""}>My Projects</a>{/if}
-        {#if $user?.accountType == AccountType.Student}<a href="/manage-projects" class={section == "manage-projects" ? "active" : ""}>My Images</a>{/if}
-        {#if $user?.accountType == AccountType.Advisor}<a href="/manage-advisees" class={section == "manage-advisees" ? "active" : ""}>My Advisees</a>{/if}
-        {#if $user?.accessLevel == AccessLevel.Admin}<a href="/admin" class={section == "admin" ? "active" : ""}>Admin Dashboard</a>{/if}
-
-        <a href="/docs" class={section == "docs" ? "active" : ""}>Documentation</a>
+        {#each navBarElements as element}
+            {#if element.predicate == undefined || element.predicate()}
+                <div class="flex items-center mx-3 gap-2">
+                    {#if element.icon != undefined}
+                        <Icon src={element.icon} size="1rem" color='white'/>
+                    {/if}
+                    <a href={element.link} class={section == element.section ? "active" : ""}>{element.name}</a>
+                </div>
+            {/if}
+        {/each}
     </div>
     <div class="user-navigation">
+        <Icon src={CaretRight} size="2rem" color="white"/>
         {#if $user}
             <UserIconMenu />
         {:else}
@@ -61,8 +78,7 @@
         gap: 1rem;  
     }
 
-    a {
-        margin: 0 1rem;
+    a { 
         color: #fff;
         text-decoration: none;
     }
