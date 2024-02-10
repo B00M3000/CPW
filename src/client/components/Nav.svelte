@@ -22,9 +22,10 @@
         <a href="/projects" class={section == "projects" ? "active" : ""}>Projects</a>
         <a href="/images" class={section == "images" ? "active" : ""}>Photos</a>
         
-        {#if $user?.accountType == AccountType.Student}<a href="/manage-projects" class={section == "manage-projects" ? "active" : ""}>Manage Projects</a>{/if}
-        {#if $user?.accountType == AccountType.Advisor}<a href="/manage-advisees" class={section == "manage-advisees" ? "active" : ""}>Manage Advisees</a>{/if}
-        {#if $user?.accessLevel == AccessLevel.Admin}<a href="/admin" class={section == "admin" ? "active" : ""}>Admin</a>{/if}
+        {#if $user?.accountType == AccountType.Student}<a href="/manage-projects" class={section == "manage-projects" ? "active" : ""}>My Projects</a>{/if}
+        {#if $user?.accountType == AccountType.Student}<a href="/manage-projects" class={section == "manage-projects" ? "active" : ""}>My Images</a>{/if}
+        {#if $user?.accountType == AccountType.Advisor}<a href="/manage-advisees" class={section == "manage-advisees" ? "active" : ""}>My Advisees</a>{/if}
+        {#if $user?.accessLevel == AccessLevel.Admin}<a href="/admin" class={section == "admin" ? "active" : ""}>Admin Dashboard</a>{/if}
 
         <a href="/docs" class={section == "docs" ? "active" : ""}>Documentation</a>
     </div>
