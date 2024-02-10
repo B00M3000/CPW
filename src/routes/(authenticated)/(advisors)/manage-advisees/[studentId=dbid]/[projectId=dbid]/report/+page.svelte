@@ -40,7 +40,7 @@
     {#if project?.fullReport.length > 5}
         <div class="report">{project?.fullReport}</div>
     {:else}
-        <h1> Sorry, no report has been published for this project.</h1>
+        <h1>This advisee has not uploaded a project report yet.</h1>
     {/if}
 </main>
 

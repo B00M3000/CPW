@@ -57,7 +57,7 @@
           <h4 class="text-2xl text-center">{project.title}</h4>
           <p class="text-sm">{project?.fullReport}</p>
         {:else}
-          <span>Sorry, no report has been published for this project.</span>
+          <span>Sorry, no report has been uploaded for this project.</span>
         {/if}
       </div>
       {:else if view == Views.Images}
