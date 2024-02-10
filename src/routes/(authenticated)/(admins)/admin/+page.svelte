@@ -79,12 +79,12 @@
         
         <div class="dashboard-panel">
             <div class="count-panel">
-                <h3 class="count-title">Logging Published Projects</h3>
+                <h3 class="count-title">Published Projects</h3>
                 <div class="count-value">{countPub}</div>
             </div>
             <hr>
             <div class="count-panel">
-                <h3 class="count-title">Logging Unfinished Projects</h3>
+                <h3 class="count-title">Unfinished Projects</h3>
                 <div class="count-value">{countNotPub}</div>
             </div>
         </div>
