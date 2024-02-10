@@ -54,9 +54,14 @@
 <main>
     <div class="dashboard-actions">
         <h2>Manage Projects</h2>
-        <button on:click={() => goto('manage-projects/create')}>
-            Create New Project
-        </button>
+        <div class="flex gap-4">
+            <button on:click={() => goto('manage-projects/create')}>
+                Create New Project
+            </button>
+            <button on:click={() => goto('manage-images/upload')}>
+                Upload Images
+            </button>
+        </div>
     </div>
 
     <div style="background-color: lightgrey; padding: 3rem; padding-top: 0; margin-bottom: 3rem;">

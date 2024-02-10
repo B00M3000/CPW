@@ -70,14 +70,17 @@
 
 <main>
     <div id="navigation-button-container">
-        <button on:click={gotoManageImages}>Manage Images</button>
+        <button on:click={gotoManageImages}>Back to Manage Images</button>
     </div>
     <div id="upload-container">
-        <div id="project-selector">
+        <h2 class="text-xl">Upload Images to a Project!</h2>
+
+        <div id="project-selector" class="flex items-center">
             <label for="project"><strong>Project: </strong></label>
             <select
                 id="project"
                 name="projectId"
+                class="border-black border-[1px] rounded-md p-1"
                 disabled={projects.length == 0}
                 required
                 bind:value={projectId}

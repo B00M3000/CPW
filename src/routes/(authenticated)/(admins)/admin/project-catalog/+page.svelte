@@ -6,7 +6,9 @@
 
 <script lang=ts>
     import { goto } from "$app/navigation";
+  import Icon from "@/client/components/Icon.svelte";
     import StudentCard from "@/client/components/StudentCard.svelte";
+  import Open from "@/client/icons/Open";
 
     export let data;
 
@@ -17,61 +19,64 @@
 
 </script>
 
-<main>
-    <table>
-        <h1> Incomplete Projects</h1>
+<main class="flex">
+    <table class="m-16">
+        <h1 class="text-2xl m-4">Incomplete Projects</h1>
+
         <tr>
+            <th></th>
             <th>
                 <span>Title</span>   
             </th>
             <th>
                 <span>Student </span>
-            </th>
-            <th>
-                <span>Status</span>
             </th>
         </tr>
     
         {#each uncompletedProjects as project}
         <tr on:click ={()  => goto(`project-catalog/${project._id}`)}>
             <td>
+                <button class="rounded-md bg-slate-300 flex gap-2 items-center justify-center p-1 hover:bg-slate-400" on:click={() => window.open(`/admin/project-catalog/${project._id}`, "_blank")}>
+                    <Icon src={Open} size="1.5rem"/>
+                    <span>Open</span>
+                </button>
+            </td>
+            <td>
                 <span>{project.title}</span>
             </td>
             <td>
                 <span> <StudentCard student={project.student} /> </span>
-            </td>
-            <td>
-                <span>Incomplete</span>
             </td>
         </tr>
         {/each}
     </table>
 
 
-    <table>
-        <h1> Completed Projects</h1>
+    <table class="m-16 mt-0">
+        <h1 class="text-2xl m-4">Completed Projects</h1>
         <tr>
+            <th></th>
             <th>
                 <span>Title</span>   
             </th>
             <th>
                 <span>Student </span>
             </th>
-            <th>
-                <span>Status</span>
-            </th>
         </tr>
     
         {#each completedProjects as project}
         <tr on:click={()  => goto(`project-catalog/${project._id}`)}>
             <td>
+                <button class="rounded-md bg-slate-300 flex gap-2 items-center justify-center p-1 hover:bg-slate-400" on:click={() => window.open(`/admin/project-catalog/${project._id}`, "_blank")}>
+                    <Icon src={Open} size="1.5rem"/>
+                    <span>Open</span>
+                </button>
+            </td>
+            <td>
                 <span>{project.title}</span>
             </td>
             <td>
                 <span> <StudentCard student={project.student} /> </span>
-            </td>
-            <td>
-                <span>Completed </span>
             </td>
         </tr>
         {/each}
@@ -84,7 +89,6 @@
         flex-direction: column;
         table {
             padding: 2rem;
-            background-color: #fff;
             gap: 2rem;
 
             tr {
@@ -111,10 +115,5 @@
                 background-color: rgb(163, 162, 162);
             }
         }  
-
-        h1 {
-            background-color: white;
-            margin: 0;
-        } 
     } 
 </style>

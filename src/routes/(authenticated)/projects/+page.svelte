@@ -64,13 +64,17 @@
                 bind:value={query}
                 type="search"
             />
-            <button class="button" on:click={search}>Search</button>
-            <button class="button button-archive" on:click={async () => {
+            <button class="button bg-sky-600" on:click={search}>Search</button>
+            <button class="button button-archive mr-4" on:click={async () => {
                     await goto(`/projects/archived`);
                 }}>
                 See Archived Projects
             </button>
-
+            <button class="button bg-orange-600 rounded-lg" on:click={async () => {
+                    await goto(`/manage-projects`);
+                }}>
+                My Projects    
+            </button>
         </div>
 
 
@@ -176,13 +180,13 @@
         border: 0px solid rgb(0, 0, 0);
         border-radius: 5px 0px 0px 5px;
         margin-left: 2rem;
+        width: 45%;
     }
 
     *:focus {
         outline: 1px solid rgba(49, 49, 255, 0.213);
     }
     .button {
-        background-color: var(--color-blue-500);
         color: white;
         padding: 11px 20px;
         border: none;
@@ -190,7 +194,6 @@
         cursor: pointer;
         font-size: 15px;
         transition: background-color 0.3s;
-
     }
 
 

@@ -177,7 +177,7 @@
       {/if}
 
       {#if step === maxStep}
-      <button type="submit" class="submit-button" on:click={upload}> Submit Form</button>
+      <button type="submit" class="submit-button" on:click={upload}>Submit Form</button>
       {/if}
     </div>
 

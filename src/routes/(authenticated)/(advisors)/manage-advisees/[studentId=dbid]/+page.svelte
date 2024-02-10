@@ -14,9 +14,12 @@
     $: projectUnapproved = projects.filter((project) => project.underReview == true);
     $: projectsApproved = projects.filter((project) => project.underReview == false);
 
-    async function changeApproval(project: any, approval: boolean){
+    function gotoInspectProject(studentId: string, projectId: string) {
+        goto(`${studentId}/${projectId}/inspect`);
+    }
 
-        const res = await fetch(`${student._id}/${project._id}/approval`, {
+    async function changeApproval(project: any, approval: boolean){
+        const res = await fetch(`/manage-advisees/${student._id}/${project._id}/approval`, {
             method: "POST",
             body: JSON.stringify({
                 action: approval ? "APPROVE" : "UNAPPROVE",
@@ -35,30 +38,29 @@
             <div class="project-card">
                 <ProjectCard {project} />
                 <div class="button-container">
-                    <button class="fullreport-button" on:click={async () => await goto(`${student._id}/${project._id}/report`)}>
-                        View Full Report
+                    <button class="fullreport-button" on:click={() => gotoInspectProject(student._id, project._id)}>
+                        Inspect Project
                     </button> 
 
-                    <button class="accept-button" on:click = {() => changeApproval(project, true)}>
+                    <button class="accept-button" on:click = {() => gotoInspectProject(student._id, project._id)}>
                         Approve Project
                     </button>
-                    
                 </div>
             </div>
         {/each}
         {#each projectsApproved as project}
-            <div class="project-card">
-                <ProjectCard {project} />
-                <div class="button-container">
-                    <button class="fullreport-button" on:click={async () => await goto(`${student._id}/${project._id}/report`)}>
-                        View Full Report
-                    </button> 
+        <div class="project-card">
+            <ProjectCard {project} />
+            <div class="button-container">
+                <button class="fullreport-button" on:click={() => gotoInspectProject(student._id, project._id)}>
+                    Inspect Project
+                </button> 
 
-                    <button class="deny-button" on:click = {() =>  changeApproval(project, false)}>
-                        Unapprove Project
-                    </button>
-                </div>
+                <button class="deny-button" on:click = {() => changeApproval(project, false)}>
+                    Unapprove Project
+                </button>
             </div>
+        </div>
         {/each}
     </div>
 </main>

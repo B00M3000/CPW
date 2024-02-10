@@ -14,13 +14,23 @@
     import Icon from "@/client/components/Icon.svelte";
     import Gear from "@/client/icons/Gear";
     import Images from "@/client/icons/Images";
+    import FileText from "@/client/icons/FileText";
+    import People from "@/client/icons/People";
 
-    async function gotoAccount() {
-        await goto('/account');
+    function gotoAccount() {
+        goto('/account');
     }
 
-    async function gotoManageImages() {
-        await goto('/manage-images')
+    function gotoManageImages() {
+        goto('/manage-images')
+    }
+
+    function gotoManageProjects() {
+        goto('/manage-projects')
+    }
+
+    function gotoManageAdvisees() {
+        goto('/manage-advisees')
     }
 </script>
 
@@ -49,10 +59,24 @@
                         </div>
                     </button>
                     {#if $user.accountType == AccountType.Student}
+                    <button class="dropdown-menu-option" on:click={gotoManageProjects}>
+                        <Icon src={FileText} size="1.25rem"/>
+                        <div class="dropdown-menu-option-link-container">
+                            <a href="/manage-projects">My Projects</a>
+                        </div>
+                    </button>
                     <button class="dropdown-menu-option" on:click={gotoManageImages}>
                         <Icon src={Images} size="1.25rem"/>
                         <div class="dropdown-menu-option-link-container">
-                            <a href="/manage-images">Manage Images</a>
+                            <a href="/manage-images">My Images</a>
+                        </div>
+                    </button>
+                    {/if}
+                    {#if $user.accountType == AccountType.Advisor}
+                    <button class="dropdown-menu-option" on:click={gotoManageAdvisees}>
+                        <Icon src={People} size="1.25rem"/>
+                        <div class="dropdown-menu-option-link-container">
+                            <a href="/manage-images">My Advisees</a>
                         </div>
                     </button>
                     {/if}

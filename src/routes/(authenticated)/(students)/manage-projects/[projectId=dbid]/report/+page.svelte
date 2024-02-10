@@ -10,6 +10,7 @@
 
     export let data;
     $: ({ project: { title, fullReport: originaFullReport }, projectId } = data);
+
     let fullReport: string = ""; 
 
     let ctrlDown = false;
@@ -17,7 +18,7 @@
     let isChanged = false;
 
     onMount(() => { 
-        fullReport = originaFullReport
+        fullReport = originaFullReport || " ";
     });
 
     async function handlePaste(){
@@ -41,12 +42,12 @@
 
         if (key == "Meta" || key == "Control") {
             ctrlDown = true;
-            event.preventDefault();
+            // event.preventDefault();
         }
 
         if(key == "v") {
             vDown = true;
-            event.preventDefault();
+            // event.preventDefault();
         }
 
         if (ctrlDown && vDown) {
@@ -59,15 +60,14 @@
 
         if (key == "Meta" || key == "Control") {
             ctrlDown = false;
-            event.preventDefault();
+            // event.preventDefault();
         }
 
         if(key == "v") {
             vDown = false;
-            event.preventDefault();
+            // event.preventDefault();
         }
     }
-
 </script>
 
 <svelte:window on:keydown={onKeydown} on:keyup={onKeyup} />
@@ -88,16 +88,17 @@
         {/if}
     </div>
     <hr>
-        {#if fullReport}
-        <div>
-            <h2>Report Content:</h2>
-            <p>{fullReport}</p>
-        </div>
-        {/if}
+    {#if fullReport}
+    <div>
+        <h2>Report Content: </h2>
+        <div id="reportbox">{fullReport}</div>
+    </div>
+    {/if}
+
+    <input type="text" placeholder="Or type/paste here if you are Jacob Signorovitch '26" class="w-full mt-3" on:input={(e) => fullReport = e.target.value} />
 </main>
 
 <style>
-
     main {
         margin: 0 auto;
         padding: 20px;
@@ -133,7 +134,7 @@
         background-color: #0056b3;
     }
 
-    p {
+    #reportbox {
         white-space: pre-wrap; 
         word-break: break-word; 
         font-size: 16px;

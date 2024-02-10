@@ -12,7 +12,7 @@ const CURRENT_YEAR = new Date().getFullYear(); // out here for now, but should b
 
 export const load = async () => {
     const allStudents = (await UserSchema.find({ schoolId: { $regex: /S/ }, graduationYear: { $gte: CURRENT_YEAR } }).lean())?.map(stringifyObjectId);
-    const projects = await ProjectSchema.find({ year: CURRENT_YEAR }).lean();
+    const projects = await ProjectSchema.find({ year: CURRENT_YEAR }, 'studentId underReview title').lean();
 
     const missingStudents = allStudents.filter(student => !projects.some(project => project.studentId == student._id));
     const inflatedUnapprovedProjects = await Promise.all(projects.filter(project => project.underReview)?.map(stringifyObjectId).map(injectStudent));
@@ -21,6 +21,6 @@ export const load = async () => {
 }
 
 async function injectStudent(project: any) {
-   project.student = stringifyObjectId(await UserSchema.findById(project.studentId, 'name').lean());
+   project.student = stringifyObjectId(await UserSchema.findById(project.studentId, 'name graduationYear').lean());
    return project;
 }
