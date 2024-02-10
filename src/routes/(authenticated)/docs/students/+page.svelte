@@ -11,8 +11,8 @@
 
 <main>
 
-    <aside>
-        <h1> Table of Contents:</h1>
+    <aside class="flex flex-col p-10">
+        <h1>Student Documentation: </h1>
         <hr>
       <button on:click={() => {markdownContents = MainCollection}}> The Main Collection </button>
       <button on:click={() => {markdownContents = Gallery}}> The Gallery Page </button>
@@ -57,11 +57,8 @@
     }
 
     aside {
-        width: 20%;
         background-color: rgb(77, 76, 76);
-        padding: 20px;
         box-sizing: border-box;
-        max-height: calc(100vh - var(--nav-bar-height));
         height: calc(100vh - var(--nav-bar-height));
         box-shadow: 2px 0px 5px var(--color-blue-grey-200);
     }
