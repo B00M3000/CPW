@@ -10,7 +10,7 @@ import { MentorSchema } from "@/server/mongo/schemas/mentor";
 import { UserSchema } from "@/server/mongo/schemas/user";
 
 export const load = async () => {
-    const projects = (await ProjectSchema.find({ year: new Date().getFullYear() }).lean())
+    const projects = (await ProjectSchema.find({ year: new Date().getFullYear() }, 'underReview studentId mentorId title').lean())
     const inflatedProjects = await Promise.all(projects.map(stringifyObjectId).map(injectStudentAndMentor))
     return { inflatedProjects };
 }
