@@ -36,11 +36,11 @@
     <div class="main-navigation">
         {#each navBarElements as element}
             {#if element.predicate == undefined || element.predicate()}
-                <div class="flex items-center mx-3 gap-2">
+                <div class="nav-element flex items-center p-2 rounded-lg mx-2 gap-2 {section == element.section ? " active" : ""}">
                     {#if element.icon != undefined}
                         <Icon src={element.icon} size="1rem" color='white'/>
                     {/if}
-                    <a href={element.link} class={section == element.section ? "active" : ""}>{element.name}</a>
+                    <a href={element.link}>{element.name}</a>
                 </div>
             {/if}
         {/each}
@@ -83,7 +83,7 @@
         text-decoration: none;
     }
 
-    a:hover, .active {
-        border-bottom: 2px solid;
+    .nav-element:hover, .active {
+        background-color: darkred;
     }
 </style>
