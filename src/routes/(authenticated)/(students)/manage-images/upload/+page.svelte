@@ -42,14 +42,16 @@
     }
 
     async function upload(event: SubmitEvent, index: number) {
+        if(statuses[index] != Status.NotUploaded) return;
+
+        statuses[index] = Status.Uploading;
+
         event.preventDefault()
 
         const formData = new FormData();
         formData.set('image', files[index]);
         formData.set('description', descriptions[index]);
         formData.set('projectId', projectId);
-
-        statuses[index] = Status.Uploading;
 
         const response = await fetch('/manage-images/upload', {
             credentials: 'include',
@@ -67,6 +69,8 @@
     async function gotoManageImages() {
         await goto('/manage-images');
     }
+
+    let uploadedAll = false;
 </script>
 
 <main>
@@ -91,10 +95,13 @@
                     <option value={project._id}>{project.title}</option>
                 {/each}
             </select>
-        </div>
+        </div>  
 
         {#if projectId != "none"}
         <input type="file" name="image" bind:files={fileList} on:change={updateUploaded} multiple={true} accept="image/png,image/jpeg,image/gif" />
+        {#if files.length > 0 && !uploadedAll}
+        <button on:click={() => { uploadedAll = true; files.forEach((_, i) => upload(new SubmitEvent("button"), i))}} class="p-2 my-1 rounded-lg bg-cyan-400 hover:bg-cyan-500">Upload All!</button>
+        {/if}
         <div id="uploaded-images">
             {#each files as file, i}
             <form class="uploaded-image" on:submit={(event) => upload(event, i)}>
@@ -110,7 +117,7 @@
                 {/if}
                 <span>{bytesToString(file.size)}</span>
                 {#if statuses[i] == Status.NotUploaded}
-                <button type="submit">Upload</button>
+                <button type="submit" class="bg-cyan-400 p-2 rounded-md">Upload</button>
                 {:else if statuses[i] == Status.Uploading}
                 <div class="loader" />
                 {:else if statuses[i] == Status.Failed}
