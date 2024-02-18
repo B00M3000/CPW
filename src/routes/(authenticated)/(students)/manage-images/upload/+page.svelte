@@ -108,7 +108,7 @@
                 <img src={URL.createObjectURL(file)}  alt="related to project"/>
                 {#if statuses[i] == Status.NotUploaded}
                 <span
-                    contenteditable
+                    contenteditable="plaintext-only"
                     placeholder="Add Description..."
                     bind:innerHTML={descriptions[i]}
                 />

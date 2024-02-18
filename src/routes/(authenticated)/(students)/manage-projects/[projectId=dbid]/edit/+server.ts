@@ -9,9 +9,9 @@ import { json } from '@sveltejs/kit';
 
 
 export async function POST({ request  }) {
-    const { project: { shortDesc, tags, title } } = await request.json();
+    const { project: { shortDesc, tags, title, _id } } = await request.json();
 
-    await ProjectSchema.findOneAndUpdate({ _id: project._id }, { title, tags, shortDesc })
+    await ProjectSchema.findOneAndUpdate({ _id }, { title, tags, shortDesc })
 
     return json({ message: "Project has been updated." });
 }

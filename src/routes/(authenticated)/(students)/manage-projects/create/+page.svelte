@@ -128,7 +128,7 @@
     {#if step === 1}
     <div id="project-title-container">
       <label for="title" class="label">Give your project a title: </label>
-      <input class="textarea" id="title" bind:value={project.title} contenteditable />
+      <input class="textarea" id="title" bind:value={project.title} contenteditable="plaintext-only" />
     </div>
     {:else if step === 2}
     <div id="project-tags-container">
@@ -147,15 +147,15 @@
     <div id="project-mentor-container">
       <span>Important: Please make sure information is correct, mentor information cannot be modified later. You will need to contact Anna Moss reguarding any changes.</span>
       <label for="mentorFirst" class="label">Mentor First Name</label>
-      <input class="textarea" id="mentorFirstName" bind:value={mentor.firstName} contenteditable />
+      <input class="textarea" id="mentorFirstName" bind:value={mentor.firstName} contenteditable="plaintext-only" />
       <label for="mentorLast" class="label">Mentor Last Name</label>
-      <input class="textarea" id="mentorLastName" bind:value={mentor.lastName} contenteditable />
+      <input class="textarea" id="mentorLastName" bind:value={mentor.lastName} contenteditable="plaintext-only" />
       <label for="mentorOrg" class="label">Mentor Organization</label>
-      <input class="textarea" id="mentorOrganization" bind:value={mentor.organization} contenteditable />
+      <input class="textarea" id="mentorOrganization" bind:value={mentor.organization} contenteditable="plaintext-only" />
       <label for="mentorEmail" class="label">Mentor Email</label>
-      <input class="textarea" id="mentorEmail" bind:value={mentor.email} contenteditable />
+      <input class="textarea" id="mentorEmail" bind:value={mentor.email} contenteditable="plaintext-only" />
       <label for="mentorPhone" class="label">Mentor Phone</label>
-      <input class="textarea" id="mentorPhone" bind:value={mentor.phoneNumber} contenteditable />
+      <input class="textarea" id="mentorPhone" bind:value={mentor.phoneNumber} contenteditable="plaintext-only" />
     </div>
     {:else}
     <MentorSearcher on:select={mentorSelected}/>
@@ -163,7 +163,7 @@
     {:else if step === 4}
     <div id="project-short-desc-container">
       <label for="shortDesc" class="label">Write A Short Description</label>
-      <span class="textarea" id="shortDesc" bind:innerHTML={project.shortDesc} contenteditable />
+      <span class="textarea" id="shortDesc" bind:innerHTML={project.shortDesc} contenteditable="plaintext-only" />
     </div>
     {/if}
 
