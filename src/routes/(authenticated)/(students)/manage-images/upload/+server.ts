@@ -13,7 +13,7 @@ import { ImageSchema } from '@/server/mongo/schemas/image';
 import { ProjectSchema } from '@/server/mongo/schemas/project';
 import sharp from 'sharp';
 
-const isValidImageType = /image\/(png|jpeg)/
+const isValidImageType = /(^image)(\/)[a-zA-Z0-9_]*/ ///image\/(png|jpeg)/
 
 const _USER_IMAGE_SPACE_LIMIT = parseInt(USER_IMAGE_SPACE_LIMIT)
 const _USER_IMAGE_DESCRIPTION_LIMIT = parseInt(USER_IMAGE_DESCRIPTION_LIMIT)
@@ -34,15 +34,17 @@ export async function PUT({ request, locals }) {
 
     if(!(await ProjectSchema.exists({ _id: projectIdField }))) throw error(400, { message: "Project ID must be valid" })
 
-    const descriptionString: string = descriptionField
+    if((await ProjectSchema.findOne({ _id: projectIdField }))?.studentId != locals?.user?.id) throw error(403, { message: "No adding images to other peoples projets!" })
+
+    const descriptionString: string = descriptionField;
 
     if(!(imageField instanceof File)) throw error(400, { message: "No image file contained in request." })
 
-    const imageFile: File = imageField
+    const imageFile: File = imageField;
 
     if(!isValidImageType.test(imageFile.type)) throw error(400, { message: "Image file must be of type image/png,image/jpeg" })
 
-    const { totalSize } = await ImageSchema.aggregate([{ $match: { ownerId: locals.user.id }}, { $group: { _id: null, totalSize: { $sum: "$size" } } }])
+    const { totalSize } = await ImageSchema.aggregate([{ $match: { ownerId: locals?.user?.id }}, { $group: { _id: null, totalSize: { $sum: "$size" } } }])
 
     if(totalSize + imageFile.size > _USER_IMAGE_SPACE_LIMIT) throw error(400, { message: "You exceed your alloted amount of space by uploading this image. Please ask website administrators for an expanded quota or manage your assets accordingly." })
 

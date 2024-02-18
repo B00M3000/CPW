@@ -52,6 +52,7 @@
         statuses[index] = Status.Uploading;
 
         const response = await fetch('/manage-images/upload', {
+            credentials: 'include',
             method: "PUT",
             body: formData
         })
