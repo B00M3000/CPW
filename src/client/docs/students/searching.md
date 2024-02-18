@@ -4,7 +4,7 @@
 
 ### The Main Collection
 
-![Main Collection](/src/client/docs/students/mainpage.png)
+![Main Collection](/assets/doc/mainpage.png)
 
 Above is a screenshot of the main project gallery. There are a few components.
 
@@ -30,7 +30,7 @@ Above is a screenshot of the main project gallery. There are a few components.
 
 The archived projects page displays projects that were done during the years 2018–2019, 2019–2020, and 2022–2023.  This page does not include refined search features, and the projects here do not have full reports, images, or individual pages associated with them. 
 
-![Archives Collection](/src/client/docs/students/archivespage.png)
+![Archives Collection](/assets/doc/archivespage.png)
 
 **This page is fairly basic, but has a few important features:**
 

@@ -2,7 +2,7 @@
 
 *Manage Projects Page*
 
-![Manage Projects Page](/src/client/docs/students/managehome.png)
+![Manage Projects Page](/assets/doc/managehome.png)
 
 <hr>
 
@@ -29,7 +29,7 @@
 ### Post Submission
 
 After submission, your page will have a new project on it. The project might look something like this:
-![Manage Projects Page](/src/client/docs/students/aproject.png)
+![Manage Projects Page](/assets/doc/aproject.png)
 
 1. _Publish Button:_ Once you’ve created a project, the project is automatically visible to your advisor. The publish button is located on the top right corner, and will say “Pending Advisor Review” until your advisor approves of it. Once your advisor approves of the project, it is published and made public. You have the choice to unpublish the project, however, by clicking on that button.
 
@@ -44,11 +44,11 @@ After submission, your page will have a new project on it. The project might loo
 ### Adding A Project Report
 
 1. Click on the add full report button of the project card shown in the post submission section above. You should see a page like this:
-![Manage Projects Page](/src/client/docs/students/reportempty.png)
+![Manage Projects Page](/assets/doc/reportempty.png)
 
 
 2. Copy your project report from Google Docs (or wherever you wrote it). There is no input prompt to paste into; just use your computer’s paste keybind (Command + V for Mac, Ctrl + V for Windows/ChromeBook), and your report will appear:
-![Manage Projects Page](/src/client/docs/students/reportfinish.png)
+![Manage Projects Page](/assets/doc/reportfinish.png)
 
 3. Then click the submit button. You can edit and resubmit your report as many times as you want using the same process.
 
