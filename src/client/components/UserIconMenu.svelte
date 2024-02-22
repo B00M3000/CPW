@@ -76,7 +76,7 @@
                     <button class="dropdown-menu-option" on:click={gotoManageAdvisees}>
                         <Icon src={People} size="1.25rem"/>
                         <div class="dropdown-menu-option-link-container">
-                            <a href="/manage-images">My Advisees</a>
+                            <a href="/manage-advisees">My Advisees</a>
                         </div>
                     </button>
                     {/if}
