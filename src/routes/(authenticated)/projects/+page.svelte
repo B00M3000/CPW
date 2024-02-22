@@ -80,7 +80,7 @@
             </button>
             {:else if $user.accountType == AccountType.Advisor}
             <button class="button bg-yellow-600 rounded-lg" on:click={async () => {
-                    await goto(`/manage-projects`);
+                    await goto(`/manage-advisees`);
                 }}>
                 View My Advisees    
             </button>
