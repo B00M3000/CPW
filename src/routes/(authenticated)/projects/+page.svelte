@@ -11,6 +11,8 @@
     import { getTagString, tags } from "@/lib/tags";
     import ProjectCard from "@/client/components/ProjectCard.svelte";
     import { page } from "$app/stores";
+    import { user } from "@/client/stores/user";
+    import { AccountType } from "@/lib/enums";
 
     export let data;
 
@@ -70,11 +72,19 @@
                 }}>
                 See Archived Projects
             </button>
+            {#if $user.accountType == AccountType.Student}
             <button class="button bg-orange-600 rounded-lg" on:click={async () => {
                     await goto(`/manage-projects`);
                 }}>
-                My Projects    
+                View My Projects    
             </button>
+            {:else if $user.accountType == AccountType.Advisor}
+            <button class="button bg-yellow-600 rounded-lg" on:click={async () => {
+                    await goto(`/manage-projects`);
+                }}>
+                View My Advisees    
+            </button>
+            {/if}
         </div>
 
 
