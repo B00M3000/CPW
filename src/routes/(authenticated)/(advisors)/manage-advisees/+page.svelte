@@ -16,8 +16,10 @@
         {#each students as student}
             <div id="student-card-container" class="notification">
                 <div class="advisee-info-container">
-                    <h3> {student.name}</h3>
-                    <h4> {student.email}</h4>
+                    {#if student.name}
+                        <h3>{student.name}</h3>
+                    {/if}
+                    <h4>{student.email}</h4>
                 </div>
                 <div class="advisee-info-container">
                     <h3> Pending Projects: {student.counter}</h3>
