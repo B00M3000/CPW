@@ -8,13 +8,15 @@
     import { goto } from "$app/navigation";
     export let data;
     $: ({ students } = data);
+
+    $: console.log(students);
 </script>
 
 <main>
-    <h1>Your Advisees: </h1>
+    <h1 class="text-4xl text-center mb-5 p-10 bg-slate-300 rounded-lg">Your Advisees</h1>
     <div id="advisee-container" >
         {#each students as student}
-            <div id="student-card-container" class="notification">
+            <div id="student-card-container" class="notification shadow-md">
                 <div class="advisee-info-container">
                     {#if student.name}
                         <h3>{student.name}</h3>
@@ -22,11 +24,12 @@
                     <h4>{student.email}</h4>
                 </div>
                 <div class="advisee-info-container">
-                    <h3> Pending Projects: {student.counter}</h3>
+                    <h3>Complete: {student.approvedCount}</h3>
+                    <h3>Pending: {student.pendingCount}</h3>
                 </div>
                 <button on:click={() => goto(`manage-advisees/${student._id}`)} class="advisee-button">
                     <span>View Advisee</span>
-                    {#if student.counter > 0}
+                    {#if student.pendingCount > 0}
                         <span class="button-badge">!</span>
                     {/if}
                  </button>
@@ -43,7 +46,6 @@
     }
     #student-card-container{
         padding: 20px;
-        border: 2px black solid;
         background-color: #F2F2F2;
         display: flex;
         justify-content: space-between;
@@ -85,10 +87,12 @@
         color: white;
         font-weight: bold;
         padding: 5px;
+        background-color: rgb(100, 100, 255);
     }
 
     .advisee-button:hover {
         cursor: pointer;
+        background-color: rgb(150, 150, 255);
     }
 
     .button-badge {

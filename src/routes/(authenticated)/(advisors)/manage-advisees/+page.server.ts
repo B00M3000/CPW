@@ -13,8 +13,9 @@ import { ProjectSchema } from '@/server/mongo/schemas/project.js';
 export async function load({ locals }) {
     const students = await Promise.all(locals.user!.adviseeIds.map(async adviseeId => {
         const student : User | null = await UserSchema.findOne({ schoolId: adviseeId})
-        const counter = await ProjectSchema.count({ studentId: student?._id, underReview: true })
-        return {  ...stringifyObjectId(await UserSchema.findOne({ schoolId: adviseeId }).lean()), counter };
+        const pendingCount = await ProjectSchema.count({ studentId: student?._id, underReview: true })
+        const approvedCount = await ProjectSchema.count({ studentId: student?._id, underReview: false })
+        return {  ...stringifyObjectId(await UserSchema.findOne({ schoolId: adviseeId }).lean()), pendingCount, approvedCount };
     })) 
 
 
