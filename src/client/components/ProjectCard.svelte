@@ -13,6 +13,9 @@
     
     export let project: Project;
 
+    export let displayLearnMore: boolean = true;
+    export let displayShortDesc: boolean = true;
+
     async function gotoProject() {
         await goto(`/projects/${project._id}`)
     }
@@ -34,13 +37,17 @@
         </div>
     </div>
 
+    {#if displayShortDesc}
     <span class="overflow-ellipsis overflow-hidden text-wrap whitespace-nowrap h-16">{project.shortDesc}</span>
+    {/if}
     
     <hr class="bg-black">
 
+    {#if displayLearnMore}
     <div class="flex justify-center mt-2">
-        <button class="rounded-md bg-blue-400 p-2 inline-flex" on:click={gotoProject}>Learn More</button>
+        <button class="rounded-md bg-blue-400 p-2 inline-flex" on:click={gotoProject}>View Project Page</button>
     </div>
+    {/if}
 </div>
 
 <style lang="scss">

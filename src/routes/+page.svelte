@@ -6,8 +6,8 @@
 
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import ProjectCard from "@/client/components/ProjectCard.svelte";
-  import { user } from "@/client/stores/user";
+//   import ProjectCard from "@/client/components/ProjectCard.svelte";
+//   import { user } from "@/client/stores/user";
 
   export let data;
 

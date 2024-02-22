@@ -12,8 +12,6 @@
     export let data;
 
     $: ({ projects, student } = data);
-    
-
 </script>
 
 <main>

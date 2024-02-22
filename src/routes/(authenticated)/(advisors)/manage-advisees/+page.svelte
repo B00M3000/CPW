@@ -20,6 +20,8 @@
                 <div class="advisee-info-container">
                     {#if student.name}
                         <h3>{student.name}</h3>
+                    {:else}
+                        <span>[has not logged in]</span>
                     {/if}
                     <h4>{student.email}</h4>
                 </div>

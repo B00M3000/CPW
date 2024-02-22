@@ -36,7 +36,7 @@
     <div class="card-container">
         {#each projectUnapproved as project}
             <div class="project-card">
-                <ProjectCard {project} />
+                <ProjectCard {project} displayLearnMore={false} />
                 <div class="button-container">
                     <button class="fullreport-button" on:click={() => gotoInspectProject(student._id, project._id)}>
                         Inspect Project
@@ -92,8 +92,6 @@
             flex-direction: row; 
             justify-content: space-between;
             align-items: center;
-            max-width: 40rem;
-            height: 20rem;
         }
 
         .button-container {
