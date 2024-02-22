@@ -32,7 +32,7 @@
 </script>
 
 <main>
-    <h1>Adivsee Projects</h1>
+    <h1 class="text-4xl text-center mb-5 p-10 bg-slate-300 rounded-lg">Adivsee Projects</h1>
     <div class="card-container">
         {#each projectUnapproved as project}
             <div class="project-card">
