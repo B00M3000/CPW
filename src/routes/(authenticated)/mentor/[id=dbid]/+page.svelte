@@ -5,47 +5,35 @@
 -->
 
 <script lang="ts">
-    import { goto } from "$app/navigation";
-    import ProjectCard from "@/client/components/ProjectCard.svelte";
-    import { user } from "@/client/stores/user";
-
     export let data;
 
-    $: ({ mentor, projects } = data);
+    $: ({ mentor } = data);
 </script>
 
-<main>
-    <h1 class="title"><strong>{mentor?.firstName} {mentor?.lastName}</strong></h1>
-    <p class="subtitle"><em>Please contact Ms. Moss for contact information.</em></p>
-    <h4> Click <a class="text-blue-500" href="{`/projects/?yearUpper=${new Date().getFullYear()}&yearLower=2019&mentorSearch=${mentor?.firstName}+${mentor?.lastName}`}">here</a> 
-        to search for projects this mentor has facillitated</h4>
+<main class="flex items-center justify-center text-center">
+    <div class="inline-flex flex-col p-6">
+        <h2 class="text-8xl text-gray-700 font-bold">{mentor?.name}</h2>
+        <p class="italic text-gray-400 mt-9 mb-2 text-xl"><em>Please contact Ms. Moss for mentor contact information.</em></p>
+        <p class="text-xl mb-5">Click <a class="text-blue-500" href="{`/projects/?yearUpper=${new Date().getFullYear()}&yearLower=2019&mentorSearch=${mentor?.name}`}">here</a> 
+            to search for projects this mentor has facillitated</p>
+        <div class="flex justify-center">
+            <button class="bg-blue-400 hover:bg-blue-300 text-center p-3 block rounded-lg text-xl text-gray-900" on:click={() => history.back()}>Go back</button>
+        </div>
+    </div>
 </main>
   
 <style>
-main {
-    text-align: center; 
-    padding: 2rem; 
-}
+    main {  
+        height: calc(100vh - var(--nav-bar-height));
+    }
 
-.title {
-    font-size: 4rem; 
-    color: #333; 
-}
+    a {
+        text-decoration: none;
+        border-bottom: 2px solid var(--color-primary); 
+        transition: border-bottom 0.2s ease; 
+    }
 
-.subtitle {
-    font-style: italic;
-    color: #777; 
-    margin-top: 1rem; 
-}
-
-a {
-    text-decoration: none;
-    border-bottom: 2px solid var(--color-primary); 
-    transition: border-bottom 0.2s ease; 
-}
-
-a:hover {
-    border-bottom: 2px solid;
-}
-
+    a:hover {
+        border-bottom: 2px solid;
+    }
 </style>
