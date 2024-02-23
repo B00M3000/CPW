@@ -19,7 +19,6 @@ export const load: PageServerLoad = async ({ params }) => {
     const inflatedProjects = await Promise.all(projects.map(injectMentor));
 
     return { projects: inflatedProjects, student };
-
 }
 
 async function injectMentor(project: any) {

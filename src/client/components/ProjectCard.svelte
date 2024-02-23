@@ -45,7 +45,7 @@
 
     {#if displayLearnMore}
     <div class="flex justify-center mt-2">
-        <button class="rounded-md bg-blue-400 p-2 inline-flex" on:click={gotoProject}>View Project Page</button>
+        <button class="rounded-md bg-blue-400 hover:bg-blue-300 p-2 inline-flex text-gray-900" on:click={gotoProject}>View Project Page</button>
     </div>
     {/if}
 </div>
