@@ -55,10 +55,8 @@
         <button class="unpublish-button" on:click={changePublish}>Publish Project</button>
     {/if}
     <p class="year"><strong>Year:</strong> {inflatedProject.year}</p>
-    <p class="mentor"><strong>Mentor:</strong> {inflatedProject.mentor.firstName} {inflatedProject.mentor.lastName}</p>
-    <p class="mentor"><strong>Mentor Info:</strong> {inflatedProject.mentor.email}, {inflatedProject.mentor.phoneNumber}</p>
-    <p class="student"><strong>Student:</strong> {inflatedProject.student.firstName} {inflatedProject.student.lastName}</p>
-    <p class="student"><strong>Student Email:</strong> {inflatedProject.student.email}</p>
+    <p class="mentor"><strong>Mentor:</strong> {inflatedProject.mentor.name}, {inflatedProject.mentor.email}, {inflatedProject.mentor.phoneNumber}</p>
+    <p class="student"><strong>Student:</strong> {inflatedProject.student.name}, {inflatedProject.student.email}</p>
     <p class="student"><strong>Short Description:</strong> {inflatedProject.shortDesc}</p>
     <p class="created-at"><strong>Created: {new Date(inflatedProject.createdAt).toLocaleString()}</strong></p>
     <p class="created-at"><strong>Last Modified: {new Date(inflatedProject.updatedAt).toLocaleString()}</strong></p>
