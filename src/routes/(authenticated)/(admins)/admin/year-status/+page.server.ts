@@ -15,12 +15,13 @@ export const load = async () => {
     const projects = await ProjectSchema.find({ year: CURRENT_YEAR }, 'studentId underReview title').lean();
 
     const missingStudents = allStudents.filter(student => !projects.some(project => project.studentId == student._id));
-    const inflatedUnapprovedProjects = await Promise.all(projects.filter(project => project.underReview)?.map(stringifyObjectId).map(injectStudent));
+    const inflatedUnapprovedProjects = await Promise.all(projects.filter(project => project.underReview)?.map(stringifyObjectId).map(injectStudentAndAdvisor));
 
    return { missingStudents, inflatedUnapprovedProjects };
 }
 
-async function injectStudent(project: any) {
-   project.student = stringifyObjectId(await UserSchema.findById(project.studentId, 'name graduationYear').lean());
+async function injectStudentAndAdvisor(project: any) {
+   project.student = stringifyObjectId(await UserSchema.findById(project.studentId, 'name email graduationYear schoolId picture').lean());
+   project.advisor = stringifyObjectId(await UserSchema.findOne({ adviseeIds: project.student.schoolId }, 'name email picture').lean());
    return project;
 }

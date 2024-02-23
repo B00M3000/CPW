@@ -36,12 +36,12 @@
     <div class="main-navigation">
         {#each navBarElements as element}
             {#if element.predicate == undefined || element.predicate()}
-                <div class="nav-element flex items-center p-2 rounded-lg mx-2 gap-2 {section == element.section ? " active" : ""}">
+                <a class="nav-element flex items-center p-2 rounded-lg mx-2 gap-2 {section == element.section ? " active" : ""}" href={element.link}>
                     {#if element.icon != undefined}
                         <Icon src={element.icon} size="1rem" color='white'/>
                     {/if}
-                    <a href={element.link}>{element.name}</a>
-                </div>
+                    <span>{element.name}</span>
+                </a>
             {/if}
         {/each}
     </div>

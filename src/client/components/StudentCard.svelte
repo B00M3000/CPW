@@ -17,7 +17,7 @@
 
 <button class="student-card" on:click={gotoStudent}>
     {#if student}
-        <img src={student.picture} alt={`image of ${student.firstName} ${student.lastName}`}>
+        <img src={student.picture} alt={`image of ${student.firstName} ${student.lastName}`} class="w-4 h-4 rounded-full">
         <span class="text">{student.firstName} {student.lastName}</span> 
     {:else}
         <span class="text">Student Not Found!</span>
@@ -25,12 +25,6 @@
 </button>
 
 <style lang="scss">
-    img {
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-    }   
-
     .student-card {
         cursor: pointer;
 
