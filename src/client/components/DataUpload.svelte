@@ -86,39 +86,44 @@
 </script>
 
 <div id="data-upload">
-    <h3>Upload <em>{dataUpload.name}</em> Data</h3>
+    <h3 class='mb-2'>Upload <em>{dataUpload.name}</em> Data</h3>
 
     <input type='file' multiple={false} accept="text/csv" bind:files={files}/>
 
     {#if file}
-    <div id="data-upload-result">
-        <table>
-            <tr>
-                {#each headings as heading}
-                <th class="{headingValidation(heading) ? "valid" : "invalid"}">
-                    <span>{heading}</span>
-                </th>
-                {/each}
-            </tr>
-            {#each entries as entry}
-            <tr>
-                {#each entry as part, headingIndex}
-                <td class="{partValidation(headings[headingIndex], part) ? "valid" : "invalid"}">
-                    <span>{part}</span>
-                </td>
-                {/each}
-            </tr>
-            {/each}
-        </table>
+    <div class="flex-col gap-6 m-6">
+        <h4 class="text-xl m-4">Review Data: </h4>
+        <div class="flex gap-4">
+            <div class="max-h-[30vh] overflow-y-auto">
+                <table>
+                    <tr>
+                        {#each headings as heading}
+                        <th class="{headingValidation(heading) ? "valid" : "invalid"}">
+                            <span>{heading}</span>
+                        </th>
+                        {/each}
+                    </tr>
+                    {#each entries as entry}
+                    <tr>
+                        {#each entry as part, headingIndex}
+                        <td class="{partValidation(headings[headingIndex], part) ? "valid" : "invalid"}">
+                            <span>{part}</span>
+                        </td>
+                        {/each}
+                    </tr>
+                    {/each}
+                </table>
+            </div>
 
-        {#if errors.length > 0}
-        <div id="errors">
-            <span>Errors: </span>
-            <ol>
-                {#each errors as error}<li>{error}</li>{/each}
-            </ol>
+            {#if errors.length > 0}
+                <div id="errors">
+                    <span>Errors: </span>
+                    <ol class="p-2">
+                        {#each errors as error}<li>{error}</li>{/each}
+                    </ol>
+                </div>
+            {/if}
         </div>
-        {/if}
     </div>
 
     {#if errors.length > 0}
@@ -158,19 +163,8 @@
         margin: 2rem;
     }
 
-    #data-upload-result {
-        display: flex;
-        flex-wrap: wrap;
-
-        justify-content: left;
-        
-        margin: 2rem;
-
-        gap: 2rem;
-    }
-
     #errors {
-        display: flex;
+        display: inline-flex;
         flex-direction: column;
         background: white;
 

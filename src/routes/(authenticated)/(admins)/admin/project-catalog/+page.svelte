@@ -19,101 +19,101 @@
 
 </script>
 
-<main class="flex">
-    <table class="m-16">
-        <h1 class="text-2xl m-4">Incomplete Projects</h1>
+<main class="flex flex-row justify-around mt-10">
+    <div class="inline-flex flex-col">
+        <h1 class="text-center text-2xl m-4">Unapproved Projects</h1>
+        <div class="max-h-[75vh] overflow-y-auto">
+            <table class="inline-table">
+                <tr>
+                    <th></th>
+                    <th>
+                        <span>Title</span>   
+                    </th>
+                    <th>
+                        <span>Student </span>
+                    </th>
+                </tr>
+            
+                {#each uncompletedProjects as project}
+                <tr on:click ={()  => goto(`project-catalog/${project._id}`)}>
+                    <td>
+                        <button class="rounded-md bg-slate-300 flex gap-2 items-center justify-center p-1 hover:bg-slate-400" on:click={() => window.open(`/admin/project-catalog/${project._id}`, "_blank")}>
+                            <Icon src={Open} size="1.5rem"/>
+                            <span>Open</span>
+                        </button>
+                    </td>
+                    <td>
+                        <p class="max-w-[24rem]">{project.title}</p>
+                    </td>
+                    <td>
+                        <span> <StudentCard student={project.student} /> </span>
+                    </td>
+                </tr>
+                {/each}
+            </table>
+        </div>
+    </div>
 
-        <tr>
-            <th></th>
-            <th>
-                <span>Title</span>   
-            </th>
-            <th>
-                <span>Student </span>
-            </th>
-        </tr>
-    
-        {#each uncompletedProjects as project}
-        <tr on:click ={()  => goto(`project-catalog/${project._id}`)}>
-            <td>
-                <button class="rounded-md bg-slate-300 flex gap-2 items-center justify-center p-1 hover:bg-slate-400" on:click={() => window.open(`/admin/project-catalog/${project._id}`, "_blank")}>
-                    <Icon src={Open} size="1.5rem"/>
-                    <span>Open</span>
-                </button>
-            </td>
-            <td>
-                <span>{project.title}</span>
-            </td>
-            <td>
-                <span> <StudentCard student={project.student} /> </span>
-            </td>
-        </tr>
-        {/each}
-    </table>
+    <div class="inline-flex flex-col">
+        <h1 class="text-center text-2xl m-4">Approved Projects</h1>
 
-
-    <table class="m-16 mt-0">
-        <h1 class="text-2xl m-4">Completed Projects</h1>
-        <tr>
-            <th></th>
-            <th>
-                <span>Title</span>   
-            </th>
-            <th>
-                <span>Student </span>
-            </th>
-        </tr>
-    
-        {#each completedProjects as project}
-        <tr on:click={()  => goto(`project-catalog/${project._id}`)}>
-            <td>
-                <button class="rounded-md bg-slate-300 flex gap-2 items-center justify-center p-1 hover:bg-slate-400" on:click={() => window.open(`/admin/project-catalog/${project._id}`, "_blank")}>
-                    <Icon src={Open} size="1.5rem"/>
-                    <span>Open</span>
-                </button>
-            </td>
-            <td>
-                <span>{project.title}</span>
-            </td>
-            <td>
-                <span> <StudentCard student={project.student} /> </span>
-            </td>
-        </tr>
-        {/each}
-    </table>
+        <div class="max-h-[75vh] overflow-y-auto">
+            <table class="inline-table">
+                <tr>
+                    <th></th>
+                    <th>
+                        <span>Title</span>   
+                    </th>
+                    <th>
+                        <span>Student </span>
+                    </th>
+                </tr>
+            
+                {#each completedProjects as project}
+                <tr on:click={()  => goto(`project-catalog/${project._id}`)}>
+                    <td>
+                        <button class="rounded-md bg-slate-300 flex gap-2 items-center justify-center p-1 hover:bg-slate-400" on:click={() => window.open(`/admin/project-catalog/${project._id}`, "_blank")}>
+                            <Icon src={Open} size="1.5rem"/>
+                            <span>Open</span>
+                        </button>
+                    </td>
+                    <td>
+                        <p class="max-w-[24rem]">{project.title}</p>
+                    </td>
+                    <td>
+                        <StudentCard student={project.student} />
+                    </td>
+                </tr>
+                {/each}
+            </table>
+        </div>
+    </div>
 </main>
 
 <style lang=scss>
-    main{
-        display: flex;
-        flex-direction: column;
-        table {
-            padding: 2rem;
-            gap: 2rem;
-
-            tr {
-                td {
-                    text-align: left;
-                    padding: 0.5rem 1rem;
-                }
-                &:nth-child(even) {
-                    background-color: #ddd;
-                }
-                
-                &:nth-child(odd) {
-                    background-color: #e9e9e9;
-                } 
-            }
-            tr:hover {
-                    background-color: rgb(163, 230, 185);
-                    cursor: pointer;
-            }
-
-            th{
+    table {
+        tr {
+            td {
                 text-align: left;
                 padding: 0.5rem 1rem;
-                background-color: rgb(163, 162, 162);
             }
-        }  
-    } 
+            &:nth-child(even) {
+                background-color: #ddd;
+            }
+            
+            &:nth-child(odd) {
+                background-color: #e9e9e9;
+            } 
+        }
+        tr:hover {
+                background-color: rgb(163, 230, 185);
+                cursor: pointer;
+        }
+
+        th {
+            text-align: left;
+            padding: 0.5rem 1rem;
+            background-color: rgb(163, 162, 162);
+        }
+    }  
 </style>
