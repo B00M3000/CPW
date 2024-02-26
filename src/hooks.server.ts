@@ -22,6 +22,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 			event.locals.user = {
 				id: user._id.toString(),
 				name: user.name,
+				firstName: user.firstName,
+				lastName: user.lastName,
 				email: user.email,
 				picture: user.picture,
 				sessionId: user.sessionId,

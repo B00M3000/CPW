@@ -7,7 +7,6 @@
 <script lang=ts>
     import ProjectCard from "@/client/components/ProjectCard.svelte";
 
-
     export let data;
 
     $: ({ projects, student } = data);
