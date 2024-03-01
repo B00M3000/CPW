@@ -34,17 +34,6 @@
             <a class="btn" href="/images">Browse Photos</a>
         </div>
     </div>
-    <!-- <section class="primary">
-        <p class="subtitle">Welcome to the Commonwealth School Project Week Collection</p>
-
-        <div class="proj-container">
-            <div id="projects" class="project-list">
-            {#each projects as project}
-                <ProjectCard {project} />
-            {/each}
-            </div>
-        </div>
-    </section> -->
 </main>
 
 
