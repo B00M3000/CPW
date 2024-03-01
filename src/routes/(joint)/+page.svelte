@@ -26,7 +26,7 @@
     <div class="flex flex-col items-center justify-center search-title text-white w-[calc(100vw - (100vw - 100%))]">
         <h1 class="text-5xl font-bold [text-shadow:_0_2px_4px_rgba(0,0,0,0.5)] mb-5">Commonwealth Project Week</h1>
         <form class="search-bar" on:submit={gotoSearch}>
-            <input type="text" class="search-input" placeholder="Search projects..." bind:value={search}>
+            <input type="text" class="search-input text-black" placeholder="Search projects..." bind:value={search}>
             <button class="search-button" type="submit">Search</button>
         </form>
         <div class="redirects">
