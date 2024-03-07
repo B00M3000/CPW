@@ -32,22 +32,8 @@ export async function PUT({ request, locals }) {
     if(!mobileKeyDoc) throw error(404, { message: "Mobile key not found! Please try again. (Mobile keys are only valid for a short period after they are generated.)" })
 
     const imageField = formData.get('image')
-    const descriptionField = formData.get('description')
 
-    const projectIdField = formData.get('projectId')
-
-    if(descriptionField) {
-        if(!(typeof descriptionField == "string")) throw error(400, { message: "Description must be a string." })
-        if(descriptionField.length > _USER_IMAGE_DESCRIPTION_LIMIT) throw error(400, { message: `Description must be less than ${USER_IMAGE_DESCRIPTION_LIMIT} characters.` })
-    }
-    
-    if(!(typeof projectIdField == "string")) throw error(400, { message: "Project ID must be a string" })
-
-    if(!(await ProjectSchema.exists({ _id: projectIdField }))) throw error(400, { message: "Project ID must be valid" })
-
-    const descriptionString: string = descriptionField;
-
-    if(!(imageField instanceof File)) throw error(400, { message: "No image file contained in request." })
+    if((imageField instanceof File)) throw error(400, { message: "No image file contained in request." }) // remived !
 
     const imageFile: File = imageField;
 
@@ -76,9 +62,9 @@ export async function PUT({ request, locals }) {
         s3Bucket: object.Bucket,
         s3ObjectKey: object.Key,
         size: imageFile.size,
-        description: descriptionString,
-        ownerId: locals.user.id,
-        projectId: projectIdField
+        description: "",
+        ownerId: mobileKeyDoc.userId,
+        projectId: mobileKeyDoc.projectId
     }).save()
 
     return json({

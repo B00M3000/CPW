@@ -98,7 +98,11 @@
         </div>  
 
         {#if projectId != "none"}
-        <input type="file" name="image" bind:files={fileList} on:change={updateUploaded} multiple={true} accept="image/png,image/jpeg,image/gif" />
+        <div class="flex gap-4 items-center">
+            <button class="p-4 rounded-xl bg-blue-500 hover:bg-blue-400 text-white" on:click={() => goto(`/mobile-upload?projectId=${projectId}`)}>Mobile Upload</button>
+            <span class="text-lg">OR</span>
+            <input type="file" name="image" bind:files={fileList} on:change={updateUploaded} multiple={true} accept="image/png,image/jpeg,image/gif" />
+        </div>
         {#if files.length > 0 && !uploadedAll}
         <button on:click={() => { uploadedAll = true; files.forEach((_, i) => upload(new SubmitEvent("button"), i))}} class="p-2 my-1 rounded-lg bg-cyan-400 hover:bg-cyan-500">Upload All!</button>
         {/if}
