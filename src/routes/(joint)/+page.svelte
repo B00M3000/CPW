@@ -26,7 +26,7 @@
     <div class="flex flex-col items-center justify-center search-title text-white w-[calc(100vw - (100vw - 100%))]">
         <h1 class="text-5xl font-bold [text-shadow:_0_2px_4px_rgba(0,0,0,0.5)] mb-5">Commonwealth Project Week</h1>
         <form class="search-bar" on:submit={gotoSearch}>
-            <input type="text" class="search-input" placeholder="Search projects..." bind:value={search}>
+            <input type="text" class="search-input text-black" placeholder="Search projects..." bind:value={search}>
             <button class="search-button" type="submit">Search</button>
         </form>
         <div class="redirects">
@@ -34,17 +34,6 @@
             <a class="btn" href="/images">Browse Photos</a>
         </div>
     </div>
-    <!-- <section class="primary">
-        <p class="subtitle">Welcome to the Commonwealth School Project Week Collection</p>
-
-        <div class="proj-container">
-            <div id="projects" class="project-list">
-            {#each projects as project}
-                <ProjectCard {project} />
-            {/each}
-            </div>
-        </div>
-    </section> -->
 </main>
 
 
