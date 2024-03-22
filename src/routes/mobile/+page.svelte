@@ -45,10 +45,14 @@
                 body: formData
             })
 
-            errorMessages.push((await response.json())?.message);
-
             if(response.ok) {
                 uploadsCompleted++;
+            } else {
+                try {
+                    errorMessages.push((await response.json())?.message);
+                } catch (error) {
+                    errorMessages.push(response.statusText);
+                }
             }
 
             return response.ok;
@@ -92,7 +96,6 @@
                     </div>
                 {:else if status == Status.Failed}
                     <span class="rounded-md bg-red-200 p-2 text-red-950">Upload Failed :(</span>
-                    <span class="rounded-md bg-red-200 p-2 text-red-950 my-3">{errorMessages.join('\n')}</span>
                     <span class="mt-2">Contact website management if it persists.</span>
                     {#if retryAttempts < 3}
                         <button class="bg-blue-600 p-2 rounded-xl hover:bg-slate-300 text-white text-center mt-2" type="submit" on:click={() => retryAttempts++}>
@@ -103,6 +106,9 @@
                     {/if}
                 {:else}
                     <span class="rounded-md bg-green-200 p-2 text-green-950">Uploaded {uploadsCompleted} of {fileList.length} images!</span>
+                {/if}
+                {#if errorMessages.length > 0}
+                    <span class="rounded-md bg-red-200 p-2 text-red-950 my-3">{errorMessages.join('\n')}</span>
                 {/if}
             {/if}
         </form>
