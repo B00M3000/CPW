@@ -20,7 +20,7 @@ const isValidImageType = /(^image)(\/)[a-zA-Z0-9_]*/ ///image\/(png|jpeg)/
 const _USER_IMAGE_SPACE_LIMIT = parseInt(USER_IMAGE_SPACE_LIMIT)
 const _USER_IMAGE_DESCRIPTION_LIMIT = parseInt(USER_IMAGE_DESCRIPTION_LIMIT)
 
-export async function PUT({ request, locals }) {
+export async function POST({ request }) {
     const formData = await request.formData();
 
     const mobileKey = formData.get('mobileKey')

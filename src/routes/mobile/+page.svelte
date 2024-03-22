@@ -41,7 +41,7 @@
 
             const response = await fetch('/mobile', {
                 credentials: 'include',
-                method: "PUT",
+                method: "POST",
                 body: formData
             })
 
