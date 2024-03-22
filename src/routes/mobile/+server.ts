@@ -33,7 +33,7 @@ export async function PUT({ request, locals }) {
 
     const imageField = formData.get('image')
 
-    if((imageField instanceof File)) throw error(400, { message: "No image file contained in request." }) // remived !
+    if(!(imageField instanceof File)) throw error(400, { message: "No image file contained in request." }) 
 
     const imageFile: File = imageField;
 
