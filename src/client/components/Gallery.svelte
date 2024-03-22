@@ -46,7 +46,7 @@
                 <LazyImage src="/images/{image._id}" alt={image.description || ""} />
             </div>
             <div class="image-popup">
-                {#if image.description}<span>Description: {image.description}</span>{/if}
+                {#if image.description}<span><strong>Description:</strong> {image.description}</span>{/if}
                 <span><strong>Project:</strong> {image.project?.title}</span>
                 <button on:click={() => toggleOverlay(i, true)}>View Enlarged</button>
                 {#if !projectPage}
@@ -104,9 +104,9 @@
 
     #gallery {
         display: flex;
-        justify-content: center;
+        // justify-content: center;
         flex-direction: column;
-        justify-content: center;
+        // justify-content: center;
         align-items: center;
 
         width: 100%;
