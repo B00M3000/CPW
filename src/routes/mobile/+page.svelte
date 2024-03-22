@@ -21,10 +21,16 @@
     let status: Status = Status.Picking;
     let successfulUploads = 0;
 
-    let errorMessage: string = "";
+    let errorMessages: string[] = [];
+
+    let uploadsCompleted = 0;
 
     async function upload() {
         if(status == Status.Uploading) return;
+
+        uploadsCompleted = 0;
+
+        errorMessages = [];
 
         status = Status.Uploading;
 
@@ -39,13 +45,16 @@
                 body: formData
             })
 
-            errorMessage = (await response.json())?.message;
+            errorMessages.push((await response.json())?.message);
+
+            if(response.ok) {
+                uploadsCompleted++;
+            }
 
             return response.ok;
         }))
             .then((results) => {
-                successfulUploads = results.reduce((acc, r) => acc + (r ? 1 : 0), 0)
-                if(successfulUploads > 0) {
+                if(uploadsCompleted > 0) {
                     status = Status.Uploaded;
                 } else {
                     status = Status.Failed;
@@ -77,9 +86,13 @@
                         <div class='loader' />
                         <span>Uploading, please wait...</span>
                     </div>
+                    <div class="flex justify-center gap-3 items-center mt-2">
+                        <span>Completed {uploadsCompleted} of {fileList.length}</span>
+                        <progress class='w-20' value={uploadsCompleted/fileList.length} max=1 />
+                    </div>
                 {:else if status == Status.Failed}
                     <span class="rounded-md bg-red-200 p-2 text-red-950">Upload Failed :(</span>
-                    <span class="rounded-md bg-red-200 p-2 text-red-950 my-3">{errorMessage}</span>
+                    <span class="rounded-md bg-red-200 p-2 text-red-950 my-3">{errorMessages.join('\n')}</span>
                     <span class="mt-2">Contact website management if it persists.</span>
                     {#if retryAttempts < 3}
                         <button class="bg-blue-600 p-2 rounded-xl hover:bg-slate-300 text-white text-center mt-2" type="submit" on:click={() => retryAttempts++}>
@@ -89,7 +102,7 @@
                         <span>Try uploading again later...</span>
                     {/if}
                 {:else}
-                    <span class="rounded-md bg-green-200 p-2 text-green-950">Uploaded {successfulUploads} of {fileList.length} images!</span>
+                    <span class="rounded-md bg-green-200 p-2 text-green-950">Uploaded {uploadsCompleted} of {fileList.length} images!</span>
                 {/if}
             {/if}
         </form>
