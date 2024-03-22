@@ -13,6 +13,7 @@
     import { page } from "$app/stores";
     import { user } from "@/client/stores/user";
     import { AccountType } from "@/lib/enums";
+  import { onMount } from "svelte";
 
     export let data;
 
@@ -24,6 +25,8 @@
     let mentorSearch: string;
     let studentSearch: string;
     let selected: string[];
+
+    $: theSearch = $page.url.searchParams.get("query") || "";
 
     function syncFields(searchParams?: URLSearchParams){
         query = searchParams?.get("query") || "";
@@ -48,16 +51,29 @@
         if(studentSearch) searchParams.set("studentSearch", studentSearch);
         if(query) searchParams.set("query", query)
 
+        spinnerActive = true;
+
         await goto(`/projects?${searchParams}`, { replaceState: true });
+
+        spinnerActive = false;
     }
+
+    let spinnerActive = false;
 </script>
 
 
-<svelte:window on:load="{()=>syncFields()}"/>
+<svelte:window on:load="{()=>syncFields()}" on:keydown={(e) => e.key == "Enter" ? search(e) : null }/>
+
+{#if spinnerActive}
+<div class="absolute z-[50] w-[100vw] h-[100vh] bg-opacity-45 bg-white flex items-center justify-center">
+    <div class="lds-dual-ring"></div>   
+</div>
+{/if}
+
 <main>
-    
     <div class="head">
         <div class="search">
+            <!-- svelte-ignore a11y-autofocus -->
             <input
                 placeholder="Search..."
                 size="90"
@@ -65,6 +81,7 @@
                 class="search-box"
                 bind:value={query}
                 type="search"
+                autofocus
             />
             <button class="button bg-sky-600" on:click={search}>Search</button>
             <button class="button button-archive mr-4" on:click={async () => {
@@ -86,10 +103,7 @@
             </button>
             {/if}
         </div>
-
-
     </div>
-
 
     <div class="leftright">
         <div class="sidebar">
@@ -130,8 +144,8 @@
         </div>
 
         <div class="results">
-            {#if projects.length === 0 && query.length > 0}
-                <h1 class="no-results"> No results for {`${ query.length < 20 ? query : query.slice(0, 17) + "..."}`} were found.</h1>
+            {#if projects.length === 0}
+                <h1 class="no-results"> No results for {`${ theSearch.length < 20 ? theSearch : theSearch.slice(0, 17) + "..."}`} were found.</h1>
             {:else}
                 {#each projects as project}
                     <ProjectCard {project} />
@@ -145,6 +159,9 @@
 
 
 <style lang="scss">
+    :root {
+        overflow-y: hidden;
+    }
     .head {
         display: flex;
         flex-direction: space-between;
@@ -311,5 +328,29 @@
         }
 
     }
- 
+
+    .lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 160px;
+  height: 160px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 20px solid #aaa;
+  border-color: #aaa transparent #aaa transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 </style>

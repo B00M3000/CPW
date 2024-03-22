@@ -64,7 +64,7 @@
         padding: 0rem 1rem;
         color: #fff;
         height: var(--nav-bar-height);
-        z-index: 1; 
+        z-index: 100; 
     }
 
     .main-navigation {
