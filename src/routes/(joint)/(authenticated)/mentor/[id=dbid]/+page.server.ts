@@ -11,7 +11,6 @@ import { buildRegex, stringifyObjectId } from '@/lib/utils';
 import { ProjectSchema } from '@/server/mongo/schemas/project.js';
 
 export async function load({ params, locals }) {
-    const mentor = stringifyObjectId(await MentorSchema.findById(params.id).lean());
-    const projects = (await ProjectSchema.find({ mentorId: mentor?._id, underReview: false }).lean()).map(stringifyObjectId)
-    return { mentor, projects }
+    const mentor = stringifyObjectId(await MentorSchema.findById(params.id, 'name').lean());
+    return { mentor }
 };

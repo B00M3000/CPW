@@ -5,9 +5,7 @@
 -->
 
 <script lang=ts>
-    import Page from "../../projects/+page.svelte";
     import ProjectCard from "@/client/components/ProjectCard.svelte";
-
 
     export let data;
 
@@ -15,16 +13,18 @@
 </script>
 
 <main>
-    <div class="profile">
+    <div class="profile my-10">
         <div class="profile-picture">
             <img src={student.picture} alt="pfp">
         </div>
         <div class="student-info">
-            <h1 class="title">{student.name}</h1>
-            <h1 class="title">{student.email}</h1>
+            <h1 class="title text-xl">{student.name}</h1>
+            <h1 class="title text-xl">{student.email}</h1>
         </div>
     </div>
-    <hr>
+    
+    <h1 class='text-center text-2xl'>Projects Completed:</h1>
+
     <div class="projects">
         {#each projects as project}
             <ProjectCard {project} />

@@ -39,9 +39,10 @@
         await goto(`mentor-search?${searchParams}`, { replaceState: true });
     }
 </script>
+
 <svelte:window on:load="{()=> syncFields()}"/>
 
-<main>
+<main class="flex-col justify-center items-center bg-gray-400">
     <div class="searching">
         <input
             placeholder="Search Mentor..."
@@ -70,49 +71,54 @@
         <button class="button" on:click={search}>Search</button>
         <button class="button" on:click={clear}>Clear</button>
     </div>
-    <div class="mentor-container">
-        <h1> Mentors: </h1>
-        <table>
-            
-                <th>
-                    <span>Name</span>   
-                </th>
-                <th>
-                    <span>Organization </span>
-                </th>
-                <th>
-                    <span>Email</span>
-                </th>
-                <th>
-                    <span>Phone</span>
-                </th>
-        
-            {#each mentors as mentor}
-            <tr on:click ={()  => goto(`mentor-search/${mentor._id}`)}>
-                <td>
-                    <span> {mentor.name} </span>
-                </td>
-                <td>
-                    <span> {mentor.organization} </span>
-                </td>
-                <td>
-                    <span> {mentor.email} </span>
-                </td>
-                <td>
-                    <span> {mentor.phoneNumber} </span>
-                </td>
-            </tr>
-            {/each}
-        </table>
+    <div class="flex justify-center items-center">
+        <div class="mentor-container m-3 overflow-y-auto max-h-[75vh] shadow-md">
+            <table>
+                <tr>
+                    <th>
+                        <span>Name</span>   
+                    </th>
+                    <th>
+                        <span>Organization </span>
+                    </th>
+                    <th>
+                        <span>Email</span>
+                    </th>
+                    <th>
+                        <span>Phone</span>
+                    </th>
+                </tr>
+                {#each mentors as mentor}
+                <tr on:click ={()  => goto(`mentor-search/${mentor._id}`)}>
+                    <td>
+                        <span> {mentor.name} </span>
+                    </td>
+                    <td>
+                        <span> {mentor.organization} </span>
+                    </td>
+                    <td>
+                        <span> {mentor.email} </span>
+                    </td>
+                    <td>
+                        <span> {mentor.phoneNumber} </span>
+                    </td>
+                </tr>
+                {/each}
+            </table>
+        </div>
     </div>
 </main>
 
 <style lang=scss>
+    main {
+        height: calc(100vh - var(--nav-bar-height));
+    }
+
     .searching{
-        display: flex;
+        display: inline-flex;
         justify-content: center;
-        padding: 1.5rem 0rem;
-        width: calc(100vw - (100vw - 100%));
+        width: 100%;
+        padding: 2rem ;
         background-color: rgb(196, 186, 186);
         
         .search-box {
@@ -141,8 +147,9 @@
     }
 
     .mentor-container {
-        display: flex;
+        display: inline-flex;
         flex-direction: column;
+
         table {
             padding: 2rem;
             background-color: #fff;

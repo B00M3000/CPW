@@ -5,7 +5,7 @@
 -->
 
 <script lang="ts">
-    import GoogleSIM from "../../client/components/GoogleSIM.svelte";
+    import GoogleSIM from "@/client/components/GoogleSIM.svelte";
 </script>
 
 <main>
