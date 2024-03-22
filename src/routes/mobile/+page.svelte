@@ -27,11 +27,11 @@
 
     async function upload() {
         if(status == Status.Uploading) return;
-
+      
         uploadsCompleted = 0;
 
         errorMessages = [];
-
+      
         status = Status.Uploading;
 
         Promise.all(Array.from(fileList).map(async (file) => {
