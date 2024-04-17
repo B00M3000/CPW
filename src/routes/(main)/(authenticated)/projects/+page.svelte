@@ -159,9 +159,6 @@
 
 
 <style lang="scss">
-    :root {
-        overflow-y: hidden;
-    }
     .head {
         display: flex;
         flex-direction: space-between;

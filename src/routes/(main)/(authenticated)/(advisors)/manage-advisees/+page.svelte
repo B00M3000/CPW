@@ -14,7 +14,7 @@
 
 <main>
     <h1 class="text-4xl text-center mb-5 p-10 bg-slate-300 rounded-lg">Your Advisees</h1>
-    <div id="advisee-container" >
+    <div id="advisee-container" class="overflow-y-auto">
         {#each students as student}
             <div id="student-card-container" class="notification shadow-md">
                 <div class="advisee-info-container">
