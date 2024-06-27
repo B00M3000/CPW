@@ -15,7 +15,7 @@
         const params = new URLSearchParams({
             client_id: PUBLIC_GOOGLE_CLIENT_ID,
             scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
-            redirect_uri: `${PUBLIC_ORIGIN}/login/redirect`,
+            redirect_uri: new URL(`/login/redirect`, PUBLIC_ORIGIN).toString(),
             response_type: 'code',
             // prompt: 'none',
         });

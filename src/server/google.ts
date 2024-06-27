@@ -13,7 +13,7 @@ export async function get_tokens(code: string) {
       'client_id': PUBLIC_GOOGLE_CLIENT_ID!,
       'client_secret': GOOGLE_CLIENT_SECRET!,
       'grant_type': 'authorization_code',
-      'redirect_uri': `${PUBLIC_ORIGIN}/login/redirect`,
+      'redirect_uri': new URL(`/login/redirect`, PUBLIC_ORIGIN).toString(),
       'code': code
     });
   
