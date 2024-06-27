@@ -16,7 +16,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const sessionId = event.cookies.get('session_id');
 
 	if(sessionId) {
-		const user = await UserSchema.findOne({ sessionId });
+		const user = await UserSchema.findOneAndUpdate(
+			{ sessionId },
+			{ lastVisit: new Date() }
+		);
 
 		if(user) {
 			event.locals.user = {
