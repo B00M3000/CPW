@@ -50,7 +50,7 @@
         {#if $user}
             <UserIconMenu />
         {:else}
-            <a class="login-button" href="/login">Log In</a>
+            <a class="p-2 bg-rose-600 shadow-xl hover:shadow-sm hover:bg-rose-700 rounded-xl text-xl" href="/login">Login</a>
         {/if}
         <Credits />
     </div>
