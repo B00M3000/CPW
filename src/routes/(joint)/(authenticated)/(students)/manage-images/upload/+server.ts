@@ -7,6 +7,8 @@
 import { uploadObject } from '@/server/aws';
 import { error, json } from '@sveltejs/kit';
 
+import type { PutObjectCommandOutput } from '@aws-sdk/client-s3';
+
 import { AWS_S3_IMAGES_BUCKET, USER_IMAGE_SPACE_LIMIT, USER_IMAGE_DESCRIPTION_LIMIT } from '$env/static/private';
 
 import { ImageSchema } from '@/server/mongo/schemas/image';
@@ -66,12 +68,15 @@ export async function PUT({ request, locals }) {
     //     if(compressed.byteLength < data.byteLength) data = compressed
     // }
 
-    const object = await uploadObject(AWS_S3_IMAGES_BUCKET, `${new Date().getTime()}-${Math.floor(Math.random() * 1000)}.${imageFile.type.split('/')[1]}`, imageBuffer)
+    const key: string = new Date().getTime() + '-' + Math.floor(Math.random() * 1000) + '.' + imageFile.type.split('/')[1];
+
+    const response: PutObjectCommandOutput = await uploadObject(AWS_S3_IMAGES_BUCKET, key, imageBuffer);
+    // maybe do something with the response idk
 
     await new ImageSchema({
         type: imageFile.type,
-        s3Bucket: object.Bucket,
-        s3ObjectKey: object.Key,
+        s3Bucket: AWS_S3_IMAGES_BUCKET,
+        s3ObjectKey: key,
         size: imageFile.size,
         description: descriptionString,
         ownerId: locals.user.id,

@@ -54,10 +54,11 @@
         formData.set('projectId', projectId);
 
         const response = await fetch('/manage-images/upload', {
-            credentials: 'include',
             method: "PUT",
             body: formData
         })
+
+        console.log(response);
         
         if(response.ok) {
             statuses[index] = Status.Uploaded;
