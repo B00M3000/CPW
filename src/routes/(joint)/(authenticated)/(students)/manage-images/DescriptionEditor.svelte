@@ -9,7 +9,7 @@
     let saved = false;
 
     async function updateDescription() { 
-        const response = await fetch(`/manage-images2/${$imageId}/description`, {
+        const response = await fetch(`/manage-images/${$imageId}/description`, {
             method: "POST",
             body: description
         })
