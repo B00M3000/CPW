@@ -11,6 +11,7 @@
     import Progress from "./Progress.svelte";
     import DescriptionEditor from "./DescriptionEditor.svelte";
     import { goto } from "$app/navigation";
+    import Trash from "@/client/icons/Trash";
 
     interface UploadedImageData {
         _id: string;
@@ -265,7 +266,10 @@
                         <td>
                             <div class="p-4 flex justify-center items-center">
                                 {#if image.status == UploadedImageStatus.Unchanged}
-                                <button class="bg-red-500 hover:bg-red-600 py-2 px-4 text-red-50 rounded-lg" on:click={() => deleteImage(image._id)}>Delete</button>
+                                <button class="bg-red-500 hover:bg-red-600 py-2 px-4 text-red-50 rounded-lg flex items-center gap-2" on:click={() => deleteImage(image._id)}>
+                                    <Icon src={Trash} size="1rem" color="white" />
+                                    <span class="pt-[2px]">Delete</span>
+                                </button>
                                 {:else if image.status == UploadedImageStatus.Deleting}
                                 <img src='/assets/loading.gif' class="w-4 h-4">
                                 {:else}
