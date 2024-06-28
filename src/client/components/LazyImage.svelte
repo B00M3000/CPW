@@ -22,6 +22,9 @@
     let loaded = false;
     let visible = false;
 
+    export let className: string = "";
+    export let loadingClassname: string = "w-12 h-12";
+
     $: {
       // mark the image as unloaded if the src changes
       loaded = Boolean(src && false);
@@ -63,9 +66,13 @@
 </script>
 
 {#if browser}
-<img {alt} bind:this={image} src={visible ? src : undefined} class:loaded />
+{#if visible}
+<img {alt} class={className} bind:this={image} {src} class:loaded />
 {:else}
-<img {alt} {src} loading="lazy" />
+<img {alt} class={loadingClassname} bind:this={image} src='/assets/loading.gif' class:loaded />
+{/if}
+{:else}
+<img {alt} class={className} {src} loading="lazy" />
 {/if}
 
 <style>
