@@ -3,6 +3,9 @@
     import { page } from '$app/stores';
     import qrcode from 'qrcode';
     import { PUBLIC_ORIGIN } from '$env/static/public';
+    import Icon from './Icon.svelte';
+    import CircleCheck from '@/client/icons/CircleCheck';
+    import Copy from '@/client/icons/Copy';
 
     export let projectId: string;
 
@@ -14,6 +17,13 @@
     const mobileKeyPromise: Promise<string> = new Promise(async (resolve) => resolve(await generateMobileKey()))
     const urlPromise: Promise<string> = new Promise(async (resolve) => resolve(new URL(`/mobile?mobileKey=${await mobileKeyPromise}`, PUBLIC_ORIGIN).toString()))
     const qrcodePromise: Promise<string> = new Promise(async (resolve) => resolve(await qrcode.toDataURL(await urlPromise)))
+
+    let copied = false;
+
+    function copyURL(url: string) {
+        copy(url)
+        copied = true;
+    }
 </script>
   
 <main class="flex items-center justify-center">
@@ -21,11 +31,15 @@
         <h1 class="text-4xl">Mobile Key</h1>
         <div class="flex gap-2 justify-center items-center">
             {#await urlPromise}
-            <span class="p-2 bg-white rounded-xl">Generating URL...</span>
-            <button class="bg-blue-500 hover:bg-blue-400 p-3 rounded-xl text-white">Copy</button>
+            <span class="p-2 bg-white rounded-xl text-lg">Generating URL...</span>
+            <button class="bg-gray-500 hover:bg-gray-600 p-3 rounded-xl text-white">
+                <Icon src={Copy} size="2rem"/>
+            </button>
             {:then url}
-            <span class="p-2 bg-white rounded-xl">{url}</span>
-            <button on:click={() => copy(url)} class="bg-blue-500 hover:bg-blue-400 p-3 rounded-xl text-white">Copy</button>
+            <span class="p-2 bg-white rounded-xl text-lg">{url}</span>
+            <button on:click={() => copyURL(url)} class="bg-gray-500 hover:bg-gray-600 p-3 rounded-xl text-white">
+                <Icon src={copied ? CircleCheck : Copy} color={copied ? "lightgreen" : "white"} size="2rem"/>
+            </button>
             {/await}
         </div>
 
