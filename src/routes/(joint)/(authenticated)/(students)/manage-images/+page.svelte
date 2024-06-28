@@ -77,7 +77,7 @@
         formData.append('projectId', projectId);
 
         const response = await axios({
-            url: '/manage-images2/upload',
+            url: '/manage-images/upload',
             method: "put",
             headers: {
                 'Content-Type': 'multipart/form-data'
