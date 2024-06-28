@@ -15,6 +15,7 @@
 
     $: {
         attributes = {};
+
         if (color) {
             if (src?.attributes?.stroke !== "none") {
                 attributes.stroke = color;
