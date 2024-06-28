@@ -4,20 +4,25 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
-import mongoose from 'mongoose';
+import mongoose, { Mongoose } from 'mongoose';
 
 import { MONGO_URI } from '$env/static/private';
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+let cached: Mongoose = global.mongoose || { conn: null, promise: null };
+
 export default async function() {
-  // if (mongoose.connections.length > 0) {
-  //   await mongoose.disconnect();
-  // }
-  // return await mongoose.connect(MONGO_URI);
-  // if (!mongoose.connection) {
-  //   return await mongoose.connect(MONGO_URI);
-  // } else {
-  //   return;
-  // }
-  await mongoose.connect(MONGO_URI);
+  if (cached.conn) {
+    console.log("Cached mongodb is called!");
+    return cached.conn;
+  }
+
+  if (!cached.promise) {
+    mongoose.set("strictQuery", true);
+    cached.promise = await mongoose.connect(MONGO_URI);
+    console.log("connected to mongoDB!");
+  }
+
+  cached.conn = await cached.promise;
+  return cached.conn;
 }
+
