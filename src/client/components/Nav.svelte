@@ -50,7 +50,7 @@
         {#if $user}
             <UserIconMenu />
         {:else}
-            <a class="p-2 bg-rose-600 shadow-xl hover:shadow-sm hover:bg-rose-700 rounded-xl text-xl" href="/login">Login</a>
+            <a class="p-2 bg-rose-600 shadow-xl hover:shadow-sm hover:bg-rose-700 rounded-xl text-xl animate-red-glowing" href="/login">Login</a>
         {/if}
         <Credits />
     </div>
@@ -85,5 +85,15 @@
 
     .nav-element:hover, .active {
         background-color: darkred;
+    }
+
+    .animate-red-glowing {
+        animation: glowing 1500ms infinite;
+    }
+
+    @keyframes glowing {
+        0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+        50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
+        100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
     }
 </style>
