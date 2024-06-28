@@ -4,26 +4,13 @@ import { error } from '@sveltejs/kit';
 
 import { nanoid } from 'nanoid';
 
-export async function load({ params, locals, url }) {
+export async function GET({ locals, url }) {
     const projectId = url.searchParams.get('projectId');
-
-    if(!projectId) {
-        return error(400, "No project ID provided in query.")
-    }
-
+    if(!projectId) throw error(400, "No project ID provided in query.")
     const project = await ProjectSchema.findById(projectId);
-
-    if(!project) {
-        return error(404, "Project not found.")
-    }
-
-    if(locals?.user?.id != project.studentId) {
-        return error(403, "Please do not mess with other peoples projects.")
-    }
-
+    if(!project) throw error(404, "Project not found.")
+    if(locals?.user?.id != project.studentId) throw error(403, "Please do not mess with other peoples project images.")
     let mobileKey: string = nanoid();
-
     await new MobileKeySchema({ projectId, userId: locals?.user?.id, mobileKey }).save()
-
-    return { mobileKey }
-};
+    return new Response(JSON.stringify({ mobileKey }), { status: 200 });
+}

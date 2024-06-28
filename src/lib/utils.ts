@@ -16,6 +16,10 @@ export function stringifyObjectId(document: Object | null | undefined) {
     return document
 }
 
+export function sleep(time: number) {
+    return new Promise((resolve) => setTimeout(resolve, time))
+}
+
 //Given a number of bytes, return a string
 export function bytesToString(bytes: number){
     if(bytes < 1000) return `${bytes} B`;

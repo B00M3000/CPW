@@ -3,10 +3,11 @@
 
     import { get, type Writable, writable } from "svelte/store";
 
+    import MobileUpload from "@/client/components/MobileUpload.svelte";
     import LazyImage from "@/client/components/LazyImage.svelte";
     import Icon from "@/client/components/Icon.svelte";
     import CloudUpload from "@/client/icons/CloudUpload";
-    import { bytesToString } from "@/lib/utils";
+    import { bytesToString, sleep } from "@/lib/utils";
     import Progress from "./Progress.svelte";
     import DescriptionEditor from "./DescriptionEditor.svelte";
     import { goto } from "$app/navigation";
@@ -54,7 +55,9 @@
 
         uploadedImages[imageIndex].status = UploadedImageStatus.Deleting
 
-        await fetch(`/manage-images/${id}`, { method: "DELETE" })
+        await fetch(`/manage-images/${id}`, { method: "DELETE" });
+
+        await sleep(200);
 
         uploadedImages[imageIndex].status = UploadedImageStatus.Deleted
     }
@@ -124,7 +127,19 @@
     }
 
     let fileInput: HTMLInputElement;
+
+    let mobileKeyOverlay = false;
+
+    function closeOverlay(event?: PointerEvent) {
+        if(event?.target?.nodeName == "DIV") mobileKeyOverlay = false
+    }
 </script>
+
+{#if mobileKeyOverlay}
+<div class="overlay" on:click={closeOverlay}>
+    <MobileUpload {projectId}/>
+</div>
+{/if}
 
 <input type="file" class="hidden" bind:this={fileInput} on:input={handleFileInput} accept="image/png,image/jpeg,image/gif" multiple />
 <main class="flex justify-center">
@@ -158,7 +173,7 @@
 
         {#if /^[0-9A-Fa-f]{24}$/.test(projectId)}
         <div class="flex items-center mx-2">
-            <button class="p-4 rounded-xl bg-blue-500 hover:bg-blue-400 text-white" on:click={() => goto(`/mobile-upload?projectId=${projectId}`)}>Mobile Upload</button>
+            <button class="p-4 rounded-xl bg-blue-500 hover:bg-blue-400 text-white" on:click={() => mobileKeyOverlay = true}>Mobile Upload</button>
             <span class="p-7">OR</span>
             <!-- svelte-ignore a11y-no-static-element-interactions -->
             <button class="border-4 flex-grow border-slate-300 bg-slate-200 rounded-xl flex-col h-36 flex justify-center items-center" on:click={() => fileInput.click()} on:dragover|preventDefault on:drop|preventDefault={handleFileDrop} aria-dropeffect="execute">
@@ -173,7 +188,10 @@
 
         {#if imageUploadQueue.length > 0}
         <div class="flex flex-col border-[3px] rounded-xl">
-            <span>*Please add descriptions to your images after uploading them on the text fields to the right.</span>
+            <div class="p-6">
+                <h1 class="font-bold text-2xl">Uploads in progress</h1>
+                <span>*Please add descriptions to your images after uploading them on the text fields to the right.</span>
+            </div>
             <div class="flex flex-col">
                 {#each imageUploadQueue as item}
                 <div class="flex justify-center border-y-[3px]">
@@ -248,6 +266,8 @@
                             <div class="p-4 flex justify-center items-center">
                                 {#if image.status == UploadedImageStatus.Unchanged}
                                 <button class="bg-red-500 hover:bg-red-600 py-2 px-4 text-red-50 rounded-lg" on:click={() => deleteImage(image._id)}>Delete</button>
+                                {:else if image.status == UploadedImageStatus.Deleting}
+                                <img src='/assets/loading.gif' class="w-4 h-4">
                                 {:else}
                                 <span>Deleted</span>
                                 {/if}
@@ -260,3 +280,21 @@
         </div>
     </div>
 </main>
+
+<style>
+    .overlay {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+
+        left: 0;
+        top: 0;
+        z-index: 9999;
+        
+        width: 100vw;
+        height: 100vh;
+
+        background: rgba(1, 1, 1, 0.2);
+    }
+</style>
