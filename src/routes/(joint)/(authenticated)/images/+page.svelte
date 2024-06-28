@@ -14,10 +14,6 @@
 
     $: ({ images } = data);
 
-    async function gotoImageUpload() {
-        await goto("/manage-images/upload");
-    }
-
     async function gotoManageImages() {
         await goto("/manage-images");
     }
@@ -26,7 +22,7 @@
 <main class="h-full">
     {#if $user.accountType == AccountType.Student}
     <div id="upload-images-button-container">
-        <button on:click={gotoImageUpload}>Upload Images</button>
+        <button on:click={gotoManageImages}>Upload Images</button>
         <button on:click={gotoManageImages}>Manage Your Images</button>
     </div>
     {/if}

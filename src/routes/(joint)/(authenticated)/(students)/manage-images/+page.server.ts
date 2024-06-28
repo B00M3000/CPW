@@ -8,9 +8,11 @@ import { stringifyObjectId } from "@/lib/utils.js";
 import { ImageSchema } from "@/server/mongo/schemas/image";
 import { ProjectSchema } from "@/server/mongo/schemas/project";
 
-export async function load({ locals }) {
-    const images = await Promise.all((await ImageSchema.find({ ownerId: locals.user.id }, 'size description projectId').lean())?.map(stringifyObjectId).map(injectProjects));
-    return { images }
+export async function load({ locals, depends }) {
+    const images = await Promise.all((await (await ImageSchema.find({ ownerId: locals.user.id }, 'size description projectId createdAt').sort({ createdAt: -1 }).lean())?.map(stringifyObjectId).map(injectProjects)));
+    const projects = (await ProjectSchema.find({ studentId: locals.user?.id }, 'title').lean())?.map(stringifyObjectId);
+    
+    return { images, projects }
 }
 
 async function injectProjects(image: any) {

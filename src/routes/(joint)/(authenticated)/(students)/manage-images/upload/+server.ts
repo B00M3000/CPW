@@ -73,7 +73,7 @@ export async function PUT({ request, locals }) {
     const response: PutObjectCommandOutput = await uploadObject(AWS_S3_IMAGES_BUCKET, key, imageBuffer);
     // maybe do something with the response idk
 
-    await new ImageSchema({
+    const imageSchem = await new ImageSchema({
         type: imageFile.type,
         s3Bucket: AWS_S3_IMAGES_BUCKET,
         s3ObjectKey: key,
@@ -84,6 +84,7 @@ export async function PUT({ request, locals }) {
     }).save()
 
     return json({
-        message: "Image was successfully uploaded to project!"
+        message: "Image was successfully uploaded to project!",
+        imageId: imageSchem._id
     }, { status: 200 })
 }

@@ -9,14 +9,14 @@ import { ImageSchema } from "@/server/mongo/schemas/image";
 import { error, json } from "@sveltejs/kit";
 
 
-export async function DELETE({ locals, params: { imageId } }) {
+export async function POST({ locals, params: { imageId }, request}) {
     const image = await ImageSchema.findById(imageId); 
     if(!image) throw error(404, { message: `Could not find image with id ${imageId}` });
     if(image.ownerId != locals.user.id) throw error(403, { message: `You do not own this image.` });
-        
-    await deleteObject(image.s3Bucket, image.s3ObjectKey)
+    
+    const description = await request.text();
 
-    await ImageSchema.deleteOne({ _id: imageId })
+    await ImageSchema.findOneAndUpdate({ _id: imageId }, { description })
 
-    return json({ message: 'Image has been deleted sucessfully!' }, { status: 200 })
+    return json({ message: 'Image description has been updated!' }, { status: 200 })
 }

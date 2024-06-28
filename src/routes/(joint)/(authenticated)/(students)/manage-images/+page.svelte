@@ -1,140 +1,262 @@
-<!--
- Created on Fri Oct 13 2023
+<script lang=ts>
+    import axios from "axios";
 
- Copyright (c) 2023 Thomas Zhou
--->
+    import { get, type Writable, writable } from "svelte/store";
 
-<script lang="ts">
-    import { goto } from "$app/navigation";
+    import LazyImage from "@/client/components/LazyImage.svelte";
+    import Icon from "@/client/components/Icon.svelte";
+    import CloudUpload from "@/client/icons/CloudUpload";
     import { bytesToString } from "@/lib/utils";
-    
-    interface PageData {
-        images: {
-            _id: string;
-            size: number;
-            description: string;
-            projectId: string;
-            project: {
-                title: string;
-            }
-        }[]
-    }
+    import Progress from "./Progress.svelte";
+    import DescriptionEditor from "./DescriptionEditor.svelte";
+    import { goto } from "$app/navigation";
 
-    enum Status {
-        Unchanged,
-        Deleting,
-        Deleted
+    interface UploadedImageData {
+        _id: string;
+        size: number;
+        description: string;
+        projectId: string;
+        createdAt: Date;
+        project: {
+            title: string;
+        };
+    };
+    interface UploadQueueItem {
+        image: File;
+        status: Writable<UploadQueueItemStatus>;
+        progress: Writable<number>;
+        project: Project;
+        imageId: Writable<string>;
+    };
+    interface Project {
+        _id: string;
+        title: string;
     }
+    enum UploadedImageStatus { Unchanged, Deleting, Deleted };
+    enum UploadQueueItemStatus { NotUploaded, Uploading, Failed, Uploaded };
+    interface PageData { images: UploadedImageData[]; projects: Project[] };
+    interface UploadedImage extends UploadedImageData { status: UploadedImageStatus; };
 
     export let data: PageData;
 
-    $: images = data.images.map(image => ({ ...image, status: Status.Unchanged }))
-    async function deleteImage(id: string) {
-        const imageIndex = images.findIndex(image => image._id == id)
+    let uploadedImages: UploadedImage[];
+    $: uploadedImages = data.images.map((image: UploadedImageData) => ({ ...image, status: UploadedImageStatus.Unchanged }))
 
-        images[imageIndex].status = Status.Deleting
+    let projects: Project[];
+    $: projects = data.projects;
+
+    let projectId: string;
+
+    let imageUploadQueue: UploadQueueItem[] = [];
+
+    async function deleteImage(id: string) {
+        const imageIndex = uploadedImages.findIndex(image => image._id == id)
+
+        uploadedImages[imageIndex].status = UploadedImageStatus.Deleting
 
         await fetch(`/manage-images/${id}`, { method: "DELETE" })
 
-        images[imageIndex].status = Status.Deleted
+        uploadedImages[imageIndex].status = UploadedImageStatus.Deleted
     }
 
-    async function gotoImageUpload() {
-        await goto("/manage-images/upload");
+    async function addImageToUploadQueue(image: File) {
+        const queueItem: UploadQueueItem = {
+            image,
+            status: writable(UploadQueueItemStatus.NotUploaded),
+            progress: writable(0),
+            project: projects.find(p => p._id == projectId),
+            imageId: writable()
+        }
+
+        imageUploadQueue.push(queueItem)
+        imageUploadQueue = imageUploadQueue;
+
+        const formData = new FormData();
+        formData.append('image', image);
+        formData.append('description', "");
+        formData.append('projectId', projectId);
+
+        const response = await axios({
+            url: '/manage-images2/upload',
+            method: "put",
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            data: formData,
+            onUploadProgress: (p: any) => {
+                queueItem.progress.set(p.progress);
+            }
+        });
+        
+        if(response.status == 200) {
+            queueItem.status.set(UploadQueueItemStatus.Uploaded);
+        } else {
+            queueItem.status.set(UploadQueueItemStatus.Failed);
+        }
+
+        queueItem.imageId.set(response.data.imageId);
     }
+
+    function handleFileDrop(event: DragEvent) {
+        if(!event.dataTransfer) return;
+        if (event.dataTransfer.items) {
+            [...event.dataTransfer.items].forEach((item, i) => {
+                if (item.kind === "file") {
+                    const file = item.getAsFile();
+                    if(file) {
+                        addImageToUploadQueue(file)
+                    } else {
+                        throw Error("Could not get file.")
+                    }
+                }
+            });
+        } else {
+            [...event.dataTransfer.files].forEach((file, i) => {
+                addImageToUploadQueue(file)
+            });
+        }
+    }
+
+    function handleFileInput() {
+        for(let file of fileInput.files || []) {
+            addImageToUploadQueue(file);
+        }
+    }
+
+    let fileInput: HTMLInputElement;
 </script>
 
-<main>
-    <div id="upload-images-button-container">
-        <button on:click={gotoImageUpload}>Click Here to Upload Images</button>
-    </div>
-    <div id="images">
-        {#each images as image}
-        <div class="image">
-            <img src="/images/{image._id}" />
-            <span>{image.project.title}</span>
-            <span>{image.description || "No description."}</span>
-            <span>{bytesToString(image.size)}</span>
-            {#if image.status == Status.Unchanged}
-            <button class="delete" on:click={() => deleteImage(image._id)}>Delete</button>
-            {:else if image.status == Status.Deleting }
-            <div class="loader" />
-            {:else if image.status == Status.Deleted}
-            <span>Image Deleted</span>
-            {/if}
+<input type="file" class="hidden" bind:this={fileInput} on:input={handleFileInput} accept="image/png,image/jpeg,image/gif" multiple />
+<main class="flex justify-center">
+    <div class="flex flex-col bg-gray-100 rounded-3xl m-5 p-5 max-w-7xl gap-3">
+        <div class="flex flex-col gap-1">
+            <h1 class="text-2xl font-bold">Upload and manage your project images</h1>
+            <p class="text-md text-gray-500">Upload new project images, alter the descriptions, and delete images. Note that once an image has been uploaded, it cannot be swapped out/changed. You must delete the image and then upload the desired image.</p>
         </div>
-        {/each}
+
+        <hr class="border-2 border-gray-200 rounded-sm">
+
+        <div class="flex flex-col gap-2">
+            <h2 class="text-2xl font-bold">Uploading images</h2>
+            <div class="flex items-center">
+                <label for="project">Choose associated project: </label>
+                <select
+                    id="project"
+                    name="projectId"
+                    class="border-black border-[1px] rounded-md p-1 ml-3"
+                    disabled={projects.length == 0}
+                    required
+                    bind:value={projectId}
+                >
+                    <option disabled selected value="none">Please select a project!</option>
+                    {#each projects as project}
+                        <option value={project._id}>{project.title}</option>
+                    {/each}
+                </select>
+            </div>
+        </div>  
+
+        {#if /^[0-9A-Fa-f]{24}$/.test(projectId)}
+        <div class="flex items-center mx-2">
+            <button class="p-4 rounded-xl bg-blue-500 hover:bg-blue-400 text-white" on:click={() => goto(`/mobile-upload?projectId=${projectId}`)}>Mobile Upload</button>
+            <span class="p-7">OR</span>
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            <button class="border-4 flex-grow border-slate-300 bg-slate-200 rounded-xl flex-col h-36 flex justify-center items-center" on:click={() => fileInput.click()} on:dragover|preventDefault on:drop|preventDefault={handleFileDrop} aria-dropeffect="execute">
+                <div class="p-2 bg-gray-300 inline-flex rounded-full mb-1">
+                    <Icon src={CloudUpload} size="2em" color="#505080"/>
+                </div>
+                <span class="text-gray-700"><strong>Click to upload</strong> or drag and drop</span>
+                <span class="text-gray-700">PNG, JPG, or GIF</span>
+            </button>
+        </div>
+        {/if}
+
+        {#if imageUploadQueue.length > 0}
+        <div class="flex flex-col border-[3px] rounded-xl">
+            <span>*Please add descriptions to your images after uploading them on the text fields to the right.</span>
+            <div class="flex flex-col">
+                {#each imageUploadQueue as item}
+                <div class="flex justify-center border-y-[3px]">
+                    <div class="p-4 flex justify-center items-center">
+                        <div class="flex justify-center items-center rounded-xl w-20 h-20">
+                            <img src={URL.createObjectURL(item.image)} class="w-20 h-20 rounded-xl"/>
+                        </div>
+                    </div>
+                    <div class="flex flex-col p-6 gap-3 justify-center">
+                        <span>{item.project.title}</span>
+                        <Progress valueStore={item.progress} />
+                    </div>
+                    <div class="flex flex-col p-6 justify-center">
+                        <DescriptionEditor imageId={item.imageId} />
+                    </div>
+                </div>
+                {/each}
+            </div>
+        </div>
+        {/if}
+
+        <hr class="border-2 border-gray-200 rounded-sm">
+
+        <div class="flex rounded-2xl border-[3px] flex-col">
+            <div class="flex flex-col gap-1 m-5">
+                <h1 class="text-2xl font-bold">Uploaded images</h1>
+                <p class="text-md text-gray-500">Project images that you uploaded.</p>
+            </div>
+
+            <table>
+                <thead class="bg-gray-300">
+                    <tr class="border-t-[3px]">
+                        <th class="p-4 text-gray-700">Image</th>
+                        <th class="p-4 text-gray-700">Associated Project</th>
+                        <th class="p-4 text-gray-700">Description</th>
+                        <th class="p-4 text-gray-700">Upload Date</th>
+                        <th class="p-4 text-gray-700">Size</th>
+                        <th class="p-4 text-gray-700"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {#each uploadedImages as image}
+                    <tr class="border-y-[3px]">
+                        <td>
+                            <div class="p-4 flex justify-center items-center">
+                                <div class="flex justify-center items-center rounded-xl w-20 h-20">
+                                    <LazyImage src="/images/{image._id}" loadingClassname="w-6 h-6" className="rounded-xl w-full h-full" alt={image.description || "N/A"}/>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="p-4 flex justify-center items-center">
+                                <span>{image.project.title}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="p-4 flex justify-center items-center">
+                                <DescriptionEditor imageId={writable(image._id)} current={image.description || "N/A"} />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="p-4 flex justify-center items-center">
+                                <span>{image.createdAt.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="p-4 flex justify-center items-center">
+                                <span>{bytesToString(image.size)}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="p-4 flex justify-center items-center">
+                                {#if image.status == UploadedImageStatus.Unchanged}
+                                <button class="bg-red-500 hover:bg-red-600 py-2 px-4 text-red-50 rounded-lg" on:click={() => deleteImage(image._id)}>Delete</button>
+                                {:else}
+                                <span>Deleted</span>
+                                {/if}
+                            </div>
+                        </td>
+                    </tr>
+                    {/each}
+                </tbody>
+            </table>
+        </div>
     </div>
 </main>
-
-
-<style lang="scss">
-    img { 
-        width: 5rem;
-        height: 5rem;
-        border-radius: 0.5rem;
-    }
-
-    .delete{
-        border: 0;
-        padding: 8px 10px;
-        background-color: red;
-        color: white;
-        border-radius: 5px;
-    }
-
-    #upload-images-button-container {
-        background-color: grey;
-        padding: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        
-        button {
-            cursor: pointer;
-
-            background-color: #478aff;
-            color: #fff;
-            border: none;
-            border-radius: 2px;
-            padding: 0.25rem;
-            width: 98%;
-            margin: 1px;
-        }
-        button:hover{
-            background-color: #7fa8f1;
-        }
-    }
-
-    .loader {
-        border: 4px solid rgba(255, 255, 255, 0.6);
-        border-top: 4px solid var(--color-blue-500);
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-
-    #images {
-        margin: 2rem;
-    }
-
-    .image {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border: 2px solid grey;
-        margin: 1rem;
-        padding: 1rem;
-    }
-</style>
-

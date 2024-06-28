@@ -14,6 +14,7 @@ interface ImageDocumentData {
     description: string;
     ownerId: string;
     projectId: string;
+    createdAt: Date;
 }
 
 const schema = new mongoose.Schema(
