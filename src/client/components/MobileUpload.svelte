@@ -33,7 +33,7 @@
             {#await urlPromise}
             <span class="p-2 bg-white rounded-xl text-lg">Generating URL...</span>
             <button class="bg-gray-500 hover:bg-gray-600 p-3 rounded-xl text-white">
-                <Icon src={Copy} size="2rem"/>
+                <Icon src={Copy} size="2rem" color="white"/>
             </button>
             {:then url}
             <span class="p-2 bg-white rounded-xl text-lg">{url}</span>
