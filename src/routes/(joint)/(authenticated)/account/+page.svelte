@@ -25,9 +25,9 @@
     <h1 class="text-3xl my-5">Welcome back {$user.firstName}!</h1>
 
     <div class="w-[36rem] text-center">
-        <h2 class="text-2xl my-5">Reminder!</h2> 
+        <h2 class="text-2xl my-5">Reminder! PLEASE READ!!!</h2> 
 
-        <p>Navigate to public pages using the navigation bar. To manage your own projects and images, utilize the hover menu on your google icon in the top right.</p>
+        <p>Navigate to public pages using the navigation bar. To manage your own projects and images, utilize the hover menu on your google icon in the top right. For Advisors, the same menu contains the button to view your advisees.</p>
     </div>
 
     <br>
