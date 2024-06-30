@@ -47,6 +47,9 @@ importers:
       sharp:
         specifier: ^0.32.6
         version: 0.32.6
+      svelte-loading-spinners:
+        specifier: ^0.3.6
+        version: 0.3.6
       svelte-local-storage-store:
         specifier: ^0.6.0
         version: 0.6.4(svelte@4.2.1)
@@ -1688,6 +1691,9 @@ packages:
     engines: {node: ^12.20 || ^14.13.1 || >= 16}
     peerDependencies:
       svelte: ^3.19.0 || ^4.0.0
+
+  svelte-loading-spinners@0.3.6:
+    resolution: {integrity: sha512-mthHQ2TwiwzTWzbFry3CBnVEfzqPOD9WkVw84OfSYzHRq6N9wgQ+yv37u81uPeuLU/ZOIPqhujpXquB1aol5ZQ==}
 
   svelte-local-storage-store@0.6.4:
     resolution: {integrity: sha512-45WoY2vSGPQM1sIQJ9jTkPPj20hYeqm+af6mUGRFSPP5WglZf36YYoZqwmZZ8Dt/2SU8lem+BTA8/Z/8TkqNLg==}
@@ -3856,6 +3862,8 @@ snapshots:
   svelte-hmr@0.15.3(svelte@4.2.1):
     dependencies:
       svelte: 4.2.1
+
+  svelte-loading-spinners@0.3.6: {}
 
   svelte-local-storage-store@0.6.4(svelte@4.2.1):
     dependencies:

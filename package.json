@@ -40,6 +40,7 @@
 		"qrcode": "^1.5.3",
 		"sass": "^1.66.1",
 		"sharp": "^0.32.6",
+		"svelte-loading-spinners": "^0.3.6",
 		"svelte-local-storage-store": "^0.6.0",
 		"uuid": "^9.0.0"
 	}

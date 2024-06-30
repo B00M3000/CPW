@@ -62,8 +62,6 @@
         justify-content: space-between;
         width: 160px;
         border-radius: 5px;
-        margin-bottom: 2rem;
-        margin-top: 0.3rem;
     }
 
     p {

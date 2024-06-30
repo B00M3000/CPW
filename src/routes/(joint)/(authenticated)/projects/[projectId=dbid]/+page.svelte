@@ -164,5 +164,7 @@
       flex-direction: column;
       height: auto;
     }
+
+    .sidebar { height: fit-content }
   }
 </style>

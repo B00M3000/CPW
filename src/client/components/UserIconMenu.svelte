@@ -125,7 +125,7 @@
         justify-content: center;
 
         z-index: 50;
-        min-width: 150px;
+        min-width: 205px;
         gap: 0.5rem;
         padding: 1rem;
 

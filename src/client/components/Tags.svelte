@@ -21,5 +21,6 @@
     #tags {
         display: inline-flex;
         flex-wrap: wrap;
+        gap: 0.25rem;
     }
 </style>

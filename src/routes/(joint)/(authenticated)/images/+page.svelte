@@ -21,7 +21,7 @@
 
 <main class="h-full">
     {#if $user.accountType == AccountType.Student}
-    <div id="upload-images-button-container">
+    <div id="upload-images-button-container" class="p-4 sm:px-16 lg:px-36">
         <button on:click={gotoManageImages}>Upload Images</button>
         <button on:click={gotoManageImages}>Manage Your Images</button>
     </div>
@@ -40,7 +40,6 @@
 
     #upload-images-button-container {
         background-color: rgb(191, 189, 189);
-        padding: 1rem 8rem;
         display: flex;
         flex-direction: row;
         align-items: center;

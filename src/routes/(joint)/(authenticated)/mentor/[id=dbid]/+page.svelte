@@ -11,7 +11,7 @@
 </script>
 
 <main class="flex items-center justify-center text-center">
-    <div class="inline-flex flex-col p-6">
+    <div class="inline-flex flex-col p-6 m-12">
         <h2 class="text-8xl text-gray-700 font-bold">{mentor?.name}</h2>
         <p class="italic text-gray-400 mt-9 mb-2 text-xl"><em>Please contact Ms. Moss for mentor contact information.</em></p>
         <p class="text-xl mb-5">Click <a class="text-blue-500" href="{`/projects/?yearUpper=${new Date().getFullYear()}&yearLower=2019&mentorSearch=${mentor?.name}`}">here</a> 

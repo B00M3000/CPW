@@ -6,6 +6,10 @@
 
 <script lang="ts">
     import Nav from "@/client/components/Nav.svelte";
+
+    import { browser } from '$app/environment';
+    import { navigating } from '$app/stores';
+    import { BarLoader } from 'svelte-loading-spinners';
 </script>
 
 <svelte:head>
@@ -26,5 +30,27 @@
 </svelte:head>
 
 <Nav>
-    <slot />
+    {#if $navigating}
+    <div class="loader">
+        <BarLoader size=100 unit="vw" duration="30s" color="#e65984" />
+    </div>
+    {/if}
+    <div class="full-height overflow-y-auto">
+        <slot />
+    </div>
 </Nav>
+
+<style>
+    .full-height {
+        height: calc(100vh - var(--nav-bar-height));
+    }
+    .loader {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 21;
+        height: 0.2rem;
+        overflow: hidden;
+    }
+</style>

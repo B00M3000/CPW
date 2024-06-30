@@ -58,7 +58,7 @@
             <button on:click={() => goto('manage-projects/create')}>
                 Create New Project
             </button>
-            <button on:click={() => goto('manage-images/upload')}>
+            <button on:click={() => goto('manage-images')}>
                 Upload Images
             </button>
         </div>

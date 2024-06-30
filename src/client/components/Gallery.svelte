@@ -39,7 +39,7 @@
 
 <div id="gallery" class="h-full">
     {#if images.length > 0}
-    <div id="images">
+    <div id="images" class="m-4">
         {#each images as image, i}
         <div class="image-container">
             <div class="lazy-image-container" style={autoHeightAndWidth ? `width: auto; height: auto;` : ""}>
@@ -160,8 +160,8 @@
         align-items: center;
         justify-content: center;
         overflow: hidden; 
-        width: 24rem;
-        height: 18rem;
+        max-width: 24rem;
+        max-height: 18rem;
     }
 
     .image-container {
