@@ -25,5 +25,6 @@
     <meta name="twitter:image" content="https://cpw.tzhou.xyz/assets/CommonwealthSchool.jpg">
 </svelte:head>
 
-<Nav />
-<slot />
+<Nav>
+    <slot />
+</Nav>

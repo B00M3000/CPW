@@ -15,7 +15,7 @@
     }
 
     const mobileKeyPromise: Promise<string> = new Promise(async (resolve) => resolve(await generateMobileKey()))
-    const urlPromise: Promise<string> = new Promise(async (resolve) => resolve(new URL(`/mobile?mobileKey=${await mobileKeyPromise}`, PUBLIC_ORIGIN).toString()))
+    const urlPromise: Promise<string> = new Promise(async (resolve) => resolve(new URL(`/mobile-upload-portal?mobileKey=${await mobileKeyPromise}`, PUBLIC_ORIGIN).toString()))
     const qrcodePromise: Promise<string> = new Promise(async (resolve) => resolve(await qrcode.toDataURL(await urlPromise)))
 
     let copied = false;
