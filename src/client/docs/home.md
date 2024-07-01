@@ -18,7 +18,7 @@ These are links to the relevant documentation for usage of our website:
 
 ### Acknowledgements 
 
-We would like to thank Ms. Moss, Ms. Jackman, and Mr. Hinterlang for their support. They provided important information about how student data is stored, support for hosting the website, and suggestions for improving or adding different features. Additionally, thanks to Moe Frumkin '23 for reviewing the documentation and Ms. Tomer for providing us with the Commonwealth branding guide. Additionally, we would like to thank Aditya Anand '26, Brian Li '26, Max Lin '27, Jasmine Liu '27, Amith Saligrama '24, Will Stokes '27, Zach Walton '25 who provided helpful and valuable feedback about UI/UX design for the website and provided suggestions for improving usability.
+We would like to thank Ms. Moss, Ms. Jackman, and Mr. Hinterlang for their support. They provided important information about how student data is stored, support for hosting the website, and suggestions for improving or adding different features. Additionally, thanks to Moe Frumkin '23 for reviewing the documentation and Ms. Tomer for providing us with the Commonwealth branding guide. Additionally, we would like to thank Auren Amster '26, Aditya Anand '26, Brian Li '26, Max Lin '27, Jasmine Liu '27, Amith Saligrama '24, Will Stokes '27, Zach Walton '25 who provided helpful and valuable feedback about UI/UX design for the website and provided suggestions for improving usability.
 
 -- Feburary 9th, 2024
 
