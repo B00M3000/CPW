@@ -72,7 +72,7 @@
 
 <svelte:window on:keydown={onKeydown} on:keyup={onKeyup} />
 
-<main>
+<main class="m-0 p-1 bg-white radius-xl">
     <div class="header">Submit Project Report for <u>{title}</u></div>
     <div class="description">To submit or edit your full report, copy your project report and paste it here by 
         pressing the paste keybind on your computer (<code>Meta/Command + V</code> for <code>Mac & Control + V</code> for Windows). 
@@ -99,14 +99,6 @@
 </main>
 
 <style>
-    main {
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #fff;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        border-radius: 5px;
-    }
-
     .header {
         font-size: 28px;
         font-weight: bold;
