@@ -11,9 +11,6 @@
     </div>
 </main>
 
-
-
-
 <style lang="scss" scoped>
     main{
         display: flex;

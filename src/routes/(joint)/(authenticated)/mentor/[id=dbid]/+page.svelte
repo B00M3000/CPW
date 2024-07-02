@@ -10,7 +10,7 @@
     $: ({ mentor } = data);
 </script>
 
-<main class="flex items-center justify-center text-center">
+<main class="flex items-center justify-center text-center h-full">
     <div class="inline-flex flex-col p-6 m-12">
         <h2 class="text-8xl text-gray-700 font-bold">{mentor?.name}</h2>
         <p class="italic text-gray-400 mt-9 mb-2 text-xl"><em>Please contact Ms. Moss for mentor contact information.</em></p>
@@ -23,10 +23,6 @@
 </main>
   
 <style>
-    main {  
-        height: calc(100vh - var(--nav-bar-height));
-    }
-
     a {
         text-decoration: none;
         border-bottom: 2px solid var(--color-primary); 
