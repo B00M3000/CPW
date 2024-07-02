@@ -17,7 +17,7 @@
     let showingRefinedSearch = true;
 </script>
 
-<div class="transition-side-bar absolute {showingRefinedSearch ? "" : "-translate-x-[275px]"} -translate-y-1/2 transform top-1/2 flex items-center">
+<div class="transition-side-bar absolute {showingRefinedSearch ? "" : "-translate-x-[17.19rem]"} -translate-y-1/2 transform top-1/2 flex items-center">
     <div class="bg-gray-300 rounded-r-md flex items-center justify-center z-10">
         <div class="flex flex-col transition-opacity w-80 items-center {showingRefinedSearch ? "" : "opacity-0"} justify-center gap-3 py-3">
             <h1 class="text-2xl">Refine Search</h1>
@@ -54,7 +54,7 @@
             </div>
         </div>
     </div>
-    <button class="transition-side-bar -translate-x-[80px] hover:translate-x-0 pr-2 py-2" on:click={() => showingRefinedSearch = !showingRefinedSearch}>
+    <button class="transition-side-bar -translate-x-[5.5rem] hover:translate-x-0 pr-2 py-2" on:click={() => showingRefinedSearch = !showingRefinedSearch}>
         <div class="relative inline-flex bg-gray-300 rounded-r-md py-3 justify-center items-center" >
             <div class="flex flex-col px-2 ml-1 bg-white rounded-md">
                 <span>Refined</span>
