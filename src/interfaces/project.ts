@@ -4,7 +4,6 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
-
 export interface Student {
     _id: string
     studentId: string; // unique identifier
