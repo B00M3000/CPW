@@ -1,16 +1,35 @@
-FROM node:18-alpine AS build
+FROM node:18-slim AS base
+
+RUN corepack enable pnpm && corepack install -g pnpm@latest-9
 
 WORKDIR /app
 
+COPY pnpm-lock.yaml .
+RUN pnpm fetch
+
+FROM base as build
+
+COPY . .
+RUN pnpm install -r --offline
+RUN pnpm run build
+
+FROM base as prod-deps
+
 COPY package.json .
-COPY package-lock.json .
-RUN npm ci --prod
+RUN pnpm install -r --offline --prod
 
-COPY ./build .
+FROM node:18-slim
 
-CMD ["node ", "-r dotenv/config", "."]
+COPY package.json .
+
+COPY --from=prod-deps /app/node_modules /node_modules
+COPY --from=build /app/build .
 
 ENV PORT=80
 ENV BODY_SIZE_LIMIT=52428800
 
 EXPOSE 80/tcp
+
+CMD node -r dotenv/config .
+
+
