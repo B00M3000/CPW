@@ -20,9 +20,6 @@ importers:
       dotenv:
         specifier: ^16.3.1
         version: 16.3.1
-      fs:
-        specifier: ^0.0.1-security
-        version: 0.0.1-security
       fuse.js:
         specifier: ^6.6.2
         version: 6.6.2
@@ -41,18 +38,9 @@ importers:
       qrcode:
         specifier: ^1.5.3
         version: 1.5.3
-      sass:
-        specifier: ^1.66.1
-        version: 1.69.3
       sharp:
         specifier: ^0.32.6
         version: 0.32.6
-      svelte-loading-spinners:
-        specifier: ^0.3.6
-        version: 0.3.6
-      svelte-local-storage-store:
-        specifier: ^0.6.0
-        version: 0.6.4(svelte@4.2.1)
       uuid:
         specifier: ^9.0.0
         version: 9.0.1
@@ -75,12 +63,21 @@ importers:
       postcss:
         specifier: ^8.4.33
         version: 8.4.33
+      sass:
+        specifier: ^1.66.1
+        version: 1.69.3
       svelte:
         specifier: ^4.2.0
         version: 4.2.1
       svelte-check:
         specifier: ^3.5.1
         version: 3.5.2(postcss-load-config@4.0.2(postcss@8.4.33))(postcss@8.4.33)(sass@1.69.3)(svelte@4.2.1)
+      svelte-loading-spinners:
+        specifier: ^0.3.6
+        version: 0.3.6
+      svelte-local-storage-store:
+        specifier: ^0.6.0
+        version: 0.6.4(svelte@4.2.1)
       tailwindcss:
         specifier: ^3.4.1
         version: 3.4.1
@@ -1061,9 +1058,6 @@ packages:
 
   fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
-
-  fs@0.0.1-security:
-    resolution: {integrity: sha512-3XY9e1pP0CVEUCdj5BmfIZxRBTSDycnbqhIOGec9QYtmVH2fbLpj86CFWkrNOkt/Fvty4KZG5lTglL9j/gJ87w==}
 
   fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
@@ -3264,8 +3258,6 @@ snapshots:
   fs-constants@1.0.0: {}
 
   fs.realpath@1.0.0: {}
-
-  fs@0.0.1-security: {}
 
   fsevents@2.3.3:
     optional: true
