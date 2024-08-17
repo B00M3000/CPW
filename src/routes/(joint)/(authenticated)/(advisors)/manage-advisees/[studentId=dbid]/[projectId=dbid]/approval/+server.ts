@@ -25,7 +25,7 @@ export async function POST({ request }) {
         return json({ message: "Project has been unapproved." });
 
     } else {
-        throw error(400, `Invalid action type provided. Given ${action}.`)
+        error(400, `Invalid action type provided. Given ${action}.`);
     }
 }
     

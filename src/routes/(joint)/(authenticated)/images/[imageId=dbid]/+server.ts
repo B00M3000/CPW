@@ -11,7 +11,7 @@ import { error } from '@sveltejs/kit';
 export async function GET({ params: { imageId }, url, setHeaders }) {
     const image = await ImageSchema.findById(imageId);   
 
-    if(!image) throw error(404, { message: `Could not find image with id ${imageId}` });
+    if(!image) error(404, { message: `Could not find image with id ${imageId}` });
 
     setHeaders({
         "Cache-Control": "public, max-age=1209600" // two weeks cache

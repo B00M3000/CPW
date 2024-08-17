@@ -14,7 +14,7 @@ import { error } from "@sveltejs/kit";
 export async function load({ params: { projectId } }) {    
     const project = stringifyObjectId(await ProjectSchema.findById(projectId).lean());
 
-    if(!project) throw error(404, { message: "Project not found."});
+    if(!project) error(404, { message: "Project not found."});
 
     const student = stringifyObjectId(await UserSchema.findById(project?.studentId).lean())
     const mentor = stringifyObjectId(await MentorSchema.findById(project?.mentorId).lean());

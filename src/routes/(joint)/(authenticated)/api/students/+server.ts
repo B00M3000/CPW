@@ -18,6 +18,6 @@ export async function GET({ url }) {
 
         return json({ students })
     } else {
-        throw error(400, "You must submit a query.")
+        error(400, "You must submit a query.");
     }
 }

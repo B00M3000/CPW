@@ -11,8 +11,8 @@ import { error, json } from "@sveltejs/kit";
 
 export async function POST({ locals, params: { imageId }, request}) {
     const image = await ImageSchema.findById(imageId); 
-    if(!image) throw error(404, { message: `Could not find image with id ${imageId}` });
-    if(image.ownerId != locals.user.id) throw error(403, { message: `You do not own this image.` });
+    if(!image) error(404, { message: `Could not find image with id ${imageId}` });
+    if(image.ownerId != locals.user.id) error(403, { message: `You do not own this image.` });
     
     const description = await request.text();
 

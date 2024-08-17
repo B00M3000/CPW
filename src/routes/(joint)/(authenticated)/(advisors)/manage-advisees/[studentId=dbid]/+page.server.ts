@@ -13,7 +13,7 @@ import { error } from '@sveltejs/kit';
 
 export async function load({ locals, params: { studentId } }) {
     const student = stringifyObjectId(await UserSchema.findOne({ _id: studentId }).lean())
-    if(!student) throw error(404, "Student not found.");
+    if(!student) error(404, "Student not found.");
     const projects = (await ProjectSchema.find({ studentId: student._id }).lean())?.map(stringifyObjectId).map(p => ({ ...p, student })) || [];
     const inflatedProjects = await Promise.all(projects.map(injectMentor));
 

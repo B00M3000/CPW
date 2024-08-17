@@ -20,7 +20,7 @@ export async function POST({ request }) {
     const headings = parsedCSV[0];
     const entries = parsedCSV.slice(1);
 
-    if(!validateCSV(headings, entries, studentDataUploadFields)) throw error(400, { message: "Data failed validation." })
+    if(!validateCSV(headings, entries, studentDataUploadFields)) error(400, { message: "Data failed validation." });
 
     const operations = generateOperations(headings, entries);
 

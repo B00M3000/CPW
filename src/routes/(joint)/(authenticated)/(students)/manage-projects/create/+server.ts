@@ -15,7 +15,7 @@ export async function POST({ request, locals }) {
     const action = data.action.toUpperCase();
     let mentorId = data.mentorId;
 
-    if(action != "CREATE") throw error(400, `Invalid Request Type! Must be CREATE given ${data.action.toUpperCase()}`)
+    if(action != "CREATE") error(400, `Invalid Request Type! Must be CREATE given ${data.action.toUpperCase()}`);
 
     if(!mentorId) {
       const mentorSchema = new MentorSchema({

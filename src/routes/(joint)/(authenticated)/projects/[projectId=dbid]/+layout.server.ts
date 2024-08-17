@@ -12,9 +12,9 @@ export async function load({ params, locals }) {
     const projectId = params.projectId;
     const project = await ProjectSchema.findById(projectId);
     
-    if(!project) throw error(404, { message: "No project exists with this ID"});
+    if(!project) error(404, { message: "No project exists with this ID"});
 
     const allowedToView = project.studentId == locals?.user?.id || locals?.user?.accountType == AccessLevel.Admin || project.publish;
 
-    if(!allowedToView) throw error(403, {message: "Project is not published and cannot be viewed publicly."});
+    if(!allowedToView) error(403, {message: "Project is not published and cannot be viewed publicly."});
 };

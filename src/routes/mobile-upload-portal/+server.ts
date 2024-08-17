@@ -25,23 +25,23 @@ export async function POST({ request }) {
 
     const mobileKey = formData.get('mobileKey')
 
-    if(!mobileKey) throw error(400, { message: "No mobile key provided." })
+    if(!mobileKey) error(400, { message: "No mobile key provided." });
 
     const mobileKeyDoc: any = stringifyObjectId(await MobileKeySchema.findOne({ mobileKey }).lean());
 
-    if(!mobileKeyDoc) throw error(404, { message: "Mobile key not found! Please try again. (Mobile keys are only valid for a short period after they are generated.)" })
+    if(!mobileKeyDoc) error(404, { message: "Mobile key not found! Please try again. (Mobile keys are only valid for a short period after they are generated.)" });
 
     const imageField = formData.get('image')
 
-    if(!(imageField instanceof File)) throw error(400, { message: "No image file contained in request." }) 
+    if(!(imageField instanceof File)) error(400, { message: "No image file contained in request." }); 
 
     const imageFile: File = imageField;
 
-    if(!isValidImageType.test(imageFile.type)) throw error(400, { message: "Image file must be of type image/png,image/jpeg" })
+    if(!isValidImageType.test(imageFile.type)) error(400, { message: "Image file must be of type image/png,image/jpeg" });
 
     const { totalSize } = await ImageSchema.aggregate([{ $match: { ownerId: mobileKey.userId }}, { $group: { _id: null, totalSize: { $sum: "$size" } } }])
 
-    if(totalSize + imageFile.size > _USER_IMAGE_SPACE_LIMIT) throw error(400, { message: "You exceed the alloted amount of space by uploading this image. Please ask website administrators for an expanded quota or manage your assets accordingly." })
+    if(totalSize + imageFile.size > _USER_IMAGE_SPACE_LIMIT) error(400, { message: "You exceed the alloted amount of space by uploading this image. Please ask website administrators for an expanded quota or manage your assets accordingly." });
 
     let imageBuffer = Buffer.from(await imageFile.arrayBuffer())
 

@@ -28,27 +28,27 @@ export async function PUT({ request, locals }) {
     const projectIdField = formData.get('projectId')
 
     if(descriptionField) {
-        if(!(typeof descriptionField == "string")) throw error(400, { message: "Description must be a string." })
-        if(descriptionField.length > _USER_IMAGE_DESCRIPTION_LIMIT) throw error(400, { message: `Description must be less than ${USER_IMAGE_DESCRIPTION_LIMIT} characters.` })
+        if(!(typeof descriptionField == "string")) error(400, { message: "Description must be a string." });
+        if(descriptionField.length > _USER_IMAGE_DESCRIPTION_LIMIT) error(400, { message: `Description must be less than ${USER_IMAGE_DESCRIPTION_LIMIT} characters.` });
     }
     
-    if(!(typeof projectIdField == "string")) throw error(400, { message: "Project ID must be a string" })
+    if(!(typeof projectIdField == "string")) error(400, { message: "Project ID must be a string" });
 
-    if(!(await ProjectSchema.exists({ _id: projectIdField }))) throw error(400, { message: "Project ID must be valid" })
+    if(!(await ProjectSchema.exists({ _id: projectIdField }))) error(400, { message: "Project ID must be valid" });
 
-    if((await ProjectSchema.findOne({ _id: projectIdField }))?.studentId != locals?.user?.id) throw error(403, { message: "No adding images to other peoples projets!" })
+    if((await ProjectSchema.findOne({ _id: projectIdField }))?.studentId != locals?.user?.id) error(403, { message: "No adding images to other peoples projets!" });
 
     const descriptionString: string = descriptionField;
 
-    if(!(imageField instanceof File)) throw error(400, { message: "No image file contained in request." })
+    if(!(imageField instanceof File)) error(400, { message: "No image file contained in request." });
 
     const imageFile: File = imageField;
 
-    if(!isValidImageType.test(imageFile.type)) throw error(400, { message: "Image file must be of type image/png,image/jpeg" })
+    if(!isValidImageType.test(imageFile.type)) error(400, { message: "Image file must be of type image/png,image/jpeg" });
 
     const { totalSize } = await ImageSchema.aggregate([{ $match: { ownerId: locals?.user?.id }}, { $group: { _id: null, totalSize: { $sum: "$size" } } }])
 
-    if(totalSize + imageFile.size > _USER_IMAGE_SPACE_LIMIT) throw error(400, { message: "You exceed your alloted amount of space by uploading this image. Please ask website administrators for an expanded quota or manage your assets accordingly." })
+    if(totalSize + imageFile.size > _USER_IMAGE_SPACE_LIMIT) error(400, { message: "You exceed your alloted amount of space by uploading this image. Please ask website administrators for an expanded quota or manage your assets accordingly." });
 
     let imageBuffer = Buffer.from(await imageFile.arrayBuffer())
 

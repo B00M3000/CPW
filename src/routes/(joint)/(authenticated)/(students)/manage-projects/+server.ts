@@ -37,7 +37,7 @@ export async function POST({ request, locals }) {
             await ProjectSchema.updateOne({ _id: projectId }, { publish: !schema.publish })
         }
     } else {
-        throw error(400, `Invalid action type provided. Given ${action}.`)
+        error(400, `Invalid action type provided. Given ${action}.`);
     }
     
     return json({ message: "Action Successfully Executed." });

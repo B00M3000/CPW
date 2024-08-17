@@ -12,9 +12,9 @@ export const load = async ({ params, locals }) => {
     const { projectId } = params;
     const project = stringifyObjectId(await ProjectSchema.findById(projectId).lean());
 
-    if(!project) throw error(404, "Project not found!");
+    if(!project) error(404, "Project not found!");
 
-    if(project.studentId != locals.user.id) throw error(403, "You cannot manage this project!")
+    if(project.studentId != locals.user.id) error(403, "You cannot manage this project!");
 
     return { project, projectId };
 }

@@ -15,11 +15,11 @@ export async function GET({ url, cookies, setHeaders }) {
   const code = url.searchParams.get('code');
   const redirectURL = url.searchParams.get('state');
 
-  if (!code) throw error(400, 'missing code');
+  if (!code) error(400, 'missing code');
 
   const data = await get_tokens(code);
 
-  if (!data.access_token) throw error(400, { message: 'Invalid Authorization Code\n' + JSON.stringify(data) });
+  if (!data.access_token) error(400, { message: 'Invalid Authorization Code\n' + JSON.stringify(data) });
 
   const { token_type, access_token } = data;
 
@@ -79,8 +79,8 @@ export async function GET({ url, cookies, setHeaders }) {
     );
 
     if(userByEmail) cookies.set('session_id', session_id, { path: '/' })
-    else throw error(403, { message: `No user with email ${google_user.email} was found.` })
+    else error(403, { message: `No user with email ${google_user.email} was found.` });
   }
 
-  throw redirect(307, redirectURL && !absolute.test(redirectURL) ? redirectURL : "/account",)
+  redirect(307, redirectURL && !absolute.test(redirectURL) ? redirectURL : "/account",);
 };
