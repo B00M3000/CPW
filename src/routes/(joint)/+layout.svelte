@@ -9,7 +9,7 @@
 
     import { browser } from '$app/environment';
     import { navigating } from '$app/stores';
-    import { BarLoader } from 'svelte-loading-spinners';
+    // import { BarLoader } from 'svelte-loading-spinners';
 </script>
 
 <svelte:head>
@@ -31,9 +31,9 @@
 
 <Nav>
     {#if $navigating}
-    <div class="loader">
+    <!-- <div class="loader">
         <BarLoader size=100 unit="vw" duration="30s" color="#e65984" />
-    </div>
+    </div> -->
     {/if}
     <div class="full-height overflow-y-auto">
         <slot />

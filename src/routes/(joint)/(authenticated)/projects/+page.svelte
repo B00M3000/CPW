@@ -5,8 +5,9 @@
     import SearchBar from './SearchBar.svelte';
     import RefinedSearch from './RefinedSearch.svelte';
     import { page } from "$app/stores";
-    import ProjectCard from "@/client/components/ProjectCard.svelte"
+    import ProjectCard from "@/client/components/ProjectCard.svelte";
     import { browser } from "$app/environment";
+    import Pagination from "@/client/components/Pagination.svelte";
     
     export let data;
     $: ({ projects } = data);
@@ -61,6 +62,7 @@
 
 <main class="h-full w-full">
     <SearchBar bind:query={query} {search}/>
+    <Pagination />
     <div class="w-full bg-gray-500 flex flex-col items-center overflow-y-auto">
         <div class="max-w-[65rem] bg-gray-400 flex flex-wrap justify-center items-center">
             {#each projects as project}
