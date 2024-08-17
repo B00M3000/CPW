@@ -1,4 +1,4 @@
-FROM node:18-slim AS base
+FROM node:18-alpine AS base
 
 RUN corepack enable pnpm && corepack install -g pnpm@latest-9
 
@@ -18,7 +18,7 @@ FROM base as prod-deps
 COPY package.json .
 RUN pnpm install -r --offline --prod
 
-FROM node:18-slim
+FROM node:18-alpine
 
 COPY package.json .
 
