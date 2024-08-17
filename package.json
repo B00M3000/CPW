@@ -9,7 +9,6 @@
     "preview": "vite preview --host",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "prod-build-docker-image": "pnpm install && docker build -t cpw .",
     "prod": "npm install && vite build && node -r dotenv/config build"
   },
   "devDependencies": {
