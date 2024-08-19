@@ -4,7 +4,8 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
-import { PutObjectCommand, PutObjectCommandOutput, GetObjectCommand, GetObjectCommandOutput, DeleteObjectCommand, DeleteObjectCommandOutput, S3Client } from "@aws-sdk/client-s3";
+import { PutObjectCommand, GetObjectCommand, DeleteObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import type { PutObjectCommandOutput, GetObjectCommandOutput, DeleteObjectCommandOutput } from "@aws-sdk/client-s3";	
 
 import { AWS_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from '$env/static/private';
 

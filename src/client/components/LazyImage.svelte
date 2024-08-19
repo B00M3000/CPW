@@ -10,28 +10,40 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { browser } from '$app/environment';
-    export let src: string;
-    export let alt: string;
-    export let top = 0;
-    export let bottom = 0;
-    export let left = 0;
-    export let right = 0;
+    // import { Stretch } from 'svelte-loading-spinners';
+    import { on } from 'svelte/events';
+
+    let { 
+      src, 
+      alt, 
+      top = 0, 
+      bottom = 0, 
+      left = 0, 
+      right = 0,
+      className = "",
+      loadingClassname = "w-12 h-12"
+    }: {
+        src: string;
+        alt: string;
+        top: number;
+        bottom: number;
+        left: number;
+        right: number;
+        className: string;
+        loadingClassname: string;
+    } = $props();
   
-    let intersecting = false;
-    let image: HTMLImageElement;
-    let loaded = false;
-    let visible = false;
+    let intersecting = $state(false);
+    let image: HTMLElement;
+    let loaded = $state(false)
+    let visible = $state(false);
 
-    export let className: string = "";
-    export let loadingClassname: string = "w-12 h-12";
-
-    $: {
-      // mark the image as unloaded if the src changes
-      loaded = Boolean(src && false);
-    }
+    $effect(() => {
+      loaded = Boolean(src && false)
+    })
 
     onMount(() => {
-      image.addEventListener('load', () => (loaded = true));
+      on(image, 'load', () => loaded = true);
       if (typeof IntersectionObserver !== 'undefined') {
         const observer = new IntersectionObserver((entries) => {
           intersecting = entries[0].isIntersecting;
@@ -55,13 +67,12 @@
           bcr.left - left < window.innerWidth;
   
         if (intersecting) {
-          window.removeEventListener('scroll', handler);
+          off();
           visible = true;
         }
       }
-  
-      window.addEventListener('scroll', handler);
-      return () => window.removeEventListener('scroll', handler);
+      const off = on(window, 'scroll', handler);
+      return off;
     });
 </script>
 
@@ -70,6 +81,9 @@
 <img {alt} class={className} bind:this={image} {src} class:loaded />
 {:else}
 <img {alt} class={loadingClassname} bind:this={image} src='/assets/loading.gif' class:loaded />
+<!-- <div bind:this={image}>
+  <Stretch color="gray"/>
+</div> -->
 {/if}
 {:else}
 <img {alt} class={className} {src} loading="lazy" />

@@ -18,7 +18,7 @@ export async function load({ params: { projectId } }) {
 
     const student = stringifyObjectId(await UserSchema.findById(project?.studentId).lean())
     const mentor = stringifyObjectId(await MentorSchema.findById(project?.mentorId).lean());
-    const inflatedImages = await Promise.all((await ImageSchema.find({ projectId }, 'projectId description').lean())?.map(stringifyObjectId).map(injectProjects));
+    const inflatedImages = await Promise.all((await ImageSchema.find({ projectId }, 'projectId description').lean().sort('-createdAt'))?.map(stringifyObjectId).map(injectProjects));
 
     return { project, mentor, student, images: inflatedImages };
 }

@@ -8,6 +8,12 @@ import Papa from 'papaparse';
 import type { Fields } from '@/lib/data-upload';
 import escapeRegExp from "lodash/escapeRegExp";
 
+export function parseIntOrElse(str: string | null, other: number): number {
+    if(!str) return other;
+    try { return parseInt(str); } 
+    catch (e) { return other; }   
+}
+
 export function buildRegex(keywords: string[]){
     return new RegExp(keywords.map(escapeRegExp).map((w:string) => `(?=.*?${w})`).join("") + ".*",   "i");
 }
