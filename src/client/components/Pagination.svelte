@@ -31,7 +31,7 @@
     <div class="flex gap-2 items-center">
         <span class="max-sm:hidden">{capitalize(pluralItemName)} per page: </span>
         <!-- <span class="sm:hidden">Show: </span> -->
-        <select class="rounded-sm p-1 bg-white" bind:value={itemsPerPage}>
+        <select class="rounded-sm p-1 bg-white" bind:value={itemsPerPage} onchange={() => currentPage = 0}>
             {#each pageSizes as pageSize}
             <option selected={itemsPerPage == pageSize}>{pageSize}</option>
             {/each}

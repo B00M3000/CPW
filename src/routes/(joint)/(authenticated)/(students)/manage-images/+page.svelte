@@ -131,15 +131,15 @@
 
     let mobileKeyOverlay = false;
 
-    function closeOverlay(event?: PointerEvent) {
+    function closeOverlay(event?: MouseEvent) {
         if(event?.target?.nodeName == "DIV") mobileKeyOverlay = false
     }
 </script>
 
 {#if mobileKeyOverlay}
-<div class="overlay" on:click={closeOverlay}>
+<button class="overlay" on:click={closeOverlay}>
     <MobileUpload {projectId}/>
-</div>
+</button>
 {/if}
 
 <input type="file" class="hidden" bind:this={fileInput} on:input={handleFileInput} accept="image/png,image/jpeg,image/gif" multiple />

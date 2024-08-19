@@ -8,8 +8,7 @@
     import StudentCard from '@/client/components/StudentCard.svelte';
     import MentorCard from '@/client/components/MentorCard.svelte';
     import Tags from '@/client/components/Tags.svelte';
-    import { getTagString } from '@/lib/tags.js';
-    import Gallery from '@/client/components/Gallery.svelte';
+    import SmartProjectImage from '@/client/components/SmartProjectImage.svelte';
 
     export let data: any;
 
@@ -61,7 +60,19 @@
         {/if}
       </div>
       {:else if view == Views.Images}
-        <Gallery projectPage={true} {images} />
+        <div class="h-full overflow-y-auto flex justify-center w-full">
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                {#each images as image}
+                <div class="w-[400px] h-[300px]">
+                    <SmartProjectImage {image} showProjectPageButton={false} />
+                </div>
+                {:else}
+                <div class="flex items-center justify-center">
+                    <span class="text-xl">No images.</span>
+                </div>
+                {/each}
+            </div>
+        </div>
       {/if}
     </div>  
   </div>

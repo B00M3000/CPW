@@ -7,16 +7,10 @@
 import { ProjectSchema, type ProjectDocument, type ProjectDocumentData } from '@/server/mongo/schemas/project';
 import { MentorSchema } from '@/server/mongo/schemas/mentor';
 import { UserSchema } from '@/server/mongo/schemas/user';
-import { buildRegex, stringifyObjectId } from '@/lib/utils';
+import { buildRegex, parseIntOrElse, stringifyObjectId } from '@/lib/utils';
 
 import lowRelevance from "@/lib/lowRelevance";
 import type { FilterQuery } from 'mongoose';
-
-function parseIntOrElse(str: string | null, other: number): number {
-    if(!str) return other;
-    try { return parseInt(str); } 
-    catch (e) { return other; }   
-}
 
 export async function load({ url: { searchParams } }) {
     const dbQuery: FilterQuery<ProjectDocument> = {};
@@ -83,7 +77,7 @@ export async function load({ url: { searchParams } }) {
     console.log(searchParams.get("itemsPerPage"));
     const skip = page * itemsPerPage;
 
-    const projects: ProjectDocumentData[] = returnEmpty ? [] : await ProjectSchema.find(dbQuery, 'studentId title year tags mentorId shortDesc').limit(itemsPerPage).skip(skip).lean() || [];
+    const projects: ProjectDocumentData[] = returnEmpty ? [] : await ProjectSchema.find(dbQuery, 'studentId title year tags mentorId shortDesc').limit(itemsPerPage).skip(skip).lean().sort('-createdAt') || [];
     const totalProjectCount: number = returnEmpty ? 0 : await ProjectSchema.find(dbQuery, 'studentId title year tags mentorId shortDesc').count();
     const inflatedProjects = await Promise.all(projects.map(stringifyObjectId).map(injectStudentAndMentor))
     return {

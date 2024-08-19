@@ -4,29 +4,94 @@
  Copyright (c) 2023 Thomas Zhou
 -->
 
-<script lang="ts">
+<script lang=ts>
     import { goto } from "$app/navigation";
-    import Gallery from "@/client/components/Gallery.svelte";
     import { user } from "@/client/stores/user";
     import { AccountType } from "@/lib/enums";
+    import Pagination from "@/client/components/Pagination.svelte";
+    import Loading2 from "@/client/components/Loading2.svelte";
+    import SmartProjectImage from "@/client/components/SmartProjectImage.svelte";
 
-    export let data;
+    let { data } = $props();
 
-    $: ({ images } = data);
+    let images: any = $state([]), page: number = $state(0), items: number = $state(10), totalImageCount: number = $state(0);
+    $effect(() => {
+        images = data.images;
+        page = data.page;
+        items = data.items;
+        totalImageCount = data.totalImageCount;
+    });
+    images = data.images;
+    page = data.page;
+    items = data.items;
+    totalImageCount = data.totalImageCount;
+
+    async function search(page: number, items: number){
+        const searchParams = new URLSearchParams();
+
+        if(items) searchParams.set("items", items.toString())
+        if(page) searchParams.set("page", page.toString())
+
+        spinnerActive = true;
+
+        await goto(`/images?${searchParams}`);
+
+        // scrollElement?.scrollTo(0, 0); TODO: fix later
+
+        spinnerActive = false;
+    }
+
+    let spinnerActive = $state(false);
 
     async function gotoManageImages() {
         await goto("/manage-images");
     }
+
+    export const snapshot = {
+        capture: () => ({
+            items
+        }),
+		restore: (snapshot) => {
+            items = snapshot.items
+        }
+    }
 </script>
+
+{#if spinnerActive}
+<Loading2 />
+{/if}
 
 <main class="h-full">
     {#if $user.accountType == AccountType.Student}
     <div id="upload-images-button-container" class="p-4 sm:px-16 lg:px-36">
-        <button on:click={gotoManageImages}>Upload Images</button>
-        <button on:click={gotoManageImages}>Manage Your Images</button>
+        <button onclick={gotoManageImages}>Upload Images</button>
+        <button onclick={gotoManageImages}>Manage Your Images</button>
     </div>
     {/if}
-    <Gallery {images} projectPage={false} />
+    <div class="h-full overflow-y-auto w-full m-4">
+        <div class="flex flex-wrap items-center justify-center gap-4 h-auto">
+            {#each images as image}
+            <div class="w-[300px] h-[225px]">
+                <SmartProjectImage {image} showProjectPageButton={true} />
+            </div>
+            {:else}
+            <div class="flex items-center justify-center">
+                <span>No images.</span>
+            </div>
+            {/each}
+        </div>
+    </div>
+    <div class="flex justify-center w-full bg-gray-300">
+        <div class="flex justify-center p-2 sm:p-4 w-full lg:w-2/3 2xl:w-1/2">
+            <Pagination 
+                pluralItemName="images" 
+                itemsPerPage={items} 
+                currentPage={page}
+                maxItems={totalImageCount}
+                onchange={search}
+            />
+        </div>
+    </div>
 </main>
 
 <style lang='scss'>

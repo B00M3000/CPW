@@ -9,8 +9,8 @@
     import ProjectCard from "@/client/components/ProjectCard.svelte";
     import { browser } from "$app/environment";
     import Pagination from "@/client/components/Pagination.svelte";
-    import Loading2 from "./Loading2.svelte";
-    
+    import Loading2 from "@/client/components/Loading2.svelte";
+  
     let { data } = $props()
     
     let inflatedProjects: any[] = $state([])
