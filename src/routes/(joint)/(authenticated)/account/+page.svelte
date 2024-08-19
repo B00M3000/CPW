@@ -28,7 +28,7 @@
     }
 </script>
 
-<main class="flex flex-col justify-center items-center mt-12 mx-8">
+<main class="flex flex-col justify-center items-center mt-12 mx-8 bg-gray-300 p-4 rounded-xl">
     <div class="flex items-center gap-5 sm:gap-10 sm:m-5">
         <img class="w-16 h-16 sm:w-32 sm:h-32 rounded-full" src={$user.picture} alt="profile">
 
