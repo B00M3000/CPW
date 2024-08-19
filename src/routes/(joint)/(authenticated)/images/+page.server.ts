@@ -18,11 +18,9 @@ export async function load({ url: { searchParams } }) {
     const totalImageCount = await ImageSchema.find().count();
     return {
       images: inflatedImages,
-      searchParameters: {
-        page: page || 0,
-        items: items || 10,
-      },
-      totalImageCount
+      page: page || 0,
+      items: items || 10,
+      totalImageCount,
     };
 }
 

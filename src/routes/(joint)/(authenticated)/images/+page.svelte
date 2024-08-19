@@ -6,7 +6,6 @@
 
 <script lang=ts>
     import { goto } from "$app/navigation";
-    import Gallery from "@/client/components/Gallery.svelte";
     import { user } from "@/client/stores/user";
     import { AccountType } from "@/lib/enums";
     import Pagination from "@/client/components/Pagination.svelte";
@@ -15,22 +14,22 @@
 
     let { data } = $props();
 
-    let images: any = [], page: number = 0, items: number = 10, totalImageCount: number = 0;
+    let images: any = $state([]), page: number = $state(0), items: number = $state(10), totalImageCount: number = $state(0);
     $effect(() => {
         images = data.images;
-        page = data.searchParameters.page;
-        items = data.searchParameters.items;
+        page = data.page;
+        items = data.items;
         totalImageCount = data.totalImageCount;
     });
     images = data.images;
-    page = data.searchParameters.page;
-    items = data.searchParameters.items;
+    page = data.page;
+    items = data.items;
     totalImageCount = data.totalImageCount;
 
-    async function search(){
+    async function search(page: number, items: number){
         const searchParams = new URLSearchParams();
 
-        if(items) searchParams.set("itemsPerPage", items.toString())
+        if(items) searchParams.set("items", items.toString())
         if(page) searchParams.set("page", page.toString())
 
         spinnerActive = true;
@@ -47,6 +46,15 @@
     async function gotoManageImages() {
         await goto("/manage-images");
     }
+
+    export const snapshot = {
+        capture: () => ({
+            items
+        }),
+		restore: (snapshot) => {
+            items = snapshot.items
+        }
+    }
 </script>
 
 {#if spinnerActive}
@@ -60,22 +68,25 @@
         <button onclick={gotoManageImages}>Manage Your Images</button>
     </div>
     {/if}
-    <div class="h-full overflow-y-auto flex justify-center w-full">
-        <div class="flex flex-wrap items-center justify-center gap-4">
+    <div class="h-full overflow-y-auto w-full m-4">
+        <div class="flex flex-wrap items-center justify-center gap-4 h-auto">
             {#each images as image}
             <div class="w-[300px] h-[225px]">
                 <SmartProjectImage {image} showProjectPageButton={true} />
             </div>
+            {:else}
+            <div class="flex items-center justify-center">
+                <span>No images.</span>
+            </div>
             {/each}
         </div>
     </div>
-    <!-- <Gallery {images} projectPage={false} /> -->
     <div class="flex justify-center w-full bg-gray-300">
         <div class="flex justify-center p-2 sm:p-4 w-full lg:w-2/3 2xl:w-1/2">
             <Pagination 
                 pluralItemName="images" 
-                bind:itemsPerPage={items} 
-                bind:currentPage={page}
+                itemsPerPage={items} 
+                currentPage={page}
                 maxItems={totalImageCount}
                 onchange={search}
             />
