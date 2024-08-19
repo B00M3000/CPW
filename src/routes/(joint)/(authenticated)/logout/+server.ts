@@ -6,7 +6,7 @@
 
 import { json, redirect } from '@sveltejs/kit';
 
-export async function GET({ cookies, setHeaders }) {
-  /* @migration task: add path argument */ cookies.delete('session_id')
+export async function GET({ cookies }) {
+  cookies.delete('session_id', { path: '/' });
   redirect(307, '/');
 };

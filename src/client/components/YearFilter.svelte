@@ -33,11 +33,10 @@
     <label>
         <select
             class="yearFilter"
-            bind:value={yearLowerBound}
             on:change={updateLowerBound}
         >
             {#each yearOptions as year}
-                <option value={year}>{year}</option>
+                <option value={year} selected={yearLowerBound == year}>{year}</option>
             {/each}
         </select>
     </label>
@@ -49,7 +48,7 @@
             on:change={updateUpperBound}
         >
             {#each yearOptions as year}
-                <option value={year}>{year}</option>
+                <option value={year} selected={yearUpperBound == year}>{year}</option>
             {/each}
         </select>
     </label>

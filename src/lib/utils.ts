@@ -6,9 +6,10 @@
 
 import Papa from 'papaparse';
 import type { Fields } from '@/lib/data-upload';
+import escapeRegExp from "lodash/escapeRegExp";
 
 export function buildRegex(keywords: string[]){
-    return new RegExp(keywords.map((w:string) => `(?=.*?${w})`).join("") + ".*",   "i");
+    return new RegExp(keywords.map(escapeRegExp).map((w:string) => `(?=.*?${w})`).join("") + ".*",   "i");
 }
 
 export function stringifyObjectId(document: Object | null | undefined) {

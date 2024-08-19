@@ -35,7 +35,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 				adviseeIds: user.adviseeIds
 			};
 		} else {
-			/* @migration task: add path argument */ event.cookies.delete('session_id');
+			event.cookies.delete('session_id', { path: '/' });
 		}
 	}
 

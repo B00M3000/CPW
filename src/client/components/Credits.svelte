@@ -57,39 +57,10 @@
 </div>
 {/if}
 
-<style lang="scss">
+<style>
     button {
-            background: none;
-            background-color: transparent;
-            border: none;
+        background: none;
+        background-color: transparent;
+        border: none;
     }
-    
-        button {
-            background: none;
-            background-color: transparent;
-            border: none;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            padding: 2rem;
-            background-color: aliceblue;
-            color: black;
-            border-radius: 1rem;
-
-            .heading {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            ul {
-                display: flex;
-                flex-direction: column;
-                .package {
-                    font-size: small;
-                }
-            }
-        }
 </style>

@@ -35,7 +35,7 @@
     let showingMobileSideBar = true;
 </script>
 
-<nav class="flex justify-between bg-[#a4123f] py-4 text-white h-[var(--nav-bar-height)] z-10">
+<nav class="flex justify-between bg-[#a32349] py-4 text-white h-[var(--nav-bar-height)] z-10 shadow-2xl">
     <div class="sm:hidden"></div>
     <div class="flex ml-4 items-center max-sm:hidden">
         {#each navBarElements as element}
@@ -72,7 +72,7 @@
     </div>
     <button class="pointer-events-auto transition-side-bar py-2 pr-2 -translate-x-[6.25rem] hover:translate-x-0" on:click={() => showingMobileSideBar = !showingMobileSideBar}>
         <div class="relative inline-flex bg-[#a4123f] rounded-r-md py-3 justify-center items-center">
-            <div class="flex flex-col bg-[#a4123f] px-2 ml-1 bg-white rounded-md text-black">
+            <div class="flex flex-col px-2 ml-1 bg-white rounded-md text-black">
                 <span>Navigation</span>
             </div> 
             <div class="px-1 py-3">
