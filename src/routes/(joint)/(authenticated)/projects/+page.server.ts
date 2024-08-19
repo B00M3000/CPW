@@ -12,28 +12,34 @@ import { buildRegex, stringifyObjectId } from '@/lib/utils';
 import lowRelevance from "@/lib/lowRelevance";
 import type { FilterQuery } from 'mongoose';
 
-export async function load({ url }) {
-    const searchParams = url.searchParams;
+function parseIntOrElse(str: string | null, other: number): number {
+    if(!str) return other;
+    try { return parseInt(str); } 
+    catch (e) { return other; }   
+}
 
+export async function load({ url: { searchParams } }) {
     const dbQuery: FilterQuery<ProjectDocument> = {};
 
-    const title = searchParams.get('query')?.split(" ");
-    if(title){
-        dbQuery.title = buildRegex(title.filter((word) => {
+    // Handle title querying
+    const q = searchParams.get('q');
+    if(q) {
+        dbQuery.title = buildRegex(q.split(' ').filter((word) => {
             return !lowRelevance.includes(word) && !(word.length === 1);
         }))
     }
 
+    // Handle tag filtering
     const tags = searchParams.get('tags')?.split("_");
     if(tags) dbQuery.tags = { $all: tags };
 
-    const yearUpper = searchParams.get('yearUpper');
-    const yearLower = searchParams.get('yearLower');
-    if(yearLower || yearUpper) dbQuery.year = { $gte: yearLower ? parseInt(yearLower) : undefined, $lte: yearUpper ? parseInt(yearUpper) : undefined };
+    // Handle year range filtering
+    dbQuery.year = { $gte: parseIntOrElse(searchParams.get("yearLower"), 2019) };
+    dbQuery.year = { ...dbQuery.year, $lte: parseIntOrElse(searchParams.get('yearUpper'), new Date().getFullYear()) };
 
+    // Setting up cached injection of student and mentor data
     let cachedStudents: any = {};
     let cachedMentors: any = {};
-
     async function injectStudentAndMentor(project: any) {
         project.student = cachedStudents[project.studentId] || stringifyObjectId(await UserSchema.findById(project.studentId, 'firstName lastName picture').lean());
         project.mentor = cachedMentors[project.mentorId] || stringifyObjectId(await MentorSchema.findById(project.mentorId, 'firstName lastName').lean());
@@ -42,6 +48,7 @@ export async function load({ url }) {
 
     let returnEmpty = false;
 
+    // Handle searchin via mentor
     const mentorSearch = searchParams.get('mentorSearch');
     if(mentorSearch){
         const mentorRegex = buildRegex(mentorSearch.split(" "))
@@ -54,6 +61,7 @@ export async function load({ url }) {
         }
     }
 
+    // Handle searching via student
     const studentSearch = searchParams.get('studentSearch');
     if(studentSearch){
         const studentRegex = buildRegex(studentSearch.split(" "))
@@ -66,10 +74,31 @@ export async function load({ url }) {
         }
     }
 
+    // only reveal published projects
     dbQuery.publish = true;
-    const projects: ProjectDocumentData[] = returnEmpty ? [] : await ProjectSchema.find(dbQuery, 'studentId title year tags mentorId shortDesc').lean() || [];
 
+    // paginate
+    const page = Math.min(parseIntOrElse(searchParams.get('page'), 0), 10000);
+    const itemsPerPage = Math.min(parseIntOrElse(searchParams.get('itemsPerPage'), 10), 50);
+    console.log(searchParams.get("itemsPerPage"));
+    const skip = page * itemsPerPage;
+
+    const projects: ProjectDocumentData[] = returnEmpty ? [] : await ProjectSchema.find(dbQuery, 'studentId title year tags mentorId shortDesc').limit(itemsPerPage).skip(skip).lean() || [];
+    const totalProjectCount: number = returnEmpty ? 0 : await ProjectSchema.find(dbQuery, 'studentId title year tags mentorId shortDesc').count();
     const inflatedProjects = await Promise.all(projects.map(stringifyObjectId).map(injectStudentAndMentor))
-
-    return { projects: inflatedProjects }
+    return {
+      inflatedProjects,
+      totalProjectCount,
+      searchParameters: {
+        query: q || "",
+        tags: tags || [],
+        yearUpper: dbQuery.yearUpper || new Date().getFullYear(),
+        yearLower: dbQuery.yearLower || 2019,
+        mentorSearch: mentorSearch || "",
+        studentSearch: studentSearch || "",
+        page: page || 0,
+        itemsPerPage: itemsPerPage || 10,
+      },
+      
+    };
 }

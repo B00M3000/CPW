@@ -23,7 +23,7 @@
         const redirect = $page.url.searchParams.get('redirect');
         if(redirect) params.set('state', redirect)
 
-        await goto(`https://accounts.google.com/o/oauth2/v2/auth?${params}`)
+        window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params}`
     }
 </script>
 

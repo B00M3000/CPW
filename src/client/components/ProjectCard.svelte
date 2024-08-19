@@ -21,59 +21,27 @@
     }
 </script>
 
-<div class="flex flex-col bg-slate-50 rounded-md max-w-96 gap-5 p-6">
+<div class="flex flex-col justify-between bg-slate-50 rounded-md gap-5 p-6 w-full h-full">
     <div class="flex items-start flex-col gap-2">
-        <h3 class="text-md">{project.title}</h3>
+        <h3 class="text-xl">{project.title}</h3>
 
-        <div class="flex justify-center max-h-20 overflow-clip">
+        <div class="flex justify-center max-h-20 overflow-clip mb-4">
             <Tags tagIds={project.tags} />
         </div> 
 
         {#if displayShortDesc}
-        <span class="overflow-ellipsis text-wrap whitespace-nowrap text-sm">{project.shortDesc}</span>
+        <span class="text-wrap whitespace-nowrap text-sm max-h-24 overflow-y-clip">{project.shortDesc}</span>
         {/if}
     </div>
+
     
-    <div class="flex items-center justify-center gap-4">
-        <StudentCard student={project.student}/>
-    
-        <MentorCard mentor={project.mentor}/>
-    </div>
-
-    {#if displayLearnMore}
-    <button class="w-full justify-center rounded-md bg-blue-400 hover:bg-blue-500 py-1 px-2 inline-flex text-gray-900" on:click={gotoProject}>View Project Page</button>
-    {/if}
-</div>
-
-<!-- <button class="flex p-3 bg-slate-300 rounded-2xl shadow-lg" on:click={gotoProject}>
-    <div class="flex flex-col gap-2">
-        <h3 class="text-md text-center mb-2">{project.title}</h3>
-
-        <div class="flex justify-center items-center gap-2">
-            <span>Student: </span>
+    <div class="flex flex-col gap-4">
+        <div class="flex items-center justify-center gap-4">
             <StudentCard student={project.student}/>
-        </div>
-        
-        <div class="flex justify-center items-center gap-2">
-            <span>Mentor: </span>
             <MentorCard mentor={project.mentor}/>
         </div>
+        {#if displayLearnMore}
+        <button class="w-full justify-center rounded-md bg-blue-400 hover:bg-blue-500 py-1 px-2 inline-flex text-gray-900" on:click={gotoProject}>View Project Page</button>
+        {/if}
     </div>
-    
-
-    <div class="flex justify-center max-h-20 overflow-clip">
-        <Tags tagIds={project.tags} />
-    </div> 
-
-    {#if displayShortDesc}
-    <span class="overflow-ellipsis overflow-hidden text-wrap whitespace-nowrap h-16">{project.shortDesc}</span>
-    {/if}
-    
-    <hr class="bg-black">
-
-    {#if displayLearnMore}
-    <div class="flex justify-center mt-2">
-        <button class="rounded-md bg-blue-400 hover:bg-blue-300 p-2 inline-flex text-gray-900" on:click={gotoProject}>View Project Page</button>
-    </div>
-    {/if}
-</button> -->
+</div>
