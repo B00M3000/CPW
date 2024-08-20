@@ -74,36 +74,40 @@
     <div class="flex justify-center items-center">
         <div class="mentor-container m-3 overflow-y-auto max-h-[75vh] shadow-md">
             <table>
-                <tr>
-                    <th>
-                        <span>Name</span>   
-                    </th>
-                    <th>
-                        <span>Organization </span>
-                    </th>
-                    <th>
-                        <span>Email</span>
-                    </th>
-                    <th>
-                        <span>Phone</span>
-                    </th>
-                </tr>
-                {#each mentors as mentor}
-                <tr on:click ={()  => goto(`mentor-search/${mentor._id}`)}>
-                    <td>
-                        <span> {mentor.name} </span>
-                    </td>
-                    <td>
-                        <span> {mentor.organization} </span>
-                    </td>
-                    <td>
-                        <span> {mentor.email} </span>
-                    </td>
-                    <td>
-                        <span> {mentor.phoneNumber} </span>
-                    </td>
-                </tr>
-                {/each}
+                <thead>
+                    <tr>
+                        <th>
+                            <span>Name</span>   
+                        </th>
+                        <th>
+                            <span>Organization </span>
+                        </th>
+                        <th>
+                            <span>Email</span>
+                        </th>
+                        <th>
+                            <span>Phone</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {#each mentors as mentor}
+                    <tr on:click ={()  => goto(`mentor-search/${mentor._id}`)}>
+                        <td>
+                            <span> {mentor.name} </span>
+                        </td>
+                        <td>
+                            <span> {mentor.organization} </span>
+                        </td>
+                        <td>
+                            <span> {mentor.email} </span>
+                        </td>
+                        <td>
+                            <span> {mentor.phoneNumber} </span>
+                        </td>
+                    </tr>
+                    {/each}
+                </tbody>
             </table>
         </div>
     </div>
