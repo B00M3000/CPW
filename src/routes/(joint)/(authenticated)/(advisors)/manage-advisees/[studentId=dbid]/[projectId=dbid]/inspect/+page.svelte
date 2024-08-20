@@ -23,7 +23,7 @@
 </script>
 
 <main class="flex flex-col p-16 m-16 bg-slate-300 rounded-3xl">
-    <p class="mb-3"><strong class="text-red-700">IMPORTANT: </strong>Please review everything, the button to approve will appear at the bottom once you have confirmed that the required elements are present!</p>
+    <p class="mb-3 gap-1 flex items-center text-xl mb-8"><strong class="text-red-700">IMPORTANT: </strong>Please review everything, the button to approve will appear at the bottom once you have confirmed that the required elements are present!</p>
 
     <h1 class="text-2xl my-2">Inspecting {project.student.name}'s Project</h1>
 

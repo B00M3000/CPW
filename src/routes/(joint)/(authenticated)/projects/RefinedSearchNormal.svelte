@@ -3,6 +3,7 @@
     import YearFilter from "@/client/components/YearFilter.svelte";
     import { tags } from "@/lib/tags";
     import { Close } from "carbon-icons-svelte";
+  import { onMount } from "svelte";
     import MultiSelect from 'svelte-multiselect'
 
     const tagOptions = Array.from(tags.entries()).map(([k, v]) => ({ id: k, label: v, value: v }))
@@ -19,6 +20,16 @@
 
     let innerWindowWidth = $state(0);
     let reduceSpacing = $derived(innerWindowWidth <= 930);
+
+    onMount(() => {
+        selected = searchParameters.tags.map((tagId: string) => tagOptions.find(option => option.id === tagId));
+    })
+
+    $effect(() => {
+        searchParameters.tags = selected.map((option: any) => option.id);
+    })
+
+    let selected = $state([]);
 </script>
 
 <div class="bg-[rgb(183,188,197)] flex items-center justify-center shadow-xl m-7 my-4 ml-0 rounded-r-xl">
@@ -58,6 +69,7 @@
                     placeholder="Search tags.."
                     liSelectedClass="flex gap-2 items-center"
                     outerDivClass="flex gap-2 items-center my-0 bg-gray-50 p-2 rounded-md"
+                    bind:selected
                 >
                     <span slot="selected" let:option class="max-w-40 text-ellipsis overflow-x-clip text-sm">{option.label}</span>
                 </MultiSelect>  

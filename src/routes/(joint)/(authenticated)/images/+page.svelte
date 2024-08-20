@@ -61,14 +61,14 @@
 <Loading2 />
 {/if}
 
-<main class="h-full">
+<main class="h-full flex items-center flex-col">
     {#if $user.accountType == AccountType.Student}
-    <div id="upload-images-button-container" class="p-4 sm:px-16 lg:px-36">
+    <div id="upload-images-button-container" class="w-full p-4 sm:px-16 lg:px-36">
         <button onclick={gotoManageImages}>Upload Images</button>
         <button onclick={gotoManageImages}>Manage Your Images</button>
     </div>
     {/if}
-    <div class="h-full overflow-y-auto w-full m-4">
+    <div class="h-full overflow-y-auto w-full">
         <div class="flex flex-wrap items-center justify-center gap-4 h-auto">
             {#each images as image}
             <div class="w-[300px] h-[225px]">
@@ -100,7 +100,7 @@
         flex-direction: column;
         justify-content: center;
 
-        height: calc(100vh - var(--nav-bar-height));
+        height: 100%;
     }
 
     #upload-images-button-container {

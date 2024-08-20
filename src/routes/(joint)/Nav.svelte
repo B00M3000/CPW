@@ -11,16 +11,17 @@
     import { AccessLevel, AccountType } from "@/lib/enums";
     import Credits from "@/client/components/Credits.svelte";
 
-    import { page } from "$app/stores";
+    import { navigating, page } from "$app/stores";
 
-    import Icon from "./Icon.svelte";
-    import CaretRight from "../icons/CaretRight";
-    import FileText from "../icons/FileText";
-    import AiFile from "../icons/AiFile";
-    import Images from "../icons/Images";
-    import Home from "../icons/Home";
-    import Gear from "../icons/Gear";
-    import CaretLeft from "../icons/CaretLeft";
+    import Icon from "../../client/components/Icon.svelte";
+    import CaretRight from "../../client/icons/CaretRight";
+    import FileText from "../../client/icons/FileText";
+    import AiFile from "../../client/icons/AiFile";
+    import Images from "../../client/icons/Images";
+    import Home from "../../client/icons/Home";
+    import Gear from "../../client/icons/Gear";
+    import CaretLeft from "../../client/icons/CaretLeft";
+    import { BarLoader } from "svelte-loading-spinners";
 
     $: section = $page.url.pathname.split("/")[1];
 
@@ -31,9 +32,8 @@
         { icon: Gear, name: "Admin", link: "/admin", section: "admin", predicate: () => $user?.accessLevel == AccessLevel.Admin },
         { icon: AiFile, name: "Docs", link: "/docs", section: "docs" }
     ]
-
-    let showingMobileSideBar = true;
 </script>
+
 
 <nav class="flex justify-between bg-[#a32349] py-4 text-white h-[var(--nav-bar-height)] z-10 shadow-2xl">
     <div class="sm:hidden"></div>
@@ -56,33 +56,23 @@
         <Credits />
     </div>
 </nav>
-
-<slot />
-
-<div class="pointer-events-none sm:hidden inline-flex justify-center items-center py-4 text-white absolute {showingMobileSideBar ? "" : "-translate-x-[8.5rem]"} -translate-y-1/2 transform top-1/2 z-10 transition-side-bar">
-    <div class="pointer-events-auto flex flex-col items-center z-10 justify-center gap-3 bg-[#a4123f] w-36 rounded-r-md py-3">
-        {#each navBarElements as element}
-            {#if element.predicate == undefined || element.predicate()}
-                <a class="text-white decoration-0 nav-element flex items-center p-2 rounded-lg mx-2 gap-2 hover:bg-red-900 {section == element.section ? " bg-red-900" : ""}" href={element.link}>
-                    <Icon src={element.icon} size="1.75rem" color='white'/>
-                    <span>{element.name}</span>
-                </a>
-            {/if}
-        {/each} 
-    </div>
-    <button class="pointer-events-auto transition-side-bar py-2 pr-2 -translate-x-[6.25rem] hover:translate-x-0" on:click={() => showingMobileSideBar = !showingMobileSideBar}>
-        <div class="relative inline-flex bg-[#a4123f] rounded-r-md py-3 justify-center items-center">
-            <div class="flex flex-col px-2 ml-1 bg-white rounded-md text-black">
-                <span>Navigation</span>
-            </div> 
-            <div class="px-1 py-3">
-                <Icon src={showingMobileSideBar ? CaretLeft : CaretRight} color="white" size="1.25rem"/>
-            </div>
-        </div>
-    </button>
+{#if $navigating}
+<div class="loader">
+    <BarLoader size=100 unit="vw" duration="30s" color="#e65984" />
 </div>
+{/if}
 
 <style lang="scss">
+    .loader {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 21;
+        height: 0.2rem;
+        overflow: hidden;
+    }
+
     .animate-red-glowing {
         animation: glowing 1500ms infinite;
     }

@@ -10,7 +10,7 @@
     import { bytesToString, sleep } from "@/lib/utils";
     import Progress from "./Progress.svelte";
     import DescriptionEditor from "./DescriptionEditor.svelte";
-    import { goto } from "$app/navigation";
+    import { goto, invalidate } from "$app/navigation";
     import Trash from "@/client/icons/Trash";
 
     interface UploadedImageData {
@@ -132,7 +132,7 @@
     let mobileKeyOverlay = false;
 
     function closeOverlay(event?: MouseEvent) {
-        if(event?.target?.nodeName == "DIV") mobileKeyOverlay = false
+        if(event?.target?.nodeName == "BUTTON") mobileKeyOverlay = false
     }
 </script>
 
@@ -202,8 +202,12 @@
                         </div>
                     </div>
                     <div class="flex flex-col p-6 gap-3 justify-center">
+                        {#if get(item.progress) == 100}
                         <span>{item.project.title}</span>
                         <Progress valueStore={item.progress} />
+                        {:else}
+                        <span>Upload Complete!</span>
+                        {/if}
                     </div>
                     <div class="flex flex-col p-6 justify-center">
                         <DescriptionEditor imageId={item.imageId} />
@@ -230,7 +234,13 @@
                         <th class="p-4 text-gray-700">Description</th>
                         <th class="p-4 text-gray-700">Upload Date</th>
                         <th class="p-4 text-gray-700">Size</th>
-                        <th class="p-4 text-gray-700"></th>
+                        <th class="p-4 text-gray-700">
+                            <div class="flex items-center justify-center ">
+                                <button class="inline-flex items-center justify-center p-1 px-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white" on:click={async () => {
+                                    invalidate('user:imagelist')
+                                }}>Refresh</button>
+                            </div>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>

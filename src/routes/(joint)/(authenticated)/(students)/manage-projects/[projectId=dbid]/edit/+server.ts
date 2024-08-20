@@ -8,10 +8,17 @@ import { ProjectSchema } from '@/server/mongo/schemas/project';
 import { json } from '@sveltejs/kit';
 
 
-export async function POST({ request  }) {
-    const { project: { shortDesc, tags, title, _id } } = await request.json();
+export async function POST({ request, params: { projectId } }) {
+    const { project: { shortDesc, tags, title } } = await request.json();
 
-    await ProjectSchema.findOneAndUpdate({ _id }, { title, tags, shortDesc })
+    await ProjectSchema.findOneAndUpdate(
+        { _id: projectId },
+        {
+            title,
+            tags,
+            shortDesc
+        }
+    );
 
     return json({ message: "Project has been updated." });
 }

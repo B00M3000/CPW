@@ -21,23 +21,20 @@
         <button class="text-white text-md rounded-r-lg p-2 sm:p-4 bg-sky-600 hover:bg-sky-700" type="submit">Search</button>
     </div>
     <div class="flex flex-wrap justify-center items-center gap-2 sm:gap-4">
-        <button class="flex-grow-0 text-white rounded-lg bg-slate-400 p-2 sm:p-4 text-md max-sm:text-sm hover:bg-slate-500" on:click={async () => {
-                await goto(`/projects/archived`);
-            }}>
+        <a class="flex-grow-0 text-white rounded-lg bg-slate-400 p-2 sm:p-4 text-md max-sm:text-sm hover:bg-slate-500"
+            href="/projects/archived">
             See Archived Projects
-        </button>
+        </a>
         {#if $user.accountType == AccountType.Student}
-        <button class="flex-grow-0 text-white rounded-lg bg-orange-600 p-2 sm:p-4 text-md max-sm:text-sm hover:bg-orange-700" on:click={async () => {
-                await goto(`/manage-projects`); 
-            }}>
+        <a class="flex-grow-0 text-white rounded-lg bg-orange-600 p-2 sm:p-4 text-md max-sm:text-sm hover:bg-orange-700" 
+            href="/manage-projects">
             View My Projects    
-        </button>
+        </a>
         {:else if $user.accountType == AccountType.Advisor}
-        <button class="flex-grow-0 text-white rounded-lg bg-yellow-600 p-2 sm:p-4 text-md max-sm:text-sm hover:bg-yellow-700" on:click={async () => {
-                await goto(`/manage-advisees`);
-            }}>
+        <a class="flex-grow-0 text-white rounded-lg bg-yellow-600 p-2 sm:p-4 text-md max-sm:text-sm hover:bg-yellow-700"
+            href="/manage-advisees">
             View My Advisees    
-        </button>
+        </a>
         {/if}
         <button class="flex-grow-0 text-white rounded-lg bg-gray-400 p-2 sm:p-4 text-md max-sm:text-sm hover:bg-gray-500" on:click={openRefinedSearch}>
             Open Refined Search 

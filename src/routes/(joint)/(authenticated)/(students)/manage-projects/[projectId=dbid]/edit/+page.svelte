@@ -6,276 +6,127 @@
 
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import InformationBox from "@/client/components/InformationBox.svelte";
     import { tags } from "@/lib/tags";
     import { onMount } from "svelte";
+    import MultiSelect from "svelte-multiselect";
+    import { RingLoader } from "svelte-loading-spinners"
+    import { CheckmarkFilled, ErrorFilled } from "carbon-icons-svelte";
 
-    export let data;
-    $: ({ project: originalProject, mentor: originalMentor, projectId } = data);
+    const tagOptions = Array.from(tags.entries()).map(([k, v]) => ({ id: k, label: v, value: v }))
 
     interface ProjectInformation {
-      title: string;
-      tags: string[];
-      shortDesc: string;
+        _id: string;
+        title: string;
+        tags: string[];
+        shortDesc: string;
     }
 
     interface MentorInformation {
-      mentorId: string;
-      name: string;
-      organization: string;
+        _id: string;
+        name: string;
+        organization: string;
+    }
+
+    let { data }: {
+        data: {
+            project: ProjectInformation, 
+            mentor: MentorInformation, 
+        }
+    } = $props();
+
+    enum EditStatus {
+        UNSAVED,
+        UPLOADING,
+        SUCCESS,
+        ERROR
     }
     
-    let project: ProjectInformation = {
-      title: "",
-      tags: [],
-      shortDesc: ""
-    };
+    let status: EditStatus = $state(EditStatus.UNSAVED);
 
-    let mentor: MentorInformation = {
-      mentorId: "",
-      name: "",
-      organization: "",
-    };
-      
-    onMount(() => {
-      project = originalProject;
-      mentor = originalMentor;
-    })
-    
-    let success = false;
-    let errorsMessages: string[] = [];
     async function upload() {
-      const numberOfTags= project.tags.length
-  
-      if(numberOfTags < 1 || numberOfTags > 5) errorsMessages.push("Please select between 1 and 5 tags.");
-      if(project.title.length > 100 && project.title.length < 12) errorsMessages.push("Please enter a project name between 12 and 200 characters");
-      if(project.shortDesc.length < 3) errorsMessages.push("Please enter a short description with at least 100 characters to start. You can always edit it later.")
+        status = EditStatus.UPLOADING;
 
-      if(errorsMessages.length == 0){
-        const res = await fetch(`/manage-projects/${projectId}/edit`, {
+        const res = await fetch(`/manage-projects/${data.project._id}/edit`, {
             method: "POST",
             body: JSON.stringify({ project })
-        });
-      } else {
-        return;
-      }
-        
-      success = true;
+        })
+
+        if(res.ok) status = EditStatus.SUCCESS;
+        else status = EditStatus.ERROR;
     }
+
+    onMount(() => {
+        selected = data.project.tags.map((tagId: string) => tagOptions.find(option => option.id === tagId));
+    })
+
+    $effect(() => {
+        project.tags = selected.map((option: any) => option.id);
+    })
+
+    let selected: any = $state([]);
+
+    interface ProjectInformation2 {
+        title?: string;
+        tags?: string[];
+        shortDesc?: string;
+    }
+
+    let project: ProjectInformation2 = {};
 </script>
 
-<main class="formbar">
-  <div class="form-container">
-      <div id="inputForm">
-          <div class="form-group">
-            <label for="subject" class="label">Project Title</label>
-            <input type="text" id="subject" name="subject" required  maxlength="120" minlength="5"  bind:value={project.title}>
-          </div>
-            <div class="form-group">
-              <label for="selected" class="label">Select Tags</label>
-              {#each Array.from(tags.entries()) as [id, label]}
-                    <input type="checkbox" value = {id} id="selected" class="checkbox" name="selected" bind:group={project.tags}/>
-                    {label}
-                  <br />
-                {/each}
-            </div>
-        
-          <h1>To Modify Mentor Information, Contact Ms. Moss</h1> 
-          <!-- remind to enter corectly first time, because later can only be changed by ms. moss -->
-          {#if !mentor}
-          <h1>Mentor Not Found!</h1>
-          {:else}
-          <div class="info">
-            <span>Name: {mentor.name}</span>
-            <span>Org: {mentor.organization}</span>
-          </div>
-          {/if}
+<main class="flex items-center justify-center h-full w-full">
+    <div class="flex flex-col items-center gap-12 p-12 rounded-lg bg-gray-300">
+        <h1 class="text-2xl">Edit Project Details</h1>
 
-          <div class="form-group">
-            <label for="shortDesc" class="label">Write A Short Description</label>
-            <textarea id="shortDesc" name="shortDesc" rows="3" cols="60" maxlength="2000" required bind:value={project.shortDesc}></textarea>
-          </div>
-      </div>
-      <hr>
-      <div class="form-group button-group">
-        <button type="submit" class="submit-button" on:click={upload}> Save Changes</button>
-        <button type="submit" class="submit-button" on:click={() => goto("/manage-projects")}> Discard</button>
-        {#if errorsMessages.length > 0}
-          <div class="overlay">
-            <div class="info-box">
-                <InformationBox 
-                  backgroundColor="var(--color-red-100)" 
-                  borderColor="var(--color-red-600)" 
-                  textColor="var(--color-red-600)" 
-                  headingColor="var(--color-red-900)" 
-                  heading="Invalid Inputs" 
-                  text={errorsMessages.map(m => `  - ${m}`).join('\n')}
-                />
+        <div class="flex items-center gap-12">
+            <div class="flex flex-col items-start gap-4">
+                <div class="flex gap-2 items-start flex-col">
+                    <h2 class="text-lg">Title</h2>
+                    <span contenteditable="plaintext-only" class="text-md rounded-md bg-gray-200 p-2 border-gray-400 border" bind:innerHTML={project.title}>{data.project.title}</span>
+                </div>
                 
+                <div class="flex gap-2 items-start flex-col">
+                    <h2 class="text-lg">Tags</h2>
+                    <MultiSelect 
+                        options={tagOptions}
+                        maxSelect={3}
+                        placeholder="Search tags.."
+                        liSelectedClass="flex gap-2 items-center"
+                        outerDivClass="flex gap-2 items-center my-0 bg-gray-50 p-2 rounded-md border-gray-400 border max-w-[30rem]"
+                        bind:selected
+                    >
+                        <span slot="selected" let:option class="max-w-72 text-ellipsis overflow-x-clip text-md">{option.label}</span>
+                    </MultiSelect>  
+                </div>
+                
+                <div class="flex gap-2 items-start flex-col">
+                    <h2 class="text-lg">Short Description</h2>
+                    <span contenteditable="plaintext-only" class="text-md rounded-md bg-gray-200 p-2 border-gray-400 border max-w-[32rem]" bind:innerHTML={project.shortDesc}>{data.project.shortDesc}</span>
+                </div>
             </div>
-            <div class="info-box-button"> <button on:click = {() => errorsMessages.length = 0}> Got It! </button> </div>
-            
-          </div>
-        {/if}
-    
-        {#if success}
-        <div class="overlay">
-          <div class="info-box">
-              <InformationBox 
-                backgroundColor="var(--color-green-100)" 
-                borderColor="var(--color-green-600)" 
-                textColor="var(--color-green-600)" 
-                headingColor="var(--color-green-500)" 
-                heading="Success!!" 
-                text={"Project was submitted. You should see it on the /manage-project page."}
-              />
-              
-          </div>
-          <div class="info-box-button-submit"> <a data-sveltekit-reload href="/manage-projects" > Got It! </a> </div>
-         </div>
-        {/if}
-      </div>
-  </div>
-  
+            <div class="flex flex-col items-start gap-4 p-8">
+                <h2 class="text-lg">Mentor</h2>
+                <div class="flex flex-col items-start gap-2 rounded-lg p-4 bg-gray-200">
+                    <span>{data.mentor.name}</span>
+                    <span>{data.mentor.organization}</span>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center gap-8">
+            <div class="flex items-center gap-3">
+                {#if status == EditStatus.UPLOADING}
+                    <RingLoader color="blue" size={24} />
+                {:else if status == EditStatus.SUCCESS}
+                    <CheckmarkFilled color="green" size={24} />
+                {:else if status == EditStatus.ERROR}
+                    <ErrorFilled color="red" size={24} />
+                {/if}
+                <button class="p-3 px-5 bg-blue-500 hover:bg-blue-600 text-white rounded-md flex items-center" onclick={upload}>
+                    
+                    <span>Save Changes</span>
+                </button>
+            </div>
+            <a class="p-3 px-5 bg-red-500 hover:bg-red-600 text-white rounded-md" href="/manage-projects" data-sveltekit-reload>Go Back</a>
+        </div>
+    </div>
 </main>
-
-<style>
-.formbar {
-  background-color: #4a5568;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  
-  height: 100%; 
-  display: flex;
-  justify-content: center;
-  
-}
-
-.form-group {
-  padding-top: 2rem;
-}
-
-
-.form-container {
-  
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-  #inputForm {
-    color: #fff;
-  }
-
-.label {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 700;
-  margin-bottom: 0.2rem;
-}
-
-input,
-textarea {
-  padding: 0.3rem 0.7rem;
-  border: 2px solid #000;
-  border-radius: 0.375rem;
-  outline: none;
-  transition: box-shadow 0.2s, border-color 0.2s;
-  color: white;
-  width: 200px;
-  background-color: #525252;
-}
-
-input:focus,
-textarea:focus {
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
-  border-color: #4299e1;
-}
-
-.checkbox{
-    width: auto;
-}
-textarea{
-    width:auto;
-}
-.submit-button {
-  padding: 0.5rem 1rem;
-  background-color: #2563eb;
-  color: #fff;
-  border-radius: 0.375rem;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.submit-button:hover {
-  background-color: #1e40af;
-}
-
-.submit-button:focus {
-  outline: none;
-}
-
-.overlay {
-    position:fixed;
-    margin: 0;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    background-color:rgba(0, 0, 0, 0.85);
-    z-index:9999;
-  }
-  .info-box{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 25vh;
-  }
-
-  .info-box-button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
- .info-box-button button{
-    margin-top: 0.2rem;
-    border: var(--color-red-600) 3px solid;
-    border-radius: 0%;
-    color: white;
-    background-color: transparent;
-    
- }
-
- .info-box-button button:hover{
-    background-color: rgba(165, 28, 28, 0.35);
-
- }
-
- .info-box-button-submit a{
-    margin-top: 0.2rem;
-    text-decoration: none;
-    border: var(--color-green-600) 3px solid;
-    border-radius: 0%;
-    color: white;
-    background-color: transparent;
-    padding: 0.5em;
-    font-size: 16px;
-    border-radius: 4px;
-    
- }
- .info-box-button-submit a:hover{
-    background-color: rgba(35, 161, 39, 0.35);
-    
- }
-
- .info-box-button-submit{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-</style>
-
-
-
-
-
-

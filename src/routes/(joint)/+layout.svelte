@@ -5,7 +5,8 @@
 -->
 
 <script lang="ts">
-    import Nav from "@/client/components/Nav.svelte";
+    import Nav from "./Nav.svelte";
+    import MobileNav from "./MobileNav.svelte";
 
     import { browser } from '$app/environment';
     import { navigating } from '$app/stores';
@@ -29,25 +30,10 @@
     <meta name="twitter:image" content="https://cpw.tzhou.xyz/assets/CommonwealthSchool.jpg">
 </svelte:head>
 
-<Nav>
-    {#if $navigating}
-    <div class="loader">
-        <BarLoader size=100 unit="vw" duration="30s" color="#e65984" />
-    </div>
-    {/if}
-    <div class="h-[calc(100vh-var(--nav-bar-height))] overflow-y-auto">
+<div class="h-screen w-screen grid grid-rows-[auto_minmax(0,_1fr)_auto]">
+    <Nav />
+    <div class="overflow-y-auto">
         <slot />
     </div>
-</Nav>
-
-<style>
-    .loader {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 21;
-        height: 0.2rem;
-        overflow: hidden;
-    }
-</style>
+    <MobileNav />
+</div>

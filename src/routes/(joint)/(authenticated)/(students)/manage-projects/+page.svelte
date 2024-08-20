@@ -53,19 +53,22 @@
 
 <main>
     <div class="dashboard-actions">
-        <h2>Manage Projects</h2>
+        <h2 class="text-2xl text-gray-600">Manage Projects</h2>
         <div class="flex gap-4">
-            <button on:click={() => goto('manage-projects/create')}>
+            <a href='manage-projects/create' class="p-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">
                 Create New Project
-            </button>
-            <button on:click={() => goto('manage-images')}>
+            </a>
+            <a href='manage-images' class="p-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">
                 Upload Images
-            </button>
+            </a>
         </div>
     </div>
 
     <div style="background-color: lightgrey; padding: 3rem; padding-top: 0; margin-bottom: 3rem;">
-        <span style="text-align: center;"><strong>Disclaimer: </strong>Completing the forms on google classroom and submitting your project report as a google document is still required. (As of Project Week 2024) </span>
+        <div class="flex items-center gap-2 text-lg">
+            <span class="font-bold text-red-700">IMPORTANT: </span>
+            <span>Completing the forms on google classroom and submitting your project report as a google document is still required. (As of Project Week 2024)</span>
+        </div>
     </div>
 
     <div class="card-container">
@@ -115,7 +118,7 @@
             {#if deleteConfirm == i}
             <div class="overlay delete-confirm">
                 <p>Enter the project title to delete. Type: {project.title}</p>
-                <input bind:value={deleteConfirmInputValue} on:paste={(e) => e.preventDefault()}/>
+                <input class="text-black" bind:value={deleteConfirmInputValue} on:paste={(e) => e.preventDefault()}/>
                 {#if deleteConfirmInputValue == project.title}
                 <button class="blink" on:click={deleteProject(project)}>CONFIRM DELETION</button>
                 {/if}
@@ -170,12 +173,6 @@
         padding: 3rem;
 
         background-color: lightgrey;
-    }
-
-    .dashboard-actions h2 {
-        font-size: 24px;
-        color: #666;
-        margin: 0;
     }
 
     button {

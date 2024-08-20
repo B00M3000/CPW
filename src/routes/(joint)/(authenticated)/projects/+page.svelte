@@ -91,7 +91,7 @@
 <Loading2 />
 {/if}
 
-<main class="h-[calc(100vh-var(--nav-bar-height))] w-full grid grid-cols-1 grid-rows-[auto_minmax(0,_1fr)_auto] bg-gray-300 overflow-hidden">
+<main class="h-full w-full grid grid-cols-1 grid-rows-[auto_minmax(0,_1fr)_auto] bg-gray-300 overflow-hidden">
     {#if refinedSearchMobileOpen}
     <div class="relative">
         <div class="absolute top-0 w-screen z-10">

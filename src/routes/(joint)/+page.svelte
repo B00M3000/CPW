@@ -22,7 +22,7 @@
 </script>
 
 <div class="fixed left-0 top-0 w-screen h-screen bg-cover bg-center blur-sm scale-110 -z-10 bg-[url('/assets/CommonwealthSchool.jpg')]"></div>
-<main class="flex justify-center items-center h-[85vh]">
+<main class="flex justify-center items-center h-full">
     <div class="flex flex-col items-center justify-center search-title text-white w-[calc(100vw - (100vw - 100%))]">
         <h1 class="text-5xl font-bold [text-shadow:_0_2px_4px_rgba(0,0,0,0.5)] mb-5 max-sm:text-4xl text-center">Commonwealth Project Week</h1>
         <form class="search-bar" on:submit={gotoSearch}>

@@ -39,6 +39,7 @@
 
     $effect(() => {
       loaded = Boolean(src && false)
+      image = image
     })
 
     $effect(() => {

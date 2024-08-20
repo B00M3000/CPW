@@ -66,36 +66,40 @@
     </div>
     <div class="mentor-container">
         <table>
-            <tr>
-                <th>
-                    <span>Project Subject</span>   
-                </th>
-                <th>
-                    <span>Name</span>   
-                </th>
-                <th>
-                    <span>Mentor </span>
-                </th>
-                <th>
-                    <span>Mentor Organization</span>
-                </th>
-            </tr>
-            {#each searchResults as result}
-            <tr>
-                <td>
-                    <span> {result["Project Subject"]} </span>
-                </td>
-                <td>
-                    <span> {result["Name First"]} {result["Name Last"]} </span>
-                </td>
-                <td>
-                    <span> {result["Mentor First Name"]} {result["Mentor Last Name"]} </span>
-                </td>
-                <td>
-                    <span> {result["Mentor Organization"]} </span>
-                </td>
-            </tr>
-            {/each}
+            <thead>
+                <tr>
+                    <th>
+                        <span>Project Subject</span>   
+                    </th>
+                    <th>
+                        <span>Name</span>   
+                    </th>
+                    <th>
+                        <span>Mentor </span>
+                    </th>
+                    <th>
+                        <span>Mentor Organization</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {#each searchResults as result}
+                <tr>
+                    <td>
+                        <span> {result["Project Subject"]} </span>
+                    </td>
+                    <td>
+                        <span> {result["Name First"]} {result["Name Last"]} </span>
+                    </td>
+                    <td>
+                        <span> {result["Mentor First Name"]} {result["Mentor Last Name"]} </span>
+                    </td>
+                    <td>
+                        <span> {result["Mentor Organization"]} </span>
+                    </td>
+                </tr>
+                {/each}
+            </tbody>
         </table>
     </div>
 </main>
