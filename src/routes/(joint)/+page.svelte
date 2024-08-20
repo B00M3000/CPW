@@ -17,7 +17,7 @@
 
   async function gotoSearch(event: Event) {
     event.preventDefault();
-    await goto(`/projects?yearUpper=2023&yearLower=2019&query=${search || ''}`)
+    await goto(`/projects?query=${search || ''}`)
   }
 </script>
 

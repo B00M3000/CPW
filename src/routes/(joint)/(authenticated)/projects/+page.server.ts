@@ -7,7 +7,7 @@
 import { ProjectSchema, type ProjectDocument, type ProjectDocumentData } from '@/server/mongo/schemas/project';
 import { MentorSchema } from '@/server/mongo/schemas/mentor';
 import { UserSchema } from '@/server/mongo/schemas/user';
-import { buildRegex, parseIntOrElse, stringifyObjectId } from '@/lib/utils';
+import { buildRegex, clamp, parseIntOrElse, stringifyObjectId } from '@/lib/utils';
 
 import lowRelevance from "@/lib/lowRelevance";
 import type { FilterQuery } from 'mongoose';
@@ -72,9 +72,8 @@ export async function load({ url: { searchParams } }) {
     dbQuery.publish = true;
 
     // paginate
-    const page = Math.min(parseIntOrElse(searchParams.get('page'), 0), 10000);
-    const itemsPerPage = Math.min(parseIntOrElse(searchParams.get('itemsPerPage'), 10), 50);
-    console.log(searchParams.get("itemsPerPage"));
+    const page = clamp(parseIntOrElse(searchParams.get('page'), 0), 0, 10000);
+    const itemsPerPage = clamp(parseIntOrElse(searchParams.get('itemsPerPage'), 10), 1, 50);
     const skip = page * itemsPerPage;
 
     const projects: ProjectDocumentData[] = returnEmpty ? [] : await ProjectSchema.find(dbQuery, 'studentId title year tags mentorId shortDesc').limit(itemsPerPage).skip(skip).lean().sort('-createdAt') || [];

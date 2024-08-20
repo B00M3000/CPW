@@ -8,9 +8,9 @@
     export let openRefinedSearch;
 </script>
 
-<form class="flex flex-wrap justify-center items-center w-full px-6 py-3 bg-gray-300 gap-2 sm:gap-4" on:submit|preventDefault={search}>
+<div class="flex flex-wrap justify-center items-center w-full px-6 py-3 bg-gray-300 gap-2 sm:gap-4">
     <!-- svelte-ignore a11y-autofocus -->
-    <div class="flex flex-grow max-w-[900px]">
+    <form class="flex flex-grow max-w-[900px]" on:submit|preventDefault={search}>
         <input
             placeholder="Search..."
             class="w-full p-2 sm:py-4 px-5 box-border rounded-l-lg outline-none"
@@ -19,7 +19,7 @@
             autofocus
         />
         <button class="text-white text-md rounded-r-lg p-2 sm:p-4 bg-sky-600 hover:bg-sky-700" type="submit">Search</button>
-    </div>
+    </form>
     <div class="flex flex-wrap justify-center items-center gap-2 sm:gap-4">
         <a class="flex-grow-0 text-white rounded-lg bg-slate-400 p-2 sm:p-4 text-md max-sm:text-sm hover:bg-slate-500"
             href="/projects/archived">
@@ -40,4 +40,4 @@
             Open Refined Search 
         </button>
     </div>
-</form>
+</div>

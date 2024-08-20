@@ -28,8 +28,6 @@
             filteredInflatedUnapprovedProjects = inflatedUnapprovedProjects;
         }
     }
-
-    $: console.log(filteredInflatedUnapprovedProjects)
 </script>
 
 <!-- <main>

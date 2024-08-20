@@ -1,9 +1,10 @@
 <script lang=ts>
+  import { enhance } from "$app/forms";
     import { goto } from "$app/navigation";
     import YearFilter from "@/client/components/YearFilter.svelte";
     import { tags } from "@/lib/tags";
     import { Close } from "carbon-icons-svelte";
-  import { onMount } from "svelte";
+    import { onMount } from "svelte";
     import MultiSelect from 'svelte-multiselect'
 
     const tagOptions = Array.from(tags.entries()).map(([k, v]) => ({ id: k, label: v, value: v }))
@@ -33,9 +34,9 @@
 </script>
 
 <div class="bg-[rgb(183,188,197)] flex items-center justify-center shadow-xl m-7 my-4 ml-0 rounded-r-xl">
-    <div class="flex flex-col w-80 mx-12 items-center justify-center {reduceSpacing ? "gap-3" : "gap-5"}">
+    <form class="flex flex-col w-80 mx-12 items-center justify-center {reduceSpacing ? "gap-3" : "gap-5"}" onsubmit={(event) => { event.preventDefault(); search() }}>
         <div class="flex justify-end w-full mb-[-1rem] mr-[-2rem]">
-            <button onclick={close} class="bg-red-600 hover:bg-red-700 flex gap-2 items-center text-white p-2 py-1 rounded-md">
+            <button onclick={close} type="button" class="bg-red-600 hover:bg-red-700 flex gap-2 items-center text-white p-2 py-1 rounded-md">
                 <Close />
                 <span>Close</span>
             </button>
@@ -79,10 +80,10 @@
         <hr class="border-[1px] border-black w-3/4 my-2"/>
 
         <div class="flex gap-6">
-            <button class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white text-md rounded-md" onclick={search}>Search</button>
-            <button class="px-4 py-2 bg-red-700 hover:bg-red-800 text-white text-md rounded-md" onclick={() => goto("/projects")}>Clear</button>
+            <button class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white text-md rounded-md" type="submit">Search</button>
+            <a class="px-4 py-2 bg-red-700 hover:bg-red-800 text-white text-md rounded-md" href="/projects">Clear</a>
         </div>
-    </div>
+    </form>
 </div>
 
 <svelte:window bind:innerWidth={innerWindowWidth} />

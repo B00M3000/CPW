@@ -33,9 +33,9 @@
 </script>
 
 <div class="bg-gray-300 flex items-center justify-center">
-    <div class="flex flex-col w-96 items-center justify-center gap-4 sm:gap-5 m-8 my-4 pb-4">
+    <form class="flex flex-col w-96 items-center justify-center gap-4 sm:gap-5 m-8 my-4 pb-4" onsubmit={async (event) => { event.preventDefault(); await search(); close()}}>
         <div class="flex justify-end w-full mr-[-2rem]">
-            <button onclick={close} class="bg-red-600 hover:bg-red-700 flex gap-2 items-center text-white p-2 py-1 rounded-md">
+            <button onclick={close} type="button" class="bg-red-600 hover:bg-red-700 flex gap-2 items-center text-white p-2 py-1 rounded-md">
                 <Close />
                 <span>Close</span>
             </button>
@@ -83,8 +83,8 @@
         </div>
 
         <div class="flex gap-6">
-            <button class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white text-md rounded-md" onclick={() => {search(); close();}}>Search</button>
-            <button class="px-4 py-2 bg-red-700 hover:bg-red-800 text-white text-md rounded-md" onclick={() => goto("/projects")}>Clear</button>
+            <button class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white text-md rounded-md" type="submit">Search</button>
+            <a class="px-4 py-2 bg-red-700 hover:bg-red-800 text-white text-md rounded-md" href="/projects">Clear</a>
         </div>
-    </div>
+    </form>
 </div>

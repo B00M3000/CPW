@@ -14,6 +14,10 @@ export function parseIntOrElse(str: string | null, other: number): number {
     catch (e) { return other; }   
 }
 
+export function clamp(value: number, min: number, max: number): number {
+    return Math.min(Math.max(value, min), max);
+}
+
 export function buildRegex(keywords: string[]){
     return new RegExp(keywords.map(escapeRegExp).map((w:string) => `(?=.*?${w})`).join("") + ".*",   "i");
 }

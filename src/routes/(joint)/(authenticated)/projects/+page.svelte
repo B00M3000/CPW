@@ -10,6 +10,7 @@
     import { browser } from "$app/environment";
     import Pagination from "@/client/components/Pagination.svelte";
     import Loading2 from "@/client/components/Loading2.svelte";
+    import { untrack } from "svelte";
   
     let { data } = $props()
     
@@ -37,7 +38,9 @@
         totalProjectCount = data.totalProjectCount
     })
     
-    async function search(){
+    async function search(event?: Event){
+        event?.preventDefault();
+        console.log("Hi")
         const { tags, yearLower, yearUpper, mentorSearch, studentSearch, query, itemsPerPage, page } = searchParameters;
 
         const searchParams = new URLSearchParams();
@@ -65,7 +68,7 @@
     let innerWindowWidth = $state(0);
 
     const refinedSearchBreakpoint = 870;
-    let refinedSearchOpen = $state(false)
+    let refinedSearchOpen = $state(true)
     let refinedSearchNormalOpen = $derived(refinedSearchOpen && innerWindowWidth > refinedSearchBreakpoint);
     let refinedSearchMobileOpen = $derived(refinedSearchOpen && innerWindowWidth <= refinedSearchBreakpoint)
     function closeRefinedSearch() {
@@ -77,10 +80,12 @@
 
     export const snapshot = {
         capture: () => ({
-            itemsPerPage: searchParameters.itemsPerPage
+            itemsPerPage: searchParameters.itemsPerPage,
+            refinedSearchOpen
         }),
 		restore: (snapshot) => {
             searchParameters.itemsPerPage = snapshot.itemsPerPage
+            refinedSearchOpen = snapshot.refinedSearchOpen
         }
     }
 
