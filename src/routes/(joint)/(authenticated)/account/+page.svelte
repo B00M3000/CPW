@@ -11,9 +11,9 @@
     import { user } from "@/client/stores/user";
     import Icon from "@/client/components/Icon.svelte";
     import { goto } from "$app/navigation";
-  import FileText from "@/client/icons/FileText.js";
-  import Images from "@/client/icons/Images.js";
-  import People from "@/client/icons/People.js";
+    import FileText from "@/client/icons/FileText.js";
+    import Images from "@/client/icons/Images.js";
+    import People from "@/client/icons/People.js";
 
     function gotoManageImages() {
         goto('/manage-images')
@@ -28,11 +28,11 @@
     }
 </script>
 
-<main class="flex flex-col justify-center items-center mt-12 mx-8 bg-gray-300 p-4 rounded-xl">
+<main class="flex flex-col justify-center items-center my-6 sm:my-12 mx-4 sm:mx-8 bg-gray-300 p-4 rounded-xl">
     <div class="flex items-center gap-5 sm:gap-10 sm:m-5">
         <img class="w-16 h-16 sm:w-32 sm:h-32 rounded-full" src={$user.picture} alt="profile">
 
-        <div class="flex flex-col text-lg sm:text-xl ">
+        <div class="flex flex-col text-md sm:text-xl ">
             <span class="font-bold">{$user.name}</span>
             <span class="font-bold">{$user.email}</span>
             <span class="font-bold"> {AccountType[$user.accountType]} - {AccessLevel[$user.accessLevel]}</span>
