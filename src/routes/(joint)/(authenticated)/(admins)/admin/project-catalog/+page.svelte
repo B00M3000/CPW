@@ -61,6 +61,7 @@
 
         <div class="max-h-[75vh] overflow-y-auto">
             <table class="inline-table">
+                <thead>
                 <tr>
                     <th></th>
                     <th>
@@ -70,23 +71,25 @@
                         <span>Student </span>
                     </th>
                 </tr>
-            
-                {#each completedProjects as project}
-                <tr on:click={()  => goto(`project-catalog/${project._id}`)}>
-                    <td>
-                        <button class="rounded-md bg-slate-300 flex gap-2 items-center justify-center p-1 hover:bg-slate-400" on:click={() => window.open(`/admin/project-catalog/${project._id}`, "_blank")}>
-                            <Icon src={Open} size="1.5rem"/>
-                            <span>Open</span>
-                        </button>
-                    </td>
-                    <td>
-                        <p class="max-w-[24rem]">{project.title}</p>
-                    </td>
-                    <td>
-                        <StudentCard student={project.student} />
-                    </td>
-                </tr>
-                {/each}
+                </thead>
+                <tbody>
+                    {#each completedProjects as project}
+                    <tr on:click={()  => goto(`project-catalog/${project._id}`)}>
+                        <td>
+                            <button class="rounded-md bg-slate-300 flex gap-2 items-center justify-center p-1 hover:bg-slate-400" on:click={() => window.open(`/admin/project-catalog/${project._id}`, "_blank")}>
+                                <Icon src={Open} size="1.5rem"/>
+                                <span>Open</span>
+                            </button>
+                        </td>
+                        <td>
+                            <p class="max-w-[24rem]">{project.title}</p>
+                        </td>
+                        <td>
+                            <StudentCard student={project.student} />
+                        </td>
+                    </tr>
+                    {/each}
+                </tbody>
             </table>
         </div>
     </div>
