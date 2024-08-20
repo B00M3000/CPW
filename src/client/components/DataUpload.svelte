@@ -96,22 +96,26 @@
         <div class="flex gap-4">
             <div class="max-h-[30vh] overflow-y-auto">
                 <table>
-                    <tr>
-                        {#each headings as heading}
-                        <th class="{headingValidation(heading) ? "valid" : "invalid"}">
-                            <span>{heading}</span>
-                        </th>
+                    <thead>
+                        <tr>
+                            {#each headings as heading}
+                            <th class="{headingValidation(heading) ? "valid" : "invalid"}">
+                                <span>{heading}</span>
+                            </th>
+                            {/each}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {#each entries as entry}
+                        <tr>
+                            {#each entry as part, headingIndex}
+                            <td class="{partValidation(headings[headingIndex], part) ? "valid" : "invalid"}">
+                                <span>{part}</span>
+                            </td>
+                            {/each}
+                        </tr>
                         {/each}
-                    </tr>
-                    {#each entries as entry}
-                    <tr>
-                        {#each entry as part, headingIndex}
-                        <td class="{partValidation(headings[headingIndex], part) ? "valid" : "invalid"}">
-                            <span>{part}</span>
-                        </td>
-                        {/each}
-                    </tr>
-                    {/each}
+                    </tbody>
                 </table>
             </div>
 

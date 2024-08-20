@@ -70,14 +70,16 @@
             </div>
 
             <table class="rounded-xl">
-                <tr>
-                    <th>&nbsp;</th>
-                    <th>Student</th>
-                    <th>Project Name</th>
-                    <th>Advisor</th>
-                    <th>Status</th>
-                </tr>
-                <div>
+                <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>Student</th>
+                        <th>Project Name</th>
+                        <th>Advisor</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
                     {#each filteredMissingStudents as student}
                         <tr>
                             <td></td>
@@ -117,7 +119,7 @@
                             </td>
                         </tr>
                     {/each}
-                </div>
+                </tbody>
             </table>
         </div>
     </div>
