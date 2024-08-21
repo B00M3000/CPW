@@ -2,22 +2,18 @@
     import Icon from "@/client/components/Icon.svelte";
     import CircleCheck from "@/client/icons/CircleCheck";
     import Save from "@/client/icons/Save";
-    import { sleep } from "@/lib/utils";
-    import { type Writable } from "svelte/store";
 
-    export let imageId: Writable<string>;
-    export let current: string = "";
+    let { imageId, current }: { imageId: string, current: string } = $props();
 
     let description: string = current;
 
-    let saved = false;
+    let saved = $state(false);
 
     async function updateDescription() { 
-        const response = await fetch(`/manage-images/${$imageId}/description`, {
+        const response = await fetch(`/manage-images/${imageId}/description`, {
             method: "POST",
             body: description
         })
-
         saved = true;
     }
 </script>
