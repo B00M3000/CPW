@@ -8,12 +8,11 @@
     import { AccessLevel, AccountType } from "@/lib/enums";
     import { user } from "@/client/stores/user";
     import Icon from "@/client/components/Icon.svelte";
-    import { goto } from "$app/navigation";
     import FileText from "@/client/icons/FileText.js";
     import Images from "@/client/icons/Images.js";
     import People from "@/client/icons/People.js";
     import Ind from "./ChecklistItemStatusIndicator.svelte";
-    import { Launch } from "carbon-icons-svelte"
+    import { Launch, Dashboard } from "carbon-icons-svelte"
 
     let { data } = $props();
 </script>
@@ -42,21 +41,28 @@
             <div class="flex gap-4 items-center m-8 mx-4">
                 {#if $user.accountType == AccountType.Student}
                 <a class="flex items-center gap-3 p-3 bg-blue-400 hover:bg-blue-500 rounded-lg"
-                    href="/manage-projects">
+                    href="/manage-projects" data-sveltekit-preload-data>
                     <Icon src={FileText} size="1.25rem"/>
                     <span>My Projects</span>
                 </a>
                 <a class="flex items-center gap-3 p-3 bg-blue-400 hover:bg-blue-500 rounded-lg"
-                    href="/manage-images">
+                    href="/manage-images" data-sveltekit-preload-data>
                     <Icon src={Images} size="1.25rem"/>
                     <span>My Images</span>
                 </a>
                 {/if}
                 {#if $user.accountType == AccountType.Advisor}
                 <a class="flex items-center gap-3 p-3 bg-blue-400 hover:bg-blue-500 rounded-lg"
-                    href="/manage-advisees">
+                    href="/manage-advisees" data-sveltekit-preload-data>
                     <Icon src={People} size="1.25rem"/>
                     <span>My Advisees</span>
+                </a>
+                {/if}
+                {#if $user.accessLevel == AccessLevel.Admin}
+                <a class="flex items-center gap-3 p-3 bg-blue-400 hover:bg-blue-500 rounded-lg"
+                    href="/admin" data-sveltekit-preload-data>
+                    <Dashboard size={24}/>
+                    <span>Admin Dashboard</span>
                 </a>
                 {/if}
             </div>
@@ -112,7 +118,7 @@
                             student.imagesAdded >= 5 ? `${student.imagesAdded} images added!` :
                             student.imagesAdded > 1 ? "Please consider uploading a few more images." : "Pictures help paint a better picture of what the experience was like. Please upload images."
                         }</span>
-                        <a href="/manage-images" class="hover:bg-gray-300 rounded-full p-2">
+                        <a href="/manage-images" class="hover:bg-gray-300 rounded-full p-2" data-sveltekit-preload-data>
                             <Launch color="blue" size={20}/>
                         </a>
                     </div>
@@ -196,7 +202,10 @@
             {#if $user.accessLevel == AccessLevel.Admin}
             <div class="p-4 rounded-lg bg-gray-200 flex flex-col items-start">
                 <h3 class="text-lg font-bold mb-2">Admin</h3>
-                <div class="grid grid-cols-[auto_auto] gap-2 ml-2">
+                <div class="flex flex-col ml-2 max-w-[30rem] gap-2">
+                    <span>1. Upload new student, advisor, and advisee student relation data.</span>
+                    <span>2. Oversee advisees and the approval process.</span>
+                    <span>3. Utilize the report generator to hunt people who haven't done what they are supposed to.</span>
                 </div>
             </div>
             {/if}

@@ -5,20 +5,18 @@
 -->
 
 <script lang="ts">
-  import { goto } from "$app/navigation";
-//   import ProjectCard from "@/client/components/ProjectCard.svelte";
-//   import { user } from "@/client/stores/user";
+    import { goto } from "$app/navigation";
 
-  export let data;
+    export let data;
 
-  $: ({ projects } = data);
+    $: ({ projects } = data);
 
-  let search: string;
+    let search: string;
 
-  async function gotoSearch(event: Event) {
-    event.preventDefault();
-    await goto(`/projects?query=${search || ''}`)
-  }
+    async function gotoSearch(event: Event) {
+        event.preventDefault();
+        await goto(`/projects?query=${search || ''}`)
+    }
 </script>
 
 <div class="fixed left-0 top-0 w-screen h-screen bg-cover bg-center blur-sm scale-110 -z-10 bg-[url('/assets/CommonwealthSchool.jpg')]"></div>

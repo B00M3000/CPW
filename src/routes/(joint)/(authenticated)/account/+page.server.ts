@@ -66,16 +66,6 @@ export async function load({ locals }){
 
         returnObject.advisor = advisorObject;
     }
-    
-    if(locals.user?.accessLevel == AccessLevel.Admin) {
-        // const adminObject = {
-        //     unapprovedProjects: 
-        // }
-
-        // returnObject.admin = adminObject
-
-        // TODO: upload new incoming class, projects not created, projects not approved
-    }
 
     return { checklist: returnObject };
 }
