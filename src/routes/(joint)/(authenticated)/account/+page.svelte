@@ -54,7 +54,7 @@
                 {/if}
                 {#if $user.accountType == AccountType.Advisor}
                 <a class="flex items-center gap-3 p-3 bg-blue-400 hover:bg-blue-500 rounded-lg"
-                    href="/manage-images">
+                    href="/manage-advisees">
                     <Icon src={People} size="1.25rem"/>
                     <span>My Advisees</span>
                 </a>

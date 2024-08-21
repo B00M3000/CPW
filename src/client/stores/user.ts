@@ -18,6 +18,6 @@ export const user = {
   async logout(): Promise<void> {
     await fetch('/logout');
     await invalidateAll();
-    window.location.reload();
+    console.log('logout')
   }
 };
