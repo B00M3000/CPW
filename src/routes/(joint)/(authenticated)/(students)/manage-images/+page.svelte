@@ -4,7 +4,6 @@
     import { get, type Writable, writable } from "svelte/store";
 
     import MobileUpload from "@/client/components/MobileUpload.svelte";
-    import LazyImage from "@/client/components/LazyImage.svelte";
     import Icon from "@/client/components/Icon.svelte";
     import CloudUpload from "@/client/icons/CloudUpload";
     import { bytesToString, sleep } from "@/lib/utils";
@@ -12,6 +11,7 @@
     import DescriptionEditor from "./DescriptionEditor.svelte";
     import { goto, invalidate } from "$app/navigation";
     import Trash from "@/client/icons/Trash";
+    import LazyImage2 from "@/client/components/LazyImage2.svelte";
 
     interface UploadedImageData {
         _id: string;
@@ -25,10 +25,10 @@
     };
     interface UploadQueueItem {
         image: File;
-        status: Writable<UploadQueueItemStatus>;
-        progress: Writable<number>;
+        status: UploadQueueItemStatus;
+        progress: number;
         project: Project;
-        imageId: Writable<string>;
+        imageId?: string;
     };
     interface Project {
         _id: string;
@@ -39,41 +39,38 @@
     interface PageData { images: UploadedImageData[]; projects: Project[] };
     interface UploadedImage extends UploadedImageData { status: UploadedImageStatus; };
 
-    export let data: PageData;
+    let { data }: { data: PageData } = $props();
 
-    let uploadedImages: UploadedImage[];
-    $: uploadedImages = data.images.map((image: UploadedImageData) => ({ ...image, status: UploadedImageStatus.Unchanged }))
+    let uploadedImages: UploadedImage[] = $state(data.images.map((image: UploadedImageData) => ({ ...image, status: UploadedImageStatus.Unchanged })));
+    let projects: Project[] = $state(data.projects);
+    $effect(() => {
+        uploadedImages = data.images.map((image: UploadedImageData) => ({ ...image, status: UploadedImageStatus.Unchanged }))
+        projects = data.projects;
+    })
 
-    let projects: Project[];
-    $: projects = data.projects;
+    let projectId: string = $state("");
 
-    let projectId: string;
-
-    let imageUploadQueue: UploadQueueItem[] = [];
+    let imageUploadQueue: UploadQueueItem[] = $state([]);
 
     async function deleteImage(id: string) {
         const imageIndex = uploadedImages.findIndex(image => image._id == id)
-
         uploadedImages[imageIndex].status = UploadedImageStatus.Deleting
-
         await fetch(`/manage-images/${id}`, { method: "DELETE" });
-
-        await sleep(200);
-
         uploadedImages[imageIndex].status = UploadedImageStatus.Deleted
     }
 
     async function addImageToUploadQueue(image: File) {
+        const project = projects.find(p => p._id == projectId);
+        if(!project) throw new Error("No project selected!");
+
         const queueItem: UploadQueueItem = {
             image,
-            status: writable(UploadQueueItemStatus.NotUploaded),
-            progress: writable(0),
-            project: projects.find(p => p._id == projectId),
-            imageId: writable()
+            status: UploadQueueItemStatus.NotUploaded,
+            progress: 0,
+            project,
         }
 
         imageUploadQueue.push(queueItem)
-        imageUploadQueue = imageUploadQueue;
 
         const formData = new FormData();
         formData.append('image', image);
@@ -88,20 +85,29 @@
             },
             data: formData,
             onUploadProgress: (p: any) => {
-                queueItem.progress.set(p.progress);
+                queueItem.progress = p.progress;
             }
         });
         
         if(response.status == 200) {
-            queueItem.status.set(UploadQueueItemStatus.Uploaded);
+            queueItem.status = UploadQueueItemStatus.Uploaded;
+            uploadedImages.unshift({
+                ...response.data.image,
+                project: {
+                    title: project.title,
+                    _id: project._id
+                },
+                status: UploadedImageStatus.Unchanged
+            })
         } else {
-            queueItem.status.set(UploadQueueItemStatus.Failed);
+            queueItem.status = UploadQueueItemStatus.Failed;
         }
 
-        queueItem.imageId.set(response.data.imageId);
+        queueItem.imageId = response.data.imageId;
     }
 
     function handleFileDrop(event: DragEvent) {
+        event.preventDefault()
         if(!event.dataTransfer) return;
         if (event.dataTransfer.items) {
             [...event.dataTransfer.items].forEach((item, i) => {
@@ -129,7 +135,7 @@
 
     let fileInput: HTMLInputElement;
 
-    let mobileKeyOverlay = false;
+    let mobileKeyOverlay = $state(false);
 
     function closeOverlay(event?: MouseEvent) {
         if(event?.target?.nodeName == "BUTTON") mobileKeyOverlay = false
@@ -137,12 +143,12 @@
 </script>
 
 {#if mobileKeyOverlay}
-<button class="overlay" on:click={closeOverlay}>
+<button class="overlay" onclick={closeOverlay}>
     <MobileUpload {projectId}/>
 </button>
 {/if}
 
-<input type="file" class="hidden" bind:this={fileInput} on:input={handleFileInput} accept="image/png,image/jpeg,image/gif" multiple />
+<input type="file" class="hidden" bind:this={fileInput} oninput={handleFileInput} accept="image/png,image/jpeg,image/gif" multiple />
 <main class="flex justify-center">
     <div class="flex flex-col bg-gray-100 rounded-3xl m-5 p-5 max-w-7xl gap-3">
         <div class="flex flex-col gap-1">
@@ -174,10 +180,10 @@
 
         {#if /^[0-9A-Fa-f]{24}$/.test(projectId)}
         <div class="flex items-center mx-2">
-            <button class="p-4 rounded-xl bg-blue-500 hover:bg-blue-400 text-white" on:click={() => mobileKeyOverlay = true}>Mobile Upload</button>
+            <button class="p-4 rounded-xl bg-blue-500 hover:bg-blue-400 text-white" onclick={() => mobileKeyOverlay = true}>Mobile Upload</button>
             <span class="p-7">OR</span>
             <!-- svelte-ignore a11y-no-static-element-interactions -->
-            <button class="border-4 flex-grow border-slate-300 bg-slate-200 rounded-xl flex-col h-36 flex justify-center items-center" on:click={() => fileInput.click()} on:dragover|preventDefault on:drop|preventDefault={handleFileDrop} aria-dropeffect="execute">
+            <button class="border-4 flex-grow border-slate-300 bg-slate-200 rounded-xl flex-col h-36 flex justify-center items-center" onclick={() => fileInput.click()} ondrop={handleFileDrop} aria-dropeffect="execute">
                 <div class="p-2 bg-gray-300 inline-flex rounded-full mb-1">
                     <Icon src={CloudUpload} size="2em" color="#505080"/>
                 </div>
@@ -202,15 +208,12 @@
                         </div>
                     </div>
                     <div class="flex flex-col p-6 gap-3 justify-center">
-                        {#if get(item.progress) == 100}
+                        {#if item.progress == 100}
                         <span>{item.project.title}</span>
-                        <Progress valueStore={item.progress} />
+                        <Progress bind:value={item.progress} />
                         {:else}
-                        <span>Upload Complete!</span>
+                        <span>Upload Complete! See below in the table.</span>
                         {/if}
-                    </div>
-                    <div class="flex flex-col p-6 justify-center">
-                        <DescriptionEditor imageId={item.imageId} />
                     </div>
                 </div>
                 {/each}
@@ -236,7 +239,7 @@
                         <th class="p-4 text-gray-700">Size</th>
                         <th class="p-4 text-gray-700">
                             <div class="flex items-center justify-center ">
-                                <button class="inline-flex items-center justify-center p-1 px-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white" on:click={async () => {
+                                <button class="inline-flex items-center justify-center p-1 px-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white" onclick={async () => {
                                     invalidate('user:imagelist')
                                 }}>Refresh</button>
                             </div>
@@ -249,7 +252,7 @@
                         <td>
                             <div class="p-4 flex justify-center items-center">
                                 <div class="flex justify-center items-center rounded-xl w-20 h-20">
-                                    <LazyImage src="/images/{image._id}" loadingClassname="w-6 h-6" className="rounded-xl w-full h-full" alt={image.description || "N/A"}/>
+                                    <LazyImage2 src="/images/{image._id}" class="rounded-xl w-full h-full" alt={image.description || "N/A"}/>
                                 </div>
                             </div>
                         </td>
@@ -259,13 +262,19 @@
                             </div>
                         </td>
                         <td>
+                            {#if image.status == UploadedImageStatus.Unchanged}
                             <div class="p-4 flex justify-center items-center">
-                                <DescriptionEditor imageId={writable(image._id)} current={image.description || "N/A"} />
+                                <DescriptionEditor imageId={image._id} current={image.description || "N/A"} />
                             </div>
+                            {:else}
+                            <div class="p-4 flex justify-center items-center">
+                                <span class="w-full text-center">Removed.</span>
+                            </div>
+                            {/if}
                         </td>
                         <td>
                             <div class="p-4 flex justify-center items-center">
-                                <span>{image.createdAt.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                                <span>{new Date(image.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                             </div>
                         </td>
                         <td>
@@ -276,7 +285,7 @@
                         <td>
                             <div class="p-4 flex justify-center items-center">
                                 {#if image.status == UploadedImageStatus.Unchanged}
-                                <button class="bg-red-500 hover:bg-red-600 py-2 px-4 text-red-50 rounded-lg flex items-center gap-2" on:click={() => deleteImage(image._id)}>
+                                <button class="bg-red-500 hover:bg-red-600 py-2 px-4 text-red-50 rounded-lg flex items-center gap-2" onclick={() => deleteImage(image._id)}>
                                     <Icon src={Trash} size="1rem" color="white" />
                                     <span class="pt-[2px]">Delete</span>
                                 </button>
