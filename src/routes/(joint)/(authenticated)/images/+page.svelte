@@ -36,8 +36,6 @@
 
         await goto(`/images?${searchParams}`);
 
-        // scrollElement?.scrollTo(0, 0); TODO: fix later
-
         spinnerActive = false;
     }
 
