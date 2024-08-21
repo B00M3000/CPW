@@ -19,20 +19,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 		const user = await UserSchema.findOneAndUpdate(
 			{ sessionId },
 			{ lastVisit: new Date() }
-		);
+		).select('id name firstName lastName email picture sessionId accountType accessLevel adviseeIds').lean();
 
 		if(user) {
 			event.locals.user = {
+				...user,
 				id: user._id.toString(),
-				name: user.name,
-				firstName: user.firstName,
-				lastName: user.lastName,
-				email: user.email,
-				picture: user.picture,
-				sessionId: user.sessionId,
-				accountType: user.accountType,
-				accessLevel: user.accessLevel,
-				adviseeIds: user.adviseeIds
 			};
 		} else {
 			event.cookies.delete('session_id', { path: '/' });
