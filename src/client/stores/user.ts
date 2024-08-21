@@ -18,6 +18,6 @@ export const user = {
   async logout(): Promise<void> {
     await fetch('/logout');
     await invalidateAll();
-    console.log('logout')
+    console.log('logout') // TODO: not working?
   }
 };
