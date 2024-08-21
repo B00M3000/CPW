@@ -4,11 +4,13 @@ The Commonwealth Project Week website is designed to do two things. First, provi
 
 The original motivation for this project was to continue and expand on Mirai Duintjer Tebbens Nishioka and Amith Saligrama's original project week idea design, which originally included searching for project week data. Since then, the website has expanded on that original concept to include searching, fuzzy searching archives, project submission, project approval by advisors, and an image gallery.
 
-<!-- The Project Week Website was created to streamline the process of archiving, the project reports review process by advisors, and management for the project week coordinator. The website provides a place to search past projects and project photos for inspiration for subsequent project weeks.
+-- Ethan Wu '26
+
+The Project Week Website was created to streamline the process of archiving, the project reports review process by advisors, and management for the project week coordinator. The website provides a place to search past projects and project photos for inspiration for subsequent project weeks.
 
 The motivation of this project stemmed from a previous good but unwieldly system in place for Project Week. The inspiration for this project came from my attendance at Mirai Duintjer Tebbens Nishioka '25 CS club in 2022 when I was first introduced to this idea. Later I learned idea had come from a joint effort between Amith Saligrama '24 and Mirai Duintjer Tebbens Nishioka '25. Since then Mirai has handed the reigns to me and many things have been expanded on, including the support for images, the inclusion of the project submission and improval flow, but most importantly the bringing on of Ethan Wu who with under my mentorship graciously helped helped polish and eventually design many of the interfaces on the website. Ethan also helped in communications and most importantly created the documentation which is linked below on this page!
 
--- Thomas Zhou '26 (Feburary 9th, 2024) -->
+-- Thomas Zhou '26 (Feburary 9th, 2024)
 
 ## Specific Documentation:
 
