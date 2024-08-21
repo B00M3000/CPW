@@ -1,5 +1,5 @@
 <script lang=ts>
-  import { enhance } from "$app/forms";
+    import { enhance } from "$app/forms";
     import { goto } from "$app/navigation";
     import YearFilter from "@/client/components/YearFilter.svelte";
     import { tags } from "@/lib/tags";
@@ -20,7 +20,8 @@
     } = $props();
 
     let innerWindowWidth = $state(0);
-    let reduceSpacing = $derived(innerWindowWidth <= 930);
+    let clientHeight = $state(0);
+    let reduceSpacing = $derived(innerWindowWidth <= 930 || clientHeight <= 600);
 
     onMount(() => {
         selected = searchParameters.tags.map((tagId: string) => tagOptions.find(option => option.id === tagId));
@@ -33,18 +34,18 @@
     let selected = $state([]);
 </script>
 
-<div class="bg-[rgb(183,188,197)] flex items-center justify-center shadow-xl m-7 my-4 ml-0 rounded-r-xl">
+<div class="bg-[rgb(183,188,197)] flex items-center justify-center shadow-xl m-7 my-4 ml-0 rounded-r-xl" bind:clientHeight={clientHeight}>
     <form class="flex flex-col w-80 mx-12 items-center justify-center {reduceSpacing ? "gap-3" : "gap-5"}" onsubmit={(event) => { event.preventDefault(); search() }}>
-        <div class="flex justify-end w-full mb-[-1rem] mr-[-2rem]">
+        <div class="flex justify-end self-start w-full">
             <button onclick={close} type="button" class="bg-red-600 hover:bg-red-700 flex gap-2 items-center text-white p-2 py-1 rounded-md">
                 <Close />
                 <span>Close</span>
             </button>
         </div>
 
-        <h1 class="text-2xl">Refined Search</h1>
+        <h1 class="{reduceSpacing ? "text-xl" : "text-2xl"}">Refined Search</h1>
 
-        <hr class="border-[1px] border-black w-3/4 my-2"/>
+        <hr class="border-[1px] border-black w-3/4"/>
 
         <div class="flex flex-col {reduceSpacing ? "gap-3" : "gap-5"} w-full">
             <div class="flex flex-col {reduceSpacing ? "gap-1" : "gap-2"}">
@@ -77,7 +78,7 @@
             </div>
         </div>
 
-        <hr class="border-[1px] border-black w-3/4 my-2"/>
+        <hr class="border-[1px] border-black w-3/4 my-1"/>
 
         <div class="flex gap-6">
             <button class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white text-md rounded-md" type="submit">Search</button>
