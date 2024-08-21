@@ -25,6 +25,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 			event.locals.user = {
 				...user,
 				id: user._id.toString(),
+				_id: undefined
 			};
 		} else {
 			event.cookies.delete('session_id', { path: '/' });
