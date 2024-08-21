@@ -71,7 +71,7 @@
     <div class="h-full overflow-y-auto w-full">
         <div class="flex flex-wrap items-center justify-center gap-4 h-auto">
             {#each images as image}
-            <div class="w-[300px] h-[225px]">
+            <div class="w-[300px] h-[225px] z-0">
                 <SmartProjectImage {image} showProjectPageButton={true} />
             </div>
             {:else}

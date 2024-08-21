@@ -124,7 +124,7 @@
         flex-direction: column;
         justify-content: center;
 
-        z-index: 50;
+        z-index: 999;
         min-width: 205px;
         gap: 0.5rem;
         padding: 1rem;
