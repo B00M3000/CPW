@@ -4,7 +4,6 @@
     import { get, type Writable, writable } from "svelte/store";
 
     import MobileUpload from "@/client/components/MobileUpload.svelte";
-    import LazyImage from "@/client/components/LazyImage.svelte";
     import Icon from "@/client/components/Icon.svelte";
     import CloudUpload from "@/client/icons/CloudUpload";
     import { bytesToString, sleep } from "@/lib/utils";
@@ -12,6 +11,7 @@
     import DescriptionEditor from "./DescriptionEditor.svelte";
     import { goto, invalidate } from "$app/navigation";
     import Trash from "@/client/icons/Trash";
+    import LazyImage2 from "@/client/components/LazyImage2.svelte";
 
     interface UploadedImageData {
         _id: string;
@@ -253,7 +253,7 @@
                         <td>
                             <div class="p-4 flex justify-center items-center">
                                 <div class="flex justify-center items-center rounded-xl w-20 h-20">
-                                    <LazyImage src="/images/{image._id}" loadingClassname="w-6 h-6" className="rounded-xl w-full h-full" alt={image.description || "N/A"}/>
+                                    <LazyImage2 src="/images/{image._id}" class="rounded-xl w-full h-full" alt={image.description || "N/A"}/>
                                 </div>
                             </div>
                         </td>
