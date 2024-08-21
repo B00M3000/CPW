@@ -35,8 +35,8 @@ export async function load({ url: { searchParams } }) {
     let cachedStudents: any = {};
     let cachedMentors: any = {};
     async function injectStudentAndMentor(project: any) {
-        project.student = cachedStudents[project.studentId] || stringifyObjectId(await UserSchema.findById(project.studentId, 'firstName lastName picture').lean());
-        project.mentor = cachedMentors[project.mentorId] || stringifyObjectId(await MentorSchema.findById(project.mentorId, 'firstName lastName').lean());
+        project.student = cachedStudents[project.studentId] || stringifyObjectId(await UserSchema.findById(project.studentId, 'name picture').lean());
+        project.mentor = cachedMentors[project.mentorId] || stringifyObjectId(await MentorSchema.findById(project.mentorId, 'name').lean());
         return project;
     }
 
@@ -46,7 +46,7 @@ export async function load({ url: { searchParams } }) {
     const mentorSearch = searchParams.get('mentorSearch');
     if(mentorSearch){
         const mentorRegex = buildRegex(mentorSearch.split(" "))
-        const mentors = (await MentorSchema.find({ name: mentorRegex }, 'firstName lastName').lean())?.map(stringifyObjectId);
+        const mentors = (await MentorSchema.find({ name: mentorRegex }, 'name').lean())?.map(stringifyObjectId);
         if(mentors.length > 0){
             mentors.forEach(m => cachedMentors[m._id] = m)
             dbQuery.mentorId = { $in: mentors.map(m => m._id)}
@@ -59,7 +59,7 @@ export async function load({ url: { searchParams } }) {
     const studentSearch = searchParams.get('studentSearch');
     if(studentSearch){
         const studentRegex = buildRegex(studentSearch.split(" "))
-        const students = (await UserSchema.find({ name: studentRegex }, 'firstName lastName picture').lean())?.map(stringifyObjectId);
+        const students = (await UserSchema.find({ name: studentRegex }, 'name').lean())?.map(stringifyObjectId);
         if(students.length > 0){
             students.forEach(s => cachedMentors[s._id] = s)
             dbQuery.studentId = { $in: students.map(s => s._id)}

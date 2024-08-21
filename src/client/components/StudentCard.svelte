@@ -7,6 +7,7 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import type { Student } from '@/interfaces/project';
+    import LazyImage2 from './LazyImage2.svelte';
 
     export let student: Student;
 
@@ -17,8 +18,8 @@
 
 <button class="student-card" on:click={gotoStudent}>
     {#if student}
-        <img src={student.picture} alt={`image of ${student.firstName} ${student.lastName}`} class="w-4 h-4 rounded-full">
-        <span class="text">{student.firstName} {student.lastName}</span> 
+        <LazyImage2 src={student.picture} alt="image of {student.name}" class="w-4 h-4 rounded-full" />
+        <span class="text">{student.name}</span> 
     {:else}
         <span class="text">Student Not Found!</span>
     {/if}

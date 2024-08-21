@@ -16,7 +16,7 @@ export const load = async () => {
 }
 
 async function injectStudentAndMentor(project: any) {
-    project.student = stringifyObjectId(await UserSchema.findById(project.studentId, 'firstName lastName picture').lean());
-    project.mentor =  stringifyObjectId(await MentorSchema.findById(project.mentorId, 'firstName lastName').lean());
+    project.student = stringifyObjectId(await UserSchema.findById(project.studentId, 'name picture').lean());
+    project.mentor =  stringifyObjectId(await MentorSchema.findById(project.mentorId, 'name').lean());
     return project;
 }

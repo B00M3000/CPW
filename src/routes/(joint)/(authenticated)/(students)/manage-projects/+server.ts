@@ -18,19 +18,20 @@ interface PublishSchema {
 export async function POST({ request, locals }) {
     const data = await request.json();
     const { action, projectId } = data
+    const project = await ProjectSchema.findOne({ _id: projectId, studentId: locals.user?.id })
+    if(!project) error(403, "Dont mess with other peoples projects.");
     if(action == "DELETE"){
-        await ProjectSchema.deleteOne({ _id: projectId, studentId: locals.user?.id });
+        await ProjectSchema.deleteOne({ _id: projectId });
+
+        await ImageSchema.deleteMany({ projectId })
         
-        const mentorId = data.mentorId;
-        const projectsOfMentor = await ProjectSchema.find({ mentorId: mentorId }) || [];
+        const projectsOfMentor = await ProjectSchema.find({ mentorId: project.mentorId }) || [];
 
         if(projectsOfMentor.length == 0){
-            await MentorSchema.deleteOne({ _id: mentorId })
+            await MentorSchema.deleteOne({ _id: project.mentorId })
         }
         await ImageSchema.deleteMany({ projectId: projectId })
     } else if (action == "PUBLISH"){
- 
-
         let schema : PublishSchema | null = await ProjectSchema.findOne({ _id: projectId, studentId: locals.user?.id }, 'publish');
 
         if(schema){

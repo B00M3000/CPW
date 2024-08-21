@@ -25,10 +25,12 @@
     
     <h1 class='text-center text-2xl'>Projects Completed:</h1>
 
-    <div class="projects">
+    <div class="flex flex-wrap items-center justify-center mt-8">
+        <div>
         {#each projects as project}
             <ProjectCard {project} />
         {/each}
+        </div>
     </div>
 </main>
 
@@ -66,13 +68,5 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-    }
-
-    .projects {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-        margin-top: 20px;
     }
 </style>
