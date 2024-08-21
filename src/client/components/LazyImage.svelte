@@ -78,6 +78,9 @@
     })
 </script>
 
+
+
+{#key src}
 {#if browser}
 {#if visible}
 <img {alt} class={className} bind:this={image} {src} class:loaded />
@@ -85,13 +88,14 @@
 <img {alt} class={loadingClassname} bind:this={image} src='/assets/loading.gif' class:loaded />
 {/if}
 {:else}
-<img {alt} class={className} {src} loading="lazy" />
+<img {alt} class={className} {src} loading="lazy" class=" " />
 {/if}
+{/key}
 
 <style>
     img {
         opacity: 0;
-        transition: opacity ease-in 1s;
+        transition: opacity ease-in 0.5s;
         max-width: 100%;
         max-height: 100%;
     }

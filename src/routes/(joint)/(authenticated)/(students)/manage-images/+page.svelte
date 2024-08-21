@@ -94,6 +94,13 @@
         
         if(response.status == 200) {
             queueItem.status.set(UploadQueueItemStatus.Uploaded);
+            uploadedImages.unshift({
+                ...(await response.request.json()),
+                project: {
+                    title: queueItem.project.title
+                },
+                status: UploadedImageStatus.Unchanged
+            })
         } else {
             queueItem.status.set(UploadQueueItemStatus.Failed);
         }
@@ -206,11 +213,8 @@
                         <span>{item.project.title}</span>
                         <Progress valueStore={item.progress} />
                         {:else}
-                        <span>Upload Complete!</span>
+                        <span>Upload Complete! See below in the table.</span>
                         {/if}
-                    </div>
-                    <div class="flex flex-col p-6 justify-center">
-                        <DescriptionEditor imageId={item.imageId} />
                     </div>
                 </div>
                 {/each}

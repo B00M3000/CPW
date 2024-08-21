@@ -85,6 +85,8 @@ export async function PUT({ request, locals }) {
 
     return json({
         message: "Image was successfully uploaded to project!",
+        imageLink: `/images/${imageSchem._id}`,
+        image: imageSchem.toObject({ transform: (doc, ret) => { delete ret.s3Bucket; delete ret.s3ObjectKey; return ret } }),
         imageId: imageSchem._id
     }, { status: 200 })
 }

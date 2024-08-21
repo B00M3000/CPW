@@ -22,7 +22,6 @@
     }
 </script>
 
-{#if $imageId}
 <div class="flex gap-1 justify-center items-center">
     <span
         contenteditable="plaintext-only"
@@ -35,9 +34,3 @@
         <Icon src={saved ? CircleCheck : Save} color={saved ? "lightgreen" : "white"} size="1.5em"/>
     </button>
 </div>
-{:else}
-<div class="flex gap-1 justify-center items-center">
-    <span>Description editor avaliable after upload.</span>
-    <img src="assets/loading.gif" class="w-6 h-6">  
-</div>
-{/if}
