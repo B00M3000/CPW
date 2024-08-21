@@ -4,7 +4,7 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
-import { goto, invalidate } from '$app/navigation';
+import { goto, invalidate, invalidateAll } from '$app/navigation';
 import { page } from '$app/stores';
 import { derived } from 'svelte/store';
 
@@ -17,7 +17,7 @@ export const user = {
   subscribe,
   async logout(): Promise<void> {
     await fetch('/logout');
-    await invalidate('app:logout');
+    await invalidateAll();
     window.location.reload();
   }
 };
