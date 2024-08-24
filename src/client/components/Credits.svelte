@@ -31,6 +31,10 @@
             </button>
         </div>
 
+        <!-- Commonwealth School Project Week Website v2 -->
+        <!-- Overhauled and Rewritten by: Thomas Zhou 26' -->
+         <!-- Featuring a complete css and backend rewrite. -->
+
         <!-- <br>
 
         <span>Project and Code Owner, Lead-Author: Thomas Zhou (26')</span>

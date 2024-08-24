@@ -8,7 +8,7 @@
 
     function updateUploaded() {
         status = Status.Picking
-        allowUpload = fileList.length > 0; 
+        allowUpload = fileList.length > 0;
     }
 
     enum Status {
@@ -27,11 +27,11 @@
 
     async function upload() {
         if(status == Status.Uploading) return;
-      
+
         uploadsCompleted = 0;
 
         errorMessages = [];
-      
+
         status = Status.Uploading;
 
         Promise.all(Array.from(fileList).map(async (file) => {
@@ -39,7 +39,7 @@
             formData.set('image', file);
             formData.set('mobileKey', mobileKey);
 
-            const response = await fetch('/mobile', {
+            const response = await fetch('/mobile-upload-portal', {
                 credentials: 'include',
                 method: "POST",
                 body: formData
@@ -113,7 +113,7 @@
             {/if}
         </form>
     </div>
-    
+
     <div class="w-full h-20 bg-inherit"></div>
 </main>
 

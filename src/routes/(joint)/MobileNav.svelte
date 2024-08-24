@@ -1,20 +1,13 @@
 <script lang=ts>
     import { user } from "@/client/stores/user";
-    import UserIconMenu from "@/client/components/UserIconMenu.svelte";
-
-    import { AccessLevel, AccountType } from "@/lib/enums";
-    import Credits from "@/client/components/Credits.svelte";
-
+    import { AccessLevel } from "@/lib/enums";
     import { page } from "$app/stores";
-
     import Icon from "../../client/components/Icon.svelte";
-    import CaretRight from "../../client/icons/CaretRight";
-    import FileText from "../../client/icons/FileText";
     import AiFile from "../../client/icons/AiFile";
-    import Images from "../../client/icons/Images";
-    import Home from "../../client/icons/Home";
+    import FileText from "../../client/icons/FileText";
     import Gear from "../../client/icons/Gear";
-    import CaretLeft from "../../client/icons/CaretLeft";
+    import Home from "../../client/icons/Home";
+    import Images from "../../client/icons/Images";
 
     $: section = $page.url.pathname.split("/")[1];
 
@@ -36,5 +29,5 @@
             </div>
         </a>
         {/if}
-    {/each} 
+    {/each}
 </nav>

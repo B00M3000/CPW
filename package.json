@@ -21,6 +21,7 @@
     "autoprefixer": "^10.4.17",
     "carbon-preprocess-svelte": "^0.11.5",
     "postcss": "^8.4.33",
+    "postcss-nesting": "^13.0.0",
     "sass": "^1.69.3",
     "svelte": "5.0.0-next.224",
     "svelte-check": "^3.8.5",

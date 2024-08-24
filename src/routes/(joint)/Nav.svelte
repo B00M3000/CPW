@@ -6,22 +6,17 @@
 
 <script>
     import { user } from "@/client/stores/user";
-    import UserIconMenu from "@/client/components/UserIconMenu.svelte";
-
-    import { AccessLevel, AccountType } from "@/lib/enums";
     import Credits from "@/client/components/Credits.svelte";
-
+    import { AccessLevel } from "@/lib/enums";
     import { navigating, page } from "$app/stores";
-
-    import Icon from "../../client/components/Icon.svelte";
-    import CaretRight from "../../client/icons/CaretRight";
-    import FileText from "../../client/icons/FileText";
-    import AiFile from "../../client/icons/AiFile";
-    import Images from "../../client/icons/Images";
-    import Home from "../../client/icons/Home";
-    import Gear from "../../client/icons/Gear";
-    import CaretLeft from "../../client/icons/CaretLeft";
+    import UserIconMenu2 from "@/routes/(joint)/UserIconMenu2.svelte";
     import { BarLoader } from "svelte-loading-spinners";
+    import Icon from "../../client/components/Icon.svelte";
+    import AiFile from "../../client/icons/AiFile";
+    import FileText from "../../client/icons/FileText";
+    import Gear from "../../client/icons/Gear";
+    import Home from "../../client/icons/Home";
+    import Images from "../../client/icons/Images";
 
     $: section = $page.url.pathname.split("/")[1];
 
@@ -45,14 +40,10 @@
                     <span>{element.name}</span>
                 </a>
             {/if}
-        {/each} 
+        {/each}
     </div>
     <div class="flex items-center gap-4 mr-4">
-        {#if $user}
-            <UserIconMenu />
-        {:else}
-            <a class="p-2 bg-rose-600 shadow-xl hover:shadow-sm hover:bg-rose-700 rounded-xl text-xl animate-red-glowing" href="/login">Login</a>
-        {/if}
+        <UserIconMenu2 />
         <Credits />
     </div>
 </nav>
@@ -71,19 +62,5 @@
         z-index: 21;
         height: 0.2rem;
         overflow: hidden;
-    }
-
-    .animate-red-glowing {
-        animation: glowing 1500ms infinite;
-    }
-
-    @keyframes glowing {
-        0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
-        50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
-        100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
-    }
-
-    .transition-side-bar {
-        transition: cubic-bezier(1, 0, 0, 1) 0.15s transform;
     }
 </style>

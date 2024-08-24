@@ -1,17 +1,14 @@
 <script lang=ts>
-    import axios from "axios";
-
-    import { get, type Writable, writable } from "svelte/store";
-
-    import MobileUpload from "@/client/components/MobileUpload.svelte";
+    import { invalidate } from "$app/navigation";
     import Icon from "@/client/components/Icon.svelte";
-    import CloudUpload from "@/client/icons/CloudUpload";
-    import { bytesToString, sleep } from "@/lib/utils";
-    import Progress from "./Progress.svelte";
-    import DescriptionEditor from "./DescriptionEditor.svelte";
-    import { goto, invalidate } from "$app/navigation";
-    import Trash from "@/client/icons/Trash";
     import LazyImage2 from "@/client/components/LazyImage2.svelte";
+    import MobileUpload from "./MobileUpload.svelte";
+    import CloudUpload from "@/client/icons/CloudUpload";
+    import Trash from "@/client/icons/Trash";
+    import { bytesToString } from "@/lib/utils";
+    import axios from "axios";
+    import DescriptionEditor from "./DescriptionEditor.svelte";
+    import Progress from "./Progress.svelte";
 
     interface UploadedImageData {
         _id: string;
@@ -88,7 +85,7 @@
                 queueItem.progress = p.progress;
             }
         });
-        
+
         if(response.status == 200) {
             queueItem.status = UploadQueueItemStatus.Uploaded;
             uploadedImages.unshift({
@@ -176,7 +173,7 @@
                     {/each}
                 </select>
             </div>
-        </div>  
+        </div>
 
         {#if /^[0-9A-Fa-f]{24}$/.test(projectId)}
         <div class="flex items-center mx-2">
@@ -314,7 +311,7 @@
         left: 0;
         top: 0;
         z-index: 9999;
-        
+
         width: 100vw;
         height: 100vh;
 
