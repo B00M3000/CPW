@@ -9,6 +9,7 @@ export interface Student {
     studentId: string; // unique identifier
     firstName: string;
     lastName: string;
+    name: stirng;
     yearOfGraduation: number;
     picture: string;
 }

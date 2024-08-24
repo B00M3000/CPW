@@ -52,33 +52,33 @@
             </div>
             <div id="dropdown-menu-options-container">
                 <div id="dropdown-menu-options">
-                    <button class="dropdown-menu-option" on:click={gotoAccount}>
+                    <a class="dropdown-menu-option" href="/account">
                         <Icon src={Gear} size="1.25rem"/>
                         <div class="dropdown-menu-option-link-container">
-                            <a href="/account">Account</a>
+                            <span>Account</span>
                         </div>
-                    </button>
+                    </a>
                     {#if $user.accountType == AccountType.Student}
-                    <button class="dropdown-menu-option" on:click={gotoManageProjects}>
+                    <a class="dropdown-menu-option" href="/manage-projects">
                         <Icon src={FileText} size="1.25rem"/>
                         <div class="dropdown-menu-option-link-container">
-                            <a href="/manage-projects">My Projects</a>
+                            <span>My Projects</span>
                         </div>
-                    </button>
-                    <button class="dropdown-menu-option" on:click={gotoManageImages}>
+                    </a>
+                    <a class="dropdown-menu-option" href="/manage-images">
                         <Icon src={Images} size="1.25rem"/>
                         <div class="dropdown-menu-option-link-container">
-                            <a href="/manage-images">My Images</a>
+                            <span>My Images</span>
                         </div>
-                    </button>
+                    </a>
                     {/if}
                     {#if $user.accountType == AccountType.Advisor}
-                    <button class="dropdown-menu-option" on:click={gotoManageAdvisees}>
+                    <a class="dropdown-menu-option" href="/manage-advisees">
                         <Icon src={People} size="1.25rem"/>
                         <div class="dropdown-menu-option-link-container">
-                            <a href="/manage-advisees">My Advisees</a>
+                            <span>My Advisees</span>
                         </div>
-                    </button>
+                    </a>
                     {/if}
                 </div>
             </div>

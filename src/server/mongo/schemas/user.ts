@@ -19,6 +19,7 @@ interface UserDocumentData {
   adviseeIds: string[];
   schoolId: string;
   graduationYear: number;
+  lastVisit: Date;
 }
 
 const schema = new mongoose.Schema(

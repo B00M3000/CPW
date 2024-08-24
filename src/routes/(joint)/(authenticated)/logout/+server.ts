@@ -4,7 +4,7 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
-import { json, redirect } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 
 export async function GET({ cookies }) {
   cookies.delete('session_id', { path: '/' });

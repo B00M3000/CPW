@@ -68,7 +68,7 @@
     let innerWindowWidth = $state(0);
 
     const refinedSearchBreakpoint = 870;
-    let refinedSearchOpen = $state(true)
+    let refinedSearchOpen = $state(false)
     let refinedSearchNormalOpen = $derived(refinedSearchOpen && innerWindowWidth > refinedSearchBreakpoint);
     let refinedSearchMobileOpen = $derived(refinedSearchOpen && innerWindowWidth <= refinedSearchBreakpoint)
     function closeRefinedSearch() {

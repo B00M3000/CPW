@@ -12,7 +12,7 @@ import { MentorSchema } from '@/server/mongo/schemas/mentor';
 import { error } from '@sveltejs/kit';
 
 export async function load({ locals, params: { studentId } }) {
-    const student = stringifyObjectId(await UserSchema.findOne({ _id: studentId }).lean())
+    const student = stringifyObjectId(await UserSchema.findOne({ _id: studentId }, 'name picture').lean())
     if(!student) error(404, "Student not found.");
     const projects = (await ProjectSchema.find({ studentId: student._id }).lean())?.map(stringifyObjectId).map(p => ({ ...p, student })) || [];
     const inflatedProjects = await Promise.all(projects.map(injectMentor));
@@ -22,6 +22,6 @@ export async function load({ locals, params: { studentId } }) {
 
 
 async function injectMentor(project: any) {
-    project.mentor = stringifyObjectId(await MentorSchema.findById(project.mentorId, 'firstName lastName').lean());
+    project.mentor = stringifyObjectId(await MentorSchema.findById(project.mentorId, 'name').lean());
     return project;
 }

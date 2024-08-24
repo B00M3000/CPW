@@ -12,12 +12,12 @@ import { ImageSchema } from "@/server/mongo/schemas/image";
 import { error } from "@sveltejs/kit";
 
 export async function load({ params: { projectId } }) {    
-    const project = stringifyObjectId(await ProjectSchema.findById(projectId).lean());
+    const project = stringifyObjectId(await ProjectSchema.findById(projectId, "title shortDesc tags mentorId studentId fullReport").lean());
 
     if(!project) error(404, { message: "Project not found."});
 
-    const student = stringifyObjectId(await UserSchema.findById(project?.studentId).lean())
-    const mentor = stringifyObjectId(await MentorSchema.findById(project?.mentorId).lean());
+    const student = stringifyObjectId(await UserSchema.findById(project?.studentId, "name picture").lean())
+    const mentor = stringifyObjectId(await MentorSchema.findById(project?.mentorId, "name").lean());
     const inflatedImages = await Promise.all((await ImageSchema.find({ projectId }, 'projectId description').lean().sort('-createdAt'))?.map(stringifyObjectId).map(injectProjects));
 
     return { project, mentor, student, images: inflatedImages };

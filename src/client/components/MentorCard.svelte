@@ -9,8 +9,7 @@
 
     interface Mentor {
         _id: string;
-        firstName: string;
-        lastName: string;
+        name: string;
     }
 
     export let mentor: Mentor;
@@ -22,7 +21,7 @@
 
 <button class="mentor-card" on:click={gotoMentor}>
     {#if mentor}
-        <span class="text">{mentor.firstName} {mentor.lastName}</span> 
+        <span class="text">{mentor.name}</span> 
     {:else}
         <span class="text">Mentor Not Found!</span>
     {/if}

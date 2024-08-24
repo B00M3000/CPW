@@ -25,6 +25,8 @@ interface User {
 	email: string;
 	picture: string;
 	sessionId: string;
+	firstName: string;
+	lastName: string;
 	accountType: number;
 	accessLevel: number;
 	adviseeIds: string[];

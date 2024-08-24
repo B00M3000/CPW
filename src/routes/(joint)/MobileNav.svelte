@@ -30,7 +30,7 @@
 <nav class="bg-[#a32349] w-full sm:hidden grid grid-cols-5 px-5">
     {#each navBarElements as element}
         {#if element.predicate == undefined || element.predicate()}
-        <a class="p-2" href={element.link}>
+        <a class="p-2" href={element.link} data-sveltekit-preload-data>
             <div class="text-white h-full decoration-0 nav-element flex items-center p-4 rounded-lg gap-2 hover:bg-red-900 {section == element.section ? " bg-red-900" : ""}">
                 <Icon src={element.icon} size="1.2rem" color='white'/>
             </div>
