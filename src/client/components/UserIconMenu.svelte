@@ -42,12 +42,12 @@
 
     <div id="dropdown-content-container" class="text-black">
         <div id="dropdown-content">
-            <div id="brief-profile">
+            <div class="grid grid-cols-[auto_minmax(0,1fr)] gap-4">
                 <img class="w-10 h-10 rounded-full" src={$user.picture} alt="" />
-                <div id="brief-account-details">
-                    <span class="name">{$user.name}</span>
-                    <span class="email">{$user.email}</span>
-                    <span class="account-information">{AccountType[$user.accountType]} - {AccessLevel[$user.accessLevel]}</span>
+                <div class="flex flex-col">
+                    <span class="text-sm font-bold -mb-1">{$user.name}</span>
+                    <span class="text-xs font-bold text-gray-700">{$user.email}</span>
+                    <span class="text-xs font-bold">{AccountType[$user.accountType]} - {AccessLevel[$user.accessLevel]}</span>
                 </div>
             </div>
             <div id="dropdown-menu-options-container">
@@ -114,7 +114,7 @@
 
         right: 0;
         top: calc(100% - 1rem);
-        
+
         border-radius: 2px;
         padding: 1rem;
     }
@@ -131,40 +131,6 @@
 
         background-color: #fff;
         box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.4);
-    }
-
-    #brief-profile {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        gap: 0.5rem;
-
-        img {
-            width: 40px;
-            height: 40px;
-
-            border-radius: 50%;
-        }
-
-        white-space: nowrap;
-    }
-
-    #brief-account-details {
-        display: flex;
-        flex-direction: column;
-
-        padding-left: 5px;
-
-        color: black;
-
-        .name {
-            font-size: 16px;
-        }
-
-        .email, .account-information {
-            font-size: 12px;
-        }
     }
 
     #dropdown-menu-options-container {

@@ -33,14 +33,10 @@
 </button>
 
 <style> 
-    @font-face {
-        font-family: Roboto-Medium;
-        src: url(/assets/Roboto-Medium.ttf);
-    }
     .container {
         display: inline-flex;
         padding: 10px;
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;    
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
         border-radius: 3px;
         cursor: pointer;
         background: white;

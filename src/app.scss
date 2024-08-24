@@ -8,6 +8,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: Roboto-Medium;
+    src: url(/assets/Roboto-Medium.ttf);
+}
+
 @mixin colors() {
     --color-primary-900: #2c0310;
     --color-primary-600: #9E133F;
@@ -60,4 +65,3 @@
     background-color: var(--color-blue-grey-100);
     overflow-x: auto;
 }
-
