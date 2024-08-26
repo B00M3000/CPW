@@ -33,7 +33,7 @@ export async function POST({ request }) {
 
     const imageField = formData.get('image')
 
-    if(!(imageField instanceof File)) error(400, { message: "No image file contained in request." }); 
+    if(!(imageField instanceof File)) error(400, { message: "No image file contained in request." });
 
     const imageFile: File = imageField;
 
@@ -55,17 +55,19 @@ export async function POST({ request }) {
         if(compressed.byteLength < imageBuffer.byteLength) imageBuffer = compressed
     }
 
-    const object = await uploadObject(AWS_S3_IMAGES_BUCKET, `${new Date().getTime()}-${Math.floor(Math.random() * 1000)}.${imageFile.type.split('/')[1]}`, imageBuffer)
+    const key = `${new Date().getTime()}-${Math.floor(Math.random() * 1000)}.${imageFile.type.split('/')[1]}`
+
+    const object = await uploadObject(AWS_S3_IMAGES_BUCKET, key, imageBuffer);
 
     await new ImageSchema({
-        type: imageFile.type,
-        s3Bucket: object.Bucket,
-        s3ObjectKey: object.Key,
-        size: imageFile.size,
-        description: "",
-        ownerId: mobileKeyDoc.userId,
-        projectId: mobileKeyDoc.projectId
-    }).save()
+      type: imageFile.type,
+      s3Bucket: AWS_S3_IMAGES_BUCKET,
+      s3ObjectKey: key,
+      size: imageFile.size,
+      description: "",
+      ownerId: mobileKeyDoc.userId,
+      projectId: mobileKeyDoc.projectId,
+    }).save();
 
     return json({
         message: "Image was successfully uploaded to project!"

@@ -11,7 +11,7 @@
 
     const tagOptions = Array.from(tags.entries()).map(([k, v]) => ({ id: k, label: v, value: v }))
 
-    let { 
+    let {
         searchParameters = $bindable(),
         search,
         close
@@ -69,7 +69,7 @@
 
             <div class="flex flex-col gap-1 sm:gap-2">
                 <span class="">Filter by Tags: </span>
-                <MultiSelect 
+                <MultiSelect
                     options={tagOptions}
                     maxSelect={3}
                     placeholder="Search tags.."
@@ -78,13 +78,13 @@
                     bind:selected
                 >
                     <span slot="selected" let:option class="max-w-36 text-ellipsis overflow-x-clip text-sm">{option.label}</span>
-                </MultiSelect>  
+                </MultiSelect>
             </div>
         </div>
 
         <div class="flex gap-6">
-            <button class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white text-md rounded-md" type="submit">Search</button>
-            <a class="px-4 py-2 bg-red-700 hover:bg-red-800 text-white text-md rounded-md" href="/projects">Clear</a>
+            <button class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white text-base rounded-md" type="submit">Search</button>
+            <a class="px-4 py-2 bg-red-700 hover:bg-red-800 text-white text-base rounded-md" href="/projects">Clear</a>
         </div>
     </form>
 </div>

@@ -11,9 +11,9 @@
     import Pagination from "@/client/components/Pagination.svelte";
     import Loading2 from "@/client/components/Loading2.svelte";
     import { untrack } from "svelte";
-  
+
     let { data } = $props()
-    
+
     let inflatedProjects: any[] = $state([])
     let searchParameters: any = $state({
         tags: [],
@@ -24,7 +24,7 @@
         query: "",
         itemsPerPage: 10,
         page: 0
-    })  
+    })
     let totalProjectCount: number = $state(0);
 
     inflatedProjects = data.inflatedProjects
@@ -37,7 +37,7 @@
         searchParameters = data.searchParameters
         totalProjectCount = data.totalProjectCount
     })
-    
+
     async function search(event?: Event){
         event?.preventDefault();
         console.log("Hi")
@@ -100,7 +100,7 @@
     {#if refinedSearchMobileOpen}
     <div class="relative">
         <div class="absolute top-0 w-screen z-10">
-            <RefinedSearchMobile 
+            <RefinedSearchMobile
                 {search}
                 close={closeRefinedSearch}
                 bind:searchParameters
@@ -112,7 +112,7 @@
     {/if}
     <div class="flex h-full">
         {#if refinedSearchNormalOpen}
-        <RefinedSearchNormal 
+        <RefinedSearchNormal
             {search}
             close={closeRefinedSearch}
             bind:searchParameters
@@ -127,7 +127,7 @@
                     {#each inflatedProjects as project}
                     <div class="flex items-center justify-center w-full h-full">
                         <ProjectCard {project} />
-                    </div>      
+                    </div>
                     {/each}
                 </div>
             </div>
@@ -141,12 +141,12 @@
     </div>
     <div class="flex justify-center w-full bg-gray-300">
         <div class="flex justify-center p-2 sm:p-4 w-full lg:w-2/3 2xl:w-1/2">
-            <Pagination 
-                pluralItemName="projects" 
-                bind:itemsPerPage={searchParameters.itemsPerPage} 
+            <Pagination
+                pluralItemName="projects"
+                bind:itemsPerPage={searchParameters.itemsPerPage}
                 bind:currentPage={searchParameters.page}
                 maxItems={totalProjectCount}
-                onchange={search}
+                onchange={() => search()}
             />
         </div>
     </div>

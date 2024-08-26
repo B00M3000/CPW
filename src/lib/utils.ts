@@ -10,8 +10,8 @@ import escapeRegExp from "lodash/escapeRegExp";
 
 export function parseIntOrElse(str: string | null, other: number): number {
     if(!str) return other;
-    try { return parseInt(str); } 
-    catch (e) { return other; }   
+    try { return parseInt(str); }
+    catch (e) { return other; }
 }
 
 export function clamp(value: number, min: number, max: number): number {
@@ -53,7 +53,7 @@ export async function parseCSV(file: File | string): Promise<string[][]> {
 }
 
 export function validateCSV(headings: string[], entries: string[][], fields: Fields) {
-  return Object.keys(fields).every((fieldName: string) => headings.filter(h => h == fieldName).length == 1) 
-  && headings.every((heading) => fields[heading]) 
+  return Object.keys(fields).every((fieldName: string) => headings.filter(h => h == fieldName).length == 1)
+  && headings.every((heading) => fields[heading])
   && entries.every((entry) => entry.every((part, i) => fields[headings[i]].test(part)));
 }

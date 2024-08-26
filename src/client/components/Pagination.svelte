@@ -3,7 +3,7 @@
     import { CaretLeft, CaretRight } from 'carbon-icons-svelte';
     import capitalize from 'lodash/capitalize';
 
-    let { 
+    let {
         itemsPerPage = $bindable(10),
         currentPage = $bindable(0), // currentPage is zero-indexed
         pluralItemName = "items",
@@ -17,7 +17,7 @@
         pageSizes?: number[],
         maxItems?: number,
         onchange?: (currentPage: number, itemsPerPage: number) => void
-    } = $props(); 
+    } = $props();
 
     function itemsPerPageOnChange() {
         currentPage = 0
@@ -44,7 +44,7 @@
         </select>
     </div>
     <div class="text-gray-900">
-        <span class="max-sm:hidden">{currentUpper}-{currentLower} of {pluralItemName.toLowerCase()}</span>
+        <span class="max-sm:hidden">{currentUpper}-{currentLower} of {maxItems} {pluralItemName.toLowerCase()}</span>
         <span class="sm:hidden">{currentUpper}-{currentLower}</span>
     </div>
     <div class="flex items-center h-full gap-3 sm:gap-5">
@@ -60,7 +60,7 @@
             <span class="text-gray-900 sm:hidden">of {totalPages}</span>
         </div>
         <button class="h-full p-2 sm:px-4 bg-gray-300 hover:bg-gray-400 rounded-md" onclick={() => { currentPage = Math.max(0, currentPage - 1); pageChange() }}>
-            <CaretLeft size={24} /> 
+            <CaretLeft size={24} />
         </button>
         <button class="h-full p-2 sm:px-4 bg-gray-300 hover:bg-gray-400 rounded-md" onclick={() => { currentPage = Math.min(totalPages - 1, currentPage + 1); pageChange() }}>
             <CaretRight size={24} />

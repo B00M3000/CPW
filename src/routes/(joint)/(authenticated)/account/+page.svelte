@@ -23,20 +23,14 @@
             <div class="flex items-center gap-5 sm:gap-10 sm:m-5">
                 <img class="w-16 h-16 sm:w-32 sm:h-32 rounded-full" src={$user.picture} alt="profile">
 
-                <div class="flex flex-col text-md sm:text-xl ">
+                <div class="flex flex-col text-base sm:text-xl ">
                     <span class="font-bold">{$user.name}</span>
                     <span class="font-bold">{$user.email}</span>
                     <span class="font-bold"> {AccountType[$user.accountType]} - {AccessLevel[$user.accessLevel]}</span>
                 </div>
             </div>
 
-            <h1 class="text-3xl my-5">Welcome back {$user.firstName}!</h1>
-
-            <div class="text-center max-w-[36rem]">
-                <h2 class="text-2xl my-5">Reminder! PLEASE READ!!!</h2> 
-                <p class="text-wrap mb-5">Navigate to public pages using the navigation bar. To manage your own projects and images, utilize the hover menu on your google icon in the top right. For Advisors, the same menu contains the button to view your advisees.</p>
-                <p class="text-wrap">Additionally, if any pages or things look broken or wonky (or too small), feel free to zoom in and out with Ctrl + and -.</p>
-            </div>
+            <h1 class="text-3xl mt-5">Welcome back {$user.firstName}!</h1>
 
             <div class="flex gap-4 items-center m-8 mx-4">
                 {#if $user.accountType == AccountType.Student}
@@ -67,10 +61,16 @@
                 {/if}
             </div>
 
-            <br>
+            <div class="flex flex-col gap-2 items-center mb-4">
+                <h2 class="text-2xl">Important Announcements: </h2>
+                <h2 class="text-xl text-gray-800">[none]</h2>
+            </div>
 
-            <h2 class="text-2xl">Important Announcements: </h2>
-            <h2 class="text-xl text-gray-800">[none]</h2>
+            <div class="text-center max-w-[36rem]">
+                <h2 class="text-2xl my-5">Reminder! PLEASE READ!!!</h2>
+                <p class="text-wrap mb-5">Navigate to public pages using the navigation bar. To manage your own projects and images, utilize the hover menu on your google icon in the top right. For Advisors, the same menu contains the button to view your advisees.</p>
+                <p class="text-wrap">Additionally, if any pages or things look broken or wonky (or too small), feel free to zoom in and out with Ctrl + and -.</p>
+            </div>
 
             <div class="mb-24"></div>
         </div>
@@ -212,4 +212,3 @@
         </div>
     </div>
 </main>
-

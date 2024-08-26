@@ -29,8 +29,8 @@
 
     let { data }: {
         data: {
-            project: ProjectInformation, 
-            mentor: MentorInformation, 
+            project: ProjectInformation,
+            mentor: MentorInformation,
         }
     } = $props();
 
@@ -40,7 +40,7 @@
         SUCCESS,
         ERROR
     }
-    
+
     let status: EditStatus = $state(EditStatus.UNSAVED);
 
     async function upload() {
@@ -82,12 +82,12 @@
             <div class="flex flex-col items-start gap-4">
                 <div class="flex gap-2 items-start flex-col">
                     <h2 class="text-lg">Title</h2>
-                    <span contenteditable="plaintext-only" class="text-md rounded-md bg-gray-200 p-2 border-gray-400 border" bind:innerHTML={project.title}>{data.project.title}</span>
+                    <span contenteditable="plaintext-only" class="text-base rounded-md bg-gray-200 p-2 border-gray-400 border" bind:innerHTML={project.title}>{data.project.title}</span>
                 </div>
-                
+
                 <div class="flex gap-2 items-start flex-col">
                     <h2 class="text-lg">Tags</h2>
-                    <MultiSelect 
+                    <MultiSelect
                         options={tagOptions}
                         maxSelect={3}
                         placeholder="Search tags.."
@@ -95,13 +95,13 @@
                         outerDivClass="flex gap-2 items-center my-0 bg-gray-50 p-2 rounded-md border-gray-400 border max-w-[30rem]"
                         bind:selected
                     >
-                        <span slot="selected" let:option class="max-w-72 text-ellipsis overflow-x-clip text-md">{option.label}</span>
-                    </MultiSelect>  
+                        <span slot="selected" let:option class="max-w-72 text-ellipsis overflow-x-clip text-base">{option.label}</span>
+                    </MultiSelect>
                 </div>
-                
+
                 <div class="flex gap-2 items-start flex-col">
                     <h2 class="text-lg">Short Description</h2>
-                    <span contenteditable="plaintext-only" class="text-md rounded-md bg-gray-200 p-2 border-gray-400 border max-w-[32rem]" bind:innerHTML={project.shortDesc}>{data.project.shortDesc}</span>
+                    <span contenteditable="plaintext-only" class="text-base rounded-md bg-gray-200 p-2 border-gray-400 border max-w-[32rem]" bind:innerHTML={project.shortDesc}>{data.project.shortDesc}</span>
                 </div>
             </div>
             <div class="flex flex-col items-start gap-4 p-8">
@@ -122,7 +122,7 @@
                     <ErrorFilled color="red" size={24} />
                 {/if}
                 <button class="p-3 px-5 bg-blue-500 hover:bg-blue-600 text-white rounded-md flex items-center" onclick={upload}>
-                    
+
                     <span>Save Changes</span>
                 </button>
             </div>

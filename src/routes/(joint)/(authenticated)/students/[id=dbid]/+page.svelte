@@ -13,7 +13,7 @@
 </script>
 
 <main>
-    <div class="profile my-10">
+    <div class="profile my-5 sm:my-12">
         <div class="profile-picture">
             <img src={student.picture} alt="pfp">
         </div>
@@ -22,15 +22,19 @@
             <h1 class="title text-xl">{student.email}</h1>
         </div>
     </div>
-    
+
     <h1 class='text-center text-2xl'>Projects Completed:</h1>
 
-    <div class="flex flex-wrap items-center justify-center mt-8">
+    <div class="flex flex-wrap items-center justify-center mt-8 mx-4 sm:mx-36 mb-12">
         <div>
         {#each projects as project}
             <ProjectCard {project} />
         {/each}
         </div>
+    </div>
+
+    <div class="flex justify-center">
+        <button class="bg-blue-400 hover:bg-blue-300 text-center px-3 p-2 sm:p-3 block rounded-lg text-lg sm:text-xl text-gray-900" on:click={() => history.back()}>Go back</button>
     </div>
 </main>
 
@@ -56,7 +60,7 @@
     }
 
     .profile-picture {
-        flex-shrink: 0; 
+        flex-shrink: 0;
     }
 
     .title {

@@ -8,7 +8,7 @@
 
     function updateUploaded() {
         status = Status.Picking
-        allowUpload = fileList.length > 0; 
+        allowUpload = fileList.length > 0;
     }
 
     enum Status {
@@ -27,11 +27,11 @@
 
     async function upload() {
         if(status == Status.Uploading) return;
-      
+
         uploadsCompleted = 0;
 
         errorMessages = [];
-      
+
         status = Status.Uploading;
 
         Promise.all(Array.from(fileList).map(async (file) => {
@@ -39,7 +39,7 @@
             formData.set('image', file);
             formData.set('mobileKey', mobileKey);
 
-            const response = await fetch('/mobile', {
+            const response = await fetch('/mobile-upload-portal', {
                 credentials: 'include',
                 method: "POST",
                 body: formData
@@ -69,12 +69,12 @@
     let retryAttempts = 0;
 </script>
 
-<main class="h-[100vh] flex flex-col justify-between items-center bg-[#8b0000]">
+<main class="h-screen flex flex-col justify-between items-center bg-[#8b0000]">
     <div class="w-full h-20 bg-[#a4123f]">
         <img src="/assets/CommSchool_primary_white.png" class='h-20'>
     </div>
 
-    <div class="flex flex-col bg-white rounded-xl p-5">
+    <div class="flex flex-col bg-white rounded-xl p-5 m-5">
         <h1 class="text-xl">Mobile Image Upload</h1>
         <h2 class="text-sm text-gray-700">Project Week Website</h2>
 
@@ -113,7 +113,7 @@
             {/if}
         </form>
     </div>
-    
+
     <div class="w-full h-20 bg-inherit"></div>
 </main>
 

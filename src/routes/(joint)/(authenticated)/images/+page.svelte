@@ -69,7 +69,7 @@
     <div class="h-full overflow-y-auto w-full">
         <div class="flex flex-wrap items-center justify-center gap-4 h-auto">
             {#each images as image}
-            <div class="w-[300px] h-[225px] z-0">
+            <div class="w-[300px] h-[225px] 2xl:w-[500px] 2xl:h-[350px] z-0">
                 <SmartProjectImage {image} showProjectPageButton={true} />
             </div>
             {:else}
@@ -81,9 +81,9 @@
     </div>
     <div class="flex justify-center w-full bg-gray-300">
         <div class="flex justify-center p-2 sm:p-4 w-full lg:w-2/3 2xl:w-1/2">
-            <Pagination 
-                pluralItemName="images" 
-                itemsPerPage={items} 
+            <Pagination
+                pluralItemName="images"
+                itemsPerPage={items}
                 currentPage={page}
                 maxItems={totalImageCount}
                 onchange={search}
@@ -109,7 +109,7 @@
         justify-content: center;
 
         gap: 0.5rem;
-        
+
         button {
             cursor: pointer;
 
@@ -127,6 +127,3 @@
         }
     }
 </style>
-
-
-

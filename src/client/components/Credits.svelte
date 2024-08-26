@@ -22,7 +22,7 @@
 </button>
 
 {#if isOpen}
-<div class="fixed top-0 left-0 bg-opacity-65 bg-black z-10 w-screen h-screen flex items-center justify-center">  
+<div class="fixed top-0 left-0 bg-opacity-65 bg-black z-10 w-screen h-screen flex items-center justify-center">
     <div class="flex flex-col p-8 bg-slate-300 rounded-xl text-black w-[45vw] min-w-[22rem] max-w-[32rem]">
         <div class="flex justify-between items-center">
             <h1 class="text-xl font-bold">Information</h1>
@@ -30,29 +30,19 @@
                 <Icon src={Close} size="2em"/>
             </button>
         </div>
-        
-        <br>
+
+        <!-- Commonwealth School Project Week Website v2 -->
+        <!-- Overhauled and Rewritten by: Thomas Zhou 26' -->
+         <!-- Featuring a complete css and backend rewrite. -->
+
+        <!-- <br>
 
         <span>Project and Code Owner, Lead-Author: Thomas Zhou (26')</span>
         <span>Co-Author: Ethan Wu (26')</span>
 
-        <br>
+        <br> -->
 
-        <span>Build #{PUBLIC_BUILD_NUMBER}</span>
-
-        <br>
-    
-        <span class="text-lg">Dependencies: </span>
-        <ul class="flex flex-col px-3 py-1">
-            <span class="package">Svelte - {pkgJSON.devDependencies.svelte}</span>
-            <span class="package">Svelte Kit - {pkgJSON.devDependencies["@sveltejs/kit"]}</span>
-            <span class="package">Svelte Node Adapter - {pkgJSON.devDependencies["@sveltejs/adapter-node"]}</span>
-            <span class="package">Vite - {pkgJSON.devDependencies.vite}</span>
-            <span class="package">Typescript - {pkgJSON.devDependencies.typescript}</span>
-            <span class="package">Mongoose - {pkgJSON.dependencies.mongoose}</span>
-            <span class="package">Sass - {pkgJSON.dependencies.sass}</span>
-            <span class="package">Sharp - {pkgJSON.dependencies.sharp}</span>
-        </ul>
+        <span class="m-5">Build #{PUBLIC_BUILD_NUMBER}</span>
     </div>
 </div>
 {/if}

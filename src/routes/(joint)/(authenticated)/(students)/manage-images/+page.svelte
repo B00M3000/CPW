@@ -1,17 +1,14 @@
 <script lang=ts>
-    import axios from "axios";
-
-    import { get, type Writable, writable } from "svelte/store";
-
-    import MobileUpload from "@/client/components/MobileUpload.svelte";
+    import { invalidate } from "$app/navigation";
     import Icon from "@/client/components/Icon.svelte";
-    import CloudUpload from "@/client/icons/CloudUpload";
-    import { bytesToString, sleep } from "@/lib/utils";
-    import Progress from "./Progress.svelte";
-    import DescriptionEditor from "./DescriptionEditor.svelte";
-    import { goto, invalidate } from "$app/navigation";
-    import Trash from "@/client/icons/Trash";
     import LazyImage2 from "@/client/components/LazyImage2.svelte";
+    import MobileUpload from "./MobileUpload.svelte";
+    import CloudUpload from "@/client/icons/CloudUpload";
+    import Trash from "@/client/icons/Trash";
+    import { bytesToString } from "@/lib/utils";
+    import axios from "axios";
+    import DescriptionEditor from "./DescriptionEditor.svelte";
+    import Progress from "./Progress.svelte";
 
     interface UploadedImageData {
         _id: string;
@@ -88,7 +85,7 @@
                 queueItem.progress = p.progress;
             }
         });
-        
+
         if(response.status == 200) {
             queueItem.status = UploadQueueItemStatus.Uploaded;
             uploadedImages.unshift({
@@ -153,7 +150,7 @@
     <div class="flex flex-col bg-gray-100 rounded-3xl m-5 p-5 max-w-7xl gap-3">
         <div class="flex flex-col gap-1">
             <h1 class="text-2xl font-bold">Upload and manage your project images</h1>
-            <p class="text-md text-gray-500">Upload new project images, alter the descriptions, and delete images. Note that once an image has been uploaded, it cannot be swapped out/changed. You must delete the image and then upload the desired image.</p>
+            <p class="text-base text-gray-500">Upload new project images, alter the descriptions, and delete images. Note that once an image has been uploaded, it cannot be swapped out/changed. You must delete the image and then upload the desired image.</p>
         </div>
 
         <hr class="border-2 border-gray-200 rounded-sm">
@@ -176,7 +173,7 @@
                     {/each}
                 </select>
             </div>
-        </div>  
+        </div>
 
         {#if /^[0-9A-Fa-f]{24}$/.test(projectId)}
         <div class="flex items-center mx-2">
@@ -226,7 +223,7 @@
         <div class="flex rounded-2xl border-[3px] flex-col">
             <div class="flex flex-col gap-1 m-5">
                 <h1 class="text-2xl font-bold">Uploaded images</h1>
-                <p class="text-md text-gray-500">Project images that you uploaded.</p>
+                <p class="text-base text-gray-500">Project images that you uploaded.</p>
             </div>
 
             <table>
@@ -314,7 +311,7 @@
         left: 0;
         top: 0;
         z-index: 9999;
-        
+
         width: 100vw;
         height: 100vh;
 

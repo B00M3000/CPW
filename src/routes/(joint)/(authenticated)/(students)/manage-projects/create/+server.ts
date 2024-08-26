@@ -4,47 +4,46 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
-import { ProjectSchema } from '@/server/mongo/schemas/project';
-import { UserSchema } from '@/server/mongo/schemas/user';
-import { error, json } from '@sveltejs/kit';
-import { MentorSchema } from '@/server/mongo/schemas/mentor';
+import { ProjectSchema } from "@/server/mongo/schemas/project";
+import { UserSchema } from "@/server/mongo/schemas/user";
+import { error, json } from "@sveltejs/kit";
+import { MentorSchema } from "@/server/mongo/schemas/mentor";
 import { stringifyObjectId } from "@/lib/utils";
 
 export async function POST({ request, locals }) {
-    const data = await request.json();
-    const action = data.action.toUpperCase();
-    let mentorId = data.mentorId;
+  const data = await request.json();
+  const action = data.action.toUpperCase();
+  let mentorId = data.mentorId;
 
-    if(action != "CREATE") error(400, `Invalid Request Type! Must be CREATE given ${data.action.toUpperCase()}`);
+  if (action != "CREATE")
+    error(
+      400,
+      `Invalid Request Type! Must be CREATE given ${data.action.toUpperCase()}`
+    );
 
-    if(!mentorId) {
-      const mentorSchema = new MentorSchema({
-        ...data.mentor,
-        name: `${data.mentor.firstName} ${data.mentor.lastName}`
-      })
-      const savedMentorSchema = await mentorSchema.save();
-      mentorId = savedMentorSchema._id
-    }
+  if (!mentorId) {
+    const mentorSchema = new MentorSchema({
+      ...data.mentor,
+      name: `${data.mentor.firstName} ${data.mentor.lastName}`,
+    });
+    const savedMentorSchema = await mentorSchema.save();
+    mentorId = savedMentorSchema._id;
+  }
 
-    const project = data.project;
-    let schema = new ProjectSchema({ 
-      title: project.title, 
-      year: new Date().getFullYear(), 
-      tags: project.tags, 
-      shortDesc: project.shortDesc, 
-      fullReport: "",
-      underReview: true,
-      publish: false,
-      mentorId: mentorId,
-      studentId: locals.user?.id
-    })
+  const project = data.project;
+  let schema = new ProjectSchema({
+    title: project.title,
+    year: new Date().getFullYear(),
+    tags: project.tags,
+    shortDesc: project.shortDesc,
+    fullReport: "",
+    underReview: true,
+    publish: false,
+    mentorId: mentorId,
+    studentId: locals.user?._id,
+  });
 
-    await schema.save();
+  await schema.save();
 
-    return json({ message: "Actions Successfully Executed." });
+  return json({ message: "Actions Successfully Executed." });
 }
-
-
-
-
-

@@ -4,32 +4,20 @@
  Copyright (c) 2023 Thomas Zhou
 -->
 
-<script lang="ts">
-    import { goto } from "$app/navigation";
-
-    export let data;
-
-    $: ({ projects } = data);
-
-    let search: string;
-
-    async function gotoSearch(event: Event) {
-        event.preventDefault();
-        await goto(`/projects?query=${search || ''}`)
-    }
-</script>
-
 <div class="fixed left-0 top-0 w-screen h-screen bg-cover bg-center blur-sm scale-110 -z-10 bg-[url('/assets/CommonwealthSchool.jpg')]"></div>
-<main class="flex justify-center items-center h-full">
-    <div class="flex flex-col items-center justify-center search-title text-white w-[calc(100vw - (100vw - 100%))]">
-        <h1 class="text-5xl font-bold [text-shadow:_0_2px_4px_rgba(0,0,0,0.5)] mb-5 max-sm:text-4xl text-center">Commonwealth Project Week</h1>
-        <form class="search-bar" on:submit={gotoSearch}>
-            <input type="text" class="search-input text-black" placeholder="Search projects..." bind:value={search}>
+
+<main class="flex justify-center items-center h-full bg-[#00000008]">
+    <div class="flex flex-col items-center justify-center text-white">
+        <h1 class="text-5xl font-bold [text-shadow:_0_2px_4px_rgba(0,0,0,0.5)] max-sm:text-4xl text-center">Commonwealth Project Week</h1>
+
+        <form class="search-bar m-2 mt-8" action="/projects" >
+            <input type="text" class="search-input text-black" placeholder="Search projects..."  name="q">
             <button class="search-button" type="submit">Search</button>
         </form>
-        <div class="redirects mx-4">
-            <a class="btn text-center p-4" href="/projects">View Completed Projects</a>
-            <a class="btn text-center p-4" href="/images">Browse Photos</a>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 mx-4 ">
+            <a class="btn text-center p-4 px-12" href="/projects">View Projects</a>
+            <a class="btn text-center p-4 px-12" href="/images">Browse Photos</a>
         </div>
     </div>
 </main>
@@ -38,7 +26,7 @@
 <style lang="scss">
     .btn {
         display: inline-block;
-        background-color: rgba(0, 0, 0, 0.3);
+        background-color: rgba(0, 0, 0, 0.4);
         color: white;
         border-radius: 5px;
         text-decoration: none;
@@ -63,7 +51,6 @@
         justify-content: center;
         align-items: center;
         width: 45vw;
-        margin: 20px 0;
     }
 
     .search-input {
@@ -90,14 +77,6 @@
         background-color: var(--color-blue-400);
     }
 
-
-    .redirects{
-        display: flex;
-        flex-direction: row;
-    }
-
-
-
     .subtitle {
         font-size: 1.5rem;
         font-weight: bold;
@@ -118,7 +97,7 @@
         color:white;
     }
 
- 
+
     .proj-container {
         background-color: transparent;
         padding: 20px;
