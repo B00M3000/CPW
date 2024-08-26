@@ -4,42 +4,41 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
-import { error, json } from '@sveltejs/kit';
-import { ProjectSchema } from '@/server/mongo/schemas/project';
-import { MentorSchema } from '@/server/mongo/schemas/mentor';
-import { ImageSchema } from '@/server/mongo/schemas/image.js';
-import type { ObjectId } from 'mongoose';
+import { error, json } from "@sveltejs/kit";
+import { ProjectSchema } from "@/server/mongo/schemas/project";
+import { MentorSchema } from "@/server/mongo/schemas/mentor";
+import { ImageSchema } from "@/server/mongo/schemas/image.js";
+import type { ObjectId } from "mongoose";
 
 interface PublishSchema {
-    _id : ObjectId,
-    publish: boolean
+  _id: ObjectId;
+  publish: boolean;
 }
 
 export async function POST({ request, locals }) {
-    const data = await request.json();
-    const { action, projectId } = data
-    const project = await ProjectSchema.findOne({ _id: projectId, studentId: locals.user?.id })
-    if(!project) error(403, "Dont mess with other peoples projects.");
-    if(action == "DELETE"){
-        await ProjectSchema.deleteOne({ _id: projectId });
+  const data = await request.json();
+  const { action, projectId } = data;
+  const project = await ProjectSchema.findOne({
+    _id: projectId,
+    studentId: locals.user?._id,
+  });
+  if (!project) error(403, "Dont mess with other peoples projects.");
 
-        await ImageSchema.deleteMany({ projectId })
-        
-        const projectsOfMentor = await ProjectSchema.find({ mentorId: project.mentorId }) || [];
+  if (action == "PUBLISH") {
+    let schema: PublishSchema | null = await ProjectSchema.findOne(
+      { _id: projectId, studentId: locals.user?._id },
+      "publish"
+    );
 
-        if(projectsOfMentor.length == 0){
-            await MentorSchema.deleteOne({ _id: project.mentorId })
-        }
-        await ImageSchema.deleteMany({ projectId: projectId })
-    } else if (action == "PUBLISH"){
-        let schema : PublishSchema | null = await ProjectSchema.findOne({ _id: projectId, studentId: locals.user?.id }, 'publish');
-
-        if(schema){
-            await ProjectSchema.updateOne({ _id: projectId }, { publish: !schema.publish })
-        }
-    } else {
-        error(400, `Invalid action type provided. Given ${action}.`);
+    if (schema) {
+      await ProjectSchema.updateOne(
+        { _id: projectId },
+        { publish: !schema.publish }
+      );
     }
-    
-    return json({ message: "Action Successfully Executed." });
+  } else {
+    error(400, `Invalid action type provided. Given ${action}.`);
+  }
+
+  return json({ message: "Action Successfully Executed." });
 }

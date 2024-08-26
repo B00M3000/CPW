@@ -6,7 +6,7 @@
 
 <script lang="ts">
     import ProjectCard from '@/client/components/ProjectCard.svelte';
-    import { goto } from '$app/navigation';
+    import { goto, invalidate } from '$app/navigation';
     import type { Project } from '@/interfaces/project.js';
 
     export let data;
@@ -22,16 +22,8 @@
     }
 
     async function deleteProject(project: Project){
-        const res = await fetch('/manage-projects', {
-            method: "POST",
-            body: JSON.stringify({
-                action: "DELETE",
-                projectId: project._id,
-                mentorId: project.mentorId
-            })
-        });
-
-        location.reload();
+        await fetch(`/manage-projects/${project._id}`, { method: "DELETE" });
+        invalidate('user:projects')
     }
 
     async function publish(project: Project){
@@ -42,8 +34,7 @@
                 projectId: project._id
             })
         });
-
-        location.reload();
+        invalidate('user:projects')
     }
 
     let initDeleteConfirm: number | null;
@@ -55,10 +46,10 @@
     <div class="dashboard-actions">
         <h2 class="text-2xl text-gray-600">Manage Projects</h2>
         <div class="flex gap-4">
-            <a href='manage-projects/create' class="p-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">
+            <a href='manage-projects/create' class="p-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">
                 Create New Project
             </a>
-            <a href='manage-images' class="p-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">
+            <a href='manage-images' class="p-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">
                 Upload Images
             </a>
         </div>
@@ -66,16 +57,15 @@
 
     <div style="background-color: lightgrey; padding: 3rem; padding-top: 0; margin-bottom: 3rem;">
         <div class="flex items-center gap-2 text-lg">
-            <span class="font-bold text-red-700">IMPORTANT: </span>
-            <span>Completing the forms on google classroom and submitting your project report as a google document is still required. (As of Project Week 2024)</span>
+            <span><strong class="font-bold text-red-700">IMPORTANT: </strong> Completing the forms on google classroom and submitting your project report as a google document is still required. (As of Project Week 2024)</span>
         </div>
     </div>
 
-    <div class="card-container">
+    <div class="flex items-center justify-center gap-8">
         {#each projects as project, i}
             <div class="project-card">
                 <div class="project-cards">
-                    <div class="card-content">
+                    <div class="shadow-2xl border border-gray-400 rounded-md">
                         <ProjectCard {project} />
                     </div>
                     <div class="button-container">
@@ -85,12 +75,12 @@
                             </button>
                         {:else}
                             {#if project.publish == true}
-                                <button class="unpublish-button" on:click={() => {publish(project)}}>
-                                    Unpublish Project
+                                <button class="unpublish-button text-2xl" on:click={() => {publish(project)}}>
+                                    Unpublish
                                 </button>
                             {:else}
-                                <button class="publish-button" on:click={() => {publish(project)}}>
-                                    Publish Project
+                                <button class="publish-button text-2xl" on:click={() => {publish(project)}}>
+                                    Publish
                                 </button>
                             {/if}
                         {/if}
@@ -101,12 +91,12 @@
                         <button class="fullreport-button" on:click={()=> goto(`manage-projects/${project._id}/report`)}>
                             {#if project.fullReport == ""} Add {:else} Edit {/if} Full Report
                         </button>
- 
+
                         <button class="delete-button" on:click={() => {initDeleteProject(i)}}>
                             {#if initDeleteConfirm == i}
                             <span class="delete-button-warning blink">
                                 <strong>⚠ Are you sure? This action is IRREVERSIBLE ⚠</strong>
-                            </span>   
+                            </span>
                             {:else}
                             Delete
                             {/if}
@@ -114,18 +104,30 @@
                     </div>
                 </div>
             </div>
-
             {#if deleteConfirm == i}
             <div class="overlay delete-confirm">
-                <p>Enter the project title to delete. Type: {project.title}</p>
-                <input class="text-black" bind:value={deleteConfirmInputValue} on:paste={(e) => e.preventDefault()}/>
-                {#if deleteConfirmInputValue == project.title}
-                <button class="blink" on:click={deleteProject(project)}>CONFIRM DELETION</button>
-                {/if}
-                <button class="blink" on:click={() => {
-                    deleteConfirm = null;
-                    initDeleteConfirm = null;
-                }}>GO BACK</button>
+                <div class="bg-gray-500 flex flex-col items-center p-8 gap-8 rounded-md">
+                    <div class="flex flex-col items-start gap-2">
+                        <div class="flex items-center gap-1">
+                            <span>Project Title: </span>
+                            <span class="p-1 bg-gray-500 rounded-md">{project.title}</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <span>Enter: </span>
+                            <span class="p-1 bg-gray-600 rounded-md">I want to delete this project</span>
+                        </div>
+                    </div>
+                    <input class="text-black p-1 w-3/4" bind:value={deleteConfirmInputValue} on:paste={(e) => e.preventDefault()}/>
+                    <div class="flex flex-col gap-4">
+                        {#if deleteConfirmInputValue == "I want to delete this project"}
+                        <button class="blink" on:click={deleteProject(project)}>CONFIRM DELETION</button>
+                        {/if}
+                        <button on:click={() => {
+                            deleteConfirm = null;
+                            initDeleteConfirm = null;
+                        }}>GO BACK</button>
+                    </div>
+                </div>
             </div>
             {/if}
         {/each}
@@ -181,7 +183,7 @@
         align-items: center;
         background-color: #007BFF;
         color: white;
-        padding: 12px 24px;
+        padding: 8px 24px;
         border: none;
         border-radius: 5px;
         cursor: pointer;
@@ -204,9 +206,9 @@
         margin-bottom: 20px;
         border-radius: 10px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        display: flex; 
         display: flex;
-        flex-direction: row; 
+        display: flex;
+        flex-direction: row;
         justify-content: space-between;
         align-items: center;
         max-width: 40rem;
@@ -266,19 +268,11 @@
 
     }
 
-    .card-container{
-        display:flex;
-        gap: 2rem;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
     .publish-button{
         background-color: var(--color-green-400);
         width:150px;
         height:50px;
         text-align:center;
-        font-size: 0.81em;
     }
 
     .unpublish-button{
@@ -286,14 +280,13 @@
         width:150px;
         height:50px;
         text-align:center;
-        font-size: 0.81em;
     }
     .unpublish-button:hover{
         background-color: var(--color-red-400);
         width:150px;
         height:50px;
         text-align:center;
-        
+
     }
 
     .disabled-button{
@@ -313,7 +306,7 @@
         width:150px;
         height:50px;
         text-align:center;
-        
+
     }
 
     .overlay {
@@ -323,10 +316,7 @@
         left:0;
         right:0;
         bottom:0;
-        background-color:rgba(0, 0, 0, 0.85);
+        background-color:rgba(0, 0, 0, 0.6);
         z-index:9999;
     }
 </style>
-
-
-

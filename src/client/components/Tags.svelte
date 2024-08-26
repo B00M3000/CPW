@@ -5,15 +5,15 @@
 -->
 
 <script lang="ts">
-    import Tag from '@/client/components/Tag.svelte'
     import { getTagString } from '@/lib/tags';
 
     export let tagIds: string[];
+    export let additionalClasses: string = '';
 </script>
 
 <div id="tags">
     {#each tagIds as tagId}
-    <Tag text={getTagString(tagId)} />
+        <span class="inline-flex p-1 bg-sky-200 rounded-sm text-xs {additionalClasses}">{getTagString(tagId)}</span>
     {/each}
 </div>
 

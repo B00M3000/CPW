@@ -11,13 +11,13 @@
     export let data;
     $: ({ project: { title, fullReport: originaFullReport }, projectId } = data);
 
-    let fullReport: string = ""; 
+    let fullReport: string = "";
 
     let ctrlDown = false;
     let vDown = false;
     let isChanged = false;
 
-    onMount(() => { 
+    onMount(() => {
         fullReport = originaFullReport || " ";
     });
 
@@ -31,7 +31,7 @@
             method: "POST",
             body: JSON.stringify({ fullReport })
         });
-        
+
         await goto("/manage-projects")
     }
 
@@ -75,13 +75,13 @@
 <main class="w-full h-full flex items-center justify-center flex-col p-24">
     <div class="bg-gray-300 p-8 rounded-xl flex flex-col">
         <div class="text-2xl font-bold text-center mb-8">Submit Project Report for <u>{title}</u></div>
-        <div class="text-lg mb-10 mx-8">To submit or edit your full report, copy your project report and paste it here by 
-            pressing the paste keybind on your computer (<code>Meta/Command + V</code> for <code>Mac & Control + V</code> for Windows). 
+        <div class="text-lg mb-10 mx-8">To submit or edit your full report, copy your project report and paste it here by
+            pressing the paste keybind on your computer (<code>Meta/Command + V</code> for <code>Mac & Control + V</code> for Windows).
             if you already submitted a report before, you'll see the old one displayed below. If you accidentally
-            made a change, just press the cancel button. If a change is made, the submit button will appear, and you can click that to 
+            made a change, just press the cancel button. If a change is made, the submit button will appear, and you can click that to
             submit your report. The submit button will automatically redirect you to the /manage-projects page.
         </div>
-        <div class="flex items-center justify-start mb-5"> 
+        <div class="flex items-center justify-start mb-5 gap-4">
             <button class="cancel" on:click={() => goto("/manage-projects")}>Cancel</button>
             {#if isChanged}
                 <button on:click={upload}>Submit</button>
@@ -121,7 +121,3 @@
         background-color: rgb(169, 1, 1);
     }
 </style>
-
-
-
-

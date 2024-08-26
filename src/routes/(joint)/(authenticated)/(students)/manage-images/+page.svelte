@@ -150,7 +150,7 @@
     <div class="flex flex-col bg-gray-100 rounded-3xl m-5 p-5 max-w-7xl gap-3">
         <div class="flex flex-col gap-1">
             <h1 class="text-2xl font-bold">Upload and manage your project images</h1>
-            <p class="text-md text-gray-500">Upload new project images, alter the descriptions, and delete images. Note that once an image has been uploaded, it cannot be swapped out/changed. You must delete the image and then upload the desired image.</p>
+            <p class="text-base text-gray-500">Upload new project images, alter the descriptions, and delete images. Note that once an image has been uploaded, it cannot be swapped out/changed. You must delete the image and then upload the desired image.</p>
         </div>
 
         <hr class="border-2 border-gray-200 rounded-sm">
@@ -223,7 +223,7 @@
         <div class="flex rounded-2xl border-[3px] flex-col">
             <div class="flex flex-col gap-1 m-5">
                 <h1 class="text-2xl font-bold">Uploaded images</h1>
-                <p class="text-md text-gray-500">Project images that you uploaded.</p>
+                <p class="text-base text-gray-500">Project images that you uploaded.</p>
             </div>
 
             <table>

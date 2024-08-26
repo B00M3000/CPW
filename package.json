@@ -4,9 +4,9 @@
   "private": true,
   "author": "Thomas Zhou <doomking9000@gmail.com> (tzhou.xyz)",
   "scripts": {
-    "dev": "vite dev --host",
+    "dev": "vite dev",
     "build": "vite build",
-    "preview": "vite preview --host",
+    "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "pnpm run check -- --watch",
     "prod": "npm install && vite build && node -r dotenv/config build"
@@ -36,7 +36,6 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.600.0",
     "axios": "^1.7.2",
-    "carbon-components-svelte": "^0.85.2",
     "carbon-icons-svelte": "^12.10.0",
     "cookie": "^0.5.0",
     "dotenv": "^16.3.1",

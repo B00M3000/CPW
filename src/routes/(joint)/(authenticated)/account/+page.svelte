@@ -23,7 +23,7 @@
             <div class="flex items-center gap-5 sm:gap-10 sm:m-5">
                 <img class="w-16 h-16 sm:w-32 sm:h-32 rounded-full" src={$user.picture} alt="profile">
 
-                <div class="flex flex-col text-md sm:text-xl ">
+                <div class="flex flex-col text-base sm:text-xl ">
                     <span class="font-bold">{$user.name}</span>
                     <span class="font-bold">{$user.email}</span>
                     <span class="font-bold"> {AccountType[$user.accountType]} - {AccessLevel[$user.accessLevel]}</span>

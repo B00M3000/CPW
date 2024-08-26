@@ -7,6 +7,7 @@
 import type { Handle } from '@sveltejs/kit';
 import mongo from '@/server/mongo';
 import { UserSchema } from '@/server/mongo/schemas/user';
+import { stringifyObjectId } from '@/lib/utils';
 
 const dbPromise = mongo();
 
@@ -19,14 +20,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 		const user = await UserSchema.findOneAndUpdate(
 			{ sessionId },
 			{ lastVisit: new Date() }
-		).select('id name firstName lastName email picture sessionId accountType accessLevel adviseeIds').lean();
+		).select('id name firstName lastName email picture accountType accessLevel adviseeIds').lean();
 
 		if(user) {
-			event.locals.user = {
-				...user,
-				id: user._id.toString(),
-				_id: undefined
-			};
+			event.locals.user = stringifyObjectId(user);
 		} else {
 			event.cookies.delete('session_id', { path: '/' });
 		}
