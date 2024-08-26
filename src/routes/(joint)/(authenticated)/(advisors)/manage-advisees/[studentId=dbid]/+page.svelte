@@ -40,7 +40,7 @@
                 <div class="button-container">
                     <button class="fullreport-button" on:click={() => gotoInspectProject(student._id, project._id)}>
                         Inspect Project
-                    </button> 
+                    </button>
 
                     <button class="accept-button" on:click = {() => gotoInspectProject(student._id, project._id)}>
                         Approve Project
@@ -54,7 +54,7 @@
             <div class="button-container">
                 <button class="fullreport-button" on:click={() => gotoInspectProject(student._id, project._id)}>
                     Inspect Project
-                </button> 
+                </button>
 
                 <button class="deny-button" on:click = {() => changeApproval(project, false)}>
                     Unapprove Project
@@ -69,7 +69,7 @@
 <style lang="scss">
     main {
         padding:1rem 5rem;
-        
+
         .card-container{
             display:flex;
             justify-content: center;
@@ -87,9 +87,9 @@
             margin-bottom: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            display: flex; 
             display: flex;
-            flex-direction: row; 
+            display: flex;
+            flex-direction: row;
             justify-content: space-between;
             align-items: center;
         }
@@ -104,6 +104,8 @@
 
 
         .accept-button{
+            display: flex;
+            align-items: center;
             background-color: var(--color-green-400);
             width:150px;
             height:50px;
@@ -120,6 +122,8 @@
         }
 
         .deny-button{
+            display: flex;
+            align-items: center;
             background-color: var(--color-red-400);
             width:150px;
             height:50px;
@@ -168,6 +172,6 @@
             background-color: #0056b3;
         }
     }
-    
+
 
 </style>

@@ -5,12 +5,12 @@
 -->
 
 <script lang="ts">
-    import { goto } from "$app/navigation";
     import { tags } from "@/lib/tags";
     import { onMount } from "svelte";
     import MultiSelect from "svelte-multiselect";
     import { RingLoader } from "svelte-loading-spinners"
     import { CheckmarkFilled, ErrorFilled } from "carbon-icons-svelte";
+    import toast from "svelte-french-toast";
 
     const tagOptions = Array.from(tags.entries()).map(([k, v]) => ({ id: k, label: v, value: v }))
 
@@ -46,6 +46,19 @@
     async function upload() {
         status = EditStatus.UPLOADING;
 
+        if(!(project.title.length < 100 && project?.title?.length > 12)) {
+            status = EditStatus.ERROR;
+            return errorMessage = "Please enter a project name between 12 and 200 characters.";
+        }
+        if(!(project.tags.length >= 1 && project.tags.length <= 7)) {
+            status = EditStatus.ERROR;
+            return errorMessage = "Please select between 1 and 7 tags.";
+        }
+        if(!(project.shortDesc.length > 100)) {
+            status = EditStatus.ERROR;
+            return errorMessage = "Please enter a short description with at least 100 characters to start. You can always edit it later.";
+        }
+
         const res = await fetch(`/manage-projects/${data.project._id}/edit`, {
             method: "POST",
             body: JSON.stringify({ project })
@@ -54,6 +67,10 @@
         if(res.ok) status = EditStatus.SUCCESS;
         else status = EditStatus.ERROR;
     }
+
+    $effect(() => {
+        if(errorMessage) toast.error(errorMessage);
+    })
 
     onMount(() => {
         selected = data.project.tags.map((tagId: string) => tagOptions.find(option => option.id === tagId));
@@ -72,6 +89,8 @@
     }
 
     let project: ProjectInformation2 = {};
+
+    let errorMessage = $state()
 </script>
 
 <main class="flex items-center justify-center h-full w-full">
@@ -112,21 +131,23 @@
                 </div>
             </div>
         </div>
-        <div class="flex items-center gap-8">
-            <div class="flex items-center gap-3">
-                {#if status == EditStatus.UPLOADING}
-                    <RingLoader color="blue" size={24} />
-                {:else if status == EditStatus.SUCCESS}
-                    <CheckmarkFilled color="green" size={24} />
-                {:else if status == EditStatus.ERROR}
-                    <ErrorFilled color="red" size={24} />
-                {/if}
-                <button class="p-3 px-5 bg-blue-500 hover:bg-blue-600 text-white rounded-md flex items-center" onclick={upload}>
-
-                    <span>Save Changes</span>
-                </button>
+        <div class="my-4 flex flex-col gap-4">
+            <span class="text-red-600">{errorMessage}</span>
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-3">
+                    {#if status == EditStatus.UPLOADING}
+                        <RingLoader color="blue" size={24} />
+                    {:else if status == EditStatus.SUCCESS}
+                        <CheckmarkFilled color="green" size={24} />
+                    {:else if status == EditStatus.ERROR}
+                        <ErrorFilled color="red" size={24} />
+                    {/if}
+                    <button class="p-3 px-5 bg-blue-500 hover:bg-blue-600 text-white rounded-md flex items-center" onclick={upload}>
+                        <span>Save Changes</span>
+                    </button>
+                </div>
+                <a class="p-3 px-5 bg-red-500 hover:bg-red-600 text-white rounded-md" href="/manage-projects" data-sveltekit-reload>Go Back</a>
             </div>
-            <a class="p-3 px-5 bg-red-500 hover:bg-red-600 text-white rounded-md" href="/manage-projects" data-sveltekit-reload>Go Back</a>
         </div>
     </div>
 </main>

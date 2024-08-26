@@ -1,16 +1,21 @@
 
 <script lang=js>
-    // @ts-nocheck
     import MentorCard from "@/client/components/MentorCard.svelte";
     import SmartProjectImage from "@/client/components/SmartProjectImage.svelte";
     import StudentCard from "@/client/components/StudentCard.svelte";
     import Tags from "@/client/components/Tags.svelte";
     import { Return, Maximize, CloseLarge } from "carbon-icons-svelte";
+    import toast from "svelte-french-toast";
 
     let { data } = $props();
 
+    $effect(() => {
+        if(doubleSpacing) toast.success('Double Spacing Enabled');
+        else toast.error('Double Spacing Disabled');
+    })
+
     let doubleSpacing = $state(false);
-    let report = $derived(doubleSpacing ? data.project?.fullReport.trim() : data.project?.fullReport.replaceAll('\n', '\n\n').trim());
+    let report = $derived(doubleSpacing ? data.project?.fullReport.replaceAll('\n', '\n\n').trim() : data.project?.fullReport.trim());
 
     let enlargedImageView = $state(false);
 
@@ -66,12 +71,12 @@
                 <Tags tagIds={data.project.tags} />
             </div>
             <h3 class="font-bold">Description: </h3>
-            <span class=" max-w-[32rem] overflow-clip text-ellipsis">{data.project?.shortDesc}</span>
+            <span class="max-w-[32rem] overflow-clip break-all text-wrap">{data.project?.shortDesc}</span>
         </div>
         <!-- Report -->
         <div class="report w-full h-full relative">
             <div class="overflow-y-auto w-full h-full">
-                <div class="w-[8.5in] min-h-full bg-white whitespace-pre-wrap break-words p-[1in]" class:justify-center={!report} >
+                <div class="w-[8.5in] min-h-full bg-white whitespace-pre-wrap break-words p-[1in] flex flex-col" class:justify-center={!report} >
                     {#if report}
                     <h4 class="text-2xl text-center mb-4">{data.project.title}</h4>
                     <h5 class="text-lg text-center mb-8">{data.student?.name}</h5>

@@ -1,4 +1,6 @@
 <script>
+    import toast, { Toaster } from 'svelte-french-toast';
+
     import "@/app.scss";
 </script>
 
@@ -19,4 +21,5 @@
     <meta name="twitter:image" content="https://cpw.tzhou.xyz/assets/CommonwealthSchool.jpg">
 </svelte:head>
 
+<Toaster />
 <slot />

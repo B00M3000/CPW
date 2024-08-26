@@ -12,12 +12,19 @@ import { ProjectSchema } from '@/server/mongo/schemas/project.js';
 
 export async function load({ locals }) {
     const students = await Promise.all(locals.user!.adviseeIds.map(async adviseeId => {
-        const student : User | null = await UserSchema.findOne({ schoolId: adviseeId})
-        const pendingCount = await ProjectSchema.count({ studentId: student?._id, underReview: true })
-        const approvedCount = await ProjectSchema.count({ studentId: student?._id, underReview: false })
-        return {  ...stringifyObjectId(await UserSchema.findOne({ schoolId: adviseeId }).lean()), pendingCount, approvedCount };
-    })) 
+        const student : User | null = await UserSchema.findOne({ schoolId: adviseeId});
+        const currentPending = !!(await ProjectSchema.exists({ studentId: student?._id, year: new Date().getFullYear() }));
+        const currentApproved = !!(await ProjectSchema.exists({ studentId: student?._id, underReview: false, year: new Date().getFullYear() }));
+        return {
+          ...stringifyObjectId(
+            await UserSchema.findOne({ schoolId: adviseeId }).lean()
+          ),
+          currentPending,
+          currentApproved,
+        };
+    }))
 
+    console.log(students);
 
-    return { students }; 
+    return { students };
 };

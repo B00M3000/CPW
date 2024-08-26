@@ -1,16 +1,11 @@
 <script lang=ts>
     import { goto } from "$app/navigation";
-    import { user } from "@/client/stores/user";
-    import { AccountType } from "@/lib/enums";
-    import SearchBar from './SearchBar.svelte';
-    import RefinedSearchNormal from './RefinedSearchNormal.svelte';
-    import RefinedSearchMobile from './RefinedSearchMobile.svelte'
-    import { page } from "$app/stores";
-    import ProjectCard from "@/client/components/ProjectCard.svelte";
-    import { browser } from "$app/environment";
-    import Pagination from "@/client/components/Pagination.svelte";
     import Loading2 from "@/client/components/Loading2.svelte";
-    import { untrack } from "svelte";
+    import Pagination from "@/client/components/Pagination.svelte";
+    import ProjectCard from "@/client/components/ProjectCard.svelte";
+    import RefinedSearchMobile from './RefinedSearchMobile.svelte';
+    import RefinedSearchNormal from './RefinedSearchNormal.svelte';
+    import SearchBar from './SearchBar.svelte';
 
     let { data } = $props()
 
