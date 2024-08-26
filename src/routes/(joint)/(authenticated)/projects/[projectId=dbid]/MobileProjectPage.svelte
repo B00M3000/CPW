@@ -60,7 +60,7 @@
             <div class="toolbar bg-[rgb(205,209,214)] p-3 rounded-xl flex flex-wrap justify-between gap-2 w-full mb-4">
                 <button class="bg-gray-500 hover:bg-gray-600 text-white p-2 rounded-md flex items-center gap-2 px-4" onclick={() => doubleSpacing = !doubleSpacing}>
                     <span class="text-base font-bold">x2</span>
-                    <span class="text-sm">Double Report Newlines</span>
+                    <span class="text-sm">Toggle Double Report Newlines</span>
                 </button>
             </div>
             <div class="w-full relative">
