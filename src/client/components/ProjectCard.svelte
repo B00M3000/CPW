@@ -10,15 +10,11 @@
     import StudentCard from "@/client/components/StudentCard.svelte";
     import MentorCard from "@/client/components/MentorCard.svelte";
     import { goto } from "$app/navigation";
-    
+
     export let project: Project;
 
     export let displayLearnMore: boolean = true;
     export let displayShortDesc: boolean = true;
-
-    async function gotoProject() {
-        await goto(`/projects/${project._id}`)
-    }
 </script>
 
 <div class="flex flex-col justify-between bg-slate-50 rounded-md gap-5 p-6 w-full h-full">
@@ -27,21 +23,21 @@
 
         <div class="flex justify-center max-h-20 overflow-clip mb-4">
             <Tags tagIds={project.tags} />
-        </div> 
+        </div>
 
         {#if displayShortDesc}
-        <span class="text-wrap whitespace-nowrap text-sm max-h-24 overflow-y-clip">{project.shortDesc}</span>
+        <span class="text-wrap whitespace-nowrap text-sm max-h-24 overflow-y-clip break-all">{project.shortDesc}</span>
         {/if}
     </div>
 
-    
+
     <div class="flex flex-col gap-4">
         <div class="flex items-center justify-center gap-4">
             <StudentCard student={project.student}/>
             <MentorCard mentor={project.mentor}/>
         </div>
         {#if displayLearnMore}
-        <button class="w-full justify-center rounded-md bg-blue-400 hover:bg-blue-500 py-1 px-2 inline-flex text-gray-900" on:click={gotoProject}>View Project Page</button>
+        <a class="w-full justify-center rounded-md bg-blue-400 hover:bg-blue-500 py-1 px-2 inline-flex text-gray-900" href="/projects/{project._id}" data-sveltekit-preload-code>View Project Page</a>
         {/if}
     </div>
 </div>

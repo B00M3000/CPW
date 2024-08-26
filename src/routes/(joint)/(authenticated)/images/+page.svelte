@@ -35,6 +35,7 @@
         spinnerActive = true;
 
         await goto(`/images?${searchParams}`);
+        scrollElement?.scrollTo(0, 0);
 
         spinnerActive = false;
     }
@@ -53,6 +54,8 @@
             items = snapshot.items
         }
     }
+
+    let scrollElement: HTMLDivElement;
 </script>
 
 {#if spinnerActive}
@@ -66,7 +69,7 @@
         <button onclick={gotoManageImages}>Manage Your Images</button>
     </div>
     {/if}
-    <div class="h-full overflow-y-auto w-full">
+    <div class="h-full overflow-y-auto w-full" bind:this={scrollElement}>
         <div class="flex flex-wrap items-center justify-center gap-4 h-auto">
             {#each images as image}
             <div class="w-[300px] h-[225px] 2xl:w-[500px] 2xl:h-[350px] z-0">

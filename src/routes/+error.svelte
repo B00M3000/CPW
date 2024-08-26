@@ -6,12 +6,19 @@
 
 <script lang="ts">
     import { page } from "$app/stores";
+    import Nav from "./(joint)/Nav.svelte";
+    import MobileNav from "./(joint)/MobileNav.svelte";
 </script>
 
-<main>
-    <span class="status">{$page.status}</span>
-    <span class="message">{$page.error?.message}</span>
-</main>
+<div class="h-screen w-screen grid grid-rows-[auto_minmax(0,_1fr)_auto]">
+    <Nav />
+    <main>
+        <span class="status">{$page.status}</span>
+        <span class="message">{$page.error?.message}</span>
+    </main>
+    <MobileNav />
+</div>
+
 
 <style lang="scss">
     main {

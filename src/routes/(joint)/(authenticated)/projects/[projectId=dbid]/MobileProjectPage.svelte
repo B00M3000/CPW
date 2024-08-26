@@ -1,18 +1,24 @@
 <script lang=ts>
-  import MentorCard from "@/client/components/MentorCard.svelte";
-  import SmartProjectImage from "@/client/components/SmartProjectImage.svelte";
-  import StudentCard from "@/client/components/StudentCard.svelte";
-  import Tags from "@/client/components/Tags.svelte";
-  import { Return } from "carbon-icons-svelte";
+    import MentorCard from "@/client/components/MentorCard.svelte";
+    import SmartProjectImage from "@/client/components/SmartProjectImage.svelte";
+    import StudentCard from "@/client/components/StudentCard.svelte";
+    import Tags from "@/client/components/Tags.svelte";
+    import { Return } from "carbon-icons-svelte";
+    import toast from "svelte-french-toast";
 
     let { data } = $props();
 
     let doubleSpacing = $state(false);
-    let report = $derived(doubleSpacing ? data.project?.fullReport.trim() : data.project?.fullReport.replaceAll('\n', '\n\n').trim());
+    let report = $derived(!doubleSpacing ? data.project?.fullReport.trim() : data.project?.fullReport.replaceAll('\n', '\n\n').trim());
 
     enum Views { FullReport, Images };
 
     let view = $state(Views.FullReport);
+
+    $effect(() => {
+        if(doubleSpacing) toast.success('Double Spacing Enabled');
+        else toast.error('Double Spacing Disabled');
+    })
 </script>
 
 <main class="flex flex-col items-center w-full">
@@ -43,7 +49,7 @@
                     <Tags additionalClasses="font-normal !text-lg px-2" tagIds={data.project.tags} />
                 </div>
                 <h3 class="mb-1">Description: </h3>
-                <span class="max-w-[32rem] overflow-clip text-ellipsis font-normal">{data.project?.shortDesc}</span>
+                <span class="max-w-[48rem] overflow-clip break-all text-wrap font-normal">{data.project?.shortDesc}</span>
             </div>
         </div>
         <!-- Report and Images Tabs -->
@@ -65,7 +71,7 @@
             </div>
             <div class="w-full relative">
                 <div class="overflow-y-scroll w-full max-h-[65vh] sm:max-h-[80vh] flex justify-center bg-gray-50">
-                    <div class="whitespace-pre-wrap break-words p-4 py-8 sm:p-[1in]" class:justify-center={!report} >
+                    <div class="whitespace-pre-wrap break-words p-4 py-8 sm:p-[1in] flex flex-col" class:justify-center={!report} >
                         {#if report}
                         <h4 class="text-xl sm:text-2xl text-center mb-2 sm:mb-4">{data.project.title}</h4>
                         <h5 class="text-base sm:text-lg text-center mb-4 sm:mb-8">{data.student?.name}</h5>
