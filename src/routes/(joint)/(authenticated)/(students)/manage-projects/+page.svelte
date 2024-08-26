@@ -8,6 +8,7 @@
     import ProjectCard from '@/client/components/ProjectCard.svelte';
     import { goto, invalidate } from '$app/navigation';
     import type { Project } from '@/interfaces/project.js';
+  import { Add, Upload } from 'carbon-icons-svelte';
 
     export let data;
 
@@ -46,10 +47,12 @@
     <div class="dashboard-actions">
         <h2 class="text-2xl text-gray-600">Manage Projects</h2>
         <div class="flex gap-4">
-            <a href='manage-projects/create' class="p-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">
-                Create New Project
+            <a href='manage-projects/create' class="p-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg flex items-center gap-2">
+                <Add size={24} />
+                <span>Create New Project</span>
             </a>
-            <a href='manage-images' class="p-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">
+            <a href='manage-images' class="p-4 py-3 animate-blue-glowing hover:bg-blue-600 text-white rounded-lg flex items-center gap-2">
+                <Upload size={20} />
                 Upload Images
             </a>
         </div>
@@ -61,7 +64,7 @@
         </div>
     </div>
 
-    <div class="flex items-center justify-center gap-8">
+    <div class="flex items-center justify-center gap-8 flex-wrap">
         {#each projects as project, i}
             <div class="project-card">
                 <div class="project-cards">
@@ -135,6 +138,19 @@
 </main>
 
 <style lang="scss">
+    .animate-blue-glowing {
+        animation: glowing 1500ms infinite;
+    }
+
+    @keyframes glowing {
+        0% { background-color: #0024b2; box-shadow: 0 0 3px #0015b2; }
+        50% { background-color: #002fff; box-shadow: 0 0 40px #0040ff; }
+        100% { background-color: #0047b2; box-shadow: 0 0 3px #003eb2; }
+    }
+
+    .trigger:hover .reveal-on-trigger {
+        display: flex;
+    }
     .delete-confirm {
         display: flex;
         align-items: center;
@@ -161,6 +177,8 @@
         }
     }
     main {
+        height: 100%;
+        width: 100%;
         margin-left: 0.5rem;
         margin-right: 0.5rem;
         padding: 4rem;
