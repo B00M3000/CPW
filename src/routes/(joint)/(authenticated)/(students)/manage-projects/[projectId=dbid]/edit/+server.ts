@@ -32,7 +32,7 @@ export async function POST({ request, params: { projectId } }) {
 
     await ProjectSchema.findOneAndUpdate(sanitizeFilter({ _id: projectId }), {
         title,
-        tags: new Set(tags),
+        tags: { $addToSet: tags },
         shortDesc,
     });
 

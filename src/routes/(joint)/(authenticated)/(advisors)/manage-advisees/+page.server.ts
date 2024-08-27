@@ -34,7 +34,5 @@ export async function load({ locals }) {
         }),
     );
 
-    console.log(students);
-
     return { students };
-}
+};
