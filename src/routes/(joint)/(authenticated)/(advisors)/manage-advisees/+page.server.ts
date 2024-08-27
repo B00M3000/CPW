@@ -5,7 +5,7 @@
  */
 
 import { UserSchema } from '@/server/mongo/schemas/user.js';
-import { stringifyObjectId } from '@/lib/utils';
+import { currentYear, stringifyObjectId } from '@/lib/utils';
 import type { User } from '@/interfaces/project.js';
 import { ProjectSchema } from '@/server/mongo/schemas/project.js';
 
@@ -13,8 +13,8 @@ import { ProjectSchema } from '@/server/mongo/schemas/project.js';
 export async function load({ locals }) {
     const students = await Promise.all(locals.user!.adviseeIds.map(async adviseeId => {
         const student : User | null = await UserSchema.findOne({ schoolId: adviseeId});
-        const currentPending = !!(await ProjectSchema.exists({ studentId: student?._id, year: new Date().getFullYear() }));
-        const currentApproved = !!(await ProjectSchema.exists({ studentId: student?._id, underReview: false, year: new Date().getFullYear() }));
+        const currentPending = !!(await ProjectSchema.exists({ studentId: student?._id, year: currentYear() }));
+        const currentApproved = !!(await ProjectSchema.exists({ studentId: student?._id, underReview: false, year: currentYear() }));
         return {
           ...stringifyObjectId(
             await UserSchema.findOne({ schoolId: adviseeId }).lean()

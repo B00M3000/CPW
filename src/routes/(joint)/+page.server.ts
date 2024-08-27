@@ -11,6 +11,8 @@ import { stringifyObjectId } from '@/lib/utils';
 
 import type { FilterQuery } from 'mongoose';
 
+// TODO: reduce this since its not used or use it
+
 export async function load() {
     const dbQuery: FilterQuery<ProjectDocument> = {};
 

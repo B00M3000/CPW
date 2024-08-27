@@ -6,8 +6,8 @@
 
 import { error, redirect } from '@sveltejs/kit';
 import { UserSchema } from '@/server/mongo/schemas/user';
-import { v4 as uuidv4 } from 'uuid';
 import { get_tokens, get_user } from '@/server/google';
+import { currentYear } from '@/lib/utils';
 
 const absolute = new RegExp('^(?:[a-z+]+:)?//', 'i');
 
@@ -25,19 +25,19 @@ export async function GET({ url, cookies, setHeaders }) {
 
   const google_user = await get_user(token_type, access_token);
 
-  const session_id = uuidv4();
+  const session_id = crypto.randomUUID();
 
   const userByGoogleId = await UserSchema.findOneAndUpdate(
     {
       $and: [
         { googleId: google_user.id },
-        { 
+        {
           $or: [
             { schoolId: /T\d+/ },
-            { graduationYear: { $exists: true, $gte: new Date().getFullYear() - 1} }
-          ]
-        }
-      ]
+            { graduationYear: { $exists: true, $gte: currentYear() - 1 } },
+          ],
+        },
+      ],
     },
     {
       email: google_user.email,
@@ -45,7 +45,7 @@ export async function GET({ url, cookies, setHeaders }) {
       lastName: google_user.family_name,
       name: google_user.name,
       picture: google_user.picture,
-      sessionId: session_id
+      sessionId: session_id,
     },
     { new: true }
   );
@@ -54,27 +54,28 @@ export async function GET({ url, cookies, setHeaders }) {
   else {
     const userByEmail = await UserSchema.findOneAndUpdate(
       {
-        $or: [ 
-          { 
+        $or: [
+          {
             email: google_user.email,
             graduationYear: { $exists: false },
-            googleId: { $exists: false } 
-          }, 
-          { 
+            googleId: { $exists: false },
+          },
+          {
             email: google_user.email,
             googleId: { $exists: false },
-            $and: [ 
-              { graduationYear: { $exists: true, $gte: new Date().getFullYear() - 1 } }
-            ]
-          }
-        ]
-      }, {
+            $and: [
+              { graduationYear: { $exists: true, $gte: currentYear() - 1 } },
+            ],
+          },
+        ],
+      },
+      {
         googleId: google_user.id,
         firstName: google_user.given_name,
         lastName: google_user.family_name,
         name: google_user.name,
         picture: google_user.picture,
-        sessionId: session_id
+        sessionId: session_id,
       }
     );
 

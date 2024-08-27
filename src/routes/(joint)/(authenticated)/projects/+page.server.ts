@@ -7,7 +7,7 @@
 import { ProjectSchema, type ProjectDocument, type ProjectDocumentData } from '@/server/mongo/schemas/project';
 import { MentorSchema } from '@/server/mongo/schemas/mentor';
 import { UserSchema } from '@/server/mongo/schemas/user';
-import { buildRegex, clamp, parseIntOrElse, stringifyObjectId } from '@/lib/utils';
+import { buildRegex, clamp, currentYear, parseIntOrElse, stringifyObjectId } from '@/lib/utils';
 
 import lowRelevance from "@/lib/lowRelevance";
 import type { FilterQuery } from 'mongoose';
@@ -29,7 +29,7 @@ export async function load({ url: { searchParams } }) {
 
     // Handle year range filtering
     dbQuery.year = { $gte: parseIntOrElse(searchParams.get("yearLower"), 2019) };
-    dbQuery.year = { ...dbQuery.year, $lte: parseIntOrElse(searchParams.get('yearUpper'), new Date().getFullYear()) };
+    dbQuery.year = { ...dbQuery.year, $lte: parseIntOrElse(searchParams.get('yearUpper'), currentYear()) };
 
     // Setting up cached injection of student and mentor data
     let cachedStudents: any = {};
@@ -85,13 +85,12 @@ export async function load({ url: { searchParams } }) {
       searchParameters: {
         query: q || "",
         tags: tags || [],
-        yearUpper: dbQuery.yearUpper || new Date().getFullYear(),
+        yearUpper: dbQuery.yearUpper || currentYear(),
         yearLower: dbQuery.yearLower || 2019,
         mentorSearch: mentorSearch || "",
         studentSearch: studentSearch || "",
         page: page || 0,
         itemsPerPage: itemsPerPage || 10,
       },
-      
     };
 }

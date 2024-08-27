@@ -4,11 +4,11 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
-import { AccessLevel, AccountType } from "@/lib/enums";
+import { AccountType } from "@/lib/enums";
+import { currentYear } from "@/lib/utils";
 import { ImageSchema } from "@/server/mongo/schemas/image";
 import { ProjectSchema } from "@/server/mongo/schemas/project";
 import { UserSchema } from "@/server/mongo/schemas/user";
-import { json } from "@sveltejs/kit";
 
 export async function load({ locals }) {
   const returnObject: any = {};
@@ -23,7 +23,7 @@ export async function load({ locals }) {
 
     const project = await ProjectSchema.findOne(
       {
-        year: new Date().getFullYear(),
+        year: currentYear(),
         studentId: locals.user._id,
       },
       "fullReport underReview"
@@ -57,13 +57,13 @@ export async function load({ locals }) {
     );
 
     advisees.forEach((a) => {
-      if (a.lastVisit?.getFullYear() == new Date().getFullYear())
+      if (a.lastVisit?.getFullYear() == currentYear())
         advisorObject.notVisited--;
     });
 
     const projects = await ProjectSchema.find(
       {
-        year: new Date().getFullYear(),
+        year: currentYear(),
         studentId: { $in: advisees.map((a) => a._id) },
       },
       "fullReport underReview"

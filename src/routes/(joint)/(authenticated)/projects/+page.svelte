@@ -13,7 +13,7 @@
     let searchParameters: any = $state({
         tags: [],
         yearUpper: 2019,
-        yearLower: new Date().getFullYear(),
+        yearLower: currentYear(),
         mentorSearch: "",
         studentSearch: "",
         query: "",

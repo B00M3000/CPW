@@ -5,8 +5,10 @@
 -->
 
 <script lang="ts">
+    import { currentYear } from "@/lib/utils";
+
     export let yearLowerBound: number = 2019;
-    export let yearUpperBound: number = new Date().getFullYear();
+    export let yearUpperBound: number = currentYear();
 
     function updateUpperBound() {
         if (yearUpperBound < yearLowerBound) {
@@ -77,7 +79,7 @@
         background-color: rgb(245, 245, 245);
         font-weight: 800;
         color: black;
-        
+
     }
     label {
         color: black;

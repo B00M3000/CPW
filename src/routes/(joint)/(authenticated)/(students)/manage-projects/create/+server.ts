@@ -4,11 +4,10 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
-import { ProjectSchema } from "@/server/mongo/schemas/project";
-import { UserSchema } from "@/server/mongo/schemas/user";
-import { error, json } from "@sveltejs/kit";
+import { currentYear } from "@/lib/utils";
 import { MentorSchema } from "@/server/mongo/schemas/mentor";
-import { stringifyObjectId } from "@/lib/utils";
+import { ProjectSchema } from "@/server/mongo/schemas/project";
+import { error, json } from "@sveltejs/kit";
 
 export async function POST({ request, locals }) {
   const data = await request.json();
@@ -33,7 +32,7 @@ export async function POST({ request, locals }) {
   const project = data.project;
   let schema = new ProjectSchema({
     title: project.title,
-    year: new Date().getFullYear(),
+    year: currentYear(),
     tags: project.tags,
     shortDesc: project.shortDesc,
     fullReport: "",

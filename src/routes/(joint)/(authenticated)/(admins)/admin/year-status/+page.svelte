@@ -1,18 +1,16 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
-
     import Icon from '@/client/components/Icon.svelte';
     import AwaitingApproval from '@/client/icons/AwaitingApproval.js';
     import Open from '@/client/icons/Open.js';
     import Warning from '@/client/icons/Warning.js';
-  import NamePlusPicture from './NamePlusPicture.svelte';
-  import { user } from '@/client/stores/user';
+    import { currentYear } from '@/lib/utils';
+    import NamePlusPicture from './NamePlusPicture.svelte';
 
     export let data;
 
     $: ({ missingStudents, inflatedUnapprovedProjects } = data);
 
-    const CURRENT_YEAR = new Date().getFullYear();
+    const CURRENT_YEAR = currentYear();
 
     let excludeSeniors: boolean;
 
@@ -60,7 +58,7 @@
         <div class="flex flex-row-reverse items-center">
             <div class="inline-flex flex-col bg-zinc-400 p-6 rounded-2xl justify-center gap-2">
                 <h2>Filters: </h2>
-    
+
                 <div class='flex items-center gap-2'>
                     <input type="checkbox" class="w-4 h-4" bind:checked={excludeSeniors}/>
                     <span>Exclude Seniors</span>
@@ -188,7 +186,7 @@
 
                 <div class="inline-flex flex-col bg-zinc-400 p-6 rounded-2xl justify-center gap-2">
                     <h2>Filters: </h2>
-        
+
                     <div class='flex items-center gap-2'>
                         <input type="checkbox" class="w-4 h-4" bind:checked={excludeSeniors}/>
                         <span>Exclude Seniors</span>
@@ -209,9 +207,9 @@
         &:nth-child(even) {
             background-color: #ddd;
         }
-        
+
         &:nth-child(odd) {
             background-color: #e9e9e9;
-        } 
+        }
     }
 </style>
