@@ -7,10 +7,10 @@
 export enum AccountType {
     Unknown,
     Student,
-    Advisor
+    Advisor,
 }
 
 export enum AccessLevel {
     Normal,
-    Admin
+    Admin,
 }

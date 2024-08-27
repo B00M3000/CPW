@@ -1,6 +1,5 @@
 # Managing Photos
 
-
 <hr>
 
 ### Accessing The Manage-Images Dashboard
@@ -19,15 +18,13 @@ That redirects here:
 
 2. Select a project to bind your image to
 
-3. Upload images using the upload button that appears after you select a project. 
+3. Upload images using the upload button that appears after you select a project.
 
 4. Add a description by clicking on the underlined “Add Description…” text
-![Main Collection](/assets/doc/imagedesc.png)
+   ![Main Collection](/assets/doc/imagedesc.png)
 
 5. Click the upload button on the right.
-![Main Collection](/assets/doc/uploadimage.png)
-
+   ![Main Collection](/assets/doc/uploadimage.png)
 
 You should now see the image you uploaded reflected both in the image gallery and on your manage-images dashboard, where you can delete the image using the delete button on the right of the image container.
 ![Main Collection](/assets/doc/deleteimage.png)
-

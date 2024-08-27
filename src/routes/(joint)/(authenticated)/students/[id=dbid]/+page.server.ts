@@ -13,15 +13,22 @@ import { MentorSchema } from "@/server/mongo/schemas/mentor";
 export const load: PageServerLoad = async ({ params }) => {
     const studentId = params.id;
 
-    const student = stringifyObjectId(await UserSchema.findById(studentId, "name picture email").lean())
-    const projects = (await ProjectSchema.find({ studentId }).lean())?.map(stringifyObjectId).map(p => ({ ...p, student })) || [];
+    const student = stringifyObjectId(
+        await UserSchema.findById(studentId, "name picture email").lean(),
+    );
+    const projects =
+        (await ProjectSchema.find({ studentId }).lean())
+            ?.map(stringifyObjectId)
+            .map((p) => ({ ...p, student })) || [];
 
     const inflatedProjects = await Promise.all(projects.map(injectMentor));
 
     return { projects: inflatedProjects, student };
-}
+};
 
 async function injectMentor(project: any) {
-    project.mentor = stringifyObjectId(await MentorSchema.findById(project.mentorId, 'name').lean());
+    project.mentor = stringifyObjectId(
+        await MentorSchema.findById(project.mentorId, "name").lean(),
+    );
     return project;
 }

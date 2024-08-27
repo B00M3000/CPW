@@ -4,12 +4,12 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
-import { parseCSV } from '@/lib/utils.js';
-import { advisorLinkageDataUpload } from '@/lib/data-upload';
-import { error, json } from '@sveltejs/kit';
-import { validateCSV } from '@/lib/utils';
-import { UserSchema } from '@/server/mongo/schemas/user.js';
-import { AccountType } from '@/lib/enums.js';
+import { parseCSV } from "@/lib/utils.js";
+import { advisorLinkageDataUpload } from "@/lib/data-upload";
+import { error, json } from "@sveltejs/kit";
+import { validateCSV } from "@/lib/utils";
+import { UserSchema } from "@/server/mongo/schemas/user.js";
+import { AccountType } from "@/lib/enums.js";
 
 const { fields: advisorLinkageDataUploadFields } = advisorLinkageDataUpload;
 
@@ -20,9 +20,13 @@ export async function POST({ request }) {
     const headings = parsedCSV[0];
     const entries = parsedCSV.slice(1);
 
-    if(!validateCSV(headings, entries, advisorLinkageDataUploadFields)) error(400, { message: "Data failed validation." });
+    if (!validateCSV(headings, entries, advisorLinkageDataUploadFields))
+        error(400, { message: "Data failed validation." });
 
-    await UserSchema.updateMany({ accountType: AccountType.Advisor }, { adviseeIds: [] });
+    await UserSchema.updateMany(
+        { accountType: AccountType.Advisor },
+        { adviseeIds: [] },
+    );
 
     const operations = generateOperations(headings, entries);
 
@@ -40,38 +44,43 @@ interface Operation {
             adviseeIds: string[];
         };
         upsert: true;
-    }
+    };
 }
 
-function generateOperations(headings: string[], entries: string[][]): Operation[] {
-    let headingsIndexes: Record<string, number> = {}
+function generateOperations(
+    headings: string[],
+    entries: string[][],
+): Operation[] {
+    let headingsIndexes: Record<string, number> = {};
 
     Object.keys(advisorLinkageDataUploadFields).forEach((fieldName: string) => {
         headingsIndexes[fieldName] = headings.indexOf(fieldName);
-    })
+    });
 
-    let advisors: Record<string, string[]> = {}
+    let advisors: Record<string, string[]> = {};
 
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
         const advisorId = entry[headingsIndexes["TID"]];
         const adviseeId = entry[headingsIndexes["SID"]];
-        if(!advisors[advisorId]) advisors[advisorId] = [adviseeId];
+        if (!advisors[advisorId]) advisors[advisorId] = [adviseeId];
         else advisors[advisorId].push(adviseeId);
-    })
+    });
 
-    let operations: Operation[] = []; 
+    let operations: Operation[] = [];
 
-    Object.entries(advisors).forEach(([advisor, adviseeIds]) => operations.push({
-        updateOne: {
-            filter: {
-                schoolId: advisor
+    Object.entries(advisors).forEach(([advisor, adviseeIds]) =>
+        operations.push({
+            updateOne: {
+                filter: {
+                    schoolId: advisor,
+                },
+                update: {
+                    adviseeIds,
+                },
+                upsert: true,
             },
-            update: {
-                adviseeIds
-            },
-            upsert: true
-        }
-    }))
+        }),
+    );
 
     return operations;
 }

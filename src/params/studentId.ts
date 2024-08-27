@@ -4,8 +4,8 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
-import type { ParamMatcher } from '@sveltejs/kit';
+import type { ParamMatcher } from "@sveltejs/kit";
 
 export const match: ParamMatcher = (param) => {
-  return /(S)\d+/.test(param);
+    return /(S)\d+/.test(param);
 };

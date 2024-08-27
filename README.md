@@ -4,4 +4,4 @@ Lead-Author: Thomas Zhou
 
 Co-Author: Ethan Wu
 
-Please contact *Thomas Zhou* <tzhou@commschool.org> for instructions for hosting.
+Please contact _Thomas Zhou_ <tzhou@commschool.org> for instructions for hosting.

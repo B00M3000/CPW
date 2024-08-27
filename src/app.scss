@@ -15,19 +15,19 @@
 
 @mixin colors() {
     --color-primary-900: #2c0310;
-    --color-primary-600: #9E133F;
-    --color-primary-500: #A4123F;
-    --color-primary-400: #B64165;
-    --color-primary-300: #C8718C;
-    --color-primary-200: #DBA0B2;
-    --color-primary-100: #EDD0D9;
+    --color-primary-600: #9e133f;
+    --color-primary-500: #a4123f;
+    --color-primary-400: #b64165;
+    --color-primary-300: #c8718c;
+    --color-primary-200: #dba0b2;
+    --color-primary-100: #edd0d9;
     --color-red-900: #860707;
-    --color-red-600: #F42E2F;
-    --color-red-500: #FF2E2E;
-    --color-red-400: #FF5858;
-    --color-red-300: #FF8282;
-    --color-red-200: #FFABAB;
-    --color-red-100: #FFD5D5;
+    --color-red-600: #f42e2f;
+    --color-red-500: #ff2e2e;
+    --color-red-400: #ff5858;
+    --color-red-300: #ff8282;
+    --color-red-200: #ffabab;
+    --color-red-100: #ffd5d5;
     --color-green-900: #032903;
     --color-green-600: #2a9329;
     --color-green-500: #2a9928;
@@ -61,7 +61,7 @@
 
 :root {
     @include colors();
-    font-family: 'Monospace', 'Trebuchet MS', Arial, sans-serif;
+    font-family: "Monospace", "Trebuchet MS", Arial, sans-serif;
     background-color: var(--color-blue-grey-100);
     overflow-x: auto;
 }

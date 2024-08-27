@@ -4,20 +4,17 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
-import { goto, invalidate, invalidateAll } from '$app/navigation';
-import { page } from '$app/stores';
-import { derived } from 'svelte/store';
+import { goto, invalidate, invalidateAll } from "$app/navigation";
+import { page } from "$app/stores";
+import { derived } from "svelte/store";
 
-const { subscribe } = derived(
-  page,
-  ({ data: { user } }): any => user,
-);
+const { subscribe } = derived(page, ({ data: { user } }): any => user);
 
 export const user = {
-  subscribe,
-  async logout(): Promise<void> {
-    await fetch('/logout');
-    await invalidateAll();
-    console.log('logout') // TODO: not working?
-  }
+    subscribe,
+    async logout(): Promise<void> {
+        await fetch("/logout");
+        await invalidateAll();
+        console.log("logout"); // TODO: not working?
+    },
 };

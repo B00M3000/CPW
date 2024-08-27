@@ -9,8 +9,9 @@ The motivation of this project stemmed from a previous good but unwieldly system
 ## Specific Documentation:
 
 These are links to the relevant documentation for usage of our website:
-- [Student Docs](/docs/students)
-- [Advisor Docs](/docs/advisor)
+
+-   [Student Docs](/docs/students)
+-   [Advisor Docs](/docs/advisor)
 
 ### Acknowledgements
 

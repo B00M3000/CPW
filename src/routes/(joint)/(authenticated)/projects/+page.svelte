@@ -6,6 +6,7 @@
     import RefinedSearchMobile from './RefinedSearchMobile.svelte';
     import RefinedSearchNormal from './RefinedSearchNormal.svelte';
     import SearchBar from './SearchBar.svelte';
+    import { currentYear } from "@/lib/utils";
 
     let { data } = $props()
 
