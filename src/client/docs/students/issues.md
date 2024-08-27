@@ -12,5 +12,6 @@ Your account was not registered properly or not registered at all, and you shoul
 <hr>
 
 ### Navigation Bar Issues
+
 If your navigation bar does not look like the image provided below, contact Ms. Moss.
 ![Main Collection](/assets/doc/navbarnormal.png)

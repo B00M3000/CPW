@@ -1,6 +1,6 @@
 # Managing Projects
 
-*Manage Projects Page*
+_Manage Projects Page_
 
 ![Manage Projects Page](/assets/doc/managehome.png)
 
@@ -18,9 +18,9 @@
 
     - _Mentor Information:_ There are 2 ways to do this
 
-      1. Choose a pre-existing mentor:
+        1. Choose a pre-existing mentor:
 
-      2. Fill in your own mentor: You can do this by clicking on the toggle manual button, and then filling in the required fields.
+        2. Fill in your own mentor: You can do this by clicking on the toggle manual button, and then filling in the required fields.
 
     - _Short Description:_ should be at least 100 characters long.
 
@@ -44,12 +44,9 @@ After submission, your page will have a new project on it. The project might loo
 ### Adding A Project Report
 
 1. Click on the add full report button of the project card shown in the post submission section above. You should see a page like this:
-![Manage Projects Page](/assets/doc/reportempty.png)
-
+   ![Manage Projects Page](/assets/doc/reportempty.png)
 
 2. Copy your project report from Google Docs (or wherever you wrote it). There is no input prompt to paste into; just use your computer’s paste keybind (Command + V for Mac, Ctrl + V for Windows/ChromeBook), and your report will appear:
-![Manage Projects Page](/assets/doc/reportfinish.png)
+   ![Manage Projects Page](/assets/doc/reportfinish.png)
 
 3. Then click the submit button. You can edit and resubmit your report as many times as you want using the same process.
-
-

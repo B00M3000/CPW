@@ -10,13 +10,25 @@ import { MentorSchema } from "@/server/mongo/schemas/mentor";
 import { UserSchema } from "@/server/mongo/schemas/user";
 
 async function injectStudentAndMentor(project: any) {
-    project.student = stringifyObjectId(await UserSchema.findById(project.studentId, 'name email picture').lean());
-    project.mentor =  stringifyObjectId(await MentorSchema.findById(project.mentorId, 'name email phoneNumber').lean());
+    project.student = stringifyObjectId(
+        await UserSchema.findById(
+            project.studentId,
+            "name email picture",
+        ).lean(),
+    );
+    project.mentor = stringifyObjectId(
+        await MentorSchema.findById(
+            project.mentorId,
+            "name email phoneNumber",
+        ).lean(),
+    );
     return project;
 }
 
 export async function load({ params: { projectId } }) {
-    const project = stringifyObjectId(await ProjectSchema.findById(projectId).lean())
+    const project = stringifyObjectId(
+        await ProjectSchema.findById(projectId).lean(),
+    );
     const inflatedProject = await injectStudentAndMentor(project);
     return { inflatedProject, projectId };
 }

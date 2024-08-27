@@ -7,8 +7,8 @@
 <script lang="ts">
     import type { Project } from "@/interfaces/project";
     import Tags from "@/client/components/Tags.svelte";
-    import StudentCard from "@/client/components/StudentCard.svelte";
-    import MentorCard from "@/client/components/MentorCard.svelte";
+    import StudentCard2 from "@/client/components/StudentCard2.svelte";
+    import MentorCard2 from "@/client/components/MentorCard2.svelte";
     import { goto } from "$app/navigation";
 
     export let project: Project;
@@ -33,8 +33,8 @@
 
     <div class="flex flex-col gap-4">
         <div class="flex items-center justify-center gap-4">
-            <StudentCard student={project.student}/>
-            <MentorCard mentor={project.mentor}/>
+            <StudentCard2 student={project.student}/>
+            <MentorCard2 mentor={project.mentor}/>
         </div>
         {#if displayLearnMore}
         <a class="w-full justify-center rounded-md bg-blue-400 hover:bg-blue-500 py-1 px-2 inline-flex text-gray-900" href="/projects/{project._id}" data-sveltekit-preload-code>View Project Page</a>

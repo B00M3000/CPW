@@ -4,9 +4,9 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
-import { redirect } from '@sveltejs/kit';
+import { redirect } from "@sveltejs/kit";
 
 export async function GET({ cookies }) {
-  cookies.delete('session_id', { path: '/' });
-  redirect(307, '/');
-};
+    cookies.delete("session_id", { path: "/" });
+    redirect(307, "/");
+}

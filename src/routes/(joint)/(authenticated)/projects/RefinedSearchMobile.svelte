@@ -1,13 +1,9 @@
 <script lang=ts>
-    import { goto } from "$app/navigation";
-    import Icon from "@/client/components/Icon.svelte";
     import YearFilter from "@/client/components/YearFilter.svelte";
-    import CaretLeft from "@/client/icons/CaretLeft";
-    import CaretRight from "@/client/icons/CaretRight";
     import { tags } from "@/lib/tags";
     import { Close } from "carbon-icons-svelte";
     import { onMount } from "svelte";
-    import MultiSelect from 'svelte-multiselect'
+    import MultiSelect from 'svelte-multiselect';
 
     const tagOptions = Array.from(tags.entries()).map(([k, v]) => ({ id: k, label: v, value: v }))
 

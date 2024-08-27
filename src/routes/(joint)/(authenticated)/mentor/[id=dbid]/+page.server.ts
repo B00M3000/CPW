@@ -4,13 +4,15 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
-import { AccessLevel } from '@/lib/enums';
-import { MentorSchema } from '@/server/mongo/schemas/mentor.js';
-import { error } from '@sveltejs/kit';
-import { buildRegex, stringifyObjectId } from '@/lib/utils';
-import { ProjectSchema } from '@/server/mongo/schemas/project.js';
+import { AccessLevel } from "@/lib/enums";
+import { MentorSchema } from "@/server/mongo/schemas/mentor.js";
+import { error } from "@sveltejs/kit";
+import { buildRegex, stringifyObjectId } from "@/lib/utils";
+import { ProjectSchema } from "@/server/mongo/schemas/project.js";
 
 export async function load({ params, locals }) {
-    const mentor = stringifyObjectId(await MentorSchema.findById(params.id, 'name').lean());
-    return { mentor }
-};
+    const mentor = stringifyObjectId(
+        await MentorSchema.findById(params.id, "name").lean(),
+    );
+    return { mentor };
+}

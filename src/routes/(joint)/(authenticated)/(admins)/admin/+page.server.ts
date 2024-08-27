@@ -6,8 +6,12 @@
 
 import { ProjectSchema } from "@/server/mongo/schemas/project";
 
-export async function load(){
-    const projectCountPublished = await ProjectSchema.count({underReview: false});
-    const projectCountNotPublished = await ProjectSchema.count({underReview: true})
+export async function load() {
+    const projectCountPublished = await ProjectSchema.countDocuments({
+        underReview: false,
+    });
+    const projectCountNotPublished = await ProjectSchema.countDocuments({
+        underReview: true,
+    });
     return { projectCountPublished, projectCountNotPublished };
 }

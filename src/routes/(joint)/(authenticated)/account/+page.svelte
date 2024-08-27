@@ -13,6 +13,7 @@
     import People from "@/client/icons/People.js";
     import Ind from "./ChecklistItemStatusIndicator.svelte";
     import { Launch, Dashboard } from "carbon-icons-svelte"
+    import { currentYear } from "@/lib/utils";
 
     let { data } = $props();
 </script>
@@ -75,7 +76,7 @@
             <div class="mb-24"></div>
         </div>
         <div class="flex flex-col items-center justify-center gap-5">
-            <h2 class="text-xl text-left">Project Week {new Date().getFullYear()} Checklist</h2>
+            <h2 class="text-xl text-left">Project Week {currentYear()} Checklist</h2>
 
             {#if $user.accountType == AccountType.Student}
             {@const student = data.checklist.student}

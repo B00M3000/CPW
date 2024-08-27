@@ -1,49 +1,77 @@
-/*
- * Created on Fri Oct 13 2023
- *
- * Copyright (c) 2023 Thomas Zhou
- */
-
-import { ProjectSchema } from "@/server/mongo/schemas/project";
-import { UserSchema } from "@/server/mongo/schemas/user";
-import { error, json } from "@sveltejs/kit";
 import { MentorSchema } from "@/server/mongo/schemas/mentor";
-import { stringifyObjectId } from "@/lib/utils";
+import {
+    validateProjectTitle,
+    validateProjectTags,
+    validateProjectShortDescription,
+    validateMentorInformation,
+} from "./server-validation";
+import { error, json } from "@sveltejs/kit";
+import { ProjectSchema } from "@/server/mongo/schemas/project";
+import { currentYear } from "@/lib/utils";
 
-export async function POST({ request, locals }) {
-  const data = await request.json();
-  const action = data.action.toUpperCase();
-  let mentorId = data.mentorId;
+export async function POST({ locals: { user }, request }) {
+    // eslint-disable-next-line prefer-const
+    let { projectDetails, mentorInformation, existingMentorId, fullReport } = await request.json();
 
-  if (action != "CREATE")
-    error(
-      400,
-      `Invalid Request Type! Must be CREATE given ${data.action.toUpperCase()}`
+    // TODO: type of on all things to verify?
+
+    // Validate project details
+    let validationResult = validateProjectTitle(projectDetails.title);
+    if (validationResult !== true) {
+        return error(400, validationResult.join(" "));
+    }
+
+    validationResult = validateProjectTags(projectDetails.tags);
+    if (validationResult !== true) {
+        return error(400, validationResult.join(" "));
+    }
+
+    validationResult = validateProjectShortDescription(
+        projectDetails.shortDescription,
     );
+    if (validationResult !== true) {
+        return error(400, validationResult.join(" "));
+    }
 
-  if (!mentorId) {
-    const mentorSchema = new MentorSchema({
-      ...data.mentor,
-      name: `${data.mentor.firstName} ${data.mentor.lastName}`,
+    // Validate mentor information
+    validationResult = validateMentorInformation(mentorInformation);
+    if (validationResult !== true) {
+        return error(400, validationResult.join(" "));
+    }
+
+    // making sure full report isn't bloat
+    if (fullReport.length > 100000) {
+        return error(400, "Full report is too long.");
+    }
+
+    if (!existingMentorId) {
+        const mentorSchema = new MentorSchema({
+            name: mentorInformation.name,
+            organization: mentorInformation.organization,
+            email: mentorInformation.email,
+            phoneNumber: mentorInformation.phoneNumber,
+        });
+        const savedMentorSchema = await mentorSchema.save();
+        existingMentorId = savedMentorSchema._id;
+    } else {
+        await MentorSchema.findByIdAndUpdate(existingMentorId, {
+            mergedMentorInformation: { $push: { studentId: user?._id, ...mentorInformation } },
+        })
+    }
+
+    const projectSchema = new ProjectSchema({
+        title: projectDetails.title,
+        year: currentYear(),
+        tags: projectDetails.tags,
+        shortDesc: projectDetails.shortDescription,
+        fullReport: fullReport,
+        underReview: true,
+        publish: false,
+        mentorId: existingMentorId,
+        studentId: user?._id,
     });
-    const savedMentorSchema = await mentorSchema.save();
-    mentorId = savedMentorSchema._id;
-  }
 
-  const project = data.project;
-  let schema = new ProjectSchema({
-    title: project.title,
-    year: new Date().getFullYear(),
-    tags: project.tags,
-    shortDesc: project.shortDesc,
-    fullReport: "",
-    underReview: true,
-    publish: false,
-    mentorId: mentorId,
-    studentId: locals.user?._id,
-  });
+    await projectSchema.save();
 
-  await schema.save();
-
-  return json({ message: "Actions Successfully Executed." });
+    return json({ message: "Project successfully created." });
 }

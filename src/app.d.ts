@@ -7,29 +7,29 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 declare global {
-	namespace App {
-		// interface Error {}
-		interface Locals {
-			user?: User
-		}
-		interface PageData {
-			user?: User
-		}
-		// interface Platform {}
-	}
+    namespace App {
+        // interface Error {}
+        interface Locals {
+            user?: User;
+        }
+        interface PageData {
+            user?: User;
+        }
+        // interface Platform {}
+    }
 }
 
 interface User {
-	_id: string;
-	name: string;
-	email: string;
-	picture: string;
-	sessionId: string;
-	firstName: string;
-	lastName: string;
-	accountType: number;
-	accessLevel: number;
-	adviseeIds: string[];
+    _id: string;
+    name: string;
+    email: string;
+    picture: string;
+    sessionId: string;
+    firstName: string;
+    lastName: string;
+    accountType: number;
+    accessLevel: number;
+    adviseeIds: string[];
 }
 
 export {};

@@ -12,7 +12,7 @@
     import { CheckmarkFilled, ErrorFilled } from "carbon-icons-svelte";
     import toast from "svelte-french-toast";
 
-    const tagOptions = Array.from(tags.entries()).map(([k, v]) => ({ id: k, label: v, value: v }))
+    const TAG_OPTIONS = Array.from(tags.entries()).map(([k, v]) => ({ id: k, label: v, value: v }))
 
     interface ProjectInformation {
         _id: string;
@@ -101,14 +101,14 @@
             <div class="flex flex-col items-start gap-4">
                 <div class="flex gap-2 items-start flex-col">
                     <h2 class="text-lg">Title</h2>
-                    <span contenteditable="plaintext-only" class="text-base rounded-md bg-gray-200 p-2 border-gray-400 border" bind:innerHTML={project.title}>{data.project.title}</span>
+                    <span contenteditable="plaintext-only" class="text-base rounded-md bg-gray-50 p-2 border-gray-400 max-w-[30rem] border min-w-72" bind:innerHTML={project.title}>{data.project.title}</span>
                 </div>
 
                 <div class="flex gap-2 items-start flex-col">
                     <h2 class="text-lg">Tags</h2>
                     <MultiSelect
-                        options={tagOptions}
-                        maxSelect={3}
+                        options={TAG_OPTIONS}
+                        maxSelect={5}
                         placeholder="Search tags.."
                         liSelectedClass="flex gap-2 items-center"
                         outerDivClass="flex gap-2 items-center my-0 bg-gray-50 p-2 rounded-md border-gray-400 border max-w-[30rem]"
@@ -120,15 +120,18 @@
 
                 <div class="flex gap-2 items-start flex-col">
                     <h2 class="text-lg">Short Description</h2>
-                    <span contenteditable="plaintext-only" class="text-base rounded-md bg-gray-200 p-2 border-gray-400 border max-w-[32rem]" bind:innerHTML={project.shortDesc}>{data.project.shortDesc}</span>
+                    <span contenteditable="plaintext-only" class="text-base rounded-md bg-gray-50 p-2 border-gray-400 border min-w-72 max-w-[32rem]" bind:innerHTML={project.shortDesc}>{data.project.shortDesc}</span>
                 </div>
             </div>
-            <div class="flex flex-col items-start gap-4 p-8">
+            <div class="flex flex-col items-start gap-2 p-8">
                 <h2 class="text-lg">Mentor</h2>
-                <div class="flex flex-col items-start gap-2 rounded-lg p-4 bg-gray-200">
-                    <span>{data.mentor.name}</span>
-                    <span>{data.mentor.organization}</span>
+                <div class="flex flex-col items-start bg-gray-200 rounded-xl p-4 min-w-[20rem]">
+                    <span class="text-lg font-bold">{data.mentor.name}</span>
+                    <span class="text-base text-gray-600">{data.mentor.email}</span>
+                    <span class="text-base text-gray-600 mb-1">{data.mentor.phoneNumber}</span>
+                    <span class="text-base">{data.mentor.organization}</span>
                 </div>
+                <span class="text-gray-600 max-w-[20rem] text-sm">Mentor information currently cannot be edited (in the future it will be). Please delete this project and create a new one if changes need to be made, integrity of contact information is important.</span>
             </div>
         </div>
         <div class="my-4 flex flex-col gap-4">

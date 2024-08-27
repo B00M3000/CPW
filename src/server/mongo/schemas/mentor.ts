@@ -4,29 +4,30 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 export interface MentorDocumentData {
-  firstName: string;
-  lastName: string;
-  name: string;
-  organization: string;
-  email: string;
-  phoneNumber: string;
+    name: string;
+    organization: string;
+    email: string;
+    phoneNumber: string;
+    mergedInformation: object[];
 }
 
 const schema = new mongoose.Schema(
-  {
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    name: { type: String, required: true },
-    organization: { type: String, required: true },
-    email: { type: String, required: true },
-    phoneNumber: { type: String, required: true },
-  },
-  { timestamps: true },
+    {
+        name: { type: String, required: true },
+        organization: { type: String, required: true },
+        email: { type: String, required: true },
+        phoneNumber: { type: String },
+        mergedInformation: { type: [Object], required: true, default: [] },
+    },
+    { timestamps: true },
 );
+
+schema.index({ name: "text" });
+
 export type MentorDocument = mongoose.HydratedDocument<MentorDocumentData>;
 
 export const MentorSchema: mongoose.Model<MentorDocumentData> =
-  mongoose.models['Mentors'] || mongoose.model('Mentors', schema);
+    mongoose.models["Mentors"] || mongoose.model("Mentors", schema);

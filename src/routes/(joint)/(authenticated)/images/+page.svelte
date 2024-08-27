@@ -72,7 +72,7 @@
     <div class="h-full overflow-y-auto w-full" bind:this={scrollElement}>
         <div class="flex flex-wrap items-center justify-center gap-4 h-auto">
             {#each images as image}
-            <div class="w-[300px] h-[225px] 2xl:w-[500px] 2xl:h-[350px] z-0">
+            <div class="w-[300px] h-[225px] 2xl:w-[400px] 2xl:h-[335px] z-0">
                 <SmartProjectImage {image} showProjectPageButton={true} />
             </div>
             {:else}

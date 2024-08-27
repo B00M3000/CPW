@@ -23,5 +23,5 @@ export default [
     "or",
     "the",
     "to",
-    "with"
-]
+    "with",
+];

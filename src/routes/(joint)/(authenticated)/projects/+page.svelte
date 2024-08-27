@@ -6,6 +6,7 @@
     import RefinedSearchMobile from './RefinedSearchMobile.svelte';
     import RefinedSearchNormal from './RefinedSearchNormal.svelte';
     import SearchBar from './SearchBar.svelte';
+    import { currentYear } from "@/lib/utils";
 
     let { data } = $props()
 
@@ -13,7 +14,7 @@
     let searchParameters: any = $state({
         tags: [],
         yearUpper: 2019,
-        yearLower: new Date().getFullYear(),
+        yearLower: currentYear(),
         mentorSearch: "",
         studentSearch: "",
         query: "",
@@ -63,7 +64,7 @@
     let innerWindowWidth = $state(0);
 
     const refinedSearchBreakpoint = 870;
-    let refinedSearchOpen = $state(false)
+    let refinedSearchOpen = $state(searchParameters.mentorSearch || searchParameters.studentSearch || searchParameters.tags.length > 0 || searchParameters.yearUpper != 2019 || searchParameters.yearLower != currentYear());
     let refinedSearchNormalOpen = $derived(refinedSearchOpen && innerWindowWidth > refinedSearchBreakpoint);
     let refinedSearchMobileOpen = $derived(refinedSearchOpen && innerWindowWidth <= refinedSearchBreakpoint)
     function closeRefinedSearch() {

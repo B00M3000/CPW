@@ -7,7 +7,7 @@
 <script lang=ts>
     import { goto } from "$app/navigation";
     import Icon from "@/client/components/Icon.svelte";
-    import StudentCard from "@/client/components/StudentCard.svelte";
+    import StudentCard2 from "@/client/components/StudentCard2.svelte";
     import Open from "@/client/icons/Open";
 
     export let data;
@@ -27,7 +27,7 @@
                     <tr>
                         <th></th>
                         <th>
-                            <span>Title</span>   
+                            <span>Title</span>
                         </th>
                         <th>
                             <span>Student </span>
@@ -47,7 +47,7 @@
                             <p class="max-w-[24rem]">{project.title}</p>
                         </td>
                         <td>
-                            <span> <StudentCard student={project.student} /> </span>
+                            <span> <StudentCard2 student={project.student} /> </span>
                         </td>
                     </tr>
                     {/each}
@@ -65,7 +65,7 @@
                 <tr>
                     <th></th>
                     <th>
-                        <span>Title</span>   
+                        <span>Title</span>
                     </th>
                     <th>
                         <span>Student </span>
@@ -85,7 +85,7 @@
                             <p class="max-w-[24rem]">{project.title}</p>
                         </td>
                         <td>
-                            <StudentCard student={project.student} />
+                            <StudentCard2 student={project.student} />
                         </td>
                     </tr>
                     {/each}
@@ -105,10 +105,10 @@
             &:nth-child(even) {
                 background-color: #ddd;
             }
-            
+
             &:nth-child(odd) {
                 background-color: #e9e9e9;
-            } 
+            }
         }
         tr:hover {
                 background-color: rgb(163, 230, 185);
@@ -120,5 +120,5 @@
             padding: 0.5rem 1rem;
             background-color: rgb(163, 162, 162);
         }
-    }  
+    }
 </style>
