@@ -11,6 +11,7 @@ export interface MentorDocumentData {
     organization: string;
     email: string;
     phoneNumber: string;
+    mergedInformation: object[];
 }
 
 const schema = new mongoose.Schema(

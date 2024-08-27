@@ -41,7 +41,7 @@
     <h2 class="text-xl mb-2">Tags: </h2>
     <MultiSelect
         options={TAG_OPTIONS}
-        maxSelect={3}
+        maxSelect={5}
         placeholder="Search tags.."
         liSelectedClass="flex gap-2 items-center"
         outerDivClass="flex gap-2 items-center my-0 bg-gray-50 p-2 py-3 rounded-md border-gray-400 border max-w-[30rem] min-w-72"

@@ -64,7 +64,7 @@
     let innerWindowWidth = $state(0);
 
     const refinedSearchBreakpoint = 870;
-    let refinedSearchOpen = $state(false)
+    let refinedSearchOpen = $state(searchParameters.mentorSearch || searchParameters.studentSearch || searchParameters.tags.length > 0 || searchParameters.yearUpper != 2019 || searchParameters.yearLower != currentYear());
     let refinedSearchNormalOpen = $derived(refinedSearchOpen && innerWindowWidth > refinedSearchBreakpoint);
     let refinedSearchMobileOpen = $derived(refinedSearchOpen && innerWindowWidth <= refinedSearchBreakpoint)
     function closeRefinedSearch() {

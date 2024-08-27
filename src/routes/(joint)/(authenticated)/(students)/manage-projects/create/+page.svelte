@@ -30,7 +30,7 @@
         fullReport = r;
     }
 
-    let step = $state(4);
+    let step = $state(1);
 
     export const snapshot = {
         capture: () => ({
@@ -53,12 +53,15 @@
     $effect.pre(() => {
         if (step == 5 && creationStatus == "not_started") {
             creationStatus = "started";
+            const reformedProjectDetails = { ...projectDetails, tags: projectDetails.selected.map(tag => tag.id) };
+            delete reformedProjectDetails.selected;
             fetch("/manage-projects/create", {
                 method: "POST",
                 body: JSON.stringify({
-                    projectDetails,
+                    projectDetails: reformedProjectDetails,
                     mentorInformation,
-                    existingMentorId
+                    existingMentorId,
+                    fullReport,
                 })
             }).then(res => {
                 if (res.ok) {
