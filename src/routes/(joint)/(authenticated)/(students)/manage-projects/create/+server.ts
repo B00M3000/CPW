@@ -46,7 +46,7 @@ export async function POST({ locals: { user }, request }) {
 
     if (!existingMentorId) {
         const mentorSchema = new MentorSchema({
-            name: mentorInformation.name,
+            name: mentorInformation.fullName,
             organization: mentorInformation.organization,
             email: mentorInformation.email,
             phoneNumber: mentorInformation.phoneNumber,

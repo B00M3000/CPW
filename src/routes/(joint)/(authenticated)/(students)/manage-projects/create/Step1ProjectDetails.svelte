@@ -19,7 +19,7 @@
             errorMessages.push("Please select between 1 and 5 tags.");
         }
 
-        if(projectDetails.shortDescription.length < 200 && projectDetails.shortDescription.length > 500) {
+        if(projectDetails.shortDescription.length < 200 || projectDetails.shortDescription.length > 500) {
             errorMessages.push("Please enter a short description with at least 200 characters and less than 500.");
         }
 
