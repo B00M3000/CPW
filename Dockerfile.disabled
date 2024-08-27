@@ -1,4 +1,4 @@
-FROM node:18-alpine AS base
+FROM node:20-alpine AS base
 
 RUN corepack enable pnpm && corepack install -g pnpm@latest-9
 
@@ -18,7 +18,7 @@ FROM base as prod-deps
 COPY package.json .
 RUN pnpm install -r --offline --prod
 
-FROM node:18-alpine
+FROM node:20-alpine
 
 COPY package.json .
 
@@ -31,5 +31,3 @@ ENV BODY_SIZE_LIMIT=52428800
 EXPOSE 80/tcp
 
 CMD node -r dotenv/config .
-
-
