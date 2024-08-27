@@ -1,406 +1,106 @@
-<!--
- Created on Fri Oct 13 2023
-
- Copyright (c) 2023 Thomas Zhou
--->
-
 <script lang=ts>
-  import InformationBox from "@/client/components/InformationBox.svelte";
-    import MentorSearcher from "@/client/components/MentorSearcher.svelte";
-    import { tags } from "@/lib/tags";
+    import Step1ProjectDetails from './Step1ProjectDetails.svelte';
+    import Step2MentorInformation from './Step2MentorInformation.svelte';
+    import Step3MentorDeduplication from './Step3MentorDeduplication.svelte';
+    import Step4ProjectReport from './Step4ProjectReport.svelte';
+    import Step5FinalTouches from './Step5FinalTouches.svelte';
+    import Loading2 from '@/client/components/Loading2.svelte';
+    import { navigating } from "$app/stores";
 
-    interface Action {
-      action: string;
-      project: ProjectInformation;
-      mentor: MentorInformation;
-      mentorId?: string;
+    let projectDetails = $state({
+        title: "",
+        selected: [],
+        shortDescription: ""
+    })
+
+    let mentorInformation = $state({
+        fullName: "",
+        organization: "",
+        email: "",
+        phoneNumber: ""
+    })
+
+    let existingMentorId = $state();
+    function selectExistingMentor(_id?: string) {
+        existingMentorId = _id;
     }
 
-    interface ProjectInformation {
-      title: string;
-      tags: string[];
-      shortDesc: string;
+    let fullReport = $state();
+    function setFullReport(r?: string) {
+        fullReport = r;
     }
 
-    interface MentorInformation {
-      firstName: string;
-      lastName: string;
-      organization: string;
-      email: string;
-      phoneNumber: string;
-    }
+    let step = $state(4);
 
-    let project: ProjectInformation = {
-      title: "",
-      tags: [],
-      shortDesc: ""
-    };
-
-    let mentor: MentorInformation = {
-      firstName: "",
-      lastName: "",
-      organization: "",
-      email: "",
-      phoneNumber: "",
-    };
-
-    let action: Action;
-    let success = false;
-    $: action = { ...action, action: "CREATE", project, mentor };
-
-    async function upload() {
-        const res = await fetch('/manage-projects/create', {
-            method: "POST",
-            body: JSON.stringify(action)
-        });
-        
-        success = true;
-    }
-
-    let step: number = 1;
-    const maxStep: number = 4;
-    const minStep: number = 1;
-    let manual: boolean = false;
-
-
-    let displayedErrorMessages: string[] = []
-
-    function nextStep() {
-      if(step < maxStep) {
-        const isValid: any = stepValidations[step]!();
-        if(isValid === true) {
-          step += 1;
-          displayedErrorMessages = []
-        } else {
-          displayedErrorMessages = isValid;
+    export const snapshot = {
+        capture: () => ({
+            projectDetails,
+            mentorInformation,
+            existingMentorId,
+            fullReport,
+            step
+        }),
+		restore: (snapshot) => {
+            projectDetails = snapshot.projectDetails;
+            mentorInformation = snapshot.mentorInformation;
+            existingMentorId = snapshot.existingMentorId;
+            fullReport = snapshot.fullReport;
+            step = snapshot.step;
         }
-      }
     }
 
-    function backStep() {
-      if(step > minStep) step -= 1
-    }
-
-    type validation = null | (() => true | string[]);
-
-    const stepValidations: validation[] = [
-      null,
-      () => {
-        if(project.title.length < 100 && project.title.length > 12) return true;
-        else return ["Please enter a project name between 12 and 200 characters."];
-      },
-      () => {
-        const numberOfTags= project.tags.length
-        if(numberOfTags >= 1 && numberOfTags <= 7) return true;
-        else return ["Please select between 1 and 7 tags."];
-      },
-
-      () => {
-        if(manual){
-          let errorsMessages: string[] = [];
-
-          if(!/.+/.test(mentor.firstName)) errorsMessages.push("Please enter the first name of your mentor.");
-          if(!/.+/.test(mentor.lastName)) errorsMessages.push("Please enter the last name of your mentor.");
-          if(!/.+/.test(mentor.organization)) errorsMessages.push("Please enter the relevant organization your mentor is associated with for your project.");
-          if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(mentor.email)) errorsMessages.push("Please enter a valid mentor email address.");
-          if(!/^\+?\d{0,3}(\s|-)?(\d|-| |\(|\))+$/.test(mentor.phoneNumber)) errorsMessages.push("Please enter a valid mentor phone number in the form +1 555-555-5555.");
-
-          return errorsMessages.length > 0 ? errorsMessages : true;
-        } else {
-          if(action.mentorId) return true;
-          else return ["Please select an existing mentor to continue or manually add one if not already exists."]
+    let creationStatus = $state("not_started");
+    $effect.pre(() => {
+        if (step == 5 && creationStatus == "not_started") {
+            creationStatus = "started";
+            fetch("/manage-projects/create", {
+                method: "POST",
+                body: JSON.stringify({
+                    projectDetails,
+                    mentorInformation,
+                    existingMentorId
+                })
+            }).then(res => {
+                if (res.ok) {
+                    creationStatus = "success";
+                } else {
+                    creationStatus = "error";
+                }
+            })
         }
-      },
-      () => {
-        if(project.shortDesc.length > 100) return true;
-        else return ["Please enter a short description with at least 100 characters to start. You can always edit it later."]
-      }
-    ]
-
-    function mentorSelected(e: CustomEvent) {
-      const { mentorId } = e.detail;
-      action.mentorId = mentorId;
-    }
+    })
 </script>
 
-<main>
-  <form>
-    {#if step === 1}
-    <div id="project-title-container">
-      <label for="title" class="label">Give your project a title: </label>
-      <input class="textarea" id="title" bind:value={project.title} contenteditable="plaintext-only" />
-    </div>
-    {:else if step === 2}
-    <div id="project-tags-container">
-      <h1>Select Tags</h1>
-      {#each Array.from(tags.entries()) as [id, label]}
-      <div class="tag-container">
-        <input type="checkbox" value={id} id="selected" bind:group={project.tags}/>
-        <span>{label}</span>
-      </div>
-      {/each}
-    </div>
-    {:else if step === 3}
-    <h3 class="label">Fill in mentor information:</h3>
-    <button class="quickselect-btn" on:click ={() => {manual = !manual}}> Toggle {#if !manual} Manual {:else} Quick Select {/if} </button>
-    {#if manual}
-    <div id="project-mentor-container">
-      <span>Important: Please make sure information is correct, mentor information cannot be modified later. You will need to contact Anna Moss reguarding any changes.</span>
-      <label for="mentorFirst" class="label">Mentor First Name</label>
-      <input class="textarea" id="mentorFirstName" bind:value={mentor.firstName} contenteditable="plaintext-only" />
-      <label for="mentorLast" class="label">Mentor Last Name</label>
-      <input class="textarea" id="mentorLastName" bind:value={mentor.lastName} contenteditable="plaintext-only" />
-      <label for="mentorOrg" class="label">Mentor Organization</label>
-      <input class="textarea" id="mentorOrganization" bind:value={mentor.organization} contenteditable="plaintext-only" />
-      <label for="mentorEmail" class="label">Mentor Email</label>
-      <input class="textarea" id="mentorEmail" bind:value={mentor.email} contenteditable="plaintext-only" />
-      <label for="mentorPhone" class="label">Mentor Phone</label>
-      <input class="textarea" id="mentorPhone" bind:value={mentor.phoneNumber} contenteditable="plaintext-only" />
-    </div>
-    {:else}
-    <MentorSearcher on:select={mentorSelected}/>
-    {/if}
-    {:else if step === 4}
-    <div id="project-short-desc-container">
-      <label for="shortDesc" class="label">Write A Short Description</label>
-      <span class="textarea" id="shortDesc" bind:innerHTML={project.shortDesc} contenteditable="plaintext-only" />
-    </div>
-    {/if}
+{#if $navigating}
+<Loading2 />
+{/if}
 
-    <div id="buttons"> 
-      {#if step > minStep}
-      <button on:click={backStep}>Back</button>
-      {/if}
-
-      {#if step < maxStep}
-      <button on:click={nextStep}>Next</button>
-      {/if}
-
-      {#if step === maxStep}
-      <button type="submit" class="submit-button" on:click={upload}>Submit Form</button>
-      {/if}
+<main class="w-full h-full flex items-center justify-center relative">
+    <div class="sm:hidden absolute top-0 left-0 w-full h-full flex items-center justify-center bg-gray-200 z-20">
+        <div class="flex flex-col items-center bg-gray-300 m-12 p-8 rounded-xl">
+            <span class="text-2xl">Sorry, please create your project on a desktop computer (any device with a larger screen). Thanks!</span>
+        </div>
+    </div>
+    <div class="flex flex-col items-start p-12 pb-4 rounded-lg bg-gray-300">
+        <span class="text-4xl mb-16">Creating a new project...</span>
+        <div class="overflow-y-auto flex flex-col items-start w-[65vw] h-[65vh]">
+            {#if step == 1}
+            <Step1ProjectDetails bind:projectDetails bind:step />
+            {:else if step == 2}
+            <Step2MentorInformation bind:mentorInformation bind:step />
+            {:else if step == 3}
+            <Step3MentorDeduplication bind:mentorInformation bind:step {selectExistingMentor}/>
+            {:else if step == 4}
+            <Step4ProjectReport bind:step {setFullReport} />
+            {:else if step == 5}
+            <Step5FinalTouches bind:step bind:creationStatus />
+            {/if}
+        </div>
+        <div class="flex justify-center w-full">
+            <div class="flex justify-center opacity-25 bg-[#000000AA] rounded-lg py-2 px-4">
+                <span class="text-white text-sm">Make Sure to Scroll to the Bottom</span>
+            </div>
+        </div>
     </div>
 
-    {#if displayedErrorMessages.length > 0}
-    <div class="overlay">
-      <div class="info-box">
-          <InformationBox 
-            backgroundColor="var(--color-red-100)" 
-            borderColor="var(--color-red-600)" 
-            textColor="var(--color-red-600)" 
-            headingColor="var(--color-red-900)" 
-            heading="Invalid Inputs" 
-            text={displayedErrorMessages.map(m => `  - ${m}`).join('\n')}
-          />
-          
-      </div>
-      <div class="info-box-button"> <button on:click = {() => displayedErrorMessages.length = 0}> Got It! </button> </div>
-      
-     </div>
-    {/if}
-
-    {#if success}
-    <div class="overlay">
-      <div class="info-box">
-          <InformationBox 
-            backgroundColor="var(--color-green-100)" 
-            borderColor="var(--color-green-600)" 
-            textColor="var(--color-green-600)" 
-            headingColor="var(--color-green-500)" 
-            heading="Success!!" 
-            text={"Project was submitted. You should see it on the /manage-project page."}
-          />
-          
-      </div>
-      <div class="info-box-button-submit"> <a data-sveltekit-reload href="/manage-projects" > Got It! </a> </div>
-      
-     </div>
-    {/if}
-  </form>
 </main>
-
-<style lang="scss">
-  main, form {
-    min-height: calc(100vh - var(--nav-bar-height));
-  }
-
-  form { 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow-y: auto;
-    height: 100%;
-
-    .textarea { 
-      border: none;
-      background-color: transparent;
-      border-bottom: 2px solid var(--color-blue-grey-500);
-    }
-  }
-
-  #project-title-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    gap: 1em;
-
-    label {
-      font-size: 36px;
-    }
-
-    .textarea {
-      font-size: 36px;  
-      min-width: 40vw;
-      max-width: 70vw;
-      font-size: 1.8rem;
-      outline: none;
-    }
-
-    margin: 1em;
-  }
-
-  #project-tags-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    .tag-container {
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    margin: 1em;
-  }
-
-  #project-mentor-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    font-size: 24px;  
-
-    &::before {
-      background: linear-gradient(transparent, inherit);
-    }
-
-    .textarea {
-      font-size: 36px;  
-      min-width: 30vw;
-      max-width: 30vw;
-      font-size: 1.8rem;
-      outline: none;
-      margin-bottom: 1rem;
-    }
-  }
-
-  #project-short-desc-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    font-size: 24px;  
-
-    .textarea {
-      min-width: 60vw;
-      max-width: 60vw;
-      border: 0;
-      font-size: 1.8rem;
-      border-bottom: 2px solid var(--color-blue-grey-500);
-    }
-  }
-
-  button {
-    background-color: var(--color-blue-500);
-    border: none;
-    padding: 0.5em;
-    font-size: 16px;
-    border-radius: 4px;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  button:hover {
-    background-color: var(--color-blue-400);
-  }
-  #buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1em;
-  }
-
-  .overlay {
-    position:fixed;
-    margin: 0;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    background-color:rgba(0, 0, 0, 0.85);
-    z-index:9999;
-  }
-  .info-box{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 25vh;
-  }
-
-  .info-box-button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
- .info-box-button button{
-    margin-top: 0.2rem;
-    border: var(--color-red-600) 3px solid;
-    border-radius: 0%;
-    color: white;
-    background-color: transparent;
-    
- }
-
- .info-box-button button:hover{
-    background-color: rgba(165, 28, 28, 0.35);
-
- }
-
- .info-box-button-submit a{
-    margin-top: 0.2rem;
-    text-decoration: none;
-    border: var(--color-green-600) 3px solid;
-    border-radius: 0%;
-    color: white;
-    background-color: transparent;
-    padding: 0.5em;
-    font-size: 16px;
-    border-radius: 4px;
-    
- }
- .info-box-button-submit a:hover{
-    background-color: rgba(35, 161, 39, 0.35);
-    
- }
-
- .info-box-button-submit{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  h3 {
-    font-size: 36px;
-    font-weight: normal;
-  }
-</style>
-
-
-
-
-
-

@@ -10,14 +10,14 @@ import escapeRegExp from "lodash/escapeRegExp";
 
 export function currentYear() {
     const date = new Date();
-    return date.getFullYear() + date.getMonth() < 8 ? 0 : 1;
+    return date.getFullYear() + (date.getMonth() < 8 ? 0 : 1);
 }
 
 export function parseIntOrElse(str: string | null, other: number): number {
     if (!str) return other;
     try {
         return parseInt(str);
-    } catch (e) {
+    } catch (_) {
         return other;
     }
 }
@@ -36,7 +36,7 @@ export function buildRegex(keywords: string[]) {
     );
 }
 
-export function stringifyObjectId(document: Object | null | undefined) {
+export function stringifyObjectId(document: object | null | undefined) {
     if (document) document._id = document?._id.toString();
     return document;
 }

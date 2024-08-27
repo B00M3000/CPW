@@ -22,7 +22,7 @@ export const load = async ({ locals, params: { projectId } }) => {
     const mentor = stringifyObjectId(
         await MentorSchema.findById(
             project.mentorId,
-            "name organization",
+            "name organization email phoneNumber",
         ).lean(),
     );
 

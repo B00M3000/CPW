@@ -8,12 +8,11 @@ import { sveltekit } from "@sveltejs/kit/vite";
 import { defineConfig } from "vite";
 import path from "path";
 import dotenv from "dotenv";
-import eslint from "vite-plugin-eslint";
 
 dotenv.config();
 
 export default defineConfig({
-    plugins: [eslint(), sveltekit()],
+    plugins: [sveltekit()],
 
     resolve: {
         alias: {

@@ -35,9 +35,9 @@ export async function load({ locals }) {
                 project.fullReport?.length || 0;
             if (!project.underReview)
                 studentObject.acquiredAdvisorApproval = true;
-            studentObject.imagesAdded = await ImageSchema.find({
+            studentObject.imagesAdded = await ImageSchema.countDocuments({
                 projectId: project._id,
-            }).count();
+            });
         }
 
         returnObject.student = studentObject;
@@ -75,7 +75,7 @@ export async function load({ locals }) {
             advisorObject.notCreatedProjects--;
             if (p.fullReport) advisorObject.notUploadedReports--;
             if (!p.underReview) advisorObject.notApproved--;
-            if ((await ImageSchema.find({ projectId: p._id }).count()) > 0)
+            if ((await ImageSchema.countDocuments({ projectId: p._id })) > 0)
                 advisorObject.notHaveImages--;
         });
 

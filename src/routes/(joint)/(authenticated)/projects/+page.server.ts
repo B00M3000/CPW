@@ -49,8 +49,8 @@ export async function load({ url: { searchParams } }) {
     };
 
     // Setting up cached injection of student and mentor data
-    let cachedStudents: any = {};
-    let cachedMentors: any = {};
+    const cachedStudents: any = {};
+    const cachedMentors: any = {};
     async function injectStudentAndMentor(project: any) {
         project.student =
             cachedStudents[project.studentId] ||
@@ -124,10 +124,9 @@ export async function load({ url: { searchParams } }) {
               .sort("-createdAt")) || [];
     const totalProjectCount: number = returnEmpty
         ? 0
-        : await ProjectSchema.find(
-              dbQuery,
-              "studentId title year tags mentorId shortDesc",
-          ).count();
+        : await ProjectSchema.countDocuments(
+              dbQuery
+          );
     const inflatedProjects = await Promise.all(
         projects.map(stringifyObjectId).map(injectStudentAndMentor),
     );

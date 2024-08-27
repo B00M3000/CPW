@@ -1,7 +1,7 @@
 <script lang=ts>
-    import MentorCard from "@/client/components/MentorCard.svelte";
+    import MentorCard2 from "@/client/components/MentorCard2.svelte";
     import SmartProjectImage from "@/client/components/SmartProjectImage.svelte";
-    import StudentCard from "@/client/components/StudentCard.svelte";
+    import StudentCard2 from "@/client/components/StudentCard2.svelte";
     import Tags from "@/client/components/Tags.svelte";
     import { Return } from "carbon-icons-svelte";
     import toast from "svelte-french-toast";
@@ -38,11 +38,11 @@
                 <h1 class="text-3xl sm:text-4xl mb-3 sm:mb-6 font-normal">{data.project?.title}</h1>
                 <div class="inline-flex items-center gap-2 mb-2 sm:mb-4">
                     <span class="">Student: </span>
-                    <StudentCard student={data.student} />
+                    <StudentCard2 student={data.student} />
                 </div>
                 <div class="inline-flex items-center gap-2 mb-2 sm:mb-4">
                     <span class="">Mentor: </span>
-                    <MentorCard mentor={data.mentor} />
+                    <MentorCard2 mentor={data.mentor} />
                 </div>
                 <div class="flex flex-col items-start mb-2 sm:mb-4">
                     <h3 class="mb-2">Tags: </h3>

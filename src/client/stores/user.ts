@@ -4,7 +4,7 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
-import { goto, invalidate, invalidateAll } from "$app/navigation";
+import { invalidateAll } from "$app/navigation";
 import { page } from "$app/stores";
 import { derived } from "svelte/store";
 

@@ -25,7 +25,7 @@ export async function load({ url: { searchParams } }) {
             ?.map(stringifyObjectId)
             .map(injectProjects),
     );
-    const totalImageCount = await ImageSchema.find().count();
+    const totalImageCount = await ImageSchema.countDocuments();
     return {
         images: inflatedImages,
         page: page || 0,
