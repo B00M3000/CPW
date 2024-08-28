@@ -27,7 +27,7 @@
     }
 </script>
 
-<button class="container" on:click={onTrigger}>
+<button class="container shadow-lg" on:click={onTrigger}>
     <img src="/assets/google-icon.png" alt = "Google Icon"/>
     <span class="text">Sign in with Google</span>
 </button>
@@ -36,7 +36,6 @@
     .container {
         display: inline-flex;
         padding: 10px;
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
         border-radius: 3px;
         cursor: pointer;
         background: white;

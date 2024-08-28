@@ -7,6 +7,7 @@
     import RefinedSearchNormal from './RefinedSearchNormal.svelte';
     import SearchBar from './SearchBar.svelte';
     import { currentYear } from "@/lib/utils";
+    import { browser } from '$app/environment';
 
     let { data } = $props()
 
@@ -36,7 +37,6 @@
 
     async function search(event?: Event){
         event?.preventDefault();
-        console.log("Hi")
         const { tags, yearLower, yearUpper, mentorSearch, studentSearch, query, itemsPerPage, page } = searchParameters;
 
         const searchParams = new URLSearchParams();
@@ -62,26 +62,32 @@
     let spinnerActive = $state(false);
 
     let innerWindowWidth = $state(0);
+    if(browser) innerWindowWidth = window.innerWidth;
 
     const refinedSearchBreakpoint = 870;
-    let refinedSearchOpen = $state(searchParameters.mentorSearch || searchParameters.studentSearch || searchParameters.tags.length > 0 || searchParameters.yearUpper != 2019 || searchParameters.yearLower != currentYear());
-    let refinedSearchNormalOpen = $derived(refinedSearchOpen && innerWindowWidth > refinedSearchBreakpoint);
-    let refinedSearchMobileOpen = $derived(refinedSearchOpen && innerWindowWidth <= refinedSearchBreakpoint)
+    let refinedSearchNormalOpen = $state(searchParameters.mentorSearch.length > 0 || searchParameters.studentSearch.length > 0 || searchParameters.tags.length > 0 || searchParameters.yearUpper != 2019 || searchParameters.yearLower != currentYear());
+    let refinedSearchMobileOpen = $state(false);
+
+    let refinedSearchNormalOpenF = $derived(refinedSearchNormalOpen && innerWindowWidth > refinedSearchBreakpoint);
+    let refinedSearchMobileOpenF = $derived(refinedSearchMobileOpen && innerWindowWidth <= refinedSearchBreakpoint)
+
     function closeRefinedSearch() {
-        refinedSearchOpen = false;
-    }
+        refinedSearchNormalOpen = false;
+        refinedSearchMobileOpen = false;
+    };
     function openRefinedSearch() {
-        refinedSearchOpen = true;
-    }
+        refinedSearchNormalOpen = true;
+        refinedSearchMobileOpen = true;
+    };
 
     export const snapshot = {
         capture: () => ({
             itemsPerPage: searchParameters.itemsPerPage,
-            refinedSearchOpen
+            refinedSearchNormalOpen
         }),
 		restore: (snapshot) => {
             searchParameters.itemsPerPage = snapshot.itemsPerPage
-            refinedSearchOpen = snapshot.refinedSearchOpen
+            refinedSearchNormalOpen = snapshot.refinedSearchNormalOpen
         }
     }
 
@@ -93,7 +99,7 @@
 {/if}
 
 <main class="h-full w-full grid grid-cols-1 grid-rows-[auto_minmax(0,_1fr)_auto] bg-gray-300 overflow-hidden">
-    {#if refinedSearchMobileOpen}
+    {#if refinedSearchMobileOpenF}
     <div class="relative">
         <div class="absolute top-0 w-screen z-10">
             <RefinedSearchMobile
@@ -107,7 +113,7 @@
     <SearchBar bind:query={searchParameters.query} {search} {openRefinedSearch} />
     {/if}
     <div class="flex h-full">
-        {#if refinedSearchNormalOpen}
+        {#if refinedSearchNormalOpenF}
         <RefinedSearchNormal
             {search}
             close={closeRefinedSearch}

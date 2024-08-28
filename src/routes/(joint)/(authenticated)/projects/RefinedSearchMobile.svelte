@@ -45,7 +45,6 @@
                 class="w-full py-1 px-3 box-border rounded-lg outline-none"
                 bind:value={searchParameters.query}
                 type="search"
-                autofocus
             />
 
             <div class="flex flex-col gap-1 sm:gap-2">

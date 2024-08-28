@@ -37,7 +37,7 @@
             {#if element.predicate == undefined || element.predicate()}
                 <a data-sveltekit-preload-data class="text-white decoration-0 nav-element flex items-center p-2 rounded-lg mx-2 gap-2 hover:bg-red-900 {section == element.section ? " bg-red-900" : ""}" href={element.link}>
                     <Icon src={element.icon} size="1rem" color='white'/>
-                    <span>{element.name}</span>
+                    <span class="text-base">{element.name}</span>
                 </a>
             {/if}
         {/each}
