@@ -10,14 +10,14 @@ import escapeRegExp from "lodash/escapeRegExp";
 
 export function currentYear() {
     const date = new Date();
-    return date.getFullYear() + (date.getMonth() < 8 ? 0 : 1);
+    return date.getFullYear() + (date.getMonth() < 7 ? 0 : 1); // the month is zero-indexed
 }
 
 export function parseIntOrElse(str: string | null, other: number): number {
     if (!str) return other;
     try {
         return parseInt(str);
-    } catch (_) {
+    } catch {
         return other;
     }
 }
