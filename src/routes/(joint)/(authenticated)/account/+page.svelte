@@ -70,7 +70,7 @@
             <div class="text-center max-w-[36rem]">
                 <h2 class="text-2xl my-5">Reminder! PLEASE READ!!!</h2>
                 <p class="text-wrap mb-5">Navigate to public pages using the navigation bar. To manage your own projects and images, utilize the hover menu on your google icon in the top right. For Advisors, the same menu contains the button to view your advisees.</p>
-                <p class="text-wrap">Additionally, if any pages or things look broken or wonky (or too small), feel free to zoom in and out with Ctrl + and -.</p>
+                <p class="text-wrap">Additionally, if any pages or things look broken or wonky (or too small), feel free to zoom in and out with Ctrl + and -, or use desktop mode if on mobile.</p>
             </div>
 
             <div class="mb-24"></div>
