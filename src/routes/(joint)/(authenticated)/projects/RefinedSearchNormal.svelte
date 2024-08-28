@@ -1,9 +1,7 @@
 <script lang=ts>
-    import { enhance } from "$app/forms";
-    import { goto } from "$app/navigation";
     import YearFilter from "@/client/components/YearFilter.svelte";
     import { tags } from "@/lib/tags";
-    import { Close } from "carbon-icons-svelte";
+    import { X } from "lucide-svelte";
     import { onMount } from "svelte";
     import MultiSelect from 'svelte-multiselect'
 
@@ -37,9 +35,8 @@
 <div class="bg-[rgb(183,188,197)] flex items-center justify-center shadow-xl m-7 my-4 ml-0 rounded-r-xl" bind:clientHeight={clientHeight}>
     <form class="flex flex-col w-80 mx-12 items-center justify-center {reduceSpacing ? "gap-3" : "gap-5"}" onsubmit={(event) => { event.preventDefault(); search() }}>
         <div class="flex justify-end self-start w-full">
-            <button onclick={close} type="button" class="bg-red-600 hover:bg-red-700 flex gap-2 items-center text-white p-2 py-1 rounded-md">
-                <Close />
-                <span>Close</span>
+            <button onclick={close} type="button" class="bg-red-600 hover:bg-red-700 flex gap-2 items-center text-white p-1 rounded-md">
+                <X />
             </button>
         </div>
 
