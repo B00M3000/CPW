@@ -1,0 +1,87 @@
+.markdown :global(h1){
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.markdown :global(h2) {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.markdown :global(h3) {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.markdown :global(h4) {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.markdown :global(p) {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+.markdown :global(ul){
+    list-style: disc;
+    padding-left: 20px;
+    margin-bottom: 12px;
+}
+
+.markdown :global(ol) {
+    list-style: disc;
+    padding-left: 20px;
+    margin-bottom: 12px;
+}
+
+.markdown :global(li) {
+    margin-bottom: 5px;
+}
+
+.markdown :global(em) {
+    font-style: italic;
+}
+
+.markdown :global(strong) {
+font-weight: bold;
+}
+
+.markdown :global(blockquote) {
+    font-style: italic;
+    border-left: 5px solid #eee;
+    padding: 8px;
+    margin-bottom: 16px;
+}
+
+.markdown :global(a) {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+.markdown :global(a:hover) {
+    color: #0056b3;
+    text-decoration: underline;
+}
+.markdown :global(hr) {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+.markdown :global(img) {
+    max-width: 100%;
+    margin-bottom: 12px;
+}
+
+.markdown :global(table) {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 16px;
+}

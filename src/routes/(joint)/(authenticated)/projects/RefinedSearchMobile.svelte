@@ -1,7 +1,7 @@
 <script lang=ts>
     import YearFilter from "@/client/components/YearFilter.svelte";
     import { tags } from "@/lib/tags";
-    import { Close } from "carbon-icons-svelte";
+    import { X } from "lucide-svelte";
     import { onMount } from "svelte";
     import MultiSelect from 'svelte-multiselect';
 
@@ -31,9 +31,8 @@
 <div class="bg-gray-300 flex items-center justify-center">
     <form class="flex flex-col w-96 items-center justify-center gap-4 sm:gap-5 m-8 my-4 pb-4" onsubmit={async (event) => { event.preventDefault(); await search(); close()}}>
         <div class="flex justify-end w-full mr-[-2rem]">
-            <button onclick={close} type="button" class="bg-red-600 hover:bg-red-700 flex gap-2 items-center text-white p-2 py-1 rounded-md">
-                <Close />
-                <span>Close</span>
+            <button onclick={close} type="button" class="bg-red-600 hover:bg-red-700 flex gap-2 items-center text-white p-1 rounded-md">
+                <X />
             </button>
         </div>
 
