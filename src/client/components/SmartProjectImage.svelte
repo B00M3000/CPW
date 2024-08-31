@@ -12,11 +12,11 @@
         };
     }
 
-    let { 
-        image, 
+    let {
+        image,
         showProjectPageButton = true,
-    }: { 
-        image: Image; 
+    }: {
+        image: Image;
         showProjectPageButton: boolean;
     } = $props();
 
@@ -25,11 +25,7 @@
             overlay = true
         } else {
             if(event?.target?.nodeName == "BUTTON") overlay = false
-        }   
-    }
-
-    async function gotoProject() {
-        await goto(`/projects/${image.projectId}`);
+        }
     }
 
     let overlay = $state(false);
@@ -41,7 +37,7 @@
 </div>
 {/snippet}
 
-<div class="relative inline-flex items-center justify-center m-1 p-2 rounded-lg bg-gray-300 w-full h-full overlay-trigger">
+<div class="relative inline-flex items-center justify-center m-1 p-2 rounded-lg bg-gray-300 w-full h-full overlay-trigger z-10">
     <div class="flex items-center justify-center w-full h-full blurred z-10 bg-inherit">
         <LazyImage2 src="/images/{image._id}" alt={image.description || ""} class="w-full h-full object-contain" />
     </div>
@@ -50,12 +46,12 @@
         <span><strong>Project:</strong> {image.project?.title}</span>
         <button class="p-1 m-1 rounded-md bg-slate-300 hover:bg-slate-400" onclick={() => toggleOverlay(true)}>View Enlarged</button>
         {#if showProjectPageButton}
-        <button class="p-1 m-1 rounded-md bg-slate-300 hover:bg-slate-400" onclick={gotoProject}>Visit Project</button>
+        <a class="p-1 m-1 rounded-md bg-slate-300 hover:bg-slate-400" href="/projects/{image.projectId}" data-sveltekit-preload-code>Visit Project</a>
         {/if}
     </div>
 </div>
 {#if overlay}
-<button class="flex items-center justify-center fixed left-0 top-0 z-30 w-screen h-screen bg-[rgba(1, 1, 1, 0.2)]" onclick={(event: MouseEvent) => toggleOverlay(false, event)}>
+<button class="flex items-center justify-center fixed left-0 top-0 z-50 w-screen h-screen bg-[#00000088]" onclick={(event: MouseEvent) => toggleOverlay(false, event)}>
     <img class="object-contain max-w-[75vw] max-h-[75vw]" src="/images/{image._id}" alt={image.description}/>
 </button>
 {/if}
