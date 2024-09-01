@@ -6,26 +6,21 @@
 
 <script>
     import { user } from "@/client/stores/user";
-    import Credits from "@/client/components/Credits.svelte";
+    import Info from "@/routes/(joint)/Info.svelte";
     import { AccessLevel } from "@/lib/enums";
     import { navigating, page } from "$app/stores";
     import UserIconMenu2 from "@/routes/(joint)/UserIconMenu2.svelte";
     import { BarLoader } from "svelte-loading-spinners";
-    import Icon from "../../client/components/Icon.svelte";
-    import AiFile from "../../client/icons/AiFile";
-    import FileText from "../../client/icons/FileText";
-    import Gear from "../../client/icons/Gear";
-    import Home from "../../client/icons/Home";
-    import Images from "../../client/icons/Images";
+    import { CircleHelp, Settings, FolderOpen, House, Images } from "lucide-svelte";
 
     $: section = $page.url.pathname.split("/")[1];
 
     const navBarElements = [
-        { icon: Home, name: "Home", link: "/", section: "" },
-        { icon: FileText, name: "Projects", link: "/projects", section: "projects" },
-        { icon: Images, name: "Photos", link: "/images", section: "images" },
-        { icon: Gear, name: "Admin", link: "/admin", section: "admin", predicate: () => $user?.accessLevel == AccessLevel.Admin },
-        { icon: AiFile, name: "Docs", link: "/docs", section: "docs" }
+        { iconComponent: House, name: "Home", link: "/", section: "" },
+        { iconComponent: FolderOpen, name: "Projects", link: "/projects", section: "projects" },
+        { iconComponent: Images, name: "Photos", link: "/images", section: "images" },
+        { iconComponent: CircleHelp, name: "Help", link: "/help", section: "help" },
+        { iconComponent: Settings, name: "Admin", link: "/admin", section: "admin", predicate: () => $user?.accessLevel == AccessLevel.Admin },
     ]
 </script>
 
@@ -36,7 +31,7 @@
         {#each navBarElements as element}
             {#if element.predicate == undefined || element.predicate()}
                 <a data-sveltekit-preload-data class="text-white decoration-0 nav-element flex items-center p-2 rounded-lg mx-2 gap-2 hover:bg-red-900 {section == element.section ? " bg-red-900" : ""}" href={element.link}>
-                    <Icon src={element.icon} size="1rem" color='white'/>
+                    <element.iconComponent size="1.2rem" color='white'/>
                     <span class="text-base">{element.name}</span>
                 </a>
             {/if}
@@ -44,7 +39,7 @@
     </div>
     <div class="flex items-center gap-4 mr-4">
         <UserIconMenu2 />
-        <Credits />
+        <Info />
     </div>
 </nav>
 {#if $navigating}
