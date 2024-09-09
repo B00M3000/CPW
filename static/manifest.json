@@ -1,15 +1,17 @@
 {
     "name": "Commonwealth Project Week",
     "short_name": "CPW",
+    "description": "This is the database housing records of Project Week projects. Find inspiration from and look at projects completed in previous years.",
     "start_url": "/",
     "scope": "/",
     "icons": [
         {
             "src": "mobile-app-icon.png",
-            "sizes": "72x72 96x96 128x128 256x256"
+            "sizes": "72x72 96x96 128x128 256x256 512x512"
         }
     ],
     "theme_color": "#a4123f",
     "background_color": "#DDD",
-    "display": "standalone"
+    "display": "standalone",
+    "orientation": "portrait"
 }
