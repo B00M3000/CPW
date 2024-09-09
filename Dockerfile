@@ -21,13 +21,12 @@ RUN pnpm install -r --offline --prod
 FROM node:20-alpine
 
 COPY package.json .
-
 COPY --from=prod-deps /app/node_modules /node_modules
 COPY --from=build /app/build .
 
-ENV PORT=80
+ENV PORT=3000
 ENV BODY_SIZE_LIMIT=52428800
 
-EXPOSE 80/tcp
+EXPOSE 3000/tcp
 
 CMD node -r dotenv/config .
