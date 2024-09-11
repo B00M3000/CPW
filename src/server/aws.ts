@@ -4,6 +4,7 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
+import path from 'path';
 import {
     PutObjectCommand,
     GetObjectCommand,
@@ -20,6 +21,7 @@ import {
     AWS_REGION,
     AWS_ACCESS_KEY_ID,
     AWS_SECRET_ACCESS_KEY,
+    AWS_S3_IMAGES_SUBFOLDER
 } from "$env/static/private";
 
 let client = new S3Client({
@@ -38,7 +40,7 @@ export async function uploadObject(
     return client.send(
         new PutObjectCommand({
             Bucket: bucket,
-            Key: key,
+            Key: path.join(AWS_S3_IMAGES_SUBFOLDER, key),
             Body: fileBuffer,
         }),
     );
@@ -51,7 +53,7 @@ export async function getObject(
     return client.send(
         new GetObjectCommand({
             Bucket: bucket,
-            Key: key,
+            Key: path.join(AWS_S3_IMAGES_SUBFOLDER, key),
         }),
     );
 }
@@ -63,7 +65,7 @@ export async function deleteObject(
     return client.send(
         new DeleteObjectCommand({
             Bucket: bucket,
-            Key: key,
+            Key: path.join(AWS_S3_IMAGES_SUBFOLDER, key),
         }),
     );
 }
