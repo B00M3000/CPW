@@ -45,7 +45,7 @@
     "type": "module",
     "dependencies": {
         "@aws-sdk/client-s3": "^3.600.0",
-        "axios": "^1.7.2",
+        "axios": "^1.7.7",
         "cookie": "^0.5.0",
         "dotenv": "^16.3.1",
         "fuse.js": "^7.0.0",
