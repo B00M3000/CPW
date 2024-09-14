@@ -40,7 +40,7 @@ export async function uploadObject(
     return client.send(
         new PutObjectCommand({
             Bucket: bucket,
-            Key: AWS_S3_IMAGES_SUBFOLDER ? path.join(AWS_S3_IMAGES_SUBFOLDER, key) : key,
+            Key: AWS_S3_IMAGES_SUBFOLDER != "/" ? path.join(AWS_S3_IMAGES_SUBFOLDER, key) : key,
             Body: fileBuffer,
         }),
     );
@@ -53,7 +53,7 @@ export async function getObject(
     return client.send(
         new GetObjectCommand({
             Bucket: bucket,
-            Key: AWS_S3_IMAGES_SUBFOLDER ? path.join(AWS_S3_IMAGES_SUBFOLDER, key) : key,
+            Key: AWS_S3_IMAGES_SUBFOLDER != "/" ? path.join(AWS_S3_IMAGES_SUBFOLDER, key) : key,
         }),
     );
 }
@@ -65,7 +65,7 @@ export async function deleteObject(
     return client.send(
         new DeleteObjectCommand({
             Bucket: bucket,
-            Key: AWS_S3_IMAGES_SUBFOLDER ? path.join(AWS_S3_IMAGES_SUBFOLDER, key) : key,
+            Key: AWS_S3_IMAGES_SUBFOLDER != "/" ? path.join(AWS_S3_IMAGES_SUBFOLDER, key) : key,
         }),
     );
 }
