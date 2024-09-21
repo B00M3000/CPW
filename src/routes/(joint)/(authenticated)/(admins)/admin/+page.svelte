@@ -5,22 +5,6 @@
 -->
 
 <script lang="ts">
-    import { goto } from "$app/navigation";
-    import { user } from "@/client/stores/user";
-    import { onMount } from "svelte";
-
-    async function gotoMentorSearch() {
-      await goto('/admin/mentor-search')
-    }
-
-    async function gotoProjectCatalog() {
-      await goto('/admin/project-catalog')
-    }
-
-    async function gotoYearStatus() {
-      await goto('/admin/year-status')
-    }
-
     export let data;
 
     $: ({ projectCountPublished, projectCountNotPublished } = data)
@@ -86,10 +70,10 @@
         </div>
 
         <div class="dashboard-panel-button">
-          <!-- <button on:click={gotoDataUpload} class="dashboard-button">Data Upload</button> -->
-          <button on:click={gotoMentorSearch} class="dashboard-button">Mentor Searcher</button>
-          <button on:click={gotoProjectCatalog} class="dashboard-button">Project Catalog</button>
-          <button on:click={gotoYearStatus} class="dashboard-button">Year Status</button>
+          <a href=/admin/identity-center class="p-4 bg-blue-400 hover:bg-blue-500">Identity Center</a>
+          <a href=/admin/mentor-searcher class="p-4 bg-blue-400 hover:bg-blue-500">Mentor Searcher</a>
+          <a href=/admin/project-catalog class="p-4 bg-blue-400 hover:bg-blue-500">Project Catalog</a>
+          <a href=/admin/year-status class="p-4 bg-blue-400 hover:bg-blue-500">Year Status</a>
         </div>
     </div>
 </main>
@@ -123,19 +107,6 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   }
 
-  .dashboard-panel-button {
-    background-color: #858585;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #1E1E1E;
-    border-radius: 5px;
-    padding: 20px;
-    margin: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  }
-
   .title {
     font-size: 2rem;
     color: #ffffff;
@@ -159,22 +130,6 @@
     color: var(--color-red-400);
   }
 
-  .dashboard-button {
-    background-color: #0073E6;
-    color: #fff;
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    border: none;
-    width: 20vw;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 10px;
-    transition: background-color 0.3s;
-  }
-
-  .dashboard-button:hover {
-    background-color: #005CBF;
-  }
   .main-container{
     background-color: var(--color-blue-grey-100);
     border: 1px solid #1E1E1E;
