@@ -19,7 +19,7 @@
 </script>
 
 <main class="flex flex-col justify-center items-center">
-    <div class="my-6 sm:my-12 mx-4 sm:mx-8 bg-gray-300 p-8 rounded-xl flex max-md:flex-col gap-12">
+    <div class="my-6 sm:my-12 mx-4 sm:mx-8 bg-gray-300 p-8 rounded-xl flex max-lg:flex-col gap-12 mb-12">
         <div class="flex flex-col items-center">
             <div class="flex items-center gap-5 sm:gap-10 sm:m-5">
                 <img class="w-16 h-16 sm:w-32 sm:h-32 rounded-full" src={$user.picture} alt="profile">
@@ -33,28 +33,28 @@
 
             <h1 class="text-3xl mt-5">Welcome back {$user.firstName}!</h1>
 
-            <div class="flex gap-4 items-center m-8 mx-4">
+            <div class="grid max-md:grid-rows-3 md:grid-cols-3 justify-center gap-4 items-center m-8 text-blue-950">
                 {#if $user.accountType == AccountType.Student}
-                <a class="flex items-center gap-3 p-3 bg-blue-400 hover:bg-blue-500 rounded-lg"
+                <a class="flex items-center gap-3 p-3 bg-blue-400 hover:bg-blue-500 rounded-lg w-full h-full"
                     href="/manage-projects" data-sveltekit-preload-data>
                     <Icon src={FileText} size="1.25rem"/>
                     <span>My Projects</span>
                 </a>
-                <a class="flex items-center gap-3 p-3 bg-blue-400 hover:bg-blue-500 rounded-lg"
+                <a class="flex items-center gap-3 p-3 bg-blue-400 hover:bg-blue-500 rounded-lg w-full h-full"
                     href="/manage-images" data-sveltekit-preload-data>
                     <Icon src={Images} size="1.25rem"/>
                     <span>My Images</span>
                 </a>
                 {/if}
                 {#if $user.accountType == AccountType.Advisor}
-                <a class="flex items-center gap-3 p-3 bg-blue-400 hover:bg-blue-500 rounded-lg"
+                <a class="flex items-center gap-3 p-3 bg-blue-400 hover:bg-blue-500 rounded-lg w-full h-full"
                     href="/manage-advisees" data-sveltekit-preload-data>
                     <Icon src={People} size="1.25rem"/>
                     <span>My Advisees</span>
                 </a>
                 {/if}
                 {#if $user.accessLevel == AccessLevel.Admin}
-                <a class="flex items-center gap-3 p-3 bg-blue-400 hover:bg-blue-500 rounded-lg"
+                <a class="flex items-center gap-3 p-3 bg-blue-400 hover:bg-blue-500 rounded-lg w-full h-full"
                     href="/admin" data-sveltekit-preload-data>
                     <Dashboard size={24}/>
                     <span>Admin Dashboard</span>
@@ -72,8 +72,6 @@
                 <p class="text-wrap mb-5">Navigate to public pages using the navigation bar. To manage your own projects and images, utilize the hover menu on your google icon in the top right. For Advisors, the same menu contains the button to view your advisees.</p>
                 <p class="text-wrap">Additionally, if any pages or things look broken or wonky (or too small), feel free to zoom in and out with Ctrl + and -, or use desktop mode if on mobile.</p>
             </div>
-
-            <div class="mb-24"></div>
         </div>
         <div class="flex flex-col items-center justify-center gap-5">
             <h2 class="text-xl text-left">Project Week {currentYear()} Checklist</h2>
