@@ -40,7 +40,7 @@ export async function POST({ locals: { user }, request }) {
     }
 
     // making sure full report isn't bloat
-    if (fullReport.length > 100000) {
+    if (fullReport && fullReport.length > 100000) {
         return error(400, "Full report is too long.");
     }
 
