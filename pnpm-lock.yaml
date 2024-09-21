@@ -61,8 +61,8 @@ importers:
         specifier: ^4.17.7
         version: 4.17.7
       '@types/papaparse':
-        specifier: ^5.3.9
-        version: 5.3.9
+        specifier: ^5.3.14
+        version: 5.3.14
       '@types/uuid':
         specifier: ^9.0.5
         version: 9.0.5
@@ -1010,8 +1010,8 @@ packages:
   '@types/node@20.8.6':
     resolution: {integrity: sha512-eWO4K2Ji70QzKUqRy6oyJWUeB7+g2cRagT3T/nxYibYcT4y2BDL8lqolRXjTHmkZCdJfIPaY73KbJAZmcryxTQ==}
 
-  '@types/papaparse@5.3.9':
-    resolution: {integrity: sha512-sZcrKD63qA4/6GyBcVvX6AIp0AkpfyYk00CUQHMBvb4+OVXTZWyXUvidUZaai1wyKUVyJoxO7mgREam/pMRrDw==}
+  '@types/papaparse@5.3.14':
+    resolution: {integrity: sha512-LxJ4iEFcpqc6METwp9f6BV6VVc43m6MfH0VqFosHvrUgfXiFe6ww7R3itkOQ+TCK6Y+Iv/+RnnvtRZnkc5Kc9g==}
 
   '@types/pug@2.0.7':
     resolution: {integrity: sha512-I469DU0UXNC1aHepwirWhu9YKg5fkxohZD95Ey/5A7lovC+Siu+MCLffva87lnfThaOrw9Vb1DUN5t55oULAAw==}
@@ -3599,7 +3599,7 @@ snapshots:
     dependencies:
       undici-types: 5.25.3
 
-  '@types/papaparse@5.3.9':
+  '@types/papaparse@5.3.14':
     dependencies:
       '@types/node': 20.8.6
 
