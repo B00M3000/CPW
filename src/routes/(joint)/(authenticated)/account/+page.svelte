@@ -16,14 +16,16 @@
     import { currentYear } from "@/lib/utils";
 
     let { data } = $props();
+
+    let aNavGridCols = $derived(($user.accountType == AccountType.Student ? 2 : 0) + ($user.accountType == AccountType.Advisor ? 1 : 0) + ($user.accessLevel == AccessLevel.Admin ? 1 : 0))
 </script>
 
 <main class="flex flex-col justify-center items-center">
-    <div class="my-6 sm:my-12 mx-4 sm:mx-8 bg-gray-300 p-8 rounded-xl mb-12 flex flex-col">
+    <div class="my-6 mx-4 sm:mx-8 bg-gray-300 p-8 rounded-xl flex flex-col">
         <h1 class="text-4xl lg:text-5xl mb-8 text-center">My Account</h1>
         <div class="flex max-lg:flex-col gap-12">
             <div class="flex flex-col items-center">
-                <div class="flex items-center gap-5 sm:gap-10 sm:m-5 mb-8">
+                <div class="flex items-center gap-5 sm:gap-10">
                     <img class="w-16 h-16 sm:w-32 sm:h-32 rounded-full" src={$user.picture} alt="profile">
 
                     <div class="flex flex-col text-base sm:text-xl ">
@@ -33,9 +35,9 @@
                     </div>
                 </div>
 
-                <h1 class="text-3xl mt-5">Welcome back {$user.firstName}!</h1>
+                <h1 class="text-3xl mb-4">Welcome back {$user.firstName}!</h1>
 
-                <div class="grid md:grid-cols-{($user.accountType == AccountType.Student ? 2 : 0) + ($user.accountType == AccountType.Advisor ? 1 : 0) + ($user.accessLevel == AccessLevel.Admin ? 1 : 0)} justify-center gap-4 items-center m-8 text-blue-950">
+                <div class="flex max-md:flex-col justify-center gap-4 items-center m-4 text-blue-950">
                     {#if $user.accountType == AccountType.Student}
                     <a class="flex items-center gap-3 p-3 bg-blue-400 hover:bg-blue-500 rounded-lg w-full h-full"
                         href="/manage-projects" data-sveltekit-preload-data>
@@ -64,10 +66,11 @@
                     {/if}
                 </div>
 
-                <div class="flex flex-col gap-2 items-center mb-4">
+                <!-- <div class="flex flex-col gap-2 items-center mb-4">
                     <h2 class="text-2xl">Important Announcements: </h2>
                     <h2 class="text-xl text-gray-800">[none]</h2>
-                </div>
+                </div> -->
+                <!-- Use modal instead! -->
 
                 <div class="text-center max-w-[36rem]">
                     <h2 class="text-2xl my-5">Reminder! PLEASE READ!!!</h2>
