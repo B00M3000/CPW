@@ -8,6 +8,7 @@ import { error, redirect } from "@sveltejs/kit";
 import { UserSchema } from "@/server/mongo/schemas/user";
 import { get_tokens, get_user } from "@/server/google";
 import { currentYear } from "@/lib/utils";
+import { AccountType } from "@/lib/enums.js";
 
 const absolute = new RegExp("^(?:[a-z+]+:)?//", "i");
 
@@ -36,7 +37,7 @@ export async function GET({ url, cookies, setHeaders }) {
                 { googleId: google_user.id },
                 {
                     $or: [
-                        { schoolId: /T\d+/ },
+                        { accountType: AccountType.Student },
                         {
                             graduationYear: {
                                 $exists: true,

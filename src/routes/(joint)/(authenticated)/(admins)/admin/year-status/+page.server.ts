@@ -7,14 +7,16 @@
 import { ProjectSchema } from "@/server/mongo/schemas/project";
 import { currentYear, stringifyObjectId } from "@/lib/utils";
 import { UserSchema } from "@/server/mongo/schemas/user";
+import { AccountType } from "@/lib/enums";
 
 export const load = async () => {
     const allStudents = (
         await UserSchema.find({
-            schoolId: { $regex: /S/ },
+            accountType: AccountType.Student,
             graduationYear: { $gte: currentYear() },
         }).lean()
     )?.map(stringifyObjectId);
+
     const projects = await ProjectSchema.find(
         { year: currentYear() },
         "studentId underReview title",
@@ -38,12 +40,12 @@ async function injectStudentAndAdvisor(project: any) {
     project.student = stringifyObjectId(
         await UserSchema.findById(
             project.studentId,
-            "name email graduationYear schoolId picture",
+            "name email graduationYear picture lastVisit",
         ).lean(),
     );
     project.advisor = stringifyObjectId(
         await UserSchema.findOne(
-            { adviseeIds: project.student.schoolId },
+            { adviseeIds: project.student._id },
             "name email picture",
         ).lean(),
     );

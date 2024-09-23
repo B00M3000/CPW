@@ -34,7 +34,6 @@ export interface User {
     firstName: string;
     lastName: string;
     email: string;
-    schoolId: string;
     accountType: number;
     accessLevel: number;
     graduationYear: number;

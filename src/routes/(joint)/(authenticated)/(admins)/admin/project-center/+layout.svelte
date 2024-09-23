@@ -7,7 +7,7 @@
         <h1 class="text-4xl mb-8 flex items-center justify-center gap-4"><FolderOpen size={48} /> Project Center</h1>
         <div class="project-center-content-grid h-full">
             <div class="grid-create h-full w-full p-4 rounded-lg flex items-center gap-4">
-                <a href=/admin/project-center/create class="flex gap-2 items-center bg-gray-500 hover:bg-gray-600 text-white p-2 px-3 rounded-md">
+                <a href=/admin/year-status class="flex gap-2 items-center bg-gray-500 hover:bg-gray-600 text-white p-2 px-3 rounded-md">
                     <Info />
                     <span>Year Status</span>
                 </a>
@@ -21,7 +21,7 @@
                 <span class="mb-2">To edit a project, open the editing menu through the year status page.</span>
             </div>
             <div class="grid-search h-full w-full p-8 px-12 rounded-lg flex flex-col items-start">
-                <h2 class="text-xl mb-4 text-center">More:</h2>
+                <h2 class="text-xl mb-4 text-center">To be implemented</h2>
             </div>
         </div>
         <a class="absolute top-0 left-0 bg-blue-500 hover:bg-blue-600 p-2 px-3 m-8 rounded-lg flex gap-2 items-center text-white" href=/admin>

@@ -17,7 +17,6 @@ interface UserDocumentData {
     accountType: number;
     accessLevel: number;
     adviseeIds: string[];
-    schoolId: string;
     graduationYear: number;
     lastVisit: Date;
 }
@@ -43,7 +42,6 @@ const schema = new mongoose.Schema(
                 partialFilterExpression: { sessionId: { $type: "string" } },
             },
         },
-        schoolId: { type: String, required: true, unique: true },
         accountType: { type: Number, required: true, default: 0 },
         accessLevel: { type: Number, required: true, default: 0 },
         adviseeIds: { type: [String], required: true, default: [] },

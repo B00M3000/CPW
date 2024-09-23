@@ -73,7 +73,7 @@
     })
 
     onMount(() => {
-        selected = data.project.tags.map((tagId: string) => tagOptions.find(option => option.id === tagId));
+        selected = data.project.tags.map((tagId: string) => TAG_OPTIONS.find(option => option.id === tagId));
     })
 
     $effect(() => {
@@ -131,7 +131,7 @@
                     <span class="text-base text-gray-600 mb-1">{data.mentor.phoneNumber}</span>
                     <span class="text-base">{data.mentor.organization}</span>
                 </div>
-                <span class="text-gray-600 max-w-[20rem] text-sm">Mentor information currently cannot be edited (in the future it will be). Please delete this project and create a new one if changes need to be made, integrity of contact information is important.</span>
+                <span class="text-gray-600 max-w-[20rem] text-sm">Mentor information currently cannot be edited (in the future it will be). Please delete this project and create a new one if changes need to be made, you can copy things over before deleteing the old project, integrity of contact information is important.</span>
             </div>
         </div>
         <div class="my-4 flex flex-col gap-4">

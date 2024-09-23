@@ -53,7 +53,7 @@ export async function load({ locals }) {
 
         const advisees = await UserSchema.find(
             {
-                schoolId: locals.user.adviseeIds,
+                _id: locals.user.adviseeIds,
             },
             "lastVisit",
         );

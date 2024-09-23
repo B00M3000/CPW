@@ -7,8 +7,8 @@
 import Papa from "papaparse";
 import escapeRegExp from "lodash/escapeRegExp";
 
-export function currentYear() {
-    const date = new Date();
+export function currentYear(d?: Date) {
+    const date = d ? new Date(d) : new Date();
     return date.getFullYear() + (date.getMonth() < 7 ? 0 : 1); // the month is zero-indexed
 }
 

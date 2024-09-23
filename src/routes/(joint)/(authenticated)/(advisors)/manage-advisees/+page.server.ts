@@ -13,7 +13,7 @@ export async function load({ locals }) {
     const students = await Promise.all(
         locals.user!.adviseeIds.map(async (adviseeId) => {
             const student: User | null = await UserSchema.findOne({
-                schoolId: adviseeId,
+                _id: adviseeId,
             });
             const currentPending = !!(await ProjectSchema.exists({
                 studentId: student?._id,
@@ -26,7 +26,7 @@ export async function load({ locals }) {
             }));
             return {
                 ...stringifyObjectId(
-                    await UserSchema.findOne({ schoolId: adviseeId }).lean(),
+                    await UserSchema.findOne({ _id: adviseeId }).lean(),
                 ),
                 currentPending,
                 currentApproved,

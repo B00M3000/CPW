@@ -20,15 +20,15 @@
 
     let changed = $derived(name != mentor.name || email != mentor.email || organization != mentor.organization || phoneNumber != (mentor.phoneNumber || ""))
 
-    let state = $state(Status.Unchanged);
+    let status = $state(Status.Unchanged);
 
     $effect(() => {
         name;
         email;
         organization;
         phoneNumber;
-        if(changed) state = Status.Unsaved;
-        if(!changed) state = Status.Unchanged;
+        if(changed) status = Status.Unsaved;
+        if(!changed) status = Status.Unchanged;
     })
 
     const EMAIL_REGEX = /.+@.+\..+/;
@@ -82,7 +82,7 @@
 
         if(errorMessages.length > 0) return;
 
-        state = Status.Saving
+        status = Status.Saving
 
         const res = await fetch('/admin/api/mentor/edit', {
             method: "POST",
@@ -96,7 +96,7 @@
         });
 
         if(res.ok) onclose();
-        else state = Status.Error;
+        else status = Status.Error;
     }
 </script>
 
@@ -137,19 +137,19 @@
                 {/each}
             </div>
             <div class="flex gap-2 items-center">
-                <button type="submit" class="relative {state == Status.Saved || state == Status.Unchanged ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}  rounded-md p-2 text-white inline-flex items-center px-3 gap-2" disabled={state == Status.Saved || state == Status.Unchanged}>
+                <button type="submit" class="relative {status == Status.Saved || status == Status.Unchanged ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}  rounded-md p-2 text-white inline-flex items-center px-3 gap-2" disabled={status == Status.Saved || status == Status.Unchanged}>
                     <Save />
                     <span>Save</span>
-                    {#if state == Status.Unsaved}
+                    {#if status == Status.Unsaved}
                     <div class="absolute bg-red-500 rounded-full -top-2 -right-3 w-6 h-6">
                         <span class='text-sm font-bold'>!</span>
                     </div>
                     {/if}
                 </button>
-                {#if state == Status.Saving}
+                {#if status == Status.Saving}
                 <Circle3 size={32}/>
                 {/if}
-                {#if state == Status.Error}
+                {#if status == Status.Error}
                 <CircleX color=red size={24}/>
                 {/if}
             </div>
