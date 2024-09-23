@@ -36,6 +36,10 @@ export const handle: Handle = async ({ event, resolve }) => {
     return await resolve(event);
 };
 
+// export async function handleError({  }) {
+
+// }
+
 export async function handleFetch({ request, fetch }) {
     return await fetch(request, {
         credentials: "same-origin",

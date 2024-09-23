@@ -7,15 +7,11 @@
 <script lang="ts">
     import Nav from "./Nav.svelte";
     import MobileNav from "./MobileNav.svelte";
-
-    import { browser } from '$app/environment';
-    import { navigating } from '$app/stores';
-    import BarLoader from 'svelte-loading-spinners/BarLoader.svelte';
 </script>
 
 <div class="h-screen w-screen grid grid-rows-[auto_minmax(0,_1fr)_auto]">
     <Nav />
-    <div class="overflow-y-auto">
+    <div class="overflow-y-auto h-full">
         <slot />
     </div>
     <MobileNav />

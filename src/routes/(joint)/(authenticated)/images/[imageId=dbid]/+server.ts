@@ -8,7 +8,7 @@ import { getObject } from "@/server/aws";
 import { ImageSchema } from "@/server/mongo/schemas/image";
 import { error } from "@sveltejs/kit";
 
-export async function GET({ params: { imageId }, url, setHeaders }) {
+export async function GET({ params: { imageId }, setHeaders }) {
     const image = await ImageSchema.findById(imageId);
 
     if (!image)
