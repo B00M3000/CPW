@@ -18,11 +18,11 @@ export function validateProjectTags(tags: string[]): true | string[] {
 export function validateProjectShortDescription(
     shortDescription: string,
 ): true | string[] {
-    if (shortDescription.length >= 200 && shortDescription.length <= 500) {
+    if (shortDescription.length >= 25 && shortDescription.length <= 500) {
         return true;
     } else {
         return [
-            "Please enter a short description with at least 200 characters and less than 500.",
+            "Please enter a short description with at least 25 characters and less than 500.",
         ];
     }
 }

@@ -1,6 +1,6 @@
 <script lang=ts>
     import { clamp } from '@/lib/utils';
-    import { CaretLeft, CaretRight } from 'carbon-icons-svelte';
+    import { ArrowLeft, ArrowRight } from 'lucide-svelte';
     import capitalize from 'lodash/capitalize';
 
     let {
@@ -60,10 +60,10 @@
             <span class="text-gray-900 sm:hidden">of {totalPages}</span>
         </div>
         <button class="h-full p-2 sm:px-4 bg-gray-300 hover:bg-gray-400 rounded-md" onclick={() => { currentPage = Math.max(0, currentPage - 1); pageChange() }}>
-            <CaretLeft size={24} />
+            <ArrowLeft size={24} strokeWidth={1.5} />
         </button>
         <button class="h-full p-2 sm:px-4 bg-gray-300 hover:bg-gray-400 rounded-md" onclick={() => { currentPage = Math.min(totalPages - 1, currentPage + 1); pageChange() }}>
-            <CaretRight size={24} />
+            <ArrowRight size={24} strokeWidth={1.5} />
         </button>
     </div>
 </div>

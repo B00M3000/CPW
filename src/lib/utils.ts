@@ -5,7 +5,6 @@
  */
 
 import Papa from "papaparse";
-import type { Fields } from "@/lib/data-upload";
 import escapeRegExp from "lodash/escapeRegExp";
 
 export function currentYear() {
@@ -69,21 +68,4 @@ export async function parseCSV(file: File | string): Promise<string[][]> {
             },
         });
     });
-}
-
-export function validateCSV(
-    headings: string[],
-    entries: string[][],
-    fields: Fields,
-) {
-    return (
-        Object.keys(fields).every(
-            (fieldName: string) =>
-                headings.filter((h) => h == fieldName).length == 1,
-        ) &&
-        headings.every((heading) => fields[heading]) &&
-        entries.every((entry) =>
-            entry.every((part, i) => fields[headings[i]].test(part)),
-        )
-    );
 }
