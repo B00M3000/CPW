@@ -6,7 +6,7 @@
 
 import type { Handle } from "@sveltejs/kit";
 import mongo from "@/server/mongo";
-import { UserSchema } from "@/server/mongo/schemas/user";
+import { UserSchema, type UserDocument } from "@/server/mongo/schemas/user";
 import { stringifyObjectId } from "@/lib/utils";
 
 const dbPromise = mongo();
@@ -22,12 +22,12 @@ export const handle: Handle = async ({ event, resolve }) => {
             { lastVisit: new Date() },
         )
             .select(
-                "id name firstName lastName email picture accountType accessLevel adviseeIds",
+                "name firstName lastName email picture accountType accessLevel adviseeIds",
             )
             .lean();
 
         if (user) {
-            event.locals.user = stringifyObjectId(user);
+            event.locals.user = stringifyObjectId(user as UserDocument);
         } else {
             event.cookies.delete("session_id", { path: "/" });
         }

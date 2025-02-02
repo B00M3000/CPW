@@ -27,7 +27,7 @@ const schema = new mongoose.Schema(
         name: { type: String, required: true },
         firstName: { type: String, required: true },
         lastName: { type: String, required: true },
-        picture: { type: String, required: true },
+        picture: { type: String, required: true, default: "/assets/ghost.png" },
         email: { type: String, required: true },
         sessionId: {
             type: String,
