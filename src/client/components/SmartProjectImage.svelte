@@ -37,8 +37,8 @@
 </div>
 {/snippet}
 
-<div class="relative inline-flex items-center justify-center m-1 p-2 rounded-lg bg-gray-300 w-full h-full overlay-trigger z-10">
-    <div class="flex items-center justify-center w-full h-full blurred z-10 bg-inherit">
+<div class="relative inline-flex items-center justify-center m-1 p-2 rounded-lg bg-gray-300 w-full h-full overlay-trigger">
+    <div class="flex items-center justify-center w-full h-full blurred bg-inherit">
         <LazyImage2 src="/images/{image._id}" alt={image.description || ""} class="w-full h-full object-contain" />
     </div>
     <div class="absolute flex-col justify-center items-center text-center hidden will-display bg-white p-2 rounded-lg max-w-64 z-20">

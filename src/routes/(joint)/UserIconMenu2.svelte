@@ -17,7 +17,7 @@
 
     <div class="relative">
         <div class="reveal-on-trigger hidden h-2 bg-white w-full"></div>
-        <div class="reveal-on-trigger hidden flex-col items-center absolute top-2 left-6 -translate-x-3/4 bg-white p-4 gap-3 shadow-lg">
+        <div class="reveal-on-trigger z-30 hidden flex-col items-center absolute top-2 left-6 -translate-x-3/4 bg-white p-4 gap-3 shadow-lg">
             <div class="grid grid-cols-[3.5rem_1fr] grid-rows-1 items-center justify-center">
                 <div class="p-2">
                     <!-- svelte-ignore a11y_missing_attribute -->
