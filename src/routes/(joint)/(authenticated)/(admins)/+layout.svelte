@@ -4,4 +4,6 @@
     let { children } = $props();
 </script>
 
-<MobileDeviceFilter {children} />
+<MobileDeviceFilter>
+    {@render children()}
+</MobileDeviceFilter>

@@ -17,7 +17,7 @@
 
     <div class="relative">
         <div class="reveal-on-trigger hidden h-2 bg-white w-full"></div>
-        <div class="reveal-on-trigger hidden flex-col items-center absolute top-2 left-6 -translate-x-3/4 bg-white p-4 gap-3 shadow-lg">
+        <div class="reveal-on-trigger z-30 hidden flex-col items-center absolute top-2 left-6 -translate-x-3/4 bg-white p-4 gap-3 shadow-lg">
             <div class="grid grid-cols-[3.5rem_1fr] grid-rows-1 items-center justify-center">
                 <div class="p-2">
                     <!-- svelte-ignore a11y_missing_attribute -->
@@ -30,16 +30,16 @@
                 </div>
             </div>
             <div class="grid gap-2">
-                <a class="flex items-center justify-between gap-4 p-2 px-6 hover:bg-[#44444444] bg-[#4444441a] border rounded-lg" href="/account">
+                <a class="flex items-center justify-between gap-4 p-2 px-6 hover:bg-gray-300 bg-gray-200 border rounded-lg" href="/account">
                     <Icon src={Gear} size="1.25rem"/>
                     <span class="w-full text-center">Account</span>
                 </a>
                 {#if $user.accountType == AccountType.Student}
-                <a class="flex items-center justify-between gap-4 p-2 px-6 hover:bg-[#44444444] bg-[#4444441a] border rounded-lg" href="/manage-projects">
+                <a class="flex items-center justify-between gap-4 p-2 px-6 hover:bg-gray-300 bg-gray-200 border rounded-lg" href="/manage-projects">
                     <Icon src={FileText} size="1.25rem"/>
                     <span class="w-full text-center">My Projects</span>
                 </a>
-                <a class="flex items-center justify-between gap-4 p-2 px-6 hover:bg-[#44444444] bg-[#4444441a] border rounded-lg" href="/manage-images">
+                <a class="flex items-center justify-between gap-4 p-2 px-6 hover:bg-gray-300 bg-gray-200 border rounded-lg" href="/manage-images">
                     <Icon src={Images} size="1.25rem"/>
                     <span class="w-full text-center">My Images</span>
                 </a>

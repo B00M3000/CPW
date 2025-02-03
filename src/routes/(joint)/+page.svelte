@@ -16,8 +16,8 @@
         </form>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 mx-4 ">
-            <a class="btn text-center p-4 px-12" href="/projects">View Projects</a>
-            <a class="btn text-center p-4 px-12" href="/images">Browse Photos</a>
+            <a class="btn text-center p-3 px-10 shadow-md" href="/projects">View Projects</a>
+            <a class="btn text-center p-3 px-10 shadow-md" href="/images">Browse Photos</a>
         </div>
     </div>
 </main>
@@ -26,17 +26,17 @@
 <style lang="scss">
     .btn {
         display: inline-block;
-        background-color: rgba(0, 0, 0, 0.4);
+        background-color: rgba(0, 0, 0, 0.3);
         color: white;
         border-radius: 5px;
         text-decoration: none;
-        font-size: 1.2rem;
-        transition: background-color 0.4s;
+        font-size: 1.1rem;
+        transition: background-color 100ms;
         margin: 10px;
         cursor: pointer;
 
         &:hover {
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.6);
         }
     }
 

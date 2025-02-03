@@ -73,7 +73,7 @@
     })
 
     onMount(() => {
-        selected = data.project.tags.map((tagId: string) => tagOptions.find(option => option.id === tagId));
+        selected = data.project.tags.map((tagId: string) => TAG_OPTIONS.find(option => option.id === tagId));
     })
 
     $effect(() => {
@@ -88,7 +88,7 @@
         shortDesc?: string;
     }
 
-    let project: ProjectInformation2 = {};
+    let project: ProjectInformation2 = $state({});
 
     let errorMessage = $state()
 </script>
