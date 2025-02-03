@@ -88,7 +88,7 @@
         shortDesc?: string;
     }
 
-    let project: ProjectInformation2 = {};
+    let project: ProjectInformation2 = $state({});
 
     let errorMessage = $state()
 </script>
