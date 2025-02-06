@@ -27,21 +27,21 @@
     }
 </script>
 
-<button class="container shadow-lg" on:click={onTrigger}>
-    <img src="/assets/google-icon.png" alt = "Google Icon"/>
+<button class="container shadow-lg rounded-sm" on:click={onTrigger}>
+    <!-- svelte-ignore a11y_missing_attribute -->
+    <img src="/assets/google-icon.png"/>
     <span class="text">Sign in with Google</span>
 </button>
 
-<style> 
+<style>
     .container {
-        display: inline-flex;
-        padding: 10px;
-        border-radius: 3px;
-        cursor: pointer;
-        background: white;
-        justify-content: center;
-        border: none;
+        display: flex;
         align-items: center;
+        padding: 12px 10px;
+        gap: 10px;
+        height: 40px;
+        background-color: #FFF;
+        border: 1px #747775 solid;
     }
     img {
         width: 20px;
@@ -50,7 +50,6 @@
     .text {
         font-family: Roboto-Medium;
         font-size: 16px;
-        color: rgba(67, 67, 67, 1);
-        margin: 0 20px;
+        color: #1F1F1F;
     }
 </style>
