@@ -17,6 +17,7 @@ export async function load({ params, locals }) {
     const allowedToView =
         project.studentId == locals?.user?._id ||
         locals?.user?.accountType == AccessLevel.Admin ||
+        locals?.user?.adviseeIds.includes(project.studentId) ||
         project.publish;
 
     if (!allowedToView)

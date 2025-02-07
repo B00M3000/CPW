@@ -19,7 +19,10 @@
 
 <div class="flex flex-col justify-between bg-slate-50 rounded-md p-4 w-full h-full shadow-xl border border-gray-400">
     <div class="flex flex-col">
-        <h3 class="text-xl">{project.title}</h3>
+        <div class="flex justify-between">
+            <h3 class="text-xl">{project.title}</h3>
+            <h2 class="text-sm text-gray-400 font-bold">{project.year}</h2>
+        </div>
 
         <div class="flex mb-4 justify-start">
             <Tags tagIds={project.tags} />
