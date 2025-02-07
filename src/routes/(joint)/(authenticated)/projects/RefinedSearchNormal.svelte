@@ -77,7 +77,7 @@
 
         <hr class="border-[1px] border-black w-3/4 my-1"/>
 
-        <div class="flex gap-6">
+        <div class="flex gap-6 flex-row-reverse">
             <button class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white text-base rounded-md" type="submit">Search</button>
             <a class="px-4 py-2 bg-red-700 hover:bg-red-800 text-white text-base rounded-md" href="/projects">Clear</a>
         </div>
