@@ -150,8 +150,8 @@
             </div>
         </div>
         {:else}
-        <div class="h-full w-full bg-gray-400 sm:rounded-lg flex items-center justify-center">
-            <h1 class="no-results overflow-ellipsis text-white text-xl sm:text-3xl m-8"> No results for {searchParameters.query} were found.</h1>
+        <div class="h-full w-full flex items-center justify-center">
+            <h1 class="no-results overflow-ellipsis text-black text-xl sm:text-3xl m-8"> No results for {searchParameters.query} were found.</h1>
         </div>
         {/if}
         <div class="sm:m-3"></div>

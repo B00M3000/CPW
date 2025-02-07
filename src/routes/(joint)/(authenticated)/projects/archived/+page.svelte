@@ -12,21 +12,21 @@
     import projects23 from "@client/data/projects23.json";
 
     const allProjects = [...projects20, ...projects22, ...projects23];
-    
+
     const fuseOptions = {
         keys: [
-            'Name First',          
-            'Name Last',           
-            'Mentor First Name',   
-            'Mentor Last Name',    
-            'Mentor Organization', 
-            'Project Subject',     
-            'Category 1',          
-            'Category 2',          
-            'Category 3'           
+            'Name First',
+            'Name Last',
+            'Mentor First Name',
+            'Mentor Last Name',
+            'Mentor Organization',
+            'Project Subject',
+            'Category 1',
+            'Category 2',
+            'Category 3'
         ],
-        includeScore: true, 
-        threshold: 0.35, 
+        includeScore: true,
+        threshold: 0.35,
     };
 
     let searchResults = allProjects;
@@ -49,8 +49,8 @@
     }
 </script>
 
-<main>
-    <div class="searching">
+<main class="p-8 flex flex-col gap-8">
+    <div class="searching bg-gray-300 rounded-lg">
         <form on:submit|preventDefault={performSearch}>
             <input
                 placeholder="Search ..."
@@ -69,10 +69,10 @@
             <thead>
                 <tr>
                     <th>
-                        <span>Project Subject</span>   
+                        <span>Project Subject</span>
                     </th>
                     <th>
-                        <span>Name</span>   
+                        <span>Name</span>
                     </th>
                     <th>
                         <span>Mentor </span>
@@ -110,8 +110,7 @@
         justify-content: center;
         padding: 1.5rem 0rem;
         width: calc(100vw - (100vw - 100%));
-        background-color: rgb(196, 186, 186);
-        
+
         .search-box {
             padding: 12px 20px;
             margin: 8px 0.2rem;
@@ -119,7 +118,7 @@
             border: 2px solid rgb(0, 0, 0);
             border-radius: 0px;
         }
-        
+
         button {
             padding: 10px 20px;
             margin: 8px;
@@ -153,10 +152,10 @@
                 &:nth-child(even) {
                     background-color: #ddd;
                 }
-                
+
                 &:nth-child(odd) {
                     background-color: #e9e9e9;
-                } 
+                }
             }
 
             tr:hover {
@@ -169,7 +168,7 @@
                 padding: 0.5rem 1rem;
                 background-color: rgb(163, 162, 162);
             }
-        }  
+        }
 
         h1 {
             padding-left: 2rem;

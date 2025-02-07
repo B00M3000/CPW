@@ -7,24 +7,25 @@
 <script lang="ts">
     import { currentYear } from "@/lib/utils";
 
-    export let yearLowerBound: number = 2019;
-    export let yearUpperBound: number = currentYear();
+    let { yearLowerBound = $bindable(2019), yearUpperBound = $bindable(currentYear()) } = $props();
+
+    $inspect({ yearLowerBound, yearUpperBound });
 
     function updateUpperBound() {
         if (yearUpperBound < yearLowerBound) {
-            yearUpperBound = yearLowerBound;
+            yearLowerBound = yearUpperBound;
         }
         yearUpperBound = yearUpperBound;
     }
 
     function updateLowerBound() {
         if (yearLowerBound > yearUpperBound) {
-            yearLowerBound = yearUpperBound;
+            yearUpperBound = yearLowerBound;
         }
         yearLowerBound = yearLowerBound;
     }
 
-    let yearOptions: number[] = [];
+    let yearOptions: number[] = $state([]);
 
     for (let year = 2019; year <= yearUpperBound; year++) {
         yearOptions.push(year);
@@ -35,6 +36,7 @@
     <label>
         <select
             class="yearFilter"
+            bind:value={yearLowerBound}
             on:change={updateLowerBound}
         >
             {#each yearOptions as year}

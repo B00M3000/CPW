@@ -7,7 +7,7 @@
         <h1 class="text-4xl mb-8 flex items-center justify-center gap-4"><FolderOpen size={48} /> Project Center</h1>
         <div class="project-center-content-grid h-full">
             <div class="grid-create h-full w-full p-4 rounded-lg flex items-center gap-4">
-                <a href=/admin/project-center/create class="flex gap-2 items-center bg-gray-500 hover:bg-gray-600 text-white p-2 px-3 rounded-md">
+                <a href=/admin/year-status class="flex gap-2 items-center bg-gray-500 hover:bg-gray-600 text-white p-2 px-3 rounded-md">
                     <Info />
                     <span>Year Status</span>
                 </a>
