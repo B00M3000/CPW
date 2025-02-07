@@ -6,7 +6,9 @@
 
 <script lang="ts">
     import { goto } from "$app/navigation";
+    import { nl2br } from "@/lib/utils";
     import { onMount } from "svelte";
+    import { z } from "zod";
 
     export let data;
     $: ({ project: { title, fullReport: originaFullReport }, projectId } = data);
@@ -89,7 +91,7 @@
         </div>
         <div>
             {#if fullReport}
-            <div class="bg-gray-50 p-4 rounded-lg">{fullReport}</div>
+            <p class="bg-gray-50 p-4 rounded-lg whitespace-pre-wrap">{@html nl2br(fullReport)}</p>
             {/if}
 
             <input type="text" placeholder="Or type/paste here if you are Jacob Signorovitch '26" class="w-full mt-3 p-2 rounded-lg" on:input={(e) => fullReport = e.target.value} />

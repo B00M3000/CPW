@@ -5,37 +5,35 @@ export async function GET({ url: { searchParams } }) {
     const q = searchParams.get('q')?.trim();
     if(!q) error(400, "Search must contain a query.")
 
-    let compound = { should: [
-        {
-            text: {
-                query: q,
-                path: "name",
-                fuzzy: {
-                    maxEdits: 2,
+    let compound = {
+        should: [
+            {
+                text: {
+                    query: q,
+                    path: "name",
+                    fuzzy: {
+                        maxEdits: 2,
+                    },
                 },
             },
-        },
-        {
-            text: {
-                query: q,
-                path: "organization",
-                fuzzy: {
-                    maxEdits: 2,
+            {
+                text: {
+                    query: q,
+                    path: "organization",
+                    fuzzy: {
+                        maxEdits: 2,
+                    },
                 },
             },
-        }
-    ]}
+        ],
+        minimumShouldMatch: 1
+    }
 
-    const pipline = [
-        {
-            $search: {
-                index: "mentorDeduplication",
-                compound,
-            },
-        },
-    ];
-
-    const mentors = await MentorSchema.aggregate(pipline)
+    const mentors = await MentorSchema.aggregate()
+        .search({
+            index: "mentorDeduplication",
+            compound,
+        })
         .sort({
             score: { $meta: "textScore" },
         })

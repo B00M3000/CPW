@@ -71,3 +71,32 @@ export async function parseCSV(file: File | string): Promise<string[][]> {
         });
     });
 }
+
+// nl2br() and br2nl() functions are sourced from https://gist.github.com/yidas/41cc9272d3dff50f3c9560fb05e7255e
+
+/**
+ * This function is same as PHP's nl2br() with default parameters.
+ *
+ * @param {string} str Input text
+ * @param {boolean} replaceMode Use replace instead of insert
+ * @param {boolean} isXhtml Use XHTML
+ * @return {string} Filtered text
+ */
+export function nl2br(str: string, replaceMode?: boolean, isXhtml?: boolean): string {
+  let breakTag = (isXhtml) ? '<br />' : '<br>';
+  let replaceStr = (replaceMode) ? '$1'+ breakTag : '$1'+ breakTag +'$2';
+  return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, replaceStr);
+}
+
+/**
+ * This function inverses text from PHP's nl2br() with default parameters.
+ *
+ * @param {string} str Input text
+ * @param {boolean} replaceMode Use replace instead of insert
+ * @return {string} Filtered text
+ */
+export function br2nl(str: string, replaceMode?: boolean): string {
+  let replaceStr = (replaceMode) ? "\n" : '';
+  // Includes <br>, <BR>, <br />, </br>
+  return str.replace(/<\s*\/?br\s*[\/]?>/gi, replaceStr);
+}

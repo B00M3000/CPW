@@ -17,7 +17,7 @@ export interface MentorDocumentData {
 const schema = new mongoose.Schema(
     {
         name: { type: String, required: true },
-        organization: { type: String, required: true },
+        organization: { type: String, required: true},
         email: { type: String, required: true },
         phoneNumber: { type: String },
         mergedInformation: { type: [Object], required: true, default: [] },
@@ -25,7 +25,7 @@ const schema = new mongoose.Schema(
     { timestamps: true },
 );
 
-schema.index({ name: "text" });
+schema.index({ name: "text", organization: "text" });
 
 export type MentorDocument = mongoose.HydratedDocument<MentorDocumentData>;
 
