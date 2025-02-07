@@ -68,9 +68,7 @@
         {#each projects as project, i}
             <div class="project-card">
                 <div class="project-cards">
-                    <div class="shadow-2xl border border-gray-400 rounded-md">
-                        <ProjectCard {project} />
-                    </div>
+                    <ProjectCard {project} />
                     <div class="button-container">
                         {#if project.underReview == true}
                             <button class="disabled-button" disabled>
