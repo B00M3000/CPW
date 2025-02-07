@@ -11,7 +11,7 @@
     $: ({ students } = data);
 </script>
 
-<main class="w-full h-full p-4 sm:p-8">
+<main class="w-full h-full overflow-y-auto p-4 sm:p-8">
     <h1 class="text-4xl text-center mb-5 p-10 bg-slate-300 rounded-lg">Your Advisees</h1>
     <div class="max-md:flex max-md:flex-col max-sm:gap-5 md:grid md:grid-cols-[auto_auto_auto] sm:gap-2 sm:mx-12">
         {#each students as student}

@@ -12,6 +12,6 @@ export async function load({ locals, params: { studentId } }) {
     const student = stringifyObjectId(
         await UserSchema.findOne({ _id: studentId }).lean(),
     );
-    if (!locals.user?.adviseeIds.includes(student.schoolId))
+    if (!locals.user?.adviseeIds.includes(student._id))
         error(403, "Access denied, not the adivosr of this student.");
 }
