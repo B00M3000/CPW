@@ -15,7 +15,7 @@ export async function load({ params: { projectId } }) {
     const project = stringifyObjectId(
         await ProjectSchema.findById(
             projectId,
-            "title shortDesc tags mentorId studentId fullReport",
+            "title shortDesc tags mentorId studentId fullReport year",
         ).lean(),
     );
 
@@ -36,6 +36,9 @@ export async function load({ params: { projectId } }) {
             ?.map(stringifyObjectId)
             .map(injectProjects),
     );
+
+    project.mentor = mentor;
+    project.student = student;
 
     return { project, mentor, student, images: inflatedImages };
 }
