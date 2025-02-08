@@ -1,6 +1,7 @@
 
 <script lang=js>
     import MentorCard2 from "@/client/components/MentorCard2.svelte";
+    import ProjectCard from "@/client/components/ProjectCard.svelte";
     import SmartProjectImage from "@/client/components/SmartProjectImage.svelte";
     import StudentCard2 from "@/client/components/StudentCard2.svelte";
     import Tags from "@/client/components/Tags.svelte";
@@ -56,7 +57,7 @@
 <main class="flex flex-col items-center w-full h-full">
     <div class="layout gap-4 p-4">
         <!-- Details -->
-        <div class="details p-4 flex flex-col justify-center bg-[rgb(205,209,214)] rounded-xl w-full">
+        <!-- <div class="details p-4 flex flex-col justify-center bg-[rgb(205,209,214)] rounded-xl w-full">
             <h1 class="text-xl mb-3">{data.project?.title}</h1>
             <div class="inline-flex items-center gap-2 mb-2">
                 <span class='font-bold'>Student: </span>
@@ -72,6 +73,27 @@
             </div>
             <h3 class="font-bold">Description: </h3>
             <span class="max-w-[32rem] overflow-clip break-all text-wrap">{data.project?.shortDesc}</span>
+        </div> -->
+        <div class="flex flex-col justify-between bg-gray-300 rounded-md p-4 w-full h-full min-h-56 shadow-xl">
+            <div class="flex flex-col">
+                <div class="flex justify-between mb-1">
+                    <h3 class="text-xl">{data.project.title}</h3>
+                    <h2 class="text-sm text-gray-400 font-bold">{data.project.year}</h2>
+                </div>
+
+                <div class="flex mb-4 justify-start">
+                    <Tags tagIds={data.project.tags} />
+                </div>
+
+                <p class="text-wrap mb-4 whitespace-nowrap text-sm break-words">{data.project.shortDesc}</p>
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <div class="flex items-center justify-center gap-4">
+                    <StudentCard2 student={data.project.student}/>
+                    <MentorCard2 mentor={data.project.mentor}/>
+                </div>
+            </div>
         </div>
         <!-- Report -->
         <div class="report w-full h-full relative">

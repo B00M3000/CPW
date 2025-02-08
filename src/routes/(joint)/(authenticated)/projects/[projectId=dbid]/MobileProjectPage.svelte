@@ -33,7 +33,7 @@
             </div>
         </div>
         <!-- Details -->
-        <div class="p-4 w-full">
+        <!-- <div class="p-4 w-full">
             <div class="p-6 flex flex-col justify-center bg-[rgb(205,209,214)] rounded-xl text-lg sm:text-xl font-bold shadow-lg border border-gray-400">
                 <h1 class="text-3xl sm:text-4xl mb-3 sm:mb-6 font-normal">{data.project?.title}</h1>
                 <div class="inline-flex items-center gap-2 mb-2 sm:mb-4">
@@ -50,6 +50,29 @@
                 </div>
                 <h3 class="mb-1">Description: </h3>
                 <span class="max-w-[48rem] overflow-clip break-all text-wrap font-normal">{data.project?.shortDesc}</span>
+            </div>
+        </div> -->
+        <div class="p-4 w-full">
+            <div class="flex flex-col justify-between bg-gray-300 rounded-md p-4 w-full h-full min-h-56 shadow-xl">
+                <div class="flex flex-col">
+                    <div class="flex justify-between mb-1">
+                        <h3 class="text-xl">{data.project.title}</h3>
+                        <h2 class="text-sm text-gray-400 font-bold">{data.project.year}</h2>
+                    </div>
+
+                    <div class="flex mb-4 justify-start">
+                        <Tags tagIds={data.project.tags} />
+                    </div>
+
+                    <p class="text-wrap mb-4 whitespace-nowrap text-sm break-words">{data.project.shortDesc}</p>
+                </div>
+
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center justify-center gap-4">
+                        <StudentCard2 student={data.project.student}/>
+                        <MentorCard2 mentor={data.project.mentor}/>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- Report and Images Tabs -->

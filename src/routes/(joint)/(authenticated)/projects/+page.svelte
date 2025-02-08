@@ -138,9 +138,7 @@
             <div class="h-full w-full overflow-y-scroll" bind:this={scrollElement}>
                 <div class="p-8 grid gap-8 grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] grid-rows-auto justify-center items-center w-full shadow-lg">
                     {#each inflatedProjects as project}
-                    <div class="flex items-center justify-center w-full h-full">
                         <ProjectCard {project} />
-                    </div>
                     {/each}
                 </div>
             </div>
