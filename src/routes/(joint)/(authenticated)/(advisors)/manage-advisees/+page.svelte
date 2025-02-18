@@ -5,13 +5,23 @@
 -->
 
 <script lang="ts">
-    import { goto } from "$app/navigation";
+    import { goto, invalidate } from "$app/navigation";
     import { ErrorFilled, WarningAltFilled, CheckmarkFilled } from "carbon-icons-svelte";
-    export let data;
-    $: ({ students } = data);
+
+    let { data } = $props();
+    let { students } = $derived(data);
+
+    function removeAdviseeFunction(id: string) {
+        return () => {
+            fetch(`/manage-advisees/${id}`, {
+                method: "DELETE",
+            });
+            invalidate('advisees')
+        }
+    }
 </script>
 
-<main class="w-full h-full overflow-y-auto p-4 sm:p-8">
+<main class="w-full h-full overflow-y-auto p-4">
     <h1 class="text-4xl text-center mb-5 p-10 bg-slate-300 rounded-lg">Your Advisees</h1>
     <div class="max-md:flex max-md:flex-col max-sm:gap-5 md:grid md:grid-cols-[auto_auto_auto] sm:gap-2 sm:mx-12">
         {#each students as student}
@@ -44,6 +54,13 @@
             </button>
         </div>
         {/each}
+    </div>
+</main>
+
+<main class="sm:p-8 p-4">
+    <h1 class="text-4xl text-center mb-5 p-10 bg-gray-300 rounded-lg">Your Advisees</h1>
+    <div class="">
+        
     </div>
 </main>
 

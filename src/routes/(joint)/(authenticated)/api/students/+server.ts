@@ -5,29 +5,24 @@
  */
 
 import { buildRegex, stringifyObjectId } from "@/lib/utils";
-import { UserSchema } from "@/server/mongo/schemas/user";
+import { UserSchema, type UserDocument } from "@/server/mongo/schemas/user";
 import { error, json } from "@sveltejs/kit";
+import z from "zod";
 
-export async function GET({ url }) {
-    const searchParams = url.searchParams;
+const QUERY_SCHEMA = z.string().min(1, "Query must be at least 1 character long.");
 
-    const query = searchParams.get("query");
+export async function GET({ url: { searchParams } }) {
+    const query = QUERY_SCHEMA.parse(searchParams.get("query"));
 
-    if (query) {
-        const students = (
-            await UserSchema.find(
-                {
-                    $or: [
-                        { email: buildRegex([query]) },
-                        { name: buildRegex(query.split(" ")) },
-                    ],
-                },
-                "name email",
-            ).lean()
-        )?.map(stringifyObjectId);
+    const students = (await UserSchema.find(
+        {
+            $or: [
+                { email: buildRegex([query]) },
+                { name: buildRegex(query.split(" ")) },
+            ],
+        },
+        "name email",
+    ).lean() as UserDocument[])?.map(stringifyObjectId);
 
-        return json({ students });
-    } else {
-        error(400, "You must submit a query.");
-    }
+    return json({ students });
 }

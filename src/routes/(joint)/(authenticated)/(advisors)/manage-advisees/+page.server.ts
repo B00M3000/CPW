@@ -9,7 +9,9 @@ import { currentYear, stringifyObjectId } from "@/lib/utils";
 import type { User } from "@/interfaces/project.js";
 import { ProjectSchema } from "@/server/mongo/schemas/project.js";
 
-export async function load({ locals }) {
+export async function load({ locals, depends }) {
+    depends('advisees')
+
     const students = await Promise.all(
         locals.user!.adviseeIds.map(async (adviseeId) => {
             const student: User | null = await UserSchema.findOne({
