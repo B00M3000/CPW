@@ -6,6 +6,7 @@
 
 <script lang="ts">
     import { goto, invalidate } from "$app/navigation";
+    import { currentYear } from "@/lib/utils";
     import { ErrorFilled, WarningAltFilled, CheckmarkFilled } from "carbon-icons-svelte";
     import { Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell } from "flowbite-svelte";
     import { ArrowLeft } from "lucide-svelte";
@@ -46,21 +47,26 @@
                                     {#if student.name}
                                     <span class="text-lg mb-2">{student.name}</span>
                                     {:else}
-                                    <span class="text-lg mb-2">[has not logged in]</span>
+                                    <span class="text-lg mb-2">[no name on record]</span>
                                     {/if}
                                     <span class="text-base text-gray-600">{student.email}</span>
                                 </div>
                             </TableBodyCell>
                             <TableBodyCell>
-                                <div class="flex items-center gap-2">
-                                    {#if !student.currentPending}
+                                <div class="flex items-center gap-2 text-wrap">
+                                    {#if !student.lastVisit || student.lastVisit?.getUTCFullYear() < currentYear()}
                                     <ErrorFilled color="red" size={24} />
+                                    <span class='text-lg'>Has not logged on!!</span>
+                                    {:else if !student.currentPending}
+                                    <ErrorFilled color="gray" size={24} />
+                                    <span class='text-lg'>No project created.</span>
                                     {:else if !student.currentApproved}
                                     <WarningAltFilled color="#C96" size={24} />
+                                    <span class='text-lg'>Awaiting advisor approval...</span>
                                     {:else}
                                     <CheckmarkFilled color="green" size={24} />
+                                    <span class='text-lg'>All set!</span>
                                     {/if}
-                                    <span class='text-lg'>{!student.currentPending ? "No project created" : !student.currentApproved ? "Awaiting approval" : "Complete"}</span>
                                 </div>
                             </TableBodyCell>
                             <TableBodyCell>

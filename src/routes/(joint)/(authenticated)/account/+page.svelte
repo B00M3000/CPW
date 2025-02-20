@@ -178,13 +178,13 @@
                         <div class="grid grid-cols-subgrid col-span-full items-center justify-center">
                             {#if advisor.notApproved == 0}
                             <Ind type="green" />
-                            <span>All advisee projects have been approved. Congrats!</span>
+                            <span>All advisee projects have been approved. Congrats, you are all set!</span>
                             {:else if advisor.notApproved == adviseeCount}
                             <Ind type="red" />
                             <span>No advisees have been approved yet.</span>
                             {:else}
                             <Ind type="orange" />
-                            <span>{advisor.notApproved} advisees have not been approved.</span>
+                            <span>{advisor.notApproved} advisees have not been approved. <p class="text-gray-400 text-sm">({advisor.adviseeCount - advisor.notApproved} approved. Hooray!)</p></span>
                             {/if}
                         </div>
                         <div class="grid grid-cols-subgrid col-span-full items-center justify-center">

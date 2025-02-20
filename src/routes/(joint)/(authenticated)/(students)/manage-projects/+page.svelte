@@ -64,7 +64,7 @@
         </div>
     </div>
 
-    <div class="flex items-center justify-center gap-8 flex-wrap">
+    <div class="gap-4 grid grid-cols-[repeat(auto-fit,_minmax(38rem,_1fr))] auto-rows-fr max-w-[77rem] w-full">
         {#each projects as project, i}
             <div class="project-card">
                 <div class="project-cards">
