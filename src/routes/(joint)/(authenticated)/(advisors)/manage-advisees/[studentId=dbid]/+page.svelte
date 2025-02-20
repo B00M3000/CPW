@@ -32,66 +32,58 @@
 </script>
 
 <main>
-    <h1 class="text-4xl text-center mb-5 p-10 bg-slate-300 rounded-lg">Adivsee Projects</h1>
-    <div class="card-container">
-        {#each projectUnapproved as project}
-            <div class="project-card">
-                <ProjectCard {project} displayLearnMore={false} />
-                <div class="button-container">
-                    <button class="fullreport-button" on:click={() => gotoInspectProject(student._id, project._id)}>
-                        Inspect Project
-                    </button>
+    <h1 class="text-4xl text-center mb-5 p-10 bg-slate-300 rounded-lg">Advisee Projects</h1>
+    <div class="flex flex-col items-center">
+        <div class="gap-4 grid grid-cols-[repeat(auto-fit,_minmax(38rem,_1fr))] auto-rows-fr max-w-[77rem] w-full">
+            {#each projectUnapproved as project}
+                <div class="project-card">
+                    <ProjectCard {project} displayLearnMore={false} />
+                    <div class="button-container">
+                        <button class="fullreport-button" on:click={() => gotoInspectProject(student._id, project._id)}>
+                            Inspect Project
+                        </button>
 
-                    <button class="accept-button" on:click = {() => gotoInspectProject(student._id, project._id)}>
-                        Approve Project
-                    </button>
+                        <button class="accept-button" on:click = {() => gotoInspectProject(student._id, project._id)}>
+                            Approve Project
+                        </button>
+                    </div>
                 </div>
-            </div>
-        {/each}
-        {#each projectsApproved as project}
-        <div class="project-card">
-            <ProjectCard {project} />
-            <div class="button-container">
-                <button class="fullreport-button" on:click={() => gotoInspectProject(student._id, project._id)}>
-                    Inspect Project
-                </button>
+            {/each}
+            {#each projectsApproved as project}
+                <div class="project-card">
+                    <ProjectCard {project} />
+                    <div class="button-container">
+                        <button class="fullreport-button" on:click={() => gotoInspectProject(student._id, project._id)}>
+                            Inspect Project
+                        </button>
 
-                <button class="deny-button" on:click = {() => changeApproval(project, false)}>
-                    Unapprove Project
-                </button>
-            </div>
+                        <button class="deny-button" on:click = {() => changeApproval(project, false)}>
+                            Unapprove Project
+                        </button>
+                    </div>
+                </div>
+            {/each}
         </div>
-        {/each}
     </div>
 </main>
 
 
 <style lang="scss">
     main {
-        padding:1rem 5rem;
+        padding: 1rem 5rem;
 
-        .card-container{
-            display:flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 2rem;
-            gap: 2rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .project-card{
+        .project-card {
+            width: 100%;
+            height: 100%;
             background-color: #fff;
-            border: 1px solid #ccc;
             padding: 20px;
-            margin-bottom: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            display: flex;
             display: flex;
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
+            max-width: 40rem;
         }
 
         .button-container {
