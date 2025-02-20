@@ -7,6 +7,7 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import ProjectCard from '@/client/components/ProjectCard.svelte';
+    import { ArrowLeft } from 'lucide-svelte';
     export let data;
 
     $: ({student, projects} = data);
@@ -31,38 +32,44 @@
     }
 </script>
 
-<main>
-    <h1 class="text-4xl text-center mb-5 p-10 bg-slate-300 rounded-lg">Advisee Projects</h1>
-    <div class="flex flex-col items-center">
-        <div class="gap-4 grid grid-cols-[repeat(auto-fit,_minmax(38rem,_1fr))] auto-rows-fr max-w-[77rem] w-full">
-            {#each projectUnapproved as project}
-                <div class="project-card">
-                    <ProjectCard {project} displayLearnMore={false} />
-                    <div class="button-container">
-                        <button class="fullreport-button" on:click={() => gotoInspectProject(student._id, project._id)}>
-                            Inspect Project
-                        </button>
+<main class="sm:p-8 p-4 relative flex items-center flex-col min-h-full">
+    <a class="absolute top-0 left-0 bg-blue-500 shadow-lg hover:bg-blue-600 p-2 px-3 m-6 rounded-lg flex gap-2 items-center text-white" href=/manage-advisees>
+        <ArrowLeft />
+        <span>Back to My Advisees Page</span>
+    </a>
+    <div class="max-w-[80rem] w-full">
+        <h1 class="text-4xl text-center mb-5 p-10 bg-slate-300 rounded-lg shadow-sm w-full">Advisee Projects</h1>
+        <div class="flex flex-col items-center">
+            <div class="gap-4 grid grid-cols-[repeat(auto-fit,_minmax(38rem,_1fr))] auto-rows-fr max-w-[77rem] w-full">
+                {#each projectUnapproved as project}
+                    <div class="project-card">
+                        <ProjectCard {project} displayLearnMore={false} />
+                        <div class="button-container">
+                            <button class="fullreport-button" on:click={() => gotoInspectProject(student._id, project._id)}>
+                                Inspect Project
+                            </button>
 
-                        <button class="accept-button" on:click = {() => gotoInspectProject(student._id, project._id)}>
-                            Approve Project
-                        </button>
+                            <button class="accept-button" on:click = {() => gotoInspectProject(student._id, project._id)}>
+                                Approve Project
+                            </button>
+                        </div>
                     </div>
-                </div>
-            {/each}
-            {#each projectsApproved as project}
-                <div class="project-card">
-                    <ProjectCard {project} />
-                    <div class="button-container">
-                        <button class="fullreport-button" on:click={() => gotoInspectProject(student._id, project._id)}>
-                            Inspect Project
-                        </button>
+                {/each}
+                {#each projectsApproved as project}
+                    <div class="project-card">
+                        <ProjectCard {project} />
+                        <div class="button-container">
+                            <button class="fullreport-button" on:click={() => gotoInspectProject(student._id, project._id)}>
+                                Inspect Project
+                            </button>
 
-                        <button class="deny-button" on:click = {() => changeApproval(project, false)}>
-                            Unapprove Project
-                        </button>
+                            <button class="deny-button" on:click = {() => changeApproval(project, false)}>
+                                Unapprove Project
+                            </button>
+                        </div>
                     </div>
-                </div>
-            {/each}
+                {/each}
+            </div>
         </div>
     </div>
 </main>
@@ -70,8 +77,6 @@
 
 <style lang="scss">
     main {
-        padding: 1rem 5rem;
-
         .project-card {
             width: 100%;
             height: 100%;

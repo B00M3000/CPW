@@ -20,7 +20,7 @@
     let aNavGridCols = $derived(($user.accountType == AccountType.Student ? 2 : 0) + ($user.accountType == AccountType.Advisor ? 1 : 0) + ($user.accessLevel == AccessLevel.Admin ? 1 : 0))
 </script>
 
-<main class="flex flex-col justify-center items-center">
+<main class="flex flex-col justify-center items-center min-h-full">
     <div class="my-6 mx-4 sm:mx-8 bg-gray-300 p-8 rounded-xl flex flex-col">
         <h1 class="text-4xl lg:text-5xl mb-8 text-center">My Account</h1>
         <div class="flex max-lg:flex-col gap-12">

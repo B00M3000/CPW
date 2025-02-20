@@ -8,6 +8,7 @@
     import { goto, invalidate } from "$app/navigation";
     import { ErrorFilled, WarningAltFilled, CheckmarkFilled } from "carbon-icons-svelte";
     import { Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell } from "flowbite-svelte";
+    import { ArrowLeft } from "lucide-svelte";
 
     let { data } = $props();
     let { students } = $derived(data);
@@ -22,9 +23,13 @@
     }
 </script>
 
-<main class="sm:p-8 p-4 flex flex-col bg-white items-center">
+<main class="sm:p-8 p-4 flex flex-col items-center relative min-h-full">
     <div class="max-w-[56rem] w-full">
-        <h1 class="text-4xl text-center mb-5 p-10 bg-gray-300 rounded-lg">Your Advisees</h1>
+        <a class="absolute top-0 left-0 bg-blue-500 hover:bg-blue-600 shadow-lg p-2 px-3 m-6 rounded-lg flex gap-2 items-center text-white" href=/account>
+            <ArrowLeft />
+            <span>Back to Account Page</span>
+        </a>
+        <h1 class="text-4xl text-center mb-5 p-10 bg-slate-300 rounded-lg shadow-sm">Your Advisees</h1>
         <div class="flex items-center flex-col px-8 lg:px-16 w-full">
             <div class="shadow-xl w-full">
                 <Table striped={true} items={students}>
