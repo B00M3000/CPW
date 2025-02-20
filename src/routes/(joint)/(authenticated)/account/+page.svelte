@@ -20,7 +20,7 @@
     let aNavGridCols = $derived(($user.accountType == AccountType.Student ? 2 : 0) + ($user.accountType == AccountType.Advisor ? 1 : 0) + ($user.accessLevel == AccessLevel.Admin ? 1 : 0))
 </script>
 
-<main class="flex flex-col justify-center items-center">
+<main class="flex flex-col justify-center items-center min-h-full">
     <div class="my-6 mx-4 sm:mx-8 bg-gray-300 p-8 rounded-xl flex flex-col">
         <h1 class="text-4xl lg:text-5xl mb-8 text-center">My Account</h1>
         <div class="flex max-lg:flex-col gap-12">
@@ -35,7 +35,7 @@
                     </div>
                 </div>
 
-                <h1 class="text-3xl mb-4">Welcome back {$user.firstName}!</h1>
+                <h1 class="text-3xl my-4">Welcome back {$user.firstName}!</h1>
 
                 <div class="flex max-md:flex-col justify-center gap-4 items-center m-4 text-blue-950">
                     {#if $user.accountType == AccountType.Student}
@@ -178,13 +178,13 @@
                         <div class="grid grid-cols-subgrid col-span-full items-center justify-center">
                             {#if advisor.notApproved == 0}
                             <Ind type="green" />
-                            <span>All advisee projects have been approved. Congrats!</span>
+                            <span>All advisee projects have been approved. Congrats, you are all set!</span>
                             {:else if advisor.notApproved == adviseeCount}
                             <Ind type="red" />
                             <span>No advisees have been approved yet.</span>
                             {:else}
                             <Ind type="orange" />
-                            <span>{advisor.notApproved} advisees have not been approved.</span>
+                            <span>{advisor.notApproved} advisees have not been approved. <p class="text-gray-400 text-sm">({advisor.adviseeCount - advisor.notApproved} approved. Hooray!)</p></span>
                             {/if}
                         </div>
                         <div class="grid grid-cols-subgrid col-span-full items-center justify-center">

@@ -49,11 +49,12 @@ export async function load({ locals }) {
             notUploadedReports: adviseeCount,
             notApproved: adviseeCount,
             notHaveImages: adviseeCount,
+            adviseeCount
         };
 
         const advisees = await UserSchema.find(
             {
-                schoolId: locals.user.adviseeIds,
+                _id: locals.user.adviseeIds,
             },
             "lastVisit",
         );
@@ -78,7 +79,6 @@ export async function load({ locals }) {
             if ((await ImageSchema.countDocuments({ projectId: p._id })) > 0)
                 advisorObject.notHaveImages--;
         });
-
         returnObject.advisor = advisorObject;
     }
 

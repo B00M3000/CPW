@@ -29,7 +29,7 @@
 
 <span class="text-gray-600 max-w-[36rem] text-base mb-8">In an effort to consolidate mentor information, please select an existing mentor entry if the information presented lines up. If none of them match, or have discrepencies with the contact information you have, just click continue. Better safe than sorry, mentor merging can always be done later.</span>
 
-<div class="grid grid-cols-[minmax(auto,16rem)_auto] xl:grid-cols-[minmax(auto,16rem)_auto_minmax(auto,16rem)_auto] mb-4 gap-4 items-start max-w-[72rem] max-h-[72rem] overflow-y-auto bg-gray-200 border border-gray-400 rounded-xl p-4 ">
+<div class="grid grid-cols-[minmax(auto,16rem)_auto] xl:grid-cols-[minmax(auto,16rem)_auto_minmax(auto,16rem)_auto] mb-4 gap-4 items-start max-w-[72rem] max-h-[72rem] bg-gray-200 border border-gray-400 rounded-xl p-4 ">
     {#each candidateMentors as mentor}
     <div class="grid grid-cols-subgrid col-span-2 p-4 bg-gray-300 rounded-xl shadow-md h-full">
         <div class="flex flex-col items-start pr-8">
