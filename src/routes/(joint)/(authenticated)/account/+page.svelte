@@ -35,7 +35,7 @@
                     </div>
                 </div>
 
-                <h1 class="text-3xl mb-4">Welcome back {$user.firstName}!</h1>
+                <h1 class="text-3xl my-4">Welcome back {$user.firstName}!</h1>
 
                 <div class="flex max-md:flex-col justify-center gap-4 items-center m-4 text-blue-950">
                     {#if $user.accountType == AccountType.Student}
