@@ -10,7 +10,7 @@ import {
     type ProjectDocumentData,
 } from "@/server/mongo/schemas/project";
 import { MentorSchema } from "@/server/mongo/schemas/mentor";
-import { UserSchema } from "@/server/mongo/schemas/user";
+import { UserSchema, type UserDocument } from "@/server/mongo/schemas/user";
 import {
     buildRegex,
     clamp,
@@ -21,32 +21,56 @@ import {
 
 import lowRelevance from "@/lib/lowRelevance";
 import type { FilterQuery } from "mongoose";
+import Zod from "zod";
 
 export async function load({ url: { searchParams } }) {
-    const dbQuery: FilterQuery<ProjectDocument> = {};
+    const aggregate = ProjectSchema.aggregate();
 
     // Handle title querying
     const q = searchParams.get("q");
     if (q) {
-        dbQuery.title = buildRegex(
-            q.split(" ").filter((word) => {
-                return !lowRelevance.includes(word) && !(word.length === 1);
-            }),
-        );
+        aggregate.search({
+            index: "project_search",
+            compound: {
+                should: [
+                    {
+                        text: {
+                            query: q,
+                            path: "title",
+                        }
+                    },
+                    {
+                        text: {
+                            query: q,
+                            path: "shortDesc",
+                        }
+                    },
+                    {
+                        text: {
+                            query: q,
+                            path: "fullReport",
+                        }
+                    }
+                ]
+            }
+        }).sort({ score: { $meta: "textScore" } })
+    } else {
+        aggregate.sort("-createdAt")
     }
 
     // Handle tag filtering
     const tags = searchParams.get("tags")?.split("_");
-    if (tags) dbQuery.tags = { $all: tags };
+    if (tags) aggregate.match({ tags: { $all: tags } });
 
     // Handle year range filtering
-    dbQuery.year = {
-        $gte: parseIntOrElse(searchParams.get("yearLower"), 2019),
-    };
-    dbQuery.year = {
-        ...dbQuery.year,
-        $lte: parseIntOrElse(searchParams.get("yearUpper"), currentYear()),
-    };
+    let yearLower = parseIntOrElse(searchParams.get("yearLower"), 2019);
+    let yearUpper = parseIntOrElse(searchParams.get("yearUpper"), currentYear());
+    aggregate.match({
+        year: {
+            $gte: yearLower,
+            $lte: yearUpper,
+        }
+    })
 
     // Setting up cached injection of student and mentor data
     const cachedStudents: any = {};
@@ -58,7 +82,7 @@ export async function load({ url: { searchParams } }) {
                 await UserSchema.findById(
                     project.studentId,
                     "name picture",
-                ).lean(),
+                ).lean() as UserDocument,
             );
         project.mentor =
             cachedMentors[project.mentorId] ||
@@ -76,10 +100,11 @@ export async function load({ url: { searchParams } }) {
         const mentorRegex = buildRegex(mentorSearch.split(" "));
         const mentors = (
             await MentorSchema.find({ name: mentorRegex }, "name").lean()
+            // maybe add fuzzy searching
         )?.map(stringifyObjectId);
         if (mentors.length > 0) {
             mentors.forEach((m) => (cachedMentors[m._id] = m));
-            dbQuery.mentorId = { $in: mentors.map((m) => m._id) };
+            aggregate.match({ mentorId: { $in: mentors.map((m) => m._id) } });
         } else {
             returnEmpty = true;
         }
@@ -92,16 +117,17 @@ export async function load({ url: { searchParams } }) {
         const students = (
             await UserSchema.find({ name: studentRegex }, "name").lean()
         )?.map(stringifyObjectId);
+        // fuzzy searching? or also just add searching on client side
         if (students.length > 0) {
             students.forEach((s) => (cachedMentors[s._id] = s));
-            dbQuery.studentId = { $in: students.map((s) => s._id) };
+            aggregate.match({ studentId: { $in: students.map((s) => s._id) } });
         } else {
             returnEmpty = true;
         }
     }
 
     // only reveal published projects
-    dbQuery.publish = true;
+    aggregate.match({ publish: true })
 
     // paginate
     const page = clamp(parseIntOrElse(searchParams.get("page"), 0), 0, 10000);
@@ -112,21 +138,17 @@ export async function load({ url: { searchParams } }) {
     );
     const skip = page * itemsPerPage;
 
-    const projects: ProjectDocumentData[] = returnEmpty
+    const projects = returnEmpty
         ? []
-        : (await ProjectSchema.find(
-              dbQuery,
-              "studentId title year tags mentorId shortDesc",
-          )
+        : (await aggregate
+              .project({ _id: 1, studentId: 1, title: 1, year: 1, tags: 1, mentorId: 1, shortDesc: 1 })
               .limit(itemsPerPage)
-              .skip(skip)
-              .lean()
-              .sort("-createdAt")) || [];
+              .skip(skip) || []);
+
     const totalProjectCount: number = returnEmpty
         ? 0
-        : await ProjectSchema.countDocuments(
-              dbQuery
-          );
+        : (await aggregate.count("total")).total
+
     const inflatedProjects = await Promise.all(
         projects.map(stringifyObjectId).map(injectStudentAndMentor),
     );
@@ -136,8 +158,8 @@ export async function load({ url: { searchParams } }) {
         searchParameters: {
             query: q || "",
             tags: tags || [],
-            yearUpper: dbQuery.yearUpper || currentYear(),
-            yearLower: dbQuery.yearLower || 2019,
+            yearUpper: yearUpper || currentYear(),
+            yearLower: yearLower || 2019,
             mentorSearch: mentorSearch || "",
             studentSearch: studentSearch || "",
             page: page || 0,
