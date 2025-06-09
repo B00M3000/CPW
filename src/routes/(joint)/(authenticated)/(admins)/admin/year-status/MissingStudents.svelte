@@ -4,7 +4,7 @@
     import { Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell } from "flowbite-svelte";
     import { getContext } from "svelte";
     import NamePlusPicture from "./NamePlusPicture.svelte";
-    import { XCircle, Ban } from 'lucide-svelte'; // use Ban icon for ignore
+    import { Ban } from 'lucide-svelte'; // use Ban icon for ignore
     import { invalidate } from "$app/navigation";
     import toast from "svelte-french-toast";
 
