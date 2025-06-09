@@ -3,9 +3,10 @@
     import MissingStudents from './MissingStudents.svelte';
     import UnapprovedStudents from './UnapprovedStudents.svelte';
     import { ArrowLeft } from 'lucide-svelte';
+    import IgnoredStudents from './IgnoredStudents.svelte';
 
     let { data } = $props();
-    let { missingStudents, inflatedUnapprovedProjects } = $derived(data);
+    let { missingStudents, inflatedUnapprovedProjects, ignoredStudents } = $derived(data);
 
     const CURRENT_YEAR = currentYear();
 
@@ -52,6 +53,7 @@
             </div>
         </div>
         <UnapprovedStudents inflatedUnapprovedProjects={filteredInflatedUnapprovedProjects} />
-        <MissingStudents missingStudents={filteredMissingStudents}/>
+        <MissingStudents missingStudents={filteredMissingStudents} ignoredStudents={ignoredStudents}/>
+        <IgnoredStudents ignoredStudents={ignoredStudents} />
     </div>
 </main>

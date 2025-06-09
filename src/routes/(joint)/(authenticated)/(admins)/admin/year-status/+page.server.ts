@@ -9,7 +9,10 @@ import { currentYear, stringifyObjectId } from "@/lib/utils";
 import { UserSchema, type UserDocument } from "@/server/mongo/schemas/user";
 import { AccountType } from "@/lib/enums";
 
-export const load = async () => {
+export const load = async ({ depends }) => {
+
+    depends('admin:ignore')
+
     const allStudents = (
         await UserSchema.find({
             accountType: AccountType.Student,
@@ -23,10 +26,19 @@ export const load = async () => {
     ).lean();
 
 
-    const missingStudents = await Promise.all(allStudents.filter(
-        (student) =>
-            !projects.some((project) => project.studentId == student._id),
-    ).map(injectAdvisor));
+    const focusedStudents = allStudents.filter(s => s.ignore != currentYear());
+    const ignoredStudents = allStudents.filter(s => s.ignore == currentYear())
+
+    const missingStudents = await Promise.all(
+        focusedStudents
+            .filter(
+                (student) =>
+                    !projects.some(
+                        (project) => project.studentId == student._id,
+                    ),
+            )
+            .map(injectAdvisor),
+    );
 
     const inflatedUnapprovedProjects = await Promise.all(
         projects
@@ -35,8 +47,7 @@ export const load = async () => {
             .map(injectStudentAndAdvisor),
     );
 
-
-    return { missingStudents, inflatedUnapprovedProjects };
+    return { missingStudents, inflatedUnapprovedProjects, ignoredStudents };
 };
 
 async function injectAdvisor(student: any) {
