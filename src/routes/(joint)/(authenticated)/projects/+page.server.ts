@@ -162,12 +162,7 @@ export async function load({ url: { searchParams } }) {
         projects.map(stringifyObjectId).map(injectStudentAndMentor),
     );
 
-    console.log(
-        JSON.stringify(
-            ProjectSchema.aggregate(aggregate.pipeline()).count("total"),
-        ),
-        await ProjectSchema.aggregate(aggregate.pipeline()).count("total"),
-    );
+    // Removed debug console.log statement to avoid logging internal details in production.
 
     return {
         inflatedProjects,
