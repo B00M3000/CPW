@@ -5,7 +5,6 @@
  */
 
 import mongoose from "mongoose";
-import { required } from "zod/v4-mini";
 
 interface UserDocumentData {
     name: string;
