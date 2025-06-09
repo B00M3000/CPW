@@ -37,10 +37,23 @@
         totalProjectCount = data.totalProjectCount
     })
 
+    function searchChangeHuh(oldSearchParams: URLSearchParams, newSearchParams: URLSearchParams) {
+        return (
+            oldSearchParams.get("yearLower") !== newSearchParams.get("yearLower") ||
+            oldSearchParams.get("yearUpper") !== newSearchParams.get("yearUpper") ||
+            oldSearchParams.get("mentorSearch") !== newSearchParams.get("mentorSearch") ||
+            oldSearchParams.get("studentSearch") !== newSearchParams.get("studentSearch") ||
+            oldSearchParams.get("q") !== newSearchParams.get("q") ||
+            oldSearchParams.get("tags") !== newSearchParams.get("tags") ||
+            oldSearchParams.get("itemsPerPage") !== newSearchParams.get("itemsPerPage")
+        );
+    }
+
     async function search(event?: Event){
         event?.preventDefault();
         const { tags, yearLower, yearUpper, mentorSearch, studentSearch, query, itemsPerPage, page } = searchParameters;
 
+        const originalSearchParams = new URLSearchParams(window.location.search);
         const searchParams = new URLSearchParams();
 
         if(tags?.length > 0) searchParams.set("tags", tags.join("_"));
@@ -50,7 +63,7 @@
         if(studentSearch) searchParams.set("studentSearch", studentSearch);
         if(query) searchParams.set("q", query)
         if(itemsPerPage) searchParams.set("itemsPerPage", itemsPerPage)
-        if(page) searchParams.set("page", page)
+        if(page) searchParams.set("page", searchChangeHuh(originalSearchParams, searchParams) ? 0 : page)
 
         spinnerActive = true;
 

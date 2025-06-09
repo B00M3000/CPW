@@ -20,6 +20,7 @@ interface UserDocumentData {
     schoolId: string;
     graduationYear: number;
     lastVisit: Date;
+    ignore?: number;
 }
 
 const schema = new mongoose.Schema(
@@ -49,6 +50,7 @@ const schema = new mongoose.Schema(
         adviseeIds: { type: [String], required: true, default: [] },
         graduationYear: { type: Number },
         lastVisit: { type: Date },
+        ignore: { type: Number, required: false }
     },
     { timestamps: true },
 );

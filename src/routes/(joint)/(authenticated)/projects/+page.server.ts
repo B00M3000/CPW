@@ -140,18 +140,30 @@ export async function load({ url: { searchParams } }) {
 
     const projects = returnEmpty
         ? []
-        : (await aggregate
-              .project({ _id: 1, studentId: 1, title: 1, year: 1, tags: 1, mentorId: 1, shortDesc: 1 })
-              .limit(itemsPerPage)
-              .skip(skip) || []);
+        : (await ProjectSchema.aggregate(aggregate.pipeline())
+              .project({
+                  _id: 1,
+                  studentId: 1,
+                  title: 1,
+                  year: 1,
+                  tags: 1,
+                  mentorId: 1,
+                  shortDesc: 1,
+              })
+              .skip(skip)
+              .limit(itemsPerPage)) || [];
 
     const totalProjectCount: number = returnEmpty
         ? 0
-        : (await aggregate.count("total")).total
+        : (await ProjectSchema.aggregate(aggregate.pipeline()).count("total"))[0]
+              .total;
 
     const inflatedProjects = await Promise.all(
         projects.map(stringifyObjectId).map(injectStudentAndMentor),
     );
+
+    // Removed debug console.log statement to avoid logging internal details in production.
+
     return {
         inflatedProjects,
         totalProjectCount,
