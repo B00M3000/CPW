@@ -1,3 +1,5 @@
+ARG TAG="UNSET"
+
 FROM node:20-alpine AS base
 
 RUN corepack enable pnpm && corepack install -g pnpm@latest-9
@@ -11,6 +13,10 @@ FROM base as build
 
 COPY . .
 RUN pnpm install -r --offline
+
+ENV PUBLIC_BUILD_NUMBER=${TAG}
+COPY .env.production .env
+
 RUN pnpm run build
 
 FROM base as prod-deps

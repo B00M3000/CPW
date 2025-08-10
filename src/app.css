@@ -1,19 +1,26 @@
+/* @layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities); */
+
+@import "tailwindcss";
+
+input {
+    background-color: white;
+}
+
 /*
  * Created on Fri Oct 13 2023
  *
  * Copyright (c) 2023 Thomas Zhou
  */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @font-face {
     font-family: Roboto-Medium;
     src: url(/assets/Roboto-Medium.ttf);
 }
 
-@mixin colors() {
+:root {
     --color-primary-900: #2c0310;
     --color-primary-600: #9e133f;
     --color-primary-500: #a4123f;
@@ -57,10 +64,6 @@
     --color-black: #000;
     --color-commschool-nav: #a4123f;
     --nav-bar-height: 70px;
-}
-
-:root {
-    @include colors();
     font-family: Roboto-Medium, sans-serif;
     background-color: var(--color-blue-grey-100);
     overflow-x: auto;

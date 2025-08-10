@@ -12,3 +12,5 @@ vite.config.ts.timestamp-*
 
 # temp for build testing
 package-lock.json
+
+.registry-deploy.yaml

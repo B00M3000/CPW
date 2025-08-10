@@ -1,7 +1,7 @@
 <script>
     import toast, { Toaster } from 'svelte-french-toast';
 
-    import "@/app.scss";
+    import "@/app.css";
 </script>
 
 <svelte:head>

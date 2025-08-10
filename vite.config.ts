@@ -8,11 +8,12 @@ import { sveltekit } from "@sveltejs/kit/vite";
 import { defineConfig } from "vite";
 import path from "path";
 import dotenv from "dotenv";
+import tailwindcss from '@tailwindcss/vite'
 
 dotenv.config();
 
 export default defineConfig({
-    plugins: [sveltekit()],
+    plugins: [sveltekit(), tailwindcss()],
 
     resolve: {
         alias: {
