@@ -32,13 +32,18 @@
     }
 </script>
 
-<main class="sm:p-8 p-4 relative flex items-center flex-col min-h-full">
-    <a class="absolute top-0 left-0 bg-blue-500 shadow-lg hover:bg-blue-600 p-2 px-3 m-6 rounded-lg flex gap-2 items-center text-white" href=/manage-advisees>
-        <ArrowLeft />
-        <span>Back to My Advisees Page</span>
-    </a>
+<main class="sm:p-8 p-4 relative flex items-center flex-col w-full min-h-full">
+    <div class="grid grid-cols-[1fr_auto_1fr] w-full mb-24">
+        <div class="flex justify-start">
+            <a class="bg-blue-500 hover:bg-blue-600 p-2 px-3 rounded-lg inline-flex gap-2 items-center text-white" href=/manage-advisees>
+                <ArrowLeft />
+                <span>Back to My Advisees Page</span>
+            </a>
+        </div>
+        <h1 class="text-4xl text-center">Advisee Projects</h1>
+        <div></div>
+    </div>
     <div class="max-w-[80rem] w-full">
-        <h1 class="text-4xl text-center mb-5 p-10 bg-slate-300 rounded-lg shadow-sm w-full">Advisee Projects</h1>
         <div class="flex flex-col items-center">
             <div class="gap-4 grid grid-cols-[repeat(auto-fit,_minmax(38rem,_1fr))] auto-rows-fr max-w-[77rem] w-full">
                 {#each projectUnapproved as project}

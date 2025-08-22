@@ -4,9 +4,9 @@
  Copyright (c) 2023 Thomas Zhou
 -->
 
-<div class="fixed left-0 top-0 w-screen h-screen bg-cover bg-center blur-sm scale-110 -z-10 bg-[url('/assets/CommonwealthSchool.jpg')]"></div>
+<div class="fixed left-0 top-0 w-screen h-screen bg-cover bg-center blur-sm scale-110 bg-[url('/assets/CommonwealthSchool.jpg')]"></div>
 
-<main class="flex justify-center items-center h-full bg-[#00000008]">
+<main class="flex justify-center items-center h-full bg-[#00000008] absolute z-10 w-full">
     <div class="flex flex-col items-center justify-center text-white">
         <h1 class="text-5xl font-bold [text-shadow:_0_2px_4px_rgba(0,0,0,0.5)] max-sm:text-4xl text-center">Commonwealth Project Week</h1>
 
@@ -57,7 +57,7 @@
         width: 55vw;
         padding: 15px;
         font-size: 1rem;
-        border: 1px solid var(--color-blue-600);
+        // border: 1px solid var(--color-blue-600);
         border-radius: 5px 0 0 5px;
         outline: none;
     }

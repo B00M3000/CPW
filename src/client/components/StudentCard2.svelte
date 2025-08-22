@@ -12,7 +12,7 @@
     let { student }: { student: Student } = $props();
 </script>
 
-<a href="/students/{student._id}" class="flex gap-2 p-2 px-3 bg-gray-400 rounded-l-full rounded-r-full items-center">
-    <LazyImage2 src={student.picture} alt="image of {student.name}" class="w-4 h-4 rounded-full" />
+<a href="/students/{student._id}" class="grid grid-cols-[auto_1fr] gap-2 p-2 px-3 bg-gray-300 border border-solid border-gray-400 rounded-l-full rounded-r-full items-center justify-center">
+    <LazyImage2 src={student.picture} alt="image of {student.name}" class="w-5 h-5 rounded-full" />
     <span class="text-sm text-center">{student.name || "Student Not Found!"}</span>
 </a>

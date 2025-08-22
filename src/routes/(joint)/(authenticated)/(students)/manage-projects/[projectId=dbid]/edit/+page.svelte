@@ -94,7 +94,7 @@
 </script>
 
 <main class="flex items-center justify-center h-full w-full">
-    <div class="flex flex-col items-center gap-12 p-12 rounded-lg bg-gray-300">
+    <div class="flex flex-col items-center gap-12 p-12 rounded-lg bg-gray-200 shadow border border-solid border-gray-400 max-w-4xl">
         <h1 class="text-2xl">Edit Project Details</h1>
 
         <div class="flex items-center gap-12">

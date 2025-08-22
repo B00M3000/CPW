@@ -85,7 +85,7 @@
                     <Tags tagIds={data.project.tags} />
                 </div>
 
-                <p class="text-wrap mb-4 whitespace-nowrap text-sm break-words">{data.project.shortDesc}</p>
+                <p class="text-wrap mb-4 text-sm break-words">{data.project.shortDesc}</p>
             </div>
 
             <div class="flex flex-col gap-4">
@@ -158,7 +158,7 @@
         height: 100%;
 
         display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-columns: minmax(0, 32rem) auto;
         grid-template-rows: auto auto minmax(0, 1fr);
         grid-template-areas: "toolbar report" "details report" "images report";
     }

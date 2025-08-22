@@ -76,7 +76,15 @@
 <div class="flex flex-col items-start mb-4">
     <span class="text-xl mb-2">Mentor Phone: </span>
     <span class="text-gray-600 max-w-[24rem] text-sm mb-1">*Optional</span>
-    <span contenteditable="plaintext-only" class="mb-1 text-base rounded-md bg-gray-50 p-2 border-gray-400 border min-w-72 max-w-[32rem]" bind:innerHTML={mentorInformation.phoneNumber}></span>
+    <div class="flex items-center gap-2 mb-1 ">
+        <span contenteditable="plaintext-only" class="text-base rounded-md bg-gray-50 p-2 border-gray-400 border min-w-72 max-w-[32rem]" bind:innerHTML={mentorInformation.phoneNumber}></span>
+        {#if mentorInformation.phoneNumber !== ""}
+        <button onclick={() => mentorInformation.phoneNumber = ""} class="bg-blue-500 text-white p-2 px-4 rounded-lg">
+            Clear
+        </button>
+        {/if}
+    </div>
+
     <span class="text-gray-600 max-w-[24rem] text-sm">Ex: +1 (427)-211-9772, 324-474-1106, 8568224318</span>
 </div>
 

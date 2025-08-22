@@ -64,7 +64,7 @@
                         <Tags tagIds={data.project.tags} />
                     </div>
 
-                    <p class="text-wrap mb-4 whitespace-nowrap text-sm break-words">{data.project.shortDesc}</p>
+                    <p class="text-wrap mb-4 text-sm break-words">{data.project.shortDesc}</p>
                 </div>
 
                 <div class="flex flex-col gap-4">

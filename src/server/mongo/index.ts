@@ -11,6 +11,7 @@ import { MONGO_URI } from "$env/static/private";
 let cached: Mongoose = global.mongoose || { conn: null, promise: null };
 
 export default async function () {
+    console.log(MONGO_URI)
     if (cached.conn) {
         console.log("Cached mongodb is called!");
         return cached.conn;

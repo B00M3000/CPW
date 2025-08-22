@@ -14,13 +14,13 @@
 </script>
 
 <main class="w-full h-full p-4">
-    <div class="relative w-full h-full bg-gray-300 rounded-xl p-8 grid grid-rows-[auto_minmax(0,_1fr)]">
+    <div class="relative w-full h-full rounded-xl p-8 grid grid-rows-[auto_minmax(0,_1fr)]">
         <h1 class="text-4xl mb-8 flex items-center justify-center gap-4"><BookUser size={48} /> Mentor Center</h1>
         <div class="mentor-center-content-grid h-full">
-            <div class="grid-search h-full w-full p-8 px-12 rounded-lg">
+            <div class="grid-search h-full w-full p-8 px-12 rounded-lg bg-gray-200 border border-solid border-gray-400 ">
                 <MentorSearch />
             </div>
-            <div class="grid-edit h-full w-full p-8 rounded-lg flex flex-col items-start">
+            <div class="grid-edit h-full w-full p-8 rounded-lg bg-gray-200 border border-solid border-gray-400 flex flex-col items-start">
                 <h2 class="text-xl mb-4 text-center">Extras:</h2>
                 <span class="mb-2">If you want to create a mentor, go to the relavent project in the project center.</span>
                 <div class="flex items-center">
@@ -43,7 +43,7 @@
                     {/await}
                 </div>
             </div>
-            <div class="grid-deduplication h-full w-full p-8 rounded-lg flex flex-col items-start">
+            <div class="grid-deduplication h-full w-full p-8 rounded-lg flex flex-col items-start bg-gray-200 border border-solid border-gray-400 ">
                 <h2 class="text-xl mb-4 text-center">Mentor Deduplication</h2>
                 <div class="flex items-center justify-center mt-8 w-full">
                     <span>To be implemented.</span>
@@ -68,7 +68,7 @@
         gap: 1.5rem;
     }
 
-    .grid-search { grid-area: search; background-color: #bdc4cd; }
-    .grid-edit { grid-area: edit; background-color: #bdc4cd; }
-    .grid-deduplication { grid-area: deduplication; background-color: #bdc4cd; }
+    .grid-search { grid-area: search; }
+    .grid-edit { grid-area: edit; }
+    .grid-deduplication { grid-area: deduplication; }
 </style>

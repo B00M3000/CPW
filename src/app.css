@@ -65,6 +65,12 @@ input {
     --color-commschool-nav: #a4123f;
     --nav-bar-height: 70px;
     font-family: Roboto-Medium, sans-serif;
-    background-color: var(--color-blue-grey-100);
+    /* background-color: var(--color-blue-grey-100); */
     overflow-x: auto;
+}
+
+html, body {
+    overflow: clip;
+    /* scrollbar-gutter: stable; */
+    background-color: var(--color-gray-300);
 }

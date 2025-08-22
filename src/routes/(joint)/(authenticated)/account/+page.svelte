@@ -39,26 +39,26 @@
 
                 <div class="flex max-md:flex-col justify-center gap-4 items-center m-4 text-blue-950">
                     {#if $user.accountType == AccountType.Student}
-                    <a class="flex items-center gap-3 p-3 bg-blue-400 hover:bg-blue-500 rounded-lg w-full h-full"
+                    <a class="flex items-center gap-3 p-3 bg-gray-200 not-hover:shadow hover:bg-gray-300 border border-gray-400 border-solid rounded-lg w-full h-full"
                         href="/manage-projects" data-sveltekit-preload-data>
                         <Icon src={FileText} size="1.25rem"/>
                         <span>My Projects</span>
                     </a>
-                    <a class="flex items-center gap-3 p-3 bg-blue-400 hover:bg-blue-500 rounded-lg w-full h-full"
+                    <a class="flex items-center gap-3 p-3 bg-gray-200 not-hover:shadow hover:bg-gray-300 border border-gray-400 border-solid rounded-lg w-full h-full"
                         href="/manage-images" data-sveltekit-preload-data>
                         <Icon src={Images} size="1.25rem"/>
                         <span>My Images</span>
                     </a>
                     {/if}
                     {#if $user.accountType == AccountType.Advisor}
-                    <a class="flex items-center gap-3 p-3 bg-blue-400 hover:bg-blue-500 rounded-lg w-full h-full"
+                    <a class="flex items-center gap-3 p-3 bg-gray-200 not-hover:shadow hover:bg-gray-300 border border-gray-400 border-solid rounded-lg w-full h-full"
                         href="/manage-advisees" data-sveltekit-preload-data>
                         <Icon src={People} size="1.25rem"/>
                         <span>My Advisees</span>
                     </a>
                     {/if}
                     {#if $user.accessLevel == AccessLevel.Admin}
-                    <a class="flex items-center gap-3 p-3 bg-blue-400 hover:bg-blue-500 rounded-lg w-full h-full"
+                    <a class="flex items-center gap-3 p-3 bg-gray-200 not-hover:shadow hover:bg-gray-300 border border-gray-400 border-solid rounded-lg w-full h-full"
                         href="/admin" data-sveltekit-preload-data>
                         <Dashboard size={24}/>
                         <span>Admin Dashboard</span>

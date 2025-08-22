@@ -122,21 +122,17 @@
 <Loading2 />
 {/if}
 
-<main class="h-full w-full grid grid-cols-1 grid-rows-[auto_minmax(0,_1fr)_auto] bg-gray-100 overflow-hidden">
+<main class="h-full w-full grid grid-cols-1 grid-rows-[auto_minmax(0,_1fr)_auto] bg-gray-100 overflow-hidden relative">
     {#if refinedSearchMobileOpenF}
-    <div class="relative">
-        <div class="absolute top-0 w-screen z-10">
-            <RefinedSearchMobile
-                {search}
-                close={closeRefinedSearch}
-                bind:searchParameters
-            />
-        </div>
-    </div>
+    <RefinedSearchMobile
+        {search}
+        close={closeRefinedSearch}
+        bind:searchParameters
+    />
     {:else}
     <SearchBar bind:query={searchParameters.query} {search} {openRefinedSearch} />
     {/if}
-    <div class="flex h-full">
+    <div class="relative flex h-full">
         {#if refinedSearchNormalOpenF}
         <RefinedSearchNormal
             {search}
@@ -148,16 +144,25 @@
         {/if}
         {#if inflatedProjects.length > 0}
         <div class="h-full w-full relative">
-            <div class="h-full w-full overflow-y-scroll" bind:this={scrollElement}>
-                <div class="p-8 grid gap-8 grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] grid-rows-auto justify-center items-center w-full shadow-lg">
+            <div class="h-full w-full relative overflow-y-scroll" bind:this={scrollElement}>
+                <div class="p-2 pt-4 md:p-8 grid gap-8 grid-cols-1 md:grid-cols-[repeat(auto-fit,_minmax(400px,_1fr))] grid-rows-auto justify-center items-center w-full mb-22 md:mb-16">
                     {#each inflatedProjects as project}
                         <ProjectCard {project} />
                     {/each}
                 </div>
             </div>
-            <div class="flex gap-2 absolute left-1/2 shadow-lg -translate-x-1/2 scroll-prompt opacity-0 -bottom-10 p-2 rounded-lg bg-gray-300" class:reveal={showScrollPrompt}>
+            <div class="flex gap-2 absolute border border-solid border-gray-400 left-1/2 shadow-lg -translate-x-1/2 scroll-prompt opacity-0 bottom-0 p-2 rounded-lg bg-gray-200" class:reveal={showScrollPrompt}>
                 <Mouse />
                 <p>Scroll Down</p>
+            </div>
+            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full p-2 px-8 max-w-5xl">
+                <Pagination
+                    pluralItemName="projects"
+                    bind:itemsPerPage={searchParameters.itemsPerPage}
+                    bind:currentPage={searchParameters.page}
+                    maxItems={totalProjectCount}
+                    onchange={() => search()}
+                />
             </div>
         </div>
         {:else}
@@ -165,18 +170,6 @@
             <h1 class="no-results overflow-ellipsis text-black text-xl sm:text-3xl m-8"> No results for {searchParameters.query} were found.</h1>
         </div>
         {/if}
-        <div class="sm:m-3"></div>
-    </div>
-    <div class="flex justify-center w-full bg-gray-300">
-        <div class="flex justify-center p-2 sm:p-4 w-full lg:w-2/3 2xl:w-1/2">
-            <Pagination
-                pluralItemName="projects"
-                bind:itemsPerPage={searchParameters.itemsPerPage}
-                bind:currentPage={searchParameters.page}
-                maxItems={totalProjectCount}
-                onchange={() => search()}
-            />
-        </div>
     </div>
 </main>
 
@@ -186,7 +179,7 @@
     }
     .reveal {
         opacity: 1;
-        bottom: 1rem;
+        bottom: 6rem;
     }
 </style>
 

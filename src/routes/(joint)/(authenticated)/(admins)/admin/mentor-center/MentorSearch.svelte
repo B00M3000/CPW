@@ -56,7 +56,7 @@
     <div class="h-full overflow-y-scroll">
         <div class="grid grid-cols-2 items-center justify-center gap-2 p-2">
             {#each mentors as mentor}
-            <button class="grid grid-cols-subgrid col-span-full p-2 rounded-l-full rounded-r-full bg-slate-200 hover:bg-slate-300" onclick={() => activeMentor = mentor}>
+            <button class="grid grid-cols-subgrid col-span-full p-2 rounded-l-full rounded-r-full bg-gray-300 hover:bg-gray-200 border border-solid border-gray-400" onclick={() => activeMentor = mentor}>
                 <div class="flex items-center">
                     <span class="text-nowrap overflow-clip overflow-ellipsis w-full px-4 text-left">{mentor.name}</span>
                 </div>

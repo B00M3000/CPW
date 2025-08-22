@@ -4,12 +4,13 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
+import { currentYear } from "@/lib/utils";
 import mongoose from "mongoose";
 
 interface UserDocumentData {
-    name: string;
-    firstName: string;
-    lastName: string;
+    name?: string;
+    firstName?: string;
+    lastName?: string;
     picture: string;
     googleId: string;
     email: string;
@@ -25,9 +26,9 @@ interface UserDocumentData {
 
 const schema = new mongoose.Schema(
     {
-        name: { type: String, required: true },
-        firstName: { type: String, required: true },
-        lastName: { type: String, required: true },
+        name: { type: String },
+        firstName: { type: String },
+        lastName: { type: String },
         picture: { type: String, required: true, default: "/assets/ghost.png" },
         email: { type: String, required: true },
         sessionId: {
@@ -44,11 +45,11 @@ const schema = new mongoose.Schema(
                 partialFilterExpression: { sessionId: { $type: "string" } },
             },
         },
-        schoolId: { type: String, required: true, unique: true },
+        // schoolId: { type: String, required: true, unique: true },
         accountType: { type: Number, required: true, default: 0 },
         accessLevel: { type: Number, required: true, default: 0 },
         adviseeIds: { type: [String], required: true, default: [] },
-        graduationYear: { type: Number },
+        graduationYear: { type: Number, required: true, default: () => currentYear() },
         lastVisit: { type: Date },
         ignore: { type: Number, required: false }
     },

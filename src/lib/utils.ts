@@ -37,6 +37,7 @@ export function buildRegex(keywords: string[]) {
 }
 
 export function stringifyObjectId<T extends Document>(document: T): T & { _id: string } {
+    if(!document) return document;
     if (!('_id' in document) || !isValidObjectId(document._id as ObjectId)) throw new Error('_id field must be of type ObjectId');
     document._id = (document._id as ObjectId).toString(); // very hacky fix but whatever
     return document as T & { _id: string };

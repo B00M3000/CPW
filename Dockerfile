@@ -1,8 +1,8 @@
 ARG TAG="UNSET"
 
-FROM node:20-alpine AS base
+FROM node:22-alpine AS base
 
-RUN corepack enable pnpm && corepack install -g pnpm@latest-9
+RUN corepack enable pnpm
 
 WORKDIR /app
 
@@ -24,7 +24,7 @@ FROM base as prod-deps
 COPY package.json .
 RUN pnpm install -r --offline --prod
 
-FROM node:20-alpine
+FROM node:22-alpine
 
 COPY package.json .
 COPY --from=prod-deps /app/node_modules /node_modules

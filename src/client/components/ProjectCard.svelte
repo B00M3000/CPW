@@ -10,6 +10,7 @@
     import StudentCard2 from "@/client/components/StudentCard2.svelte";
     import MentorCard2 from "@/client/components/MentorCard2.svelte";
     import { goto } from "$app/navigation";
+    import { ExternalLink } from "lucide-svelte";
 
     export let project: Project;
 
@@ -17,7 +18,7 @@
     export let displayShortDesc: boolean = true;
 </script>
 
-<div class="flex flex-col justify-between bg-slate-50 rounded-md p-4 w-full h-full shadow-xl border border-gray-400">
+<div class="flex flex-col justify-between bg-slate-50 rounded-md p-4 w-full h-full shadow-lg border border-gray-400">
     <div class="flex flex-col">
         <div class="flex justify-between mb-1">
             <h3 class="text-xl">{project.title}</h3>
@@ -29,7 +30,7 @@
         </div>
 
         {#if displayShortDesc}
-        <p class="text-wrap mb-4 whitespace-nowrap text-sm max-h-24 overflow-clip overflow-ellipsis break-words">{project.shortDesc}</p>
+        <p class="text-wrap mb-4 text-sm max-h-24 overflow-clip overflow-ellipsis break-words">{project.shortDesc}</p>
         {/if}
     </div>
 
@@ -40,7 +41,10 @@
         </div>
 
         {#if displayLearnMore}
-        <a class="w-full justify-center rounded-md bg-blue-400 hover:bg-blue-500 py-1 px-2 inline-flex text-gray-900" href="/projects/{project._id}" data-sveltekit-preload-code>View Project Page</a>
+        <a class="justify-center gap-2 items-center rounded-md bg-blue-400  transition-all py-1 px-2 inline-flex text-white" href="/projects/{project._id}" data-sveltekit-preload-code>
+            <ExternalLink size={20} />
+            <span>Open</span>
+        </a>
         {/if}
     </div>
 </div>

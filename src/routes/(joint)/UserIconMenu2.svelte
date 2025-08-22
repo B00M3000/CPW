@@ -6,6 +6,7 @@
     import FileText from "../../client/icons/FileText";
     import Images from "../../client/icons/Images";
     import People from "../../client/icons/People";
+    import { page } from "$app/state";
 </script>
 
 {#if $user}
@@ -30,22 +31,22 @@
                 </div>
             </div>
             <div class="grid gap-2">
-                <a class="flex items-center justify-between gap-4 p-2 px-6 hover:bg-gray-300 bg-gray-200 border rounded-lg" href="/account">
+                <a class="flex items-center justify-between gap-4 p-2 px-6 hover:bg-gray-300 bg-gray-200 border-gray-400 border border-solid rounded-lg" href="/account">
                     <Icon src={Gear} size="1.25rem"/>
                     <span class="w-full text-center">Account</span>
                 </a>
                 {#if $user.accountType == AccountType.Student}
-                <a class="flex items-center justify-between gap-4 p-2 px-6 hover:bg-gray-300 bg-gray-200 border rounded-lg" href="/manage-projects">
+                <a class="flex items-center justify-between gap-4 p-2 px-6 hover:bg-gray-300 bg-gray-200 border-gray-400 border border-solid rounded-lg" href="/manage-projects">
                     <Icon src={FileText} size="1.25rem"/>
                     <span class="w-full text-center">My Projects</span>
                 </a>
-                <a class="flex items-center justify-between gap-4 p-2 px-6 hover:bg-gray-300 bg-gray-200 border rounded-lg" href="/manage-images">
+                <a class="flex items-center justify-between gap-4 p-2 px-6 hover:bg-gray-300 bg-gray-200 border-gray-400 border border-solid rounded-lg" href="/manage-images">
                     <Icon src={Images} size="1.25rem"/>
                     <span class="w-full text-center">My Images</span>
                 </a>
                 {/if}
                 {#if $user.accountType == AccountType.Advisor}
-                <a class="flex items-center justify-between gap-4 p-2 px-6 hover:bg-[#44444444] bg-[#4444441a] border rounded-lg" href="/manage-advisees">
+                <a class="flex items-center justify-between gap-4 p-2 px-6 hover:bg-[#44444444] bg-[#4444441a] border-gray-400 border rounded-lg" href="/manage-advisees">
                     <Icon src={People} size="1.25rem"/>
                     <span class="w-full text-center">My Advisees</span>
                 </a>
@@ -56,7 +57,9 @@
     </div>
 </div>
 {:else}
-<a class="p-2 bg-rose-600 shadow-xl hover:shadow-sm hover:bg-rose-700 rounded-xl text-xl animate-red-glowing" href="/login">Login</a>
+{#if page.url.pathname !== "/login"}
+<a class="py-1 px-4 bg-rose-600 shadow-xl hover:shadow-sm hover:bg-rose-700 rounded-xl text-lg animate-red-glowing" href="/login">Login</a>
+{/if}
 {/if}
 
 <style type="scss">

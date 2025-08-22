@@ -4,6 +4,7 @@
     import { X } from "lucide-svelte";
     import { onMount } from "svelte";
     import MultiSelect from 'svelte-multiselect';
+    import { fly } from "svelte/transition";
 
     const tagOptions = Array.from(tags.entries()).map(([k, v]) => ({ id: k, label: v, value: v }))
 
@@ -28,10 +29,10 @@
     let selected = $state([]);
 </script>
 
-<div class="bg-gray-300 flex items-center justify-center">
+<div class="absolute z-10 bg-gray-300 flex items-center justify-center w-full" in:fly={{ y: -400, duration: 400 }} out:fly={{ y: -400, duration: 400 }}>
     <form class="flex flex-col w-96 items-center justify-center gap-4 sm:gap-5 m-8 my-4 pb-4" onsubmit={async (event) => { event.preventDefault(); await search(); close()}}>
         <div class="flex justify-end w-full mr-[-2rem]">
-            <button onclick={close} type="button" class="bg-red-600 hover:bg-red-700 flex gap-2 items-center text-white p-1 rounded-md">
+            <button onclick={close} type="button" class="hover:bg-gray-200 flex gap-2 items-center text-black p-1 rounded-md">
                 <X />
             </button>
         </div>
@@ -69,6 +70,7 @@
                     placeholder="Search tags.."
                     liSelectedClass="flex gap-2 items-center"
                     outerDivClass="flex gap-2 items-center my-0 bg-gray-50 p-2 rounded-md"
+                    --sms-bg="#e5e7eb"
                     bind:selected
                 >
                     <span slot="selected" let:option class="max-w-36 text-ellipsis overflow-x-clip text-sm">{option.label}</span>

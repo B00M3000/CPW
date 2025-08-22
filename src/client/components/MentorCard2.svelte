@@ -13,6 +13,6 @@
     let { mentor }: { mentor: Mentor } = $props();
 </script>
 
-<a href="/mentor/{mentor._id}" class="flex gap-2 p-2 px-3 bg-gray-400 rounded-l-full rounded-r-full items-center">
+<a href="/mentor/{mentor._id}" class="flex gap-2 p-2 px-3 bg-gray-300 border border-solid border-gray-400 rounded-l-full rounded-r-full items-center">
     <span class="text-sm text-center">{mentor.name || "Mentor Not Found!"}</span>
 </a>

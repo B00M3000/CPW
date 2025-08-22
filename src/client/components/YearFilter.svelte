@@ -35,7 +35,7 @@
 <div class="filter-container">
     <label>
         <select
-            class="yearFilter"
+            class="yearFilter bg-gray-200"
             bind:value={yearLowerBound}
             on:change={updateLowerBound}
         >
@@ -47,7 +47,7 @@
     <p> to </p>
     <label>
         <select
-            class="yearFilter"
+            class="yearFilter bg-gray-200"
             bind:value={yearUpperBound}
             on:change={updateUpperBound}
         >
@@ -70,22 +70,19 @@
     p {
         padding: 0px;
         margin: 0px;
-        font-weight: 900;
-        font-size: 14px;
+        font-weight: 500;
+        font-size: 16px;
     }
 
     .yearFilter {
         padding: 4px;
-        border: 1px solid rgb(245, 245, 245);
         border-radius: 4px;
-        background-color: rgb(245, 245, 245);
-        font-weight: 800;
+        font-weight: 500;
         color: black;
 
     }
     label {
         color: black;
-        background-color: rgb(245, 245, 245);
         border-radius: 5px;
     }
 </style>

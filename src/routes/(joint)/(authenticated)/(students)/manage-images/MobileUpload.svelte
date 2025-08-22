@@ -6,6 +6,7 @@
     import Icon from '../../../../../client/components/Icon.svelte';
     import CircleCheck from '@/client/icons/CircleCheck';
     import Copy from '@/client/icons/Copy';
+    import { RingLoader } from "svelte-loading-spinners";
 
     export let projectId: string;
 
@@ -26,24 +27,26 @@
     }
 </script>
 
-<div class="flex flex-col p-7 bg-gray-400 gap-3 items-center justify-center rounded-xl">
+<div class="flex flex-col p-12 bg-white gap-3 items-center justify-center rounded-xl">
     <h1 class="text-4xl mb-4">Mobile Image Upload</h1>
     <div class="flex gap-2 justify-center items-center">
         {#await urlPromise}
-        <span class="p-2 bg-white rounded-xl text-lg">Generating URL...</span>
-        <button class="bg-blue-500 hover:bg-blue-600 p-2 rounded-xl text-white">
-            <Icon src={Copy} size="2rem" color="white"/>
+        <span class="p-2 bg-gray-200 rounded-xl text-base w-72">Generating URL...</span>
+        <button class="p-2 rounded-xl text-white">
+            <Icon src={Copy} size="1.5rem" color="black"/>
         </button>
         {:then url}
-        <span class="p-2 bg-white rounded-xl text-lg max-w-96 text-ellipsis overflow-clip text-nowrap">{url}</span>
-        <button on:click={() => copyURL(url)} class="bg-blue-500 hover:bg-blue-600 p-2 rounded-xl text-white">
-            <Icon src={copied ? CircleCheck : Copy} color={copied ? "lightgreen" : "white"} size="2rem"/>
+        <span class="p-2 bg-gray-200 rounded-xl text-base w-72 text-ellipsis overflow-clip text-nowrap">{url}</span>
+        <button on:click={() => copyURL(url)} class="{copied ? "" : "hover:bg-gray-200"} p-2 rounded-xl text-white">
+            <Icon src={copied ? CircleCheck : Copy} color={copied ? "darkgreen" : "black"} size="1.5rem"/>
         </button>
         {/await}
     </div>
 
     {#await qrcodePromise}
-        <span>Loading QR Code...</span>
+        <div class="w-72 !h-72 flex items-center justify-center">
+            <RingLoader color="blue" size={48} />
+        </div>
     {:then qr}
         <img src={qr} class="w-72 h-72"/>
     {:catch error}

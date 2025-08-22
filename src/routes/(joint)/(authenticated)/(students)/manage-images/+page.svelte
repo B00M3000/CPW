@@ -153,7 +153,7 @@
             <p class="text-base text-gray-500">Upload new project images, alter the descriptions, and delete images. Note that once an image has been uploaded, it cannot be swapped out/changed. You must delete the image and then upload the desired image.</p>
         </div>
 
-        <hr class="border-2 border-gray-200 rounded-sm">
+        <hr class="border-2 border-gray-300 rounded-sm">
 
         <div class="flex flex-col gap-2">
             <h2 class="text-2xl font-bold">Uploading images</h2>
@@ -162,7 +162,7 @@
                 <select
                     id="project"
                     name="projectId"
-                    class="border-black border-[1px] rounded-md p-1 ml-3"
+                    class="border-gray-400 border-[1px] rounded-md p-1 ml-3"
                     disabled={projects.length == 0}
                     required
                     bind:value={projectId}
@@ -177,10 +177,10 @@
 
         {#if /^[0-9A-Fa-f]{24}$/.test(projectId)}
         <div class="flex items-center mx-2">
-            <button class="p-4 rounded-xl bg-blue-500 hover:bg-blue-400 text-white" onclick={() => mobileKeyOverlay = true}>Mobile Upload</button>
+            <button class="p-8 px-16 text-xl rounded-xl bg-blue-500 hover:bg-blue-400 text-white" onclick={() => mobileKeyOverlay = true}>Mobile Upload</button>
             <span class="p-7">OR</span>
             <!-- svelte-ignore a11y-no-static-element-interactions -->
-            <button class="border-4 flex-grow border-slate-300 bg-slate-200 rounded-xl flex-col h-36 flex justify-center items-center" onclick={() => fileInput.click()} ondrop={handleFileDrop} aria-dropeffect="execute">
+            <button class="border-4 flex-grow border-gray-400 bg-slate-200 rounded-xl flex-col h-36 flex justify-center items-center" onclick={() => fileInput.click()} ondrop={handleFileDrop} aria-dropeffect="execute">
                 <div class="p-2 bg-gray-300 inline-flex rounded-full mb-1">
                     <Icon src={CloudUpload} size="2em" color="#505080"/>
                 </div>
@@ -191,7 +191,7 @@
         {/if}
 
         {#if imageUploadQueue.length > 0}
-        <div class="flex flex-col border-[3px] rounded-xl">
+        <div class="flex flex-col border rounded-xl">
             <div class="p-6">
                 <h1 class="font-bold text-2xl">Uploads in progress</h1>
                 <span>*Please add descriptions to your images after uploading them on the text fields to the right.</span>
@@ -218,9 +218,9 @@
         </div>
         {/if}
 
-        <hr class="border-2 border-gray-200 rounded-sm">
+        <hr class="border-2 border-gray-300 rounded-sm">
 
-        <div class="flex rounded-2xl border-[3px] flex-col">
+        <div class="flex rounded-2xl border flex-col border-gray-400 border-solid">
             <div class="flex flex-col gap-1 m-5">
                 <h1 class="text-2xl font-bold">Uploaded images</h1>
                 <p class="text-base text-gray-500">Project images that you uploaded.</p>
@@ -228,7 +228,7 @@
 
             <table>
                 <thead class="bg-gray-300">
-                    <tr class="border-t-[3px]">
+                    <tr class="border-gray-400 border-t">
                         <th class="p-4 text-gray-700">Image</th>
                         <th class="p-4 text-gray-700">Associated Project</th>
                         <th class="p-4 text-gray-700">Description</th>
@@ -245,7 +245,7 @@
                 </thead>
                 <tbody>
                     {#each uploadedImages as image}
-                    <tr class="border-y-[3px]">
+                    <tr class="border-gray-400 border-t">
                         <td>
                             <div class="p-4 flex justify-center items-center">
                                 <div class="flex justify-center items-center rounded-xl w-20 h-20">

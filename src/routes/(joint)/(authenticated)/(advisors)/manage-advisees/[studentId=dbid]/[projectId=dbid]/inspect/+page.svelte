@@ -34,27 +34,28 @@
 
 {#if initalPrompt}
     <div class="absolute flex items-center justify-center h-full w-full top-0 left-0 bg-[#000000AA]">
-        <div class='bg-gray-200 p-8 rounded-xl gap-4 flex flex-col items-center max-w-[90vw] sm:max-w-[75vw]'>
+        <div class='bg-gray-200 p-8 rounded-lg gap-4 flex flex-col items-center max-w-[90vw] sm:max-w-[75vw]'>
             <p class="gap-1 text-xl"><strong class="text-red-700">IMPORTANT:</strong> Please review everything, the button to approve will appear at the bottom once you have confirmed that the required elements are present!</p>
-            <button class="bg-red-500 hover:bg-red-600 text-white p-2 rounded-md flex items-center gap-2 px-4" onclick={() => initalPrompt = false}>
+            <button class="bg-gray-400 hover:bg-gray-500 text-white p-2 rounded-md flex items-center gap-2 px-4" onclick={() => initalPrompt = false}>
                 <span class="text-lg">Dismiss</span>
             </button>
         </div>
     </div>
 {/if}
 
-<main class="flex flex-col items-center w-full">
-    <div class="inline-flex flex-col p-8 sm:p-16 m-4 sm:m-16 !mt-4 bg-slate-300 rounded-3xl">
-        <div class="rounded-xl flex flex-wrap justify-between gap-2 w-full mb-8">
+<main class="flex flex-col items-center w-full bg-gray-300">
+    <div class="grid grid-cols-[1fr_auto_1fr] w-full p-8">
+        <div class="flex justify-start items-center">
             <button class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md flex items-center gap-2 px-4" onclick={() => history.back()}>
                 <Return size={20}/>
                 <span class="text-base">Return</span>
             </button>
         </div>
-
         <h1 class="text-3xl mb-8">Inspecting {data.project.student.name}'s Project</h1>
-
-        <h3 class="text-xl text-bold">Project Details: </h3>
+        <div></div>
+    </div>
+    <div class="inline-flex flex-col p-8 sm:p-16 m-4 sm:m-16 !mt-4 bg-gray-200 rounded-lg">
+        <h3 class="text-xl text-bold mb-2">Project Details: </h3>
 
         <p class="year"><strong>Year:</strong> {data.project.year}</p>
         <p class="mentor"><strong>Mentor:</strong> {data.project.mentor.name}</p>

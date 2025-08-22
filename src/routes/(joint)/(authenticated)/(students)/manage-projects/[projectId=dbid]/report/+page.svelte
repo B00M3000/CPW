@@ -75,7 +75,7 @@
 <svelte:window on:keydown={onKeydown} on:keyup={onKeyup} />
 
 <main class="w-full flex items-center justify-center flex-col p-8">
-    <div class="bg-gray-300 p-8 rounded-xl flex flex-col max-w-[85vw]">
+    <div class="bg-gray-200 p-8 rounded-lg flex flex-col max-w-5xl  border border-solid border-gray-400">
         <div class="text-2xl font-bold text-center mb-8">Submit Project Report for <u>{title}</u></div>
         <div class="text-lg mb-10 mx-8">To submit or edit your full report, copy your project report and paste it here by
             pressing the paste keybind on your computer (<code>Meta/Command + V</code> for <code>Mac & Control + V</code> for Windows).

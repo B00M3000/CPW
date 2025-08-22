@@ -23,7 +23,7 @@
     }
 </script>
 
-<div class="flex flex-col gap-4 p-5 items-start w-full">
+<div class="flex flex-col gap-4 p-5 items-center w-full">
     <div class="w-[24rem] shadow-md">
         {#key ignoredStudents}
         <Table striped={true} items={ignoredStudents}>

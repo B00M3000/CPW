@@ -27,7 +27,7 @@
     }
 </script>
 
-<button class="container shadow-lg rounded-sm" on:click={onTrigger}>
+<button class="container shadow-lg rounded-sm cursor-pointer" on:click={onTrigger}>
     <!-- svelte-ignore a11y_missing_attribute -->
     <img src="/assets/google-icon.png"/>
     <span class="text">Sign in with Google</span>

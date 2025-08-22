@@ -10,10 +10,14 @@ import type { User } from "@/interfaces/project.js";
 import { ProjectSchema } from "@/server/mongo/schemas/project.js";
 
 export async function load({ locals, depends }) {
-    depends('advisees')
+    depends('user:adviseeIds')
+
+    const { adviseeIds } = await UserSchema.findById(locals.user?._id, 'adviseeIds')
+
+    adviseeIds.reverse();
 
     const students = await Promise.all(
-        locals.user!.adviseeIds.map(async (adviseeId) => {
+        adviseeIds.map(async (adviseeId) => {
             const student: User | null = await UserSchema.findOne({
                 _id: adviseeId,
             });

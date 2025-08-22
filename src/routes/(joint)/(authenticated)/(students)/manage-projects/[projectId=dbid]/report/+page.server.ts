@@ -10,7 +10,7 @@ import { error } from "@sveltejs/kit";
 
 export const load = async ({ locals, params: { projectId } }) => {
     const project = stringifyObjectId(
-        await ProjectSchema.findById(projectId, "studentId fullReport").lean(),
+        await ProjectSchema.findById(projectId, "studentId fullReport title").lean(),
     );
     if (!project) error(404, "Project not found!");
     if (project.studentId != locals.user._id)

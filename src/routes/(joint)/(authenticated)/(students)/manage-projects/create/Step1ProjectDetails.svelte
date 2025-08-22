@@ -45,6 +45,7 @@
         placeholder="Search tags.."
         liSelectedClass="flex gap-2 items-center"
         outerDivClass="flex gap-2 items-center my-0 bg-gray-50 p-2 py-3 rounded-md border-gray-400 border max-w-[30rem] min-w-72"
+        --sms-bg="#d1d5dc"
         bind:selected={projectDetails.selected}
     >
         <span slot="selected" let:option class="max-w-72 text-ellipsis overflow-x-clip text-base">{option.label}</span>

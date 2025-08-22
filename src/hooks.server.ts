@@ -4,10 +4,11 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
-import type { Handle } from "@sveltejs/kit";
+import { error, redirect, type Handle } from "@sveltejs/kit";
 import mongo from "@/server/mongo";
 import { UserSchema, type UserDocument } from "@/server/mongo/schemas/user";
 import { stringifyObjectId } from "@/lib/utils";
+import { AccessLevel, AccountType } from "./lib/enums";
 
 const dbPromise = mongo();
 
@@ -31,6 +32,23 @@ export const handle: Handle = async ({ event, resolve }) => {
         } else {
             event.cookies.delete("session_id", { path: "/" });
         }
+    }
+
+
+    if(event.route.id?.includes("(authenticated)") && !event.locals.user) {
+        return redirect(307, "/login");
+    }
+
+    if(event.route.id?.includes("(students)") && event.locals.user.accountType != AccountType.Student) {
+        return error(403, { message: "Only Students" });
+    }
+
+    if(event.route.id?.includes("(advisors)") && event.locals.user.accountType != AccountType.Advisor) {
+        return error(403, { message: "Only Advisors" });
+    }
+
+    if(event.route.id?.includes("(admins)") && event.locals.user.accessLevel != AccessLevel.Admin) {
+        return error(403, { message: "Only Admins" });
     }
 
     return await resolve(event);

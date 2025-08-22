@@ -78,15 +78,15 @@
 <Loading2 />
 {/if}
 
-<main class="w-full h-full flex items-center justify-center relative">
+<main class="w-full h-full flex flex-col items-center justify-start relative overflow-y-auto">
     <div class="sm:hidden absolute top-0 left-0 w-full h-full flex items-center justify-center bg-gray-200 z-20">
         <div class="flex flex-col items-center bg-gray-300 m-12 p-8 rounded-xl">
             <span class="text-2xl">Sorry, please create your project on a desktop computer (any device with a larger screen). Thanks!</span>
         </div>
     </div>
-    <div class="flex flex-col items-start p-12 pb-4 rounded-lg bg-gray-300">
-        <span class="text-4xl mb-16">Creating a new project...</span>
-        <div class="overflow-y-auto flex flex-col items-start w-[65vw] h-[65vh]">
+    <div class="flex flex-col items-start p-12 pb-4 rounded-lg my-16 bg-gray-200 border border-solid border-gray-400">
+        <span class="text-4xl mb-12">Creating a new project...</span>
+        <div class="flex flex-col items-start w-[65vw] min-h-[65vh] max-w-4xl p-2">
             {#if step == 1}
             <Step1ProjectDetails bind:projectDetails bind:step />
             {:else if step == 2}
@@ -99,8 +99,8 @@
             <Step5FinalTouches bind:step bind:creationStatus />
             {/if}
         </div>
-        <div class="flex justify-center w-full">
-            <div class="flex justify-center opacity-25 bg-[#000000AA] rounded-lg py-2 px-4">
+        <div class="fixed justify-center w-72 bottom-8 left-1/2 -translate-1/2 ">
+            <div class="flex justify-center opacity-35 bg-[#000000AA] rounded-lg py-2 px-4">
                 <span class="text-white text-sm">Make Sure to Scroll to the Bottom</span>
             </div>
         </div>

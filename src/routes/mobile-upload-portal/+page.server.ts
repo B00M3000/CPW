@@ -13,6 +13,9 @@ import { error } from "@sveltejs/kit";
 
 export async function load({ params, locals, url }) {
     const mobileKey = url.searchParams.get("mobileKey");
+    if(!mobileKey) {
+        return error(400, 'Mobile upload key is required');
+    }
     const mobileKeyDoc: any = stringifyObjectId(
         await MobileKeySchema.findOne({ mobileKey }).lean(),
     );

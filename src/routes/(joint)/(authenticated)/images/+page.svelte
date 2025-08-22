@@ -62,7 +62,7 @@
 <Loading2 />
 {/if}
 
-<main class="h-full flex items-center flex-col">
+<main class="relative h-full flex items-center flex-col bg-gray-300">
     {#if $user.accountType == AccountType.Student}
     <div id="upload-images-button-container" class="w-full p-4 sm:px-16 lg:px-36">
         <button onclick={gotoManageImages}>Upload Images</button>
@@ -70,7 +70,7 @@
     </div>
     {/if}
     <div class="h-full overflow-y-auto w-full" bind:this={scrollElement}>
-        <div class="flex flex-wrap items-center justify-center gap-4 h-auto">
+        <div class="flex flex-wrap items-center justify-center gap-4 h-auto mb-24">
             {#each images as image}
             <div class="w-[300px] h-[225px] 2xl:w-[400px] 2xl:h-[335px]">
                 <SmartProjectImage {image} showProjectPageButton={true} />
@@ -82,16 +82,14 @@
             {/each}
         </div>
     </div>
-    <div class="flex justify-center w-full bg-gray-300">
-        <div class="flex justify-center p-2 sm:p-4 w-full lg:w-2/3 2xl:w-1/2">
-            <Pagination
-                pluralItemName="images"
-                itemsPerPage={items}
-                currentPage={page}
-                maxItems={totalImageCount}
-                onchange={search}
-            />
-        </div>
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full p-2 px-8 max-w-5xl z-20">
+        <Pagination
+            pluralItemName="images"
+            itemsPerPage={items}
+            currentPage={page}
+            maxItems={totalImageCount}
+            onchange={search}
+        />
     </div>
 </main>
 

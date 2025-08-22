@@ -33,7 +33,7 @@
     let currentLower = $derived(clamp((currentPage + 1) * itemsPerPage, 0, maxItems))
 </script>
 
-<div class="flex items-center justify-between bg-[rgb(236,238,241)] gap-4 w-full rounded-md text-black p-4">
+<div class="flex items-center justify-between bg-gray-200 border border-solid border-gray-400 gap-4 w-full rounded-md text-black p-4 shadow-xl">
     <div class="flex gap-2 items-center">
         <span class="max-sm:hidden">{capitalize(pluralItemName)} per page: </span>
         <!-- <span class="sm:hidden">Show: </span> -->
@@ -47,7 +47,7 @@
         <span class="max-sm:hidden">{currentUpper}-{currentLower} of {maxItems} {pluralItemName.toLowerCase()}</span>
         <span class="sm:hidden">{currentUpper}-{currentLower}</span>
     </div>
-    <div class="flex items-center h-full gap-3 sm:gap-5">
+    <div class="flex items-center h-full gap-5">
         <div class="flex items-center gap-1">
             <div>
                 <select class="rounded-sm p-1 bg-white" bind:value={currentPage} onchange={pageChange}>
@@ -59,11 +59,13 @@
             <span class="text-gray-900 max-sm:hidden">of {totalPages} pages</span>
             <span class="text-gray-900 sm:hidden">of {totalPages}</span>
         </div>
-        <button class="h-full p-2 sm:px-4 bg-gray-300 hover:bg-gray-400 rounded-md" onclick={() => { currentPage = Math.max(0, currentPage - 1); pageChange() }}>
-            <ArrowLeft size={24} strokeWidth={1.5} />
-        </button>
-        <button class="h-full p-2 sm:px-4 bg-gray-300 hover:bg-gray-400 rounded-md" onclick={() => { currentPage = Math.min(totalPages - 1, currentPage + 1); pageChange() }}>
-            <ArrowRight size={24} strokeWidth={1.5} />
-        </button>
+        <div class="flex items-center gap-3">
+            <button class="h-full p-2 sm:px-4 bg-gray-300 hover:scale-110 transition-all rounded-md text-gray-700" onclick={() => { currentPage = Math.max(0, currentPage - 1); pageChange() }}>
+                <ArrowLeft size={24} strokeWidth={2} />
+            </button>
+            <button class="h-full p-2 sm:px-4 bg-gray-300 hover:scale-110 transition-all rounded-md text-gray-700" onclick={() => { currentPage = Math.min(totalPages - 1, currentPage + 1); pageChange() }}>
+                <ArrowRight size={24} strokeWidth={2} />
+            </button>
+        </div>
     </div>
 </div>

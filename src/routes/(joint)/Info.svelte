@@ -22,8 +22,8 @@
 </button>
 
 {#if isOpen}
-<div class="fixed top-0 left-0 bg-opacity-65 bg-black z-10 w-screen h-screen flex items-center justify-center">
-    <div class="flex flex-col p-8 bg-slate-300 rounded-xl text-black w-[45vw] min-w-[22rem] max-w-[32rem]">
+<div class="fixed top-0 left-0 bg-black/65 z-10 w-screen h-screen flex items-center justify-center">
+    <div class="flex flex-col p-8 bg-gray-300 rounded-xl text-black w-[45vw] min-w-[22rem] max-w-[32rem]">
         <div class="flex justify-between items-center">
             <h1 class="text-xl font-bold">Information</h1>
             <button on:click={toggleState}>

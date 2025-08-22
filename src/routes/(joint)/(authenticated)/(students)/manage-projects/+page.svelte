@@ -43,87 +43,83 @@
     let deleteConfirmInputValue: string;
 </script>
 
-<main>
-    <div class="dashboard-actions">
-        <h2 class="text-2xl text-gray-600">Manage Projects</h2>
-        <div class="flex gap-4">
-            <a href='manage-projects/create' class="p-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg flex items-center gap-2">
-                <Add size={24} />
-                <span>Create New Project</span>
-            </a>
-            <a href='manage-images' class="p-4 py-3 animate-blue-glowing hover:bg-blue-600 text-white rounded-lg flex items-center gap-2">
-                <Upload size={20} />
-                Upload Images
-            </a>
+<main class="flex flex-col">
+    <div class="p-12 flex flex-col justify-center bg-gray-200 gap-12 mb-12">
+        <div class="flex items-center justify-between w-full">
+            <h2 class="text-2xl text-gray-600">Manage Projects</h2>
+            <div class="flex gap-4">
+                <a href='manage-projects/create' class="p-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg flex items-center gap-2">
+                    <Add size={24} />
+                    <span>Create New Project</span>
+                </a>
+                <a href='manage-images' class="p-4 py-3 animate-blue-glowing hover:bg-blue-600 text-white rounded-lg flex items-center gap-2">
+                    <Upload size={20} />
+                    Upload Images
+                </a>
+            </div>
         </div>
-    </div>
-
-    <div style="background-color: lightgrey; padding: 3rem; padding-top: 0; margin-bottom: 3rem;">
         <div class="flex items-center gap-2 text-lg">
-            <span><strong class="font-bold text-red-700">IMPORTANT: </strong> Completing the forms on google classroom and submitting your project report as a google document is still required. (As of Project Week 2024)</span>
+            <span class="text-justify"><strong class="font-bold text-red-700">IMPORTANT: </strong> Completing the forms on google classroom and submitting your project report as a google document is still required. (As of Project Week 2024)</span>
         </div>
     </div>
 
-    <div class="gap-4 grid grid-cols-[repeat(auto-fit,_minmax(38rem,_1fr))] auto-rows-fr max-w-[77rem] w-full">
+    <div class="self-center gap-4 grid grid-cols-[repeat(auto-fit,_minmax(40rem,_1fr))] auto-rows-fr max-w-[90rem] w-full">
         {#each projects as project, i}
-            <div class="project-card">
-                <div class="project-cards">
-                    <ProjectCard {project} />
-                    <div class="button-container">
-                        {#if project.underReview == true}
-                            <button class="disabled-button" disabled>
-                               Pending Advisor Review
+            <div class="project-cards">
+                <ProjectCard {project} />
+                <div class="grid grid-rows-4 gap-5 ml-6 mr-2 text-white text-base w-48">
+                    {#if project.underReview == true}
+                        <button class="disabled-button" disabled>
+                            Pending Advisor Review
+                        </button>
+                    {:else}
+                        {#if project.publish == true}
+                            <button class="!bg-red-700 hover:!bg-red-600 hover:scale-105 transition-all rounded-lg p-4 px-4" onclick={() => {publish(project)}}>
+                                Unpublish
                             </button>
                         {:else}
-                            {#if project.publish == true}
-                                <button class="unpublish-button text-2xl" on:click={() => {publish(project)}}>
-                                    Unpublish
-                                </button>
-                            {:else}
-                                <button class="publish-button text-2xl" on:click={() => {publish(project)}}>
-                                    Publish
-                                </button>
-                            {/if}
+                            <button class="!bg-green-700 hover:!bg-green-600 hover:scale-105 transition-all rounded-lg p-4 px-4" onclick={() => {publish(project)}}>
+                                Publish
+                            </button>
                         {/if}
+                    {/if}
 
-                        <button class="edit-button" on:click={() => goto(`manage-projects/${project._id}/edit`)}>
-                            Edit Details
-                        </button>
-                        <button class="fullreport-button" on:click={()=> goto(`manage-projects/${project._id}/report`)}>
-                            {#if project.fullReport == ""} Add {:else} Edit {/if} Full Report
-                        </button>
+                    <button class="!bg-blue-700 hover:!bg-blue-600 hover:scale-105 transition-all rounded-lg p-4 px-4" onclick={() => goto(`manage-projects/${project._id}/edit`)}>
+                        Edit Details
+                    </button>
+                    <button class="!bg-blue-700 hover:!bg-blue-600 hover:scale-105 transition-all rounded-lg p-4 px-4 text-sm" onclick={()=> goto(`manage-projects/${project._id}/report`)}>
+                        {#if project.fullReport == ""} Add {:else} Edit {/if} Full Report
+                    </button>
 
-                        <button class="delete-button" on:click={() => {initDeleteProject(i)}}>
-                            {#if initDeleteConfirm == i}
-                            <span class="delete-button-warning blink">
-                                <strong>⚠ Are you sure? This action is IRREVERSIBLE ⚠</strong>
-                            </span>
-                            {:else}
-                            Delete
-                            {/if}
-                        </button>
-                    </div>
+                    <button class="!bg-red-700 hover:!bg-red-600 hover:scale-105 transition-all rounded-lg p-4 px-4" onclick={() => {initDeleteProject(i)}}>
+                        {#if initDeleteConfirm == i}
+                        <span class="delete-button-warning blink">
+                            <strong>⚠ Are you sure? This action is IRREVERSIBLE ⚠</strong>
+                        </span>
+                        {:else}
+                        Delete
+                        {/if}
+                    </button>
                 </div>
             </div>
             {#if deleteConfirm == i}
+            {@const disabled = deleteConfirmInputValue !== "I want to delete this project" }
             <div class="overlay delete-confirm">
-                <div class="bg-gray-500 flex flex-col items-center p-8 gap-8 rounded-md">
-                    <div class="flex flex-col items-start gap-2">
-                        <div class="flex items-center gap-1">
-                            <span>Project Title: </span>
-                            <span class="p-1 bg-gray-500 rounded-md">{project.title}</span>
+                <div class="bg-gray-300 flex flex-col text-black items-center p-8 gap-4 rounded-md">
+                    <div class="grid gap-2 grid-cols-[auto_auto]">
+                        <div class="grid grid-cols-subgrid col-span-full">
+                            <span class="text-right font-semibold">Project Title: </span>
+                            <span class="">{project.title}</span>
                         </div>
-                        <div class="flex items-center gap-1">
-                            <span>Enter: </span>
-                            <span class="p-1 bg-gray-600 rounded-md">I want to delete this project</span>
+                        <div class="grid grid-cols-subgrid col-span-full">
+                            <span class="text-right  font-semibold">Enter Below: </span>
+                            <span class="">I want to delete this project</span>
                         </div>
                     </div>
-                    <input class="text-black p-1 w-3/4" bind:value={deleteConfirmInputValue} on:paste={(e) => e.preventDefault()}/>
+                    <input class="text-black p-1 w-3/4 border border-gray-400 border-solid" bind:value={deleteConfirmInputValue} onpaste={(e) => e.preventDefault()}/>
                     <div class="flex flex-col gap-4">
-                        {#if deleteConfirmInputValue == "I want to delete this project"}
-                        <button class="blink" on:click={deleteProject(project)}>CONFIRM DELETION</button>
-                        {/if}
-                        <button on:click={() => {
+                        <button class="{disabled ? "!bg-gray-200 !cursor-not-allowed" : "blink"}" onclick={() => deleteProject(project)} {disabled}>CONFIRM DELETION</button>
+                        <button onclick={() => {
                             deleteConfirm = null;
                             initDeleteConfirm = null;
                         }}>GO BACK</button>
@@ -183,38 +179,6 @@
         overflow-x: hidden;
     }
 
-    .dashboard-actions {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        padding: 3rem;
-
-        background-color: lightgrey;
-    }
-
-    button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #007BFF;
-        color: white;
-        padding: 8px 24px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s ease;
-    }
-
-    button:disabled {
-        cursor: auto;
-    }
-
-    button:hover {
-        background-color: #0056b3;
-    }
-
     .project-cards {
         background-color: #fff;
         border: 1px solid #ccc;
@@ -227,8 +191,7 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        max-width: 40rem;
-        height: 20rem;
+        height: 22rem;
     }
 
     .button-container {

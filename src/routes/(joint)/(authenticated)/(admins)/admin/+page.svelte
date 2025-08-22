@@ -5,7 +5,7 @@
 -->
 
 <script lang="ts">
-    import { BookUser, FolderOpen, Info, Users } from 'lucide-svelte';
+    import { BookUser, FolderOpen, Rocket, Users } from 'lucide-svelte';
 
     export let data;
 </script>
@@ -28,8 +28,8 @@
             <span>Project Center</span>
           </a>
           <a href=/admin/year-status class="p-4 px-6 bg-blue-500 rounded-lg hover:bg-blue-600 flex-col flex items-center gap-4">
-            <Info size={96} />
-            <span>Year Status</span>
+            <Rocket size={96} />
+            <span>Mission Control</span>
           </a>
         </div>
     </div>
