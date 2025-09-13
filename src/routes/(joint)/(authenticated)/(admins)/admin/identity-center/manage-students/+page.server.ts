@@ -127,7 +127,7 @@ export const actions = {
     async createStudent({ request }) {
         try {
             const data = await request.formData();
-            
+
             // Parse and validate form data with Zod
             const validationResult = CREATE_STUDENT_SCHEMA.safeParse({
                 firstName: data.get('firstName')?.toString(),

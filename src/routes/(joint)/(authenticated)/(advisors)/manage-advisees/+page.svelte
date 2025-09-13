@@ -15,6 +15,8 @@
     import TransferAdvisees from "./TransferAdvisees.svelte";
     import RemoveAdvisees from "./RemoveAdvisees.svelte";
     import { page } from "$app/state";
+    import SmartProjectImage from "@/client/components/SmartProjectImage.svelte";
+    import LazyImage2 from "@/client/components/LazyImage2.svelte";
 
     let students = $derived(page.data.students);
 
@@ -48,18 +50,21 @@
                 <TableHeadCell></TableHeadCell>
             </TableHead>
             <TableBody>
-                <TableBodyRow slot="row" let:item class="border-gray-400 border-y border-solid">
+                <TableBodyRow slot="row" let:item class="border-gray-400 border-y border-solid bg-gray-100">
                     {@const student = item as any}
                     <TableBodyCell>
-                        <div class="flex flex-col items-start w-full">
-                            <div class="flex items-start justify-start text-base mb-2 w-full">
-                                <span>{student.name ? student.name : "[no name on record]"}</span>
-                                <span class="text-gray-500 text-xs ml-1">{student.graduationYear % 100}</span>
-                                {#if Date.now() - student.createdAt < 1000 * 60 * 60 * 24}
-                                    <span class="text-green-500 text-xs ml-1 animate-pulse">New!</span>
-                                {/if}
+                        <div class="grid grid-cols-[auto_1fr] gap-4 items-center">
+                            <div class="w-10 h-10 rounded-full overflow-hidden"><LazyImage2 class="w-10 h-10" src={student.picture} /></div>
+                            <div class="flex flex-col items-start w-full">
+                                <div class="flex items-start justify-start text-base w-full">
+                                    <span>{student.name ? student.name : "[no name on record]"}</span>
+                                    <span class="text-gray-500 text-xs ml-1">{student.graduationYear % 100}</span>
+                                    {#if Date.now() - student.createdAt < 1000 * 60 * 60 * 24}
+                                        <span class="text-green-500 text-xs ml-1 animate-pulse">New!</span>
+                                    {/if}
+                                </div>
+                                <span class="text-sm text-gray-600">{student.email}</span>
                             </div>
-                            <span class="text-sm text-gray-600">{student.email}</span>
                         </div>
                     </TableBodyCell>
                     <TableBodyCell>

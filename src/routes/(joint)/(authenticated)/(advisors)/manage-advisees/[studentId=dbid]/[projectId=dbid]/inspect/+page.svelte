@@ -44,17 +44,17 @@
 {/if}
 
 <main class="flex flex-col items-center w-full bg-gray-300">
-    <div class="grid grid-cols-[1fr_auto_1fr] w-full p-8">
+    <div class="grid grid-cols-[1fr_auto_1fr] w-full p-12 items-center justify-center">
         <div class="flex justify-start items-center">
             <button class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md flex items-center gap-2 px-4" onclick={() => history.back()}>
                 <Return size={20}/>
                 <span class="text-base">Return</span>
             </button>
         </div>
-        <h1 class="text-3xl mb-8">Inspecting {data.project.student.name}'s Project</h1>
+        <h1 class="text-3xl">Inspecting {data.project.student.name}'s Project</h1>
         <div></div>
     </div>
-    <div class="inline-flex flex-col p-8 sm:p-16 m-4 sm:m-16 !mt-4 bg-gray-200 rounded-lg">
+    <div class="inline-flex flex-col p-8 sm:p-16 m-4 sm:m-16 !mt-0 bg-gray-200 rounded-lg border border-solid border-gray-400">
         <h3 class="text-xl text-bold mb-2">Project Details: </h3>
 
         <p class="year"><strong>Year:</strong> {data.project.year}</p>

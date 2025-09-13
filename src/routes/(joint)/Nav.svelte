@@ -25,7 +25,7 @@
 </script>
 
 
-<nav class="flex justify-between bg-[#a32349] py-4 text-white h-[var(--nav-bar-height)] z-10 shadow-2xl">
+<nav class="flex justify-between bg-[#a32349] py-4 text-white h-[var(--nav-bar-height)] z-20 shadow-2xl">
     <div class="sm:hidden"></div>
     <div class="flex ml-4 items-center max-sm:hidden">
         {#each navBarElements as element}

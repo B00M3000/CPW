@@ -6,6 +6,7 @@
     import StudentCard2 from "@/client/components/StudentCard2.svelte";
     import Tags from "@/client/components/Tags.svelte";
     import { Return, Maximize, CloseLarge } from "carbon-icons-svelte";
+    import { X } from "lucide-svelte";
     import toast from "svelte-french-toast";
 
     let { data } = $props();
@@ -29,23 +30,22 @@
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div id="enlarged-image-view" class="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-[#00000044] z-40" onclick={backgroundClick}>
-    <div class="bg-gray-300 rounded-xl grid grid-rows-[auto_minmax(0,_1fr)] max-w-[85%] max-h-[85%] min-w-[55%] min-h-[55%]">
-        <div class="p-8 py-4 text-xl bg-gray-400 shadow-md rounded-t-xl flex justify-between items-center">
+    <div class="bg-gray-300 grid grid-rows-[auto_minmax(0,_1fr)] max-w-7xl w-full h-3/4 border border-solid mx-16 border-gray-400 rounded-lg overflow-hidden">
+        <div class="p-8 py-4 text-xl bg-gray-300 rounded-t-xl flex justify-between items-center">
             <span>Gallery</span>
-            <button class="bg-red-500 hover:bg-red-600 text-white p-2 rounded-md flex items-center gap-2" onclick={() => enlargedImageView = false}>
-                <CloseLarge />
-                <span class="text-sm">Close</span>
+            <button class="text-black p-2 rounded-full flex items-center gap-2 cursor-pointer hover:bg-gray-300" onclick={() => enlargedImageView = false}>
+                <X size={24} />
             </button>
         </div>
-        <div class="overflow-y-auto w-full h-full">
-            <div class="grid grid-cols-2 xl:grid-cols-3 px-4">
+        <div class="overflow-y-auto w-full h-full bg-gray-200">
+            <div class="grid grid-cols-2 xl:grid-cols-3 px-4 h-full">
                 {#each data.images as image}
                 <div class="">
                     <SmartProjectImage {image} showProjectPageButton={false} />
                 </div>
                 {:else}
-                <div class="flex items-center justify-center col-span-full my-4">
-                    <span class="text-xl">No images.</span>
+                <div class="flex items-center justify-center col-span-full w-full h-full">
+                    <span class="text-2xl text-gray-500">No images.</span>
                 </div>
                 {/each}
             </div>
@@ -56,25 +56,7 @@
 
 <main class="flex flex-col items-center w-full h-full">
     <div class="layout gap-4 p-4">
-        <!-- Details -->
-        <!-- <div class="details p-4 flex flex-col justify-center bg-[rgb(205,209,214)] rounded-xl w-full">
-            <h1 class="text-xl mb-3">{data.project?.title}</h1>
-            <div class="inline-flex items-center gap-2 mb-2">
-                <span class='font-bold'>Student: </span>
-                <StudentCard2 student={data.student} />
-            </div>
-            <div class="inline-flex items-center gap-2 mb-2">
-                <span class='font-bold'>Mentor: </span>
-                <MentorCard2 mentor={data.mentor} />
-            </div>
-            <div class="flex flex-col items-start mb-2">
-                <h3 class="font-bold my-1">Tags: </h3>
-                <Tags tagIds={data.project.tags} />
-            </div>
-            <h3 class="font-bold">Description: </h3>
-            <span class="max-w-[32rem] overflow-clip break-all text-wrap">{data.project?.shortDesc}</span>
-        </div> -->
-        <div class="flex flex-col justify-between bg-gray-300 rounded-md p-4 w-full h-full min-h-56 shadow-xl">
+        <div class="flex flex-col justify-between bg-gray-200 border border-solid border-gray-400 rounded-md p-4 w-full h-full min-h-56 shadow-xl">
             <div class="flex flex-col">
                 <div class="flex justify-between mb-1">
                     <h3 class="text-xl">{data.project.title}</h3>
@@ -114,23 +96,23 @@
             <div class="fadeout"></div>
         </div>
         <!-- Images -->
-        <div class="images bg-gray-300 rounded-xl grid grid-rows-[auto_minmax(0,_1fr)] relative">
-            <div class="p-8 py-4 text-xl bg-gray-400 shadow-md rounded-t-xl flex justify-between items-center">
+        <div class="images bg-gray-200 rounded-xl grid grid-rows-[auto_minmax(0,_1fr)] relative border border-solid border-gray-400">
+            <div class="p-8 py-4 text-xl bg-gray-300 rounded-t-xl flex justify-between items-center">
                 <span>Gallery</span>
-                <button class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md flex items-center gap-2" onclick={() => enlargedImageView = true}>
+                <button class="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white p-2 rounded-md flex items-center gap-2" onclick={() => enlargedImageView = true}>
                     <Maximize />
                     <span class="text-sm">Enlarge</span>
                 </button>
             </div>
             <div class="overflow-y-auto w-full h-full max-w-[36rem] 2xl:max-w-[42rem]">
-                <div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 px-4">
+                <div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 px-4 h-full">
                     {#each data.images as image}
                     <div class="">
                         <SmartProjectImage {image} showProjectPageButton={false} />
                     </div>
                     {:else}
-                    <div class="flex items-center justify-center col-span-full my-4">
-                        <span class="text-xl">No images.</span>
+                    <div class="flex items-center justify-center col-span-full text-gray-500 h-full">
+                        <span class="text-2xl">No images.</span>
                     </div>
                     {/each}
                 </div>
@@ -140,12 +122,12 @@
             {/if}
         </div>
         <!-- Toolbar -->
-        <div class="toolbar bg-[rgb(205,209,214)] p-4 rounded-xl flex flex-wrap justify-between gap-2 ">
-            <button class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md flex items-center gap-2 px-4" onclick={() => history.back()}>
+        <div class="toolbar bg-gray-200 border border-gray-400 border-solid p-4 rounded-xl flex flex-wrap justify-between gap-2">
+            <button class="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white p-2 rounded-md flex items-center gap-2 px-4" onclick={() => history.back()}>
                 <Return size={20}/>
                 <span class="text-base">Return</span>
             </button>
-            <button class="bg-gray-500 hover:bg-gray-600 text-white p-2 rounded-md flex items-center gap-2 px-4" onclick={() => doubleSpacing = !doubleSpacing}>
+            <button class="bg-gray-500 cursor-pointer hover:bg-gray-600 text-white p-2 rounded-md flex items-center gap-2 px-4" onclick={() => doubleSpacing = !doubleSpacing}>
                 <span class="text-base font-bold">x2</span>
                 <span class="text-sm">Toggle Double Report Newlines</span>
             </button>

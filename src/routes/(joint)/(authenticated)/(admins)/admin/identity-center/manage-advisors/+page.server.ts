@@ -65,7 +65,7 @@ export const actions = {
     async createAdvisor({ request }) {
         try {
             const data = await request.formData();
-            
+
             // Parse and validate form data with Zod
             const validationResult = CREATE_ADVISOR_SCHEMA.safeParse({
                 firstName: data.get('firstName')?.toString(),

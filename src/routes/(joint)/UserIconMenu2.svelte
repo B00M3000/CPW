@@ -10,7 +10,7 @@
 </script>
 
 {#if $user}
-<div class="trigger text-black">
+<div class="relative trigger text-black">
     <div class="hover:bg-[#AAAAAA44] rounded-full p-1">
         <!-- svelte-ignore a11y_missing_attribute -->
         <img class="w-10 h-10 rounded-full" src={$user.picture} />
@@ -18,7 +18,7 @@
 
     <div class="relative">
         <div class="reveal-on-trigger hidden h-2 bg-white w-full"></div>
-        <div class="reveal-on-trigger z-30 hidden flex-col items-center absolute top-2 left-6 -translate-x-3/4 bg-white p-4 gap-3 shadow-lg">
+        <div class="reveal-on-trigger z-50 hidden flex-col items-center absolute top-2 left-6 -translate-x-3/4 bg-white p-4 gap-3 shadow-lg">
             <div class="grid grid-cols-[3.5rem_1fr] grid-rows-1 items-center justify-center">
                 <div class="p-2">
                     <!-- svelte-ignore a11y_missing_attribute -->
@@ -52,7 +52,7 @@
                 </a>
                 {/if}
             </div>
-            <button class="inline-flex justify-center items-center bg-red-500 text-white rounded-sm p-1 px-4 hover:bg-red-600" on:click={() => user.logout()}>Log Out</button>
+            <button class="inline-flex justify-center cursor-pointer items-center bg-red-500 text-white rounded-sm p-1 px-4 hover:bg-red-600" on:click={() => user.logout()}>Log Out</button>
         </div>
     </div>
 </div>
