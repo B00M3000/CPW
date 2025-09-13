@@ -17,7 +17,7 @@ export async function load({ locals, depends, url }) {
             `/login?redirect=${encodeURIComponent(url.pathname + url.search)}`,
         );
 
-    if (locals.user.accountType == AccountType.Unknown)
+    if (locals.user.accountType == AccountType.Unknown && (!url.pathname.startsWith('/projects') && !url.pathname.startsWith('/images') && !url.pathname.startsWith('/help')))
         error(403, {
             message: "Account is not registered as a Student or Advisor.",
         });
