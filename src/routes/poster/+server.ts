@@ -8,7 +8,7 @@ export const GET: RequestHandler = async ({ url, cookies }) => {
             path: '/',
             httpOnly: true,
             secure: true,
-            sameSite: 'strict'
+            sameSite: 'none'
         });
     }
 
