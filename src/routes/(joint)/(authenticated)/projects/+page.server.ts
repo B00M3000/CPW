@@ -53,7 +53,7 @@ export async function load({ url: { searchParams } }) {
                     }
                 ]
             }
-        }).sort({ score: { $meta: "textScore" } })
+        }).addFields({ score: { $meta: "searchScore" } }).sort({ score: -1 })
     } else {
         aggregate.sort("-createdAt")
     }
