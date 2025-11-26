@@ -23,7 +23,7 @@ export default defineConfig({
             "@interfaces": path.resolve("src/interfaces"),
         },
     },
-    server: { port: process.env.PORT ? parseInt(process.env.PORT) : 80 },
+    server: { port: process.env.PORT ? parseInt(process.env.PORT) : 3000 },
     build: { chunkSizeWarningLimit: 1600 },
     assetsInclude: ["**/*.md"],
 });
