@@ -2,13 +2,11 @@
 
 The Project Week Website was created to streamline the process of archiving, the project reports review process by advisors, and management for the project week coordinator. The website provides a place to search past projects and project photos for inspiration for subsequent project weeks.
 
-The motivation of this project stemmed from a previous good but unwieldly system in place for Project Week (paper). The inspiration for this project originated from my attendance at a CS meeting run by Mirai Duintjer Tebbens Nishioka '24 in 2022.
-
--- Thomas Zhou '26 (Feburary 9th, 2024)
+The motivation of this project stemmed from a previous good but unwieldly system in place for Project Week (paper). The inspiration for this project originated from a CS Club meeting with Mirai Duintjer Tebbens Nishioka '24 in 2022, where we discussed creating some form of digital archive for Project Week.
 
 ### Help:
 
--   [Students](/help/students)
+-   [Students](/help/students) 
 -   [Advisors](/help/advisor)
 
 ### Acknowledgements
