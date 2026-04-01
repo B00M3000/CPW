@@ -15,6 +15,15 @@ export interface ProjectDocumentData {
     shortDesc: string;
     fullReport: string;
     underReview: boolean;
+    pdf?: {
+        fileName: string;
+        size: number;
+        type: string;
+        s3Bucket: string;
+        s3ObjectKey: string;
+        uploadedAt: Date;
+        uploaderId: string;
+    };
 }
 
 const schema = new mongoose.Schema(
@@ -28,6 +37,15 @@ const schema = new mongoose.Schema(
         fullReport: { type: String, default: "" },
         underReview: { type: Boolean, required: true },
         publish: { type: Boolean, default: false },
+        pdf: {
+            fileName: { type: String, required: false },
+            size: { type: Number, required: false },
+            type: { type: String, required: false },
+            s3Bucket: { type: String, required: false },
+            s3ObjectKey: { type: String, required: false },
+            uploadedAt: { type: Date, required: false },
+            uploaderId: { type: String, required: false },
+        },
     },
     { timestamps: true },
 );
