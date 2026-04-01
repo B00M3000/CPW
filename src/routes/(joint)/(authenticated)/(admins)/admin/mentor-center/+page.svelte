@@ -12,25 +12,34 @@
         await fetch('/admin/api/mentor/unlinked', { method: "DELETE" })
         unlikedMentorPromise = fetch('/admin/api/mentor/unlinked').then(res => res.json());
     }
+
+    // Shared merge selection state lifted from MentorSearch → MentorMerger
+    let primaryMentor: any = $state(undefined);
+    let duplicateMentor: any = $state(undefined);
 </script>
 
 <main class="w-full h-full p-4">
     <div class="relative w-full h-full rounded-xl p-8 grid grid-rows-[auto_minmax(0,_1fr)]">
         <h1 class="text-4xl mb-8 flex items-center justify-center gap-4"><BookUser size={48} /> Mentor Center</h1>
         <div class="mentor-center-content-grid h-full">
-            <div class="grid-search h-full w-full p-8 px-12 rounded-lg bg-gray-200 border border-solid border-gray-400 ">
-                <MentorSearch />
+            <div class="grid-search h-full w-full p-8 px-12 rounded-lg bg-gray-200 border border-solid border-gray-400 overflow-hidden">
+                <MentorSearch
+                    onSelectPrimary={(m) => primaryMentor = m}
+                    onSelectDuplicate={(m) => duplicateMentor = m}
+                    primaryId={primaryMentor?._id}
+                    duplicateId={duplicateMentor?._id}
+                />
             </div>
             <div class="grid-edit h-full w-full p-8 rounded-lg bg-gray-200 border border-solid border-gray-400 flex flex-col items-start">
-                <h2 class="text-xl mb-4 text-center">Extras:</h2>
-                <span class="mb-2">If you want to create a mentor, go to the relavent project in the project center.</span>
+                <h2 class="text-xl mb-4 text-center font-semibold">Extras:</h2>
+                <span class="mb-2 text-sm">To create a mentor, go to the relevant project in the project center.</span>
                 <div class="flex items-center">
                     {#await unlikedMentorPromise}
                     <span class="mr-2">Unlinked Mentors: ...</span>
                     <Circle3 size={24}/>
                     {:then data}
-                    <span class="mr-2">Unlinked Mentors: {data.unlinkedCount}</span>
-                    {#if data.unlinkedCount > 0}
+                    <span class="mr-2">Unlinked Mentors: {(data as any).unlinkedCount}</span>
+                    {#if (data as any).unlinkedCount > 0}
                     <button class="bg-red-500 hover:bg-red-500 flex items-center gap-1 p-1 text-white rounded-md" onclick={purge}>
                         <Trash2 size={16}/>
                         <span class="text-xs">Purge</span>
@@ -40,13 +49,12 @@
                     {/if}
                     {:catch}
                     <span class="mr-2">Error when counting unlinked mentors.</span>
-                    <CircleX color=red size={20}/>
+                    <CircleX color="red" size={20}/>
                     {/await}
                 </div>
             </div>
-            <div class="grid-deduplication h-full w-full p-8 rounded-lg flex flex-col items-start bg-gray-200 border border-solid border-gray-400 ">
-                <h2 class="text-xl mb-4 text-center">Mentor Deduplication</h2>
-                <MentorMerger />
+            <div class="grid-deduplication h-full w-full p-6 rounded-lg bg-gray-200 border border-solid border-gray-400 overflow-hidden">
+                <MentorMerger bind:primary={primaryMentor} bind:duplicate={duplicateMentor} />
             </div>
         </div>
         <a class="absolute top-0 left-0 bg-blue-500 hover:bg-blue-600 p-2 px-3 m-8 rounded-lg flex gap-2 items-center text-white" href=/admin>

@@ -108,26 +108,26 @@
             <div class="grid grid-rows-[auto_auto] grid-cols-[auto_auto] gap-4 mb-2">
                 <div class="flex flex-col items-start">
                     <span class="text-lg mb-1">Mentor Full Name: </span>
-                    <span bind:innerHTML={name} contenteditable="plaintext-only" class="mb-1 text-base rounded-md bg-gray-50 p-2 border-gray-400 border min-w-72 max-w-[16rem]"></span>
+                    <span bind:textContent={name} contenteditable="plaintext-only" class="mb-1 text-base rounded-md bg-gray-50 p-2 border-gray-400 border min-w-72 max-w-[16rem]"></span>
                     <span class="text-gray-600 max-w-[24rem] text-sm">Ex: Thomas Zhou, Bill Gates (just the name, no titles, etc.)</span>
                 </div>
 
                 <div class="flex flex-col items-start">
                     <span class="text-lg mb-1">Mentor Email: </span>
-                    <span bind:innerHTML={email} contenteditable="plaintext-only" class="mb-1 text-base rounded-md bg-gray-50 p-2 border-gray-400 border min-w-72 max-w-[16rem]"></span>
+                    <span bind:textContent={email} contenteditable="plaintext-only" class="mb-1 text-base rounded-md bg-gray-50 p-2 border-gray-400 border min-w-72 max-w-[16rem]"></span>
                     <span class="text-gray-600 max-w-[24rem] text-sm">Ex: tzhou@commschool.org</span>
                 </div>
 
                 <div class="flex flex-col items-start">
                     <span class="text-lg mb-1">Mentor Organization: </span>
-                    <span bind:innerHTML={organization} contenteditable="plaintext-only" class="mb-1 text-base rounded-md bg-gray-50 p-2 border-gray-400 border min-w-72 max-w-[16rem]"></span>
+                    <span bind:textContent={organization} contenteditable="plaintext-only" class="mb-1 text-base rounded-md bg-gray-50 p-2 border-gray-400 border min-w-72 max-w-[16rem]"></span>
                     <span class="text-gray-600 max-w-[24rem] text-sm">Ex: Brookline Food Pantry, Center of Inclusive Computing at Northeastern University, Columbia University, Kaggle, Commonwealth School</span>
                 </div>
 
                 <div class="flex flex-col items-start">
                     <span class="text-lg mb-1">Mentor Phone: </span>
                     <span class="text-gray-600 max-w-[24rem] text-sm mb-1">*Optional</span>
-                    <span bind:innerHTML={phoneNumber} contenteditable="plaintext-only" class="mb-1 text-base rounded-md bg-gray-50 p-2 border-gray-400 border min-w-72 max-w-[16rem]"></span>
+                    <span bind:textContent={phoneNumber} contenteditable="plaintext-only" class="mb-1 text-base rounded-md bg-gray-50 p-2 border-gray-400 border min-w-72 max-w-[16rem]"></span>
                     <span class="text-gray-600 max-w-[24rem] text-sm">Ex: +1 (427)-211-9772, 324-474-1106, 8568224318</span>
                 </div>
             </div>

@@ -1,78 +1,43 @@
 <script lang=ts>
     import { Circle } from "svelte-loading-spinners";
-    import { Merge, CircleCheckBig, CircleX } from "lucide-svelte";
-    import { PUBLIC_ORIGIN } from "$env/static/public";
+    import { Merge, CircleCheckBig, CircleX, X } from "lucide-svelte";
 
-    interface MentorResult {
+    interface MentorProject { _id: string; title: string; year: number; studentName: string; }
+    interface Mentor {
         _id: string;
         name: string;
         organization: string;
         email: string;
+        phoneNumber?: string;
+        projects?: MentorProject[];
+        projectCount?: number;
     }
 
-    let primaryQuery = $state("");
-    let duplicateQuery = $state("");
-
-    let primaryResults: MentorResult[] = $state([]);
-    let duplicateResults: MentorResult[] = $state([]);
-
-    let primaryLoading = $state(false);
-    let duplicateLoading = $state(false);
-
-    let selectedPrimary: MentorResult | undefined = $state(undefined);
-    let selectedDuplicate: MentorResult | undefined = $state(undefined);
+    let {
+        primary = $bindable(undefined),
+        duplicate = $bindable(undefined),
+    }: {
+        primary?: Mentor;
+        duplicate?: Mentor;
+    } = $props();
 
     enum MergeStatus { Idle, Merging, Success, Error }
     let mergeStatus = $state(MergeStatus.Idle);
     let mergeError = $state("");
 
-    async function searchMentors(query: string, setResults: (r: MentorResult[]) => void, setLoading: (v: boolean) => void) {
-        if (!query.trim()) return;
-        setLoading(true);
-        try {
-            const url = new URL("/admin/api/mentor/search", PUBLIC_ORIGIN);
-            url.searchParams.set("q", query);
-            const res = await fetch(url);
-            if (!res.ok) throw new Error(`Search failed: ${res.status}`);
-            const data = await res.json();
-            setResults(data.mentors);
-        } catch {
-            setResults([]);
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    function searchPrimary(e?: SubmitEvent) {
-        e?.preventDefault();
-        searchMentors(primaryQuery, (r) => primaryResults = r, (v) => primaryLoading = v);
-    }
-
-    function searchDuplicate(e?: SubmitEvent) {
-        e?.preventDefault();
-        searchMentors(duplicateQuery, (r) => duplicateResults = r, (v) => duplicateLoading = v);
-    }
-
     async function mergeMentors() {
-        if (!selectedPrimary || !selectedDuplicate) return;
+        if (!primary || !duplicate) return;
         mergeStatus = MergeStatus.Merging;
         mergeError = "";
         const res = await fetch("/admin/api/mentor/merge", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                primaryId: selectedPrimary._id,
-                duplicateId: selectedDuplicate._id,
-            }),
+            body: JSON.stringify({ primaryId: primary._id, duplicateId: duplicate._id }),
         });
         if (res.ok) {
             mergeStatus = MergeStatus.Success;
-            selectedPrimary = undefined;
-            selectedDuplicate = undefined;
-            primaryResults = [];
-            duplicateResults = [];
-            primaryQuery = "";
-            duplicateQuery = "";
+            primary = undefined;
+            duplicate = undefined;
         } else {
             const body = await res.json().catch(() => ({ message: "Unknown error" }));
             mergeError = body.message ?? "Merge failed";
@@ -83,96 +48,80 @@
     function reset() {
         mergeStatus = MergeStatus.Idle;
         mergeError = "";
-        selectedPrimary = undefined;
-        selectedDuplicate = undefined;
+        primary = undefined;
+        duplicate = undefined;
     }
+
+    // Combine projects from both mentors for the preview
+    let allProjects = $derived([
+        ...(primary?.projects ?? []).map(p => ({ ...p, keepMentor: primary?.name })),
+        ...(duplicate?.projects ?? []).map(p => ({ ...p, keepMentor: primary?.name })),
+    ]);
 </script>
 
-<div class="flex flex-col gap-4 w-full">
+<div class="flex flex-col gap-3 w-full h-full">
+    <h2 class="text-xl font-semibold text-center">Mentor Deduplication</h2>
+
     {#if mergeStatus === MergeStatus.Success}
     <div class="flex flex-col items-center gap-2 py-4">
         <CircleCheckBig size={40} color="#383" />
         <span class="text-green-700 font-semibold">Mentors merged successfully!</span>
-        <button class="bg-blue-500 hover:bg-blue-600 text-white rounded-md p-2 px-4 mt-2" onclick={reset}>Merge another</button>
+        <button class="bg-blue-500 hover:bg-blue-600 text-white rounded-md p-2 px-4 text-sm" onclick={reset}>Merge another</button>
     </div>
     {:else}
-    <div class="grid grid-cols-2 gap-4">
-        <!-- Primary Mentor -->
-        <div class="flex flex-col gap-2">
-            <span class="font-semibold text-sm text-gray-700">Keep (Primary):</span>
-            {#if selectedPrimary}
-            <div class="bg-green-100 border border-green-400 rounded-lg p-3 flex flex-col gap-1 relative">
-                <span class="font-bold text-sm">{selectedPrimary.name}</span>
-                <span class="text-xs text-gray-600">{selectedPrimary.organization}</span>
-                <span class="text-xs text-gray-500">{selectedPrimary.email}</span>
-                <button class="absolute top-1 right-2 text-gray-400 hover:text-gray-700 text-xs" onclick={() => selectedPrimary = undefined}>✕</button>
+
+    <p class="text-xs text-gray-500">Use the Mentor Search panel on the left to select which mentor to keep as <span class="font-semibold text-green-700">Primary</span> and which to remove as the <span class="font-semibold text-red-700">Duplicate</span>.</p>
+
+    <!-- Selected mentors preview -->
+    <div class="grid grid-cols-2 gap-2">
+        <!-- Primary -->
+        <div class="flex flex-col gap-1">
+            <span class="text-xs font-bold text-green-700 uppercase">Keep (Primary)</span>
+            {#if primary}
+            <div class="bg-green-50 border border-green-400 rounded-lg p-3 flex flex-col gap-1 relative">
+                <button class="absolute top-1 right-1 text-gray-400 hover:text-gray-700" onclick={() => primary = undefined}><X size={12}/></button>
+                <span class="font-bold text-sm pr-4">{primary.name}</span>
+                <span class="text-xs text-gray-600">{primary.organization}</span>
+                <span class="text-xs text-gray-500">{primary.email}</span>
             </div>
             {:else}
-            <form class="flex" onsubmit={searchPrimary}>
-                <input
-                    placeholder="Search primary..."
-                    class="flex-1 p-1 px-2 rounded-l-md border border-gray-300 outline-none text-sm"
-                    bind:value={primaryQuery}
-                    type="search"
-                />
-                <button class="bg-sky-600 hover:bg-sky-700 text-white text-sm px-3 rounded-r-md" type="submit">Search</button>
-            </form>
-            {#if primaryLoading}
-            <div class="flex justify-center py-2"><Circle size={20} /></div>
-            {:else if primaryResults.length > 0}
-            <div class="flex flex-col gap-1 max-h-40 overflow-y-auto">
-                {#each primaryResults as m}
-                <button
-                    class="text-left p-2 rounded-md bg-gray-100 hover:bg-gray-200 border border-gray-300 text-sm"
-                    onclick={() => { selectedPrimary = m; primaryResults = []; }}
-                >
-                    <span class="font-medium">{m.name}</span>
-                    <span class="text-gray-500 ml-1 text-xs">— {m.organization}</span>
-                </button>
-                {/each}
+            <div class="bg-gray-50 border border-dashed border-gray-300 rounded-lg p-3 flex items-center justify-center min-h-16">
+                <span class="text-xs text-gray-400">Select from search →</span>
             </div>
-            {/if}
             {/if}
         </div>
 
-        <!-- Duplicate Mentor -->
-        <div class="flex flex-col gap-2">
-            <span class="font-semibold text-sm text-gray-700">Remove (Duplicate):</span>
-            {#if selectedDuplicate}
-            <div class="bg-red-100 border border-red-400 rounded-lg p-3 flex flex-col gap-1 relative">
-                <span class="font-bold text-sm">{selectedDuplicate.name}</span>
-                <span class="text-xs text-gray-600">{selectedDuplicate.organization}</span>
-                <span class="text-xs text-gray-500">{selectedDuplicate.email}</span>
-                <button class="absolute top-1 right-2 text-gray-400 hover:text-gray-700 text-xs" onclick={() => selectedDuplicate = undefined}>✕</button>
+        <!-- Duplicate -->
+        <div class="flex flex-col gap-1">
+            <span class="text-xs font-bold text-red-700 uppercase">Remove (Duplicate)</span>
+            {#if duplicate}
+            <div class="bg-red-50 border border-red-400 rounded-lg p-3 flex flex-col gap-1 relative">
+                <button class="absolute top-1 right-1 text-gray-400 hover:text-gray-700" onclick={() => duplicate = undefined}><X size={12}/></button>
+                <span class="font-bold text-sm pr-4">{duplicate.name}</span>
+                <span class="text-xs text-gray-600">{duplicate.organization}</span>
+                <span class="text-xs text-gray-500">{duplicate.email}</span>
             </div>
             {:else}
-            <form class="flex" onsubmit={searchDuplicate}>
-                <input
-                    placeholder="Search duplicate..."
-                    class="flex-1 p-1 px-2 rounded-l-md border border-gray-300 outline-none text-sm"
-                    bind:value={duplicateQuery}
-                    type="search"
-                />
-                <button class="bg-sky-600 hover:bg-sky-700 text-white text-sm px-3 rounded-r-md" type="submit">Search</button>
-            </form>
-            {#if duplicateLoading}
-            <div class="flex justify-center py-2"><Circle size={20} /></div>
-            {:else if duplicateResults.length > 0}
-            <div class="flex flex-col gap-1 max-h-40 overflow-y-auto">
-                {#each duplicateResults as m}
-                <button
-                    class="text-left p-2 rounded-md bg-gray-100 hover:bg-gray-200 border border-gray-300 text-sm"
-                    onclick={() => { selectedDuplicate = m; duplicateResults = []; }}
-                >
-                    <span class="font-medium">{m.name}</span>
-                    <span class="text-gray-500 ml-1 text-xs">— {m.organization}</span>
-                </button>
-                {/each}
+            <div class="bg-gray-50 border border-dashed border-gray-300 rounded-lg p-3 flex items-center justify-center min-h-16">
+                <span class="text-xs text-gray-400">Select from search →</span>
             </div>
-            {/if}
             {/if}
         </div>
     </div>
+
+    <!-- Projects that will be re-linked -->
+    {#if allProjects.length > 0 && primary && duplicate}
+    <div class="flex flex-col gap-1">
+        <span class="text-xs font-semibold text-gray-600 uppercase">Projects to be re-linked to {primary.name}:</span>
+        <div class="flex flex-wrap gap-1 max-h-24 overflow-y-auto border border-gray-200 rounded-md p-2 bg-gray-50">
+            {#each allProjects as proj}
+            <span class="text-xs bg-blue-100 border border-blue-200 rounded-full px-2 py-0.5 text-blue-800" title="{proj.studentName}">
+                {proj.title} <span class="text-blue-500">({proj.year})</span>
+            </span>
+            {/each}
+        </div>
+    </div>
+    {/if}
 
     {#if mergeStatus === MergeStatus.Error}
     <div class="flex items-center gap-2 text-red-600 text-sm">
@@ -182,18 +131,14 @@
     {/if}
 
     <button
-        class="flex items-center gap-2 self-start bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white rounded-md p-2 px-4"
-        disabled={!selectedPrimary || !selectedDuplicate || mergeStatus === MergeStatus.Merging}
+        class="flex items-center gap-2 self-start bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white rounded-md p-2 px-4 text-sm"
+        disabled={!primary || !duplicate || primary?._id === duplicate?._id || mergeStatus === MergeStatus.Merging}
         onclick={mergeMentors}
     >
-        {#if mergeStatus === MergeStatus.Merging}
-        <Circle size={18} />
-        {:else}
-        <Merge size={18} />
-        {/if}
-        <span class="text-sm">Merge (keep primary, remove duplicate)</span>
+        {#if mergeStatus === MergeStatus.Merging}<Circle size={16} />{:else}<Merge size={16} />{/if}
+        <span>Merge (keep primary, remove duplicate)</span>
     </button>
 
-    <span class="text-xs text-gray-500">All projects linked to the duplicate will be re-linked to the primary. The duplicate's information will be archived before deletion.</span>
+    <span class="text-xs text-gray-400">All projects linked to the duplicate will be re-linked to the primary. The duplicate's information will be archived before deletion.</span>
     {/if}
 </div>
