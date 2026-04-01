@@ -91,6 +91,14 @@
                 <div class="fadeout"></div>
             </div>
         </div>
+        {#if data.project.pdfUrl}
+        <div class="p-4 w-full">
+            <div class="w-full bg-gray-200 border border-solid border-gray-400 rounded-xl overflow-hidden">
+                <div class="p-4 py-3 bg-gray-300 text-xl">PDF Report</div>
+                <iframe src={data.project.pdfUrl} class="w-full aspect-[8.5/11]" title="Project PDF"></iframe>
+            </div>
+        </div>
+        {/if}
         {:else if view == Views.Images}
         <!-- Images -->
         <div class='p-4 w-full'>

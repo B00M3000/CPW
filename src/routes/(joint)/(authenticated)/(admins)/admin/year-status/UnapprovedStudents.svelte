@@ -47,7 +47,7 @@
                     </TableBodyCell>
                     <TableBodyCell class="!p-4">
                         <div class="flex justify-end">
-                            <button class="rounded-md bg-slate-300 flex gap-2 items-center justify-center p-2 hover:bg-slate-400" on:click={() => window.open(`/admin/project-catalog/${item._id}`, "_blank")}>
+                            <button class="rounded-md bg-slate-300 flex gap-2 items-center justify-center p-2 hover:bg-slate-400" on:click={() => window.open(`/admin/project-center/${item._id}`, "_blank")}>
                                 <Icon src={Open} size="1.2rem"/>
                                 <span>Open</span>
                             </button>

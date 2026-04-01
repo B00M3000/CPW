@@ -1,9 +1,3 @@
-/*
- * Created on Sat Oct 14 2023
- *
- * Copyright (c) 2023 Thomas Zhou
- */
-
 import { ProjectSchema } from "@/server/mongo/schemas/project";
 import { json } from "@sveltejs/kit";
 
@@ -12,17 +6,13 @@ export async function POST({ request, params: { projectId } }) {
     if (req.Action == "SAVE") {
         const fullReport = req.fullReport;
         await ProjectSchema.findOneAndUpdate(
-            {
-                _id: projectId,
-            },
+            { _id: projectId },
             { fullReport },
         );
     } else if (req.Action == "PUBLISH") {
         const publish = req.publish;
         await ProjectSchema.findOneAndUpdate(
-            {
-                _id: projectId,
-            },
+            { _id: projectId },
             { publish },
         );
     } else if (req.Action == "UPDATE") {

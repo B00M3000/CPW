@@ -43,7 +43,7 @@
 
     async function saveDetails() {
         detailsStatus = SaveStatus.Saving;
-        const res = await fetch(`/admin/project-catalog/${project._id}`, {
+        const res = await fetch(`/admin/project-center/${project._id}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -65,7 +65,7 @@
 
     async function saveReport() {
         reportStatus = SaveStatus.Saving;
-        const res = await fetch(`/admin/project-catalog/${project._id}`, {
+        const res = await fetch(`/admin/project-center/${project._id}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ Action: "SAVE", fullReport: editedFullReport }),
@@ -84,7 +84,7 @@
 
     async function changePublish() {
         const newPublish = !project.publish;
-        const res = await fetch(`/admin/project-catalog/${project._id}`, {
+        const res = await fetch(`/admin/project-center/${project._id}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ Action: "PUBLISH", publish: newPublish }),
@@ -292,8 +292,15 @@
                 {#if reportStatus === SaveStatus.Error}<CircleX size={22} color="red" />{/if}
             </div>
             {:else}
-            <div class="max-h-96 overflow-y-auto border border-gray-300 rounded-md p-4 bg-white whitespace-pre-wrap text-base">
-                {#if editedFullReport}{editedFullReport}{:else}<em class="text-gray-400">No full report yet.</em>{/if}
+            <div class="flex flex-col 2xl:flex-row gap-4">
+                <div class="flex-1 max-h-96 overflow-y-auto border border-gray-300 rounded-md p-4 bg-white whitespace-pre-wrap text-base">
+                    {#if editedFullReport}{editedFullReport}{:else}<em class="text-gray-400">No full report yet.</em>{/if}
+                </div>
+                {#if pdfUrl}
+                <div class="flex-1 overflow-y-auto">
+                    <iframe src={pdfUrl} class="w-full aspect-[8.5/11] rounded-md border border-gray-300" title="Project PDF"></iframe>
+                </div>
+                {/if}
             </div>
             <button class="flex items-center gap-2 self-start bg-green-600 hover:bg-green-700 text-white rounded-md p-2 px-4" onclick={() => editingReport = true}>
                 <Save size={18} />

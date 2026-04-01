@@ -75,19 +75,28 @@
             </button>
         </div>
 
-        <div class="flex justify-center w-full">
-            <div class="w-[9.5in] min-h-full bg-white whitespace-pre-wrap break-words p-[1in] mb-8 flex flex-col" class:justify-center={!report} >
-                {#if report}
-                <h4 class="text-2xl text-center mb-4">{data.project.title}</h4>
-                <h5 class="text-lg text-center mb-8">{data.project.student.name}</h5>
-                <p class="text-base">{@html report}</p>
-                {:else}
-                <div class="flex flex-col items-center justify-center gap-16 h-full">
-                    <span class="text-4xl w-full text-center">No report has been uploaded for this project.</span>
-                    <span class="text-7xl w-full text-center">¯\_(ツ)_/¯</span>
+        <div class="flex flex-col 2xl:flex-row gap-4 w-full">
+            <!-- Text report -->
+            <div class="flex-1 flex justify-center">
+                <div class="w-full max-w-[9.5in] bg-white whitespace-pre-wrap break-words p-[1in] mb-8 flex flex-col" class:justify-center={!report} >
+                    {#if report}
+                    <h4 class="text-2xl text-center mb-4">{data.project.title}</h4>
+                    <h5 class="text-lg text-center mb-8">{data.project.student.name}</h5>
+                    <p class="text-base">{@html report}</p>
+                    {:else}
+                    <div class="flex flex-col items-center justify-center gap-16 h-full">
+                        <span class="text-4xl w-full text-center">No report has been uploaded for this project.</span>
+                        <span class="text-7xl w-full text-center">¯\_(ツ)_/¯</span>
+                    </div>
+                    {/if}
                 </div>
-                {/if}
             </div>
+            <!-- PDF report -->
+            {#if data.project.pdfUrl}
+            <div class="flex-1 overflow-y-auto">
+                <iframe src={data.project.pdfUrl} class="w-full aspect-[8.5/11]" title="Project PDF"></iframe>
+            </div>
+            {/if}
         </div>
 
         <h2 class="text-xl mb-2">Things to look for: </h2>
