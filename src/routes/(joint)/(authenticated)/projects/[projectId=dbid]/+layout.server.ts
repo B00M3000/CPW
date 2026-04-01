@@ -4,8 +4,8 @@
  * Copyright (c) 2023 Thomas Zhou
  */
 
-import { AccessLevel } from "@/lib/enums.js";
 import { ProjectSchema } from "@/server/mongo/schemas/project.js";
+import { canViewProject } from "@/server/project-access";
 import { error } from "@sveltejs/kit";
 
 export async function load({ params, locals }) {
@@ -14,11 +14,7 @@ export async function load({ params, locals }) {
 
     if (!project) error(404, { message: "No project exists with this ID" });
 
-    const allowedToView =
-        project.studentId == locals?.user?._id ||
-        locals?.user?.accountType == AccessLevel.Admin ||
-        locals?.user?.adviseeIds?.includes(project.studentId) ||
-        project.publish;
+    const allowedToView = canViewProject(locals.user, project);
 
     if (!allowedToView)
         error(403, {

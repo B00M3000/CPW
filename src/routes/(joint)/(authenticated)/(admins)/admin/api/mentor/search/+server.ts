@@ -35,7 +35,7 @@ export async function GET({ url: { searchParams } }) {
             compound,
         })
         .sort({
-            score: { $meta: "textScore" },
+            score: { $meta: "searchScore" },
         })
         .limit(50)
         .project({

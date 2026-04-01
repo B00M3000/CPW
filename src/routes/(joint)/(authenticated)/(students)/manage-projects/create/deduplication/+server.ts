@@ -42,7 +42,7 @@ export async function GET({ url: { searchParams } }) {
 
     const mentors = await MentorSchema.aggregate(pipline)
         .sort({
-            score: { $meta: "textScore" },
+            score: { $meta: "searchScore" },
         })
         .limit(10)
         .project({

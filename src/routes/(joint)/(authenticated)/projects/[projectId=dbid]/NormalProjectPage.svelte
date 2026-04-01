@@ -1,5 +1,4 @@
-
-<script lang=js>
+<script lang="js">
     import MentorCard2 from "@/client/components/MentorCard2.svelte";
     import ProjectCard from "@/client/components/ProjectCard.svelte";
     import SmartProjectImage from "@/client/components/SmartProjectImage.svelte";
@@ -12,124 +11,237 @@
     let { data } = $props();
 
     $effect(() => {
-        if(doubleSpacing) toast.success('Double Spacing Enabled');
-        else toast.error('Double Spacing Disabled');
-    })
+        if (doubleSpacing) toast.success("Double Spacing Enabled");
+        else toast.error("Double Spacing Disabled");
+    });
 
     let doubleSpacing = $state(false);
-    let report = $derived(doubleSpacing ? data.project?.fullReport.replaceAll('\n', '\n\n').trim() : data.project?.fullReport.trim());
+    let report = $derived(
+        doubleSpacing
+            ? (data.project?.fullReport || "").replaceAll("\n", "\n\n").trim()
+            : (data.project?.fullReport || "").trim(),
+    );
 
     let enlargedImageView = $state(false);
 
+    /** @param {MouseEvent} event */
     function backgroundClick(event) {
-        if(event.target.id == 'enlarged-image-view') enlargedImageView = false;
+        if (event.target === event.currentTarget) enlargedImageView = false;
     }
 </script>
 
 {#if enlargedImageView}
-<!-- svelte-ignore a11y_click_events_have_key_events -->
-<!-- svelte-ignore a11y_no_static_element_interactions -->
-<div id="enlarged-image-view" class="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-[#00000044] z-40" onclick={backgroundClick}>
-    <div class="bg-gray-300 grid grid-rows-[auto_minmax(0,_1fr)] max-w-7xl w-full h-3/4 border border-solid mx-16 border-gray-400 rounded-lg overflow-hidden">
-        <div class="p-8 py-4 text-xl bg-gray-300 rounded-t-xl flex justify-between items-center">
-            <span>Gallery</span>
-            <button class="text-black p-2 rounded-full flex items-center gap-2 cursor-pointer hover:bg-gray-300" onclick={() => enlargedImageView = false}>
-                <X size={24} />
-            </button>
-        </div>
-        <div class="overflow-y-auto w-full h-full bg-gray-200">
-            <div class="grid grid-cols-2 xl:grid-cols-3 px-4 h-full">
-                {#each data.images as image}
-                <div class="">
-                    <SmartProjectImage {image} showProjectPageButton={false} />
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
+    <div
+        id="enlarged-image-view"
+        class="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-[#00000044] z-40"
+        onclick={backgroundClick}
+    >
+        <div
+            class="bg-gray-300 grid grid-rows-[auto_minmax(0,_1fr)] max-w-7xl w-full h-3/4 border border-solid mx-16 border-gray-400 rounded-lg overflow-hidden"
+        >
+            <div
+                class="p-8 py-4 text-xl bg-gray-300 rounded-t-xl flex justify-between items-center"
+            >
+                <span>Gallery</span>
+                <button
+                    class="text-black p-2 rounded-full flex items-center gap-2 cursor-pointer hover:bg-gray-300"
+                    onclick={() => (enlargedImageView = false)}
+                >
+                    <X size={24} />
+                </button>
+            </div>
+            <div class="overflow-y-auto w-full h-full bg-gray-200">
+                <div class="grid grid-cols-2 xl:grid-cols-3 px-4 h-full">
+                    {#each data.images as image}
+                        <div class="">
+                            <SmartProjectImage
+                                {image}
+                                showProjectPageButton={false}
+                            />
+                        </div>
+                    {:else}
+                        <div
+                            class="flex items-center justify-center col-span-full w-full h-full"
+                        >
+                            <span class="text-2xl text-gray-500"
+                                >No images.</span
+                            >
+                        </div>
+                    {/each}
                 </div>
-                {:else}
-                <div class="flex items-center justify-center col-span-full w-full h-full">
-                    <span class="text-2xl text-gray-500">No images.</span>
-                </div>
-                {/each}
             </div>
         </div>
     </div>
-</div>
 {/if}
 
 <main class="flex flex-col items-center w-full h-full">
     <div class="layout gap-4 p-4">
-        <div class="flex flex-col justify-between bg-gray-200 border border-solid border-gray-400 rounded-md p-4 w-full h-full min-h-56 shadow-xl">
+        <div
+            class="flex flex-col justify-between bg-gray-200 border border-solid border-gray-400 rounded-md p-4 w-full h-full min-h-56 shadow-xl"
+        >
             <div class="flex flex-col">
                 <div class="flex justify-between mb-1">
                     <h3 class="text-xl">{data.project.title}</h3>
-                    <h2 class="text-sm text-gray-400 font-bold">{data.project.year}</h2>
+                    <h2 class="text-sm text-gray-400 font-bold">
+                        {data.project.year}
+                    </h2>
                 </div>
 
                 <div class="flex mb-4 justify-start">
                     <Tags tagIds={data.project.tags} />
                 </div>
 
-                <p class="text-wrap mb-4 text-sm break-words">{data.project.shortDesc}</p>
+                <p class="text-wrap mb-4 text-sm break-words">
+                    {data.project.shortDesc}
+                </p>
             </div>
 
             <div class="flex flex-col gap-4">
                 <div class="flex items-center justify-center gap-4">
-                    <StudentCard2 student={data.project.student}/>
-                    <MentorCard2 mentor={data.project.mentor}/>
+                    <StudentCard2 student={data.project.student} />
+                    <MentorCard2 mentor={data.project.mentor} />
                 </div>
             </div>
         </div>
         <!-- Report -->
         <div class="report w-full h-full relative">
             <div class="overflow-y-auto w-full h-full">
-                <div class="w-[8.5in] min-h-full bg-white whitespace-pre-wrap break-words p-[1in] flex flex-col" class:justify-center={!report} >
-                    {#if report}
-                    <h4 class="text-2xl text-center mb-4">{data.project.title}</h4>
-                    <h5 class="text-lg text-center mb-8">{data.student?.name}</h5>
-                    <p class="text-base">{@html report}</p>
-                    {:else}
-                    <div class="flex flex-col items-center justify-center gap-16 h-full">
-                        <span class="text-4xl w-full text-center">No report has been uploaded for this project.</span>
-                        <span class="text-7xl w-full text-center">¯\_(ツ)_/¯</span>
+                <div class="report-content-grid">
+                    <div class="bg-white border border-gray-300 rounded p-4">
+                        <div
+                            class="flex justify-between items-center mb-3 gap-2"
+                        >
+                            <h4 class="text-lg font-semibold">Project PDF</h4>
+                            {#if data.project.pdfUrl}
+                                <a
+                                    class="text-blue-700 underline"
+                                    href={data.project.pdfUrl}
+                                    target="_blank"
+                                    rel="noreferrer">Download PDF</a
+                                >
+                            {/if}
+                        </div>
+                        {#if data.project.pdfUrl}
+                            <iframe
+                                title="Project PDF"
+                                src={data.project.pdfUrl}
+                                class="w-full h-[24rem] border border-gray-300 rounded"
+                            ></iframe>
+                        {:else}
+                            <p class="text-gray-700">
+                                No PDF has been uploaded for this project.
+                            </p>
+                        {/if}
                     </div>
-                    {/if}
+
+                    <div
+                        class="w-full min-h-full bg-white whitespace-pre-wrap break-words p-6 lg:p-10 flex flex-col border border-gray-300 rounded"
+                    >
+                        <div
+                            class="flex justify-between items-center mb-4 gap-2"
+                        >
+                            <h4 class="text-lg font-semibold">Text Report</h4>
+                            <button
+                                class="bg-gray-500 cursor-pointer hover:bg-gray-600 text-white p-2 rounded-md flex items-center gap-2 px-4"
+                                onclick={() => (doubleSpacing = !doubleSpacing)}
+                            >
+                                <span class="text-base font-bold">x2</span>
+                                <span class="text-sm"
+                                    >Toggle Double Report Newlines</span
+                                >
+                            </button>
+                        </div>
+                        <div
+                            class="flex-1"
+                            class:flex={true}
+                            class:items-center={!report}
+                            class:justify-center={!report}
+                        >
+                            {#if report}
+                                <div>
+                                    <h4 class="text-2xl text-center mb-4">
+                                        {data.project.title}
+                                    </h4>
+                                    <h5 class="text-lg text-center mb-8">
+                                        {data.student?.name}
+                                    </h5>
+                                    <p class="text-base">{report}</p>
+                                </div>
+                            {:else}
+                                <div
+                                    class="flex flex-col items-center justify-center gap-16 h-full"
+                                >
+                                    <span class="text-4xl w-full text-center"
+                                        >No text report has been uploaded for this
+                                        project.</span
+                                    >
+                                    <span class="text-7xl w-full text-center"
+                                        >¯\_(ツ)_/¯</span
+                                    >
+                                </div>
+                            {/if}
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="fadeout"></div>
         </div>
         <!-- Images -->
-        <div class="images bg-gray-200 rounded-xl grid grid-rows-[auto_minmax(0,_1fr)] relative border border-solid border-gray-400">
-            <div class="p-8 py-4 text-xl bg-gray-300 rounded-t-xl flex justify-between items-center">
+        <div
+            class="images bg-gray-200 rounded-xl grid grid-rows-[auto_minmax(0,_1fr)] relative border border-solid border-gray-400"
+        >
+            <div
+                class="p-8 py-4 text-xl bg-gray-300 rounded-t-xl flex justify-between items-center"
+            >
                 <span>Gallery</span>
-                <button class="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white p-2 rounded-md flex items-center gap-2" onclick={() => enlargedImageView = true}>
+                <button
+                    class="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white p-2 rounded-md flex items-center gap-2"
+                    onclick={() => (enlargedImageView = true)}
+                >
                     <Maximize />
                     <span class="text-sm">Enlarge</span>
                 </button>
             </div>
-            <div class="overflow-y-auto w-full h-full max-w-[36rem] 2xl:max-w-[42rem]">
-                <div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 px-4 h-full">
+            <div
+                class="overflow-y-auto w-full h-full max-w-[36rem] 2xl:max-w-[42rem]"
+            >
+                <div
+                    class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 px-4 h-full"
+                >
                     {#each data.images as image}
-                    <div class="">
-                        <SmartProjectImage {image} showProjectPageButton={false} />
-                    </div>
+                        <div class="">
+                            <SmartProjectImage
+                                {image}
+                                showProjectPageButton={false}
+                            />
+                        </div>
                     {:else}
-                    <div class="flex items-center justify-center col-span-full text-gray-500 h-full">
-                        <span class="text-2xl">No images.</span>
-                    </div>
+                        <div
+                            class="flex items-center justify-center col-span-full text-gray-500 h-full"
+                        >
+                            <span class="text-2xl">No images.</span>
+                        </div>
                     {/each}
                 </div>
             </div>
             {#if enlargedImageView}
-            <div class="rounded-xl absolute z-20 bg-[repeating-linear-gradient(45deg,black,black_10px,#FFF_20px,#000_40px)] opacity-20 w-full h-full"></div>
+                <div
+                    class="rounded-xl absolute z-20 bg-[repeating-linear-gradient(45deg,black,black_10px,#FFF_20px,#000_40px)] opacity-20 w-full h-full"
+                ></div>
             {/if}
         </div>
         <!-- Toolbar -->
-        <div class="toolbar bg-gray-200 border border-gray-400 border-solid p-4 rounded-xl flex flex-wrap justify-between gap-2">
-            <button class="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white p-2 rounded-md flex items-center gap-2 px-4" onclick={() => history.back()}>
-                <Return size={20}/>
+        <div
+            class="toolbar bg-gray-200 border border-gray-400 border-solid p-4 rounded-xl flex flex-wrap justify-between gap-2"
+        >
+            <button
+                class="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white p-2 rounded-md flex items-center gap-2 px-4"
+                onclick={() => history.back()}
+            >
+                <Return size={20} />
                 <span class="text-base">Return</span>
-            </button>
-            <button class="bg-gray-500 cursor-pointer hover:bg-gray-600 text-white p-2 rounded-md flex items-center gap-2 px-4" onclick={() => doubleSpacing = !doubleSpacing}>
-                <span class="text-base font-bold">x2</span>
-                <span class="text-sm">Toggle Double Report Newlines</span>
             </button>
         </div>
     </div>
@@ -144,10 +256,15 @@
         grid-template-rows: auto auto minmax(0, 1fr);
         grid-template-areas: "toolbar report" "details report" "images report";
     }
-    .details { grid-area: details; }
-    .report { grid-area: report; }
-    .images { grid-area: images; }
-    .toolbar { grid-area: toolbar; }
+    .report {
+        grid-area: report;
+    }
+    .images {
+        grid-area: images;
+    }
+    .toolbar {
+        grid-area: toolbar;
+    }
 
     .fadeout {
         position: absolute;
@@ -158,6 +275,38 @@
         width: 100%;
         height: 1in;
 
-        background: linear-gradient(180deg, rgb(99.608% 99.608% 99.608% / 0) 0%, rgb(99.609% 99.609% 99.609% / 0.00390625) 6.25%, rgb(99.614% 99.614% 99.614% / 0.015625) 12.5%, rgb(99.622% 99.622% 99.622% / 0.03515625) 18.75%, rgb(99.632% 99.632% 99.632% / 0.0625) 25%, rgb(99.646% 99.646% 99.646% / 0.09765625) 31.25%, rgb(99.663% 99.663% 99.663% / 0.140625) 37.5%, rgb(99.683% 99.683% 99.683% / 0.19140625) 43.75%, rgb(99.706% 99.706% 99.706% / 0.25) 50%, rgb(99.732% 99.732% 99.732% / 0.31640625) 56.25%, rgb(99.761% 99.761% 99.761% / 0.390625) 62.5%, rgb(99.793% 99.793% 99.793% / 0.47265625) 68.75%, rgb(99.828% 99.828% 99.828% / 0.5625) 75%, rgb(99.867% 99.867% 99.867% / 0.66015625) 81.25%, rgb(99.908% 99.908% 99.908% / 0.765625) 87.5%, rgb(99.953% 99.953% 99.953% / 0.87890625) 93.75%, rgb(100% 100% 100%) 100% );
+        background: linear-gradient(
+            180deg,
+            rgb(99.608% 99.608% 99.608% / 0) 0%,
+            rgb(99.609% 99.609% 99.609% / 0.00390625) 6.25%,
+            rgb(99.614% 99.614% 99.614% / 0.015625) 12.5%,
+            rgb(99.622% 99.622% 99.622% / 0.03515625) 18.75%,
+            rgb(99.632% 99.632% 99.632% / 0.0625) 25%,
+            rgb(99.646% 99.646% 99.646% / 0.09765625) 31.25%,
+            rgb(99.663% 99.663% 99.663% / 0.140625) 37.5%,
+            rgb(99.683% 99.683% 99.683% / 0.19140625) 43.75%,
+            rgb(99.706% 99.706% 99.706% / 0.25) 50%,
+            rgb(99.732% 99.732% 99.732% / 0.31640625) 56.25%,
+            rgb(99.761% 99.761% 99.761% / 0.390625) 62.5%,
+            rgb(99.793% 99.793% 99.793% / 0.47265625) 68.75%,
+            rgb(99.828% 99.828% 99.828% / 0.5625) 75%,
+            rgb(99.867% 99.867% 99.867% / 0.66015625) 81.25%,
+            rgb(99.908% 99.908% 99.908% / 0.765625) 87.5%,
+            rgb(99.953% 99.953% 99.953% / 0.87890625) 93.75%,
+            rgb(100% 100% 100%) 100%
+        );
+    }
+
+    .report-content-grid {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 1650px) {
+        .report-content-grid {
+            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+            align-items: start;
+        }
     }
 </style>

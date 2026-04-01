@@ -26,6 +26,13 @@ export interface Project {
     fullReport: string;
     publish: boolean;
     underReview: boolean;
+    pdf?: {
+        fileName: string;
+        size: number;
+        type: string;
+        uploadedAt: string;
+    };
+    pdfUrl?: string;
 }
 
 export interface User {

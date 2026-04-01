@@ -15,6 +15,9 @@ export async function load({ params }) {
     const project: any = await injectStudentAndMentor(
         stringifyObjectId(await ProjectSchema.findById(projectId).lean()),
     );
+    project.pdfUrl = project.pdf?.s3ObjectKey
+        ? `/project-pdfs/${project._id.toString()}`
+        : null;
     return { project, studentId };
 }
 

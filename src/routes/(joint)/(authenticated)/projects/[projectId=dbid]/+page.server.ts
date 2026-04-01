@@ -15,7 +15,7 @@ export async function load({ params: { projectId } }) {
     const project = stringifyObjectId(
         await ProjectSchema.findById(
             projectId,
-            "title shortDesc tags mentorId studentId fullReport year",
+            "title shortDesc tags mentorId studentId fullReport year pdf",
         ).lean(),
     );
 
@@ -39,6 +39,9 @@ export async function load({ params: { projectId } }) {
 
     project.mentor = mentor;
     project.student = student;
+    project.pdfUrl = project.pdf?.s3ObjectKey
+        ? `/project-pdfs/${project._id.toString()}`
+        : null;
 
     return { project, mentor, student, images: inflatedImages };
 }

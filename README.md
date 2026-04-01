@@ -1,5 +1,9 @@
 # Commonwealth School Project Week Website 
 
+## AI Agent Summary
+
+For a fast, implementation-focused overview of the codebase, read [AI_REPOSITORY_SUMMARY.md](AI_REPOSITORY_SUMMARY.md).
+
 ### v2
 
 Author: Thomas Zhou
