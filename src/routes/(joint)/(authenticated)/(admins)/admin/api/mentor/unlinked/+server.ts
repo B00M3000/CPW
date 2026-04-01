@@ -14,7 +14,7 @@ export async function GET() {
 export async function DELETE() {
     const allMentors = await MentorSchema.find({}, '')
     await Promise.all(allMentors.map(async ({ _id }) => {
-        if(!await ProjectSchema.find({ mentorId: _id }).exists("_id", true)) MentorSchema.deleteOne({ _id });
+        if(!await ProjectSchema.find({ mentorId: _id }).exists("_id", true)) await MentorSchema.deleteOne({ _id });
     }))
     return text("Purge complete!")
 }

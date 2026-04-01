@@ -25,7 +25,16 @@ export async function POST({ request, params: { projectId } }) {
             },
             { publish },
         );
+    } else if (req.Action == "UPDATE") {
+        const { title, tags, shortDesc } = req;
+        const updated = await ProjectSchema.findOneAndUpdate(
+            { _id: projectId },
+            { title, tags, shortDesc },
+        );
+        if (!updated) {
+            return json({ message: "Project not found." }, { status: 404 });
+        }
     }
 
-    return json({ message: "Report updated successfully!" });
+    return json({ message: "Project updated successfully!" });
 }

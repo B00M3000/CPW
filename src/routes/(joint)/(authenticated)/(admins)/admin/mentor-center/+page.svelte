@@ -1,6 +1,7 @@
 <script lang=ts>
     import { ArrowLeft, CircleCheckBig, CircleX, Trash2, BookUser } from "lucide-svelte";
     import MentorSearch from "./MentorSearch.svelte";
+    import MentorMerger from "./MentorMerger.svelte";
     import { Circle3 } from "svelte-loading-spinners";
     import { browser } from "$app/environment";
 
@@ -45,9 +46,7 @@
             </div>
             <div class="grid-deduplication h-full w-full p-8 rounded-lg flex flex-col items-start bg-gray-200 border border-solid border-gray-400 ">
                 <h2 class="text-xl mb-4 text-center">Mentor Deduplication</h2>
-                <div class="flex items-center justify-center mt-8 w-full">
-                    <span>To be implemented.</span>
-                </div>
+                <MentorMerger />
             </div>
         </div>
         <a class="absolute top-0 left-0 bg-blue-500 hover:bg-blue-600 p-2 px-3 m-8 rounded-lg flex gap-2 items-center text-white" href=/admin>
