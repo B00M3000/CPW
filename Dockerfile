@@ -15,7 +15,7 @@ COPY . .
 RUN pnpm install -r --offline
 
 ENV PUBLIC_BUILD_NUMBER=${TAG}
-COPY .env.production .env
+COPY /.env.production .env
 
 RUN pnpm run build
 
