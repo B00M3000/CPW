@@ -18,8 +18,6 @@ export const load = async ({ locals, params: { projectId } }) => {
     if (!project) error(404, "Project not found!");
     if (project.studentId != locals.user._id)
         error(403, "You cannot manage this project!");
-    project.pdfUrl = project.pdf?.s3ObjectKey
-        ? `/project-pdfs/${project._id.toString()}`
-        : null;
+    project.pdfUrl = project.pdf ? `/project-pdfs/${project._id.toString()}` : null;
     return { project, projectId: project._id.toString() };
 };

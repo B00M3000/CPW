@@ -1,8 +1,5 @@
+import { AccessLevel, AccountType } from "@/lib/enums";
 import { getObject } from "@/server/aws";
-import {
-    canPubliclyCacheProjectAsset,
-    canViewProject,
-} from "@/server/project-access";
 import { ProjectSchema } from "@/server/mongo/schemas/project";
 import { error } from "@sveltejs/kit";
 
@@ -11,25 +8,27 @@ function safeInlineFilename(fileName: string) {
 }
 
 export async function GET({ locals, params: { projectId }, setHeaders }) {
-    if (!locals.user) {
-        error(403, { message: "Not authenticated." });
-    }
-
     const project = await ProjectSchema.findById(projectId, "studentId publish pdf").lean();
 
     if (!project?.pdf?.s3ObjectKey) {
         error(404, { message: "Project PDF not found." });
     }
 
-    if (!canViewProject(locals.user, project)) {
+    const isOwner = project.studentId === locals.user._id;
+    const isAdmin = locals.user.accessLevel === AccessLevel.Admin;
+    const isAdvisorOfStudent =
+        locals.user.accountType === AccountType.Advisor &&
+        locals.user.adviseeIds?.includes(project.studentId);
+    const isPublished = !!project.publish;
+
+    if (!isPublished && !isOwner && !isAdmin && !isAdvisorOfStudent) {
         error(403, { message: "You do not have access to this PDF." });
     }
 
     const object = await getObject(project.pdf.s3Bucket, project.pdf.s3ObjectKey);
-    const isPublished = canPubliclyCacheProjectAsset(locals.user, project);
 
     setHeaders({
-        "Cache-Control": isPublished ? "public, max-age=1209600" : "private, no-store",
+        "Cache-Control": isPublished ? "public, max-age=1209600" : "private, max-age=300",
         "X-Content-Type-Options": "nosniff",
         "Content-Disposition": `inline; filename="${safeInlineFilename(project.pdf.fileName)}"`,
     });

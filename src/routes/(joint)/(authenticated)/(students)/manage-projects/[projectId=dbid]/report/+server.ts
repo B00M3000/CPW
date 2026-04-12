@@ -8,10 +8,6 @@ import { ProjectSchema } from "@/server/mongo/schemas/project";
 import { error, json } from "@sveltejs/kit";
 
 export async function POST({ request, locals, params: { projectId } }) {
-    if (!locals.user) {
-        error(403, "Not authenticated.");
-    }
-
     const { fullReport } = await request.json();
 
     const project = await ProjectSchema.findById(projectId, "studentId pdf").lean();
@@ -19,15 +15,11 @@ export async function POST({ request, locals, params: { projectId } }) {
         return json({ message: "Project not found." }, { status: 404 });
     }
 
-    if (project.studentId.toString() !== locals.user._id.toString()) {
+    if (project.studentId !== locals.user._id) {
         error(403, "You cannot update another user's report.");
     }
 
-    if (typeof fullReport !== "string") {
-        return json({ message: "Report text must be a string." }, { status: 400 });
-    }
-
-    const safeFullReport = fullReport;
+    const safeFullReport = typeof fullReport === "string" ? fullReport : "";
 
     if (!safeFullReport.trim() && !project.pdf?.s3ObjectKey) {
         return json(

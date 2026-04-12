@@ -21,8 +21,9 @@
 
     let enlargedImageView = $state(false);
 
+    /** @param {MouseEvent} event */
     function backgroundClick(event) {
-        if(event.target.id == 'enlarged-image-view') enlargedImageView = false;
+        if (event.target === event.currentTarget) enlargedImageView = false;
     }
 </script>
 
@@ -55,7 +56,7 @@
 {/if}
 
 <main class="flex flex-col items-center w-full h-full">
-    <div class="layout gap-4 p-4 w-full">
+    <div class="layout gap-4 p-4">
         <div class="flex flex-col justify-between bg-gray-200 border border-solid border-gray-400 rounded-md p-4 w-full h-full min-h-56 shadow-xl">
             <div class="flex flex-col">
                 <div class="flex justify-between mb-1">
@@ -78,29 +79,31 @@
             </div>
         </div>
         <!-- Report -->
-        <div class="report w-full h-full overflow-y-auto flex flex-col 2xl:flex-row">
-            <!-- Text report -->
-            <div class="relative flex-1">
-                <div class="w-full min-h-full bg-white whitespace-pre-wrap break-words p-[1in] flex flex-col" class:justify-center={!report} >
+        <div class="report w-full h-full relative">
+            <div class="overflow-y-auto w-full h-full">
+                {#if data.project.pdfUrl}
+                <div class="bg-white border border-gray-300 rounded p-4 mb-4">
+                    <div class="flex justify-between items-center mb-3 gap-2">
+                        <h4 class="text-lg font-semibold">Project PDF</h4>
+                        <a class="text-blue-700 underline" href={data.project.pdfUrl} target="_blank" rel="noreferrer">Download PDF</a>
+                    </div>
+                    <iframe title="Project PDF" src={data.project.pdfUrl} class="w-full h-[24rem] border border-gray-300 rounded"></iframe>
+                </div>
+                {/if}
+                <div class="w-[8.5in] min-h-full bg-white whitespace-pre-wrap break-words p-[1in] flex flex-col" class:justify-center={!report} >
                     {#if report}
                     <h4 class="text-2xl text-center mb-4">{data.project.title}</h4>
                     <h5 class="text-lg text-center mb-8">{data.student?.name}</h5>
                     <p class="text-base">{@html report}</p>
                     {:else}
                     <div class="flex flex-col items-center justify-center gap-16 h-full">
-                        <span class="text-4xl w-full text-center">No report has been uploaded for this project.</span>
+                        <span class="text-4xl w-full text-center">No text report has been uploaded for this project.</span>
                         <span class="text-7xl w-full text-center">¯\_(ツ)_/¯</span>
                     </div>
                     {/if}
                 </div>
-                <div class="fadeout"></div>
             </div>
-            <!-- PDF report -->
-            {#if data.project.pdfUrl}
-            <div class="flex-1 border-l border-gray-300">
-                <iframe src={data.project.pdfUrl} class="w-full aspect-[8.5/11]" title="Project PDF"></iframe>
-            </div>
-            {/if}
+            <div class="fadeout"></div>
         </div>
         <!-- Images -->
         <div class="images bg-gray-200 rounded-xl grid grid-rows-[auto_minmax(0,_1fr)] relative border border-solid border-gray-400">
@@ -151,7 +154,6 @@
         grid-template-rows: auto auto minmax(0, 1fr);
         grid-template-areas: "toolbar report" "details report" "images report";
     }
-    .details { grid-area: details; }
     .report { grid-area: report; }
     .images { grid-area: images; }
     .toolbar { grid-area: toolbar; }

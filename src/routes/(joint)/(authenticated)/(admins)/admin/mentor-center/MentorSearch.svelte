@@ -1,5 +1,8 @@
 <script lang="ts">
+    import { browser } from "$app/environment";
+    import { ExternalLink, Pencil } from "lucide-svelte";
     import { Circle } from "svelte-loading-spinners";
+    import { onMount } from "svelte";
     import MentorModal from "./MentorModal.svelte";
 
     interface MentorProject {
@@ -35,13 +38,49 @@
     let loading = $state(false);
     let activeMentor: Mentor | undefined = $state(undefined);
 
+    const QUERY_PARAM_NAME = "q";
+
+    function setQueryParam(nextQuery: string) {
+        if (!browser) return;
+
+        const url = new URL(window.location.href);
+        if (nextQuery) url.searchParams.set(QUERY_PARAM_NAME, nextQuery);
+        else url.searchParams.delete(QUERY_PARAM_NAME);
+
+        window.history.replaceState(window.history.state, "", url);
+    }
+
+    onMount(() => {
+        if (!browser) return;
+
+        const initialQuery =
+            new URL(window.location.href).searchParams
+                .get(QUERY_PARAM_NAME)
+                ?.trim() || "";
+
+        if (initialQuery) {
+            query = initialQuery;
+            queryMentors();
+        }
+    });
+
     async function queryMentors(event?: SubmitEvent) {
         event?.preventDefault();
-        if (!query.trim()) return;
+
+        const trimmedQuery = query.trim();
+        if (!trimmedQuery) {
+            mentors = [];
+            setQueryParam("");
+            return;
+        }
+
+        query = trimmedQuery;
+        setQueryParam(trimmedQuery);
+
         loading = true;
         try {
             const res = await fetch(
-                `/admin/api/mentor/search?q=${encodeURIComponent(query)}`,
+                `/admin/api/mentor/search?q=${encodeURIComponent(trimmedQuery)}`,
             );
             if (!res.ok) throw new Error();
             const data = await res.json();
@@ -101,10 +140,11 @@
                         <div class="flex-1 min-w-0">
                             <button
                                 type="button"
-                                class="text-left font-semibold text-base hover:underline cursor-pointer leading-tight"
+                                class="text-left font-semibold text-base hover:underline cursor-pointer leading-tight inline-flex items-center gap-1"
                                 onclick={() => (activeMentor = mentor)}
                             >
                                 {mentor.name}
+                                <Pencil size={13} class="text-gray-500" />
                             </button>
                             <p class="text-xs text-gray-600 truncate">
                                 {mentor.organization}
@@ -131,15 +171,22 @@
                     {#if mentor.projects && mentor.projects.length > 0}
                         <div class="flex flex-wrap gap-1">
                             {#each mentor.projects as proj}
-                                <span
-                                    class="text-xs bg-gray-100 border border-gray-200 rounded-full px-2 py-0.5 text-gray-700 truncate max-w-[16rem]"
-                                    title="{proj.title} ({proj.year}) — {proj.studentName}"
+                                <a
+                                    href="/admin/project-center/{proj._id}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-xs bg-gray-100 border border-gray-200 rounded-full px-2 py-0.5 text-gray-700 hover:bg-gray-200 hover:border-gray-300 transition-colors max-w-[20rem] inline-flex items-center gap-2"
+                                    title="Open project: {proj.title} ({proj.year}) — {proj.studentName}"
                                 >
-                                    {proj.title}
-                                    <span class="text-gray-400"
-                                        >({proj.year})</span
-                                    >
-                                </span>
+                                    <p>
+                                        {proj.title}
+                                        <span class="text-gray-400"
+                                            >({proj.year})</span
+                                        >
+                                        <span class="text-gray-500">- {proj.studentName}</span>
+                                    </p>
+                                    <ExternalLink size={16} class="text-gray-500 shrink-0" />
+                                </a>
                             {/each}
                             {#if (mentor.projectCount ?? 0) > (mentor.projects?.length ?? 0)}
                                 <span class="text-xs text-gray-400 px-1"

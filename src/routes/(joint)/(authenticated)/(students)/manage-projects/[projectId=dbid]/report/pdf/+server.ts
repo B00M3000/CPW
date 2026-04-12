@@ -1,9 +1,10 @@
 import { deleteObject, uploadObject } from "@/server/aws";
-import { MAX_PDF_SIZE_BYTES } from "@/lib/constants/upload";
 import { ProjectSchema } from "@/server/mongo/schemas/project";
 import { AWS_S3_IMAGES_BUCKET } from "$env/static/private";
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
+
+const MAX_PDF_SIZE_BYTES = 10 * 1000 * 1000;
 
 function assertPdfSignature(buffer: Buffer) {
     const signature = buffer.subarray(0, 5).toString("utf-8");
@@ -21,7 +22,7 @@ export const PUT: RequestHandler = async ({ request, locals, params: { projectId
 
     const project = await ProjectSchema.findById(projectId, "studentId pdf").lean();
     if (!project) error(404, { message: "Project not found." });
-    if (project.studentId.toString() !== locals.user._id.toString())
+    if (project.studentId !== locals.user._id)
         error(403, { message: "You cannot upload a PDF for another user's project." });
 
     const formData = await request.formData();
@@ -47,7 +48,7 @@ export const PUT: RequestHandler = async ({ request, locals, params: { projectId
     }
 
     if (pdfFile.size > MAX_PDF_SIZE_BYTES) {
-        error(400, { message: "PDF exceeds the 25 MB file size limit." });
+        error(400, { message: "PDF exceeds the 10 MB file size limit." });
     }
 
     const fileBuffer = Buffer.from(await pdfFile.arrayBuffer());
@@ -99,7 +100,7 @@ export const DELETE: RequestHandler = async ({ locals, params: { projectId } }) 
 
     const project = await ProjectSchema.findById(projectId, "studentId pdf").lean();
     if (!project) error(404, { message: "Project not found." });
-    if (project.studentId.toString() !== locals.user._id.toString())
+    if (project.studentId !== locals.user._id)
         error(403, { message: "You cannot remove a PDF for another user's project." });
 
     if (!project.pdf?.s3ObjectKey) {

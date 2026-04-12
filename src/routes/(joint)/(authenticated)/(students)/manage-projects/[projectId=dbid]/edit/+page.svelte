@@ -40,6 +40,8 @@
         organization: string;
     }
 
+    type MentorAction = "create-new" | "use-existing";
+
     let {
         data,
     }: {
@@ -72,6 +74,8 @@
 
     let candidateMentors: CandidateMentor[] = $state([]);
     let selectedExistingMentorId = $state("");
+    let mentorAction: MentorAction | "" = $state("");
+    let mentorEditorOpen = $state(false);
     let mentorDeduplicationOpen = $state(false);
     let mentorDeduplicationLoading = $state(false);
     let errorMessage = $state("");
@@ -83,6 +87,19 @@
         (data.mentor.organization || "").trim(),
         (data.mentor.phoneNumber || "").trim(),
     ].join("|");
+
+    const currentMentorSignature = $derived(
+        [
+            (mentor.name || "").trim(),
+            (mentor.email || "").trim(),
+            (mentor.organization || "").trim(),
+            (mentor.phoneNumber || "").trim(),
+        ].join("|"),
+    );
+
+    const mentorChanged = $derived(
+        currentMentorSignature !== originalMentorSignature,
+    );
 
     onMount(() => {
         selected = data.project.tags
@@ -101,15 +118,10 @@
     });
 
     $effect(() => {
-        const currentMentorSignature = [
-            (mentor.name || "").trim(),
-            (mentor.email || "").trim(),
-            (mentor.organization || "").trim(),
-            (mentor.phoneNumber || "").trim(),
-        ].join("|");
-
-        if (currentMentorSignature === originalMentorSignature) {
+        if (!mentorChanged) {
             lastAutoOpenedMentorSignature = "";
+            mentorAction = "";
+            selectedExistingMentorId = "";
             return;
         }
 
@@ -137,6 +149,7 @@
         const searchParams = new URLSearchParams();
         searchParams.set("name", mentor.name || "");
         searchParams.set("organization", mentor.organization || "");
+        searchParams.set("limit", "10");
 
         const res = await fetch(
             `/manage-projects/create/deduplication?${searchParams.toString()}`,
@@ -153,6 +166,7 @@
     }
 
     function chooseExistingMentor(candidate: CandidateMentor) {
+        mentorAction = "use-existing";
         selectedExistingMentorId = candidate._id;
         mentor.name = candidate.name;
         mentor.email = candidate.email;
@@ -161,6 +175,22 @@
 
     function clearExistingMentorSelection() {
         selectedExistingMentorId = "";
+    }
+
+    function selectMentorAction(nextAction: MentorAction) {
+        mentorAction = nextAction;
+
+        if (nextAction === "create-new") {
+            selectedExistingMentorId = "";
+            mentorDeduplicationOpen = false;
+            mentorDeduplicationLoading = false;
+            candidateMentors = [];
+            return;
+        }
+
+        if (!mentorDeduplicationOpen) {
+            openMentorDeduplication();
+        }
     }
 
     async function upload() {
@@ -199,6 +229,22 @@
             return;
         }
 
+        if (mentorChanged) {
+            if (!mentorAction) {
+                status = EditStatus.ERROR;
+                errorMessage =
+                    "You changed mentor details. Please choose whether to create a new mentor or use an existing one.";
+                return;
+            }
+
+            if (mentorAction === "use-existing" && !selectedExistingMentorId) {
+                status = EditStatus.ERROR;
+                errorMessage =
+                    "Please select an existing mentor before saving.";
+                return;
+            }
+        }
+
         const res = await fetch(`/manage-projects/${data.project._id}/edit`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -211,6 +257,7 @@
                     phoneNumber: mentor.phoneNumber || "",
                 },
                 existingMentorId: selectedExistingMentorId || undefined,
+                mentorAction: mentorChanged ? mentorAction : undefined,
             }),
         });
 
@@ -223,15 +270,21 @@
             errorMessage = body?.message || "Failed to save changes.";
         }
     }
+
+    function closeMentorEditor() {
+        mentorEditorOpen = false;
+    }
 </script>
 
-<main class="flex items-center justify-center h-full w-full">
+<main class="w-full min-h-full overflow-y-auto py-8 px-4">
     <div
-        class="flex flex-col items-center gap-12 p-12 rounded-lg bg-gray-200 shadow border border-solid border-gray-400 max-w-4xl"
+        class="mx-auto flex w-full max-w-5xl flex-col items-stretch gap-12 rounded-lg border border-solid border-gray-400 bg-gray-200 p-12 shadow"
     >
         <h1 class="text-2xl">Edit Project Details</h1>
 
-        <div class="flex items-center gap-12">
+        <div
+            class="edit-layout gap-12 items-start"
+        >
             <div class="flex flex-col items-start gap-4">
                 <div class="flex gap-2 items-start flex-col">
                     <h2 class="text-lg">Title</h2>
@@ -266,130 +319,36 @@
             <div class="flex flex-col items-start gap-2 p-8">
                 <h2 class="text-lg">Mentor</h2>
                 <div
-                    class="flex flex-col items-start bg-gray-200 rounded-xl p-4 min-w-[20rem] gap-1"
+                    class="flex w-full min-w-[20rem] flex-col items-start gap-1 rounded-3xl bg-slate-100 px-5 py-5"
                 >
-                    <span class="text-sm text-gray-600">Full Name</span>
-                    <input
-                        class="text-lg font-bold rounded-md bg-gray-50 p-2 border border-gray-400 w-full"
-                        type="text"
-                        bind:value={mentor.name}
-                    />
-                    <span class="text-sm text-gray-600 mt-1">Email</span>
-                    <input
-                        class="text-base text-gray-700 rounded-md bg-gray-50 p-2 border border-gray-400 w-full"
-                        type="email"
-                        bind:value={mentor.email}
-                    />
-                    <span class="text-sm text-gray-600 mt-1"
-                        >Phone (optional)</span
+                    <span
+                        class="w-full text-lg font-bold text-slate-800"
+                        >{mentor.name || "Not set"}</span
                     >
-                    <input
-                        class="text-base text-gray-700 rounded-md bg-gray-50 p-2 border border-gray-400 w-full"
-                        type="text"
-                        bind:value={mentor.phoneNumber}
-                    />
-                    <span class="text-sm text-gray-600 mt-1"
-                        >Organization</span
+                    <span
+                        class="w-full text-base text-slate-600"
+                        >{mentor.organization || "Not set"}</span
                     >
-                    <input
-                        class="text-base rounded-md bg-gray-50 p-2 border border-gray-400 w-full"
-                        type="text"
-                        bind:value={mentor.organization}
-                    />
+                    <span
+                        class="w-full text-sm text-slate-500"
+                        >{mentor.email || "Not set"}</span
+                    >
+                    <span
+                        class="w-full text-sm text-slate-500"
+                        >{mentor.phoneNumber || "Not provided"}</span
+                    >
                 </div>
 
-                {#if mentorDeduplicationOpen}
-                    <div
-                        class="flex flex-col gap-3 w-full mt-3 rounded-xl border border-gray-300 bg-gray-100 p-4"
-                    >
-                        <div class="flex items-center justify-between gap-2">
-                            <span class="text-lg font-semibold"
-                                >Mentor Deduplication</span
-                            >
-                            <button
-                                class="p-1 px-3 rounded-md bg-gray-500 hover:bg-gray-600 text-white"
-                                onclick={() => {
-                                    mentorDeduplicationOpen = false;
-                                    mentorDeduplicationLoading = false;
-                                    candidateMentors = [];
-                                    selectedExistingMentorId = "";
-                                }}
-                            >
-                                Close
-                            </button>
-                        </div>
-
-                        <span class="text-sm text-gray-600 max-w-[36rem]">
-                            Review possible matching mentors before saving. If
-                            one matches, select it and the project will use that
-                            mentor record instead of creating a duplicate.
-                        </span>
-
-                        {#if mentorDeduplicationLoading}
-                            <div class="p-4 text-sm text-gray-600">
-                                Searching for similar mentors...
-                            </div>
-                        {:else if candidateMentors.length > 0}
-                            <div class="flex flex-col gap-2 w-full">
-                                <span class="text-sm text-gray-600"
-                                    >Select an existing mentor if one matches:</span
-                                >
-                                {#each candidateMentors as candidate}
-                                    <div
-                                        class="bg-white border border-gray-300 rounded-md p-2 flex items-center justify-between gap-2"
-                                    >
-                                        <div class="flex flex-col">
-                                            <span class="font-semibold text-sm"
-                                                >{candidate.name}</span
-                                            >
-                                            <span class="text-xs text-gray-600"
-                                                >{candidate.email}</span
-                                            >
-                                            <span class="text-xs text-gray-600"
-                                                >{candidate.organization}</span
-                                            >
-                                        </div>
-                                        <button
-                                            class="p-1 px-3 rounded-md text-white {selectedExistingMentorId ===
-                                            candidate._id
-                                                ? 'bg-slate-400 cursor-not-allowed'
-                                                : 'bg-blue-500 hover:bg-blue-600'}"
-                                            disabled={selectedExistingMentorId ===
-                                                candidate._id}
-                                            onclick={() =>
-                                                chooseExistingMentor(candidate)}
-                                        >
-                                            {selectedExistingMentorId ===
-                                            candidate._id
-                                                ? "Selected"
-                                                : "Use"}
-                                        </button>
-                                    </div>
-                                {/each}
-                            </div>
-                        {:else}
-                            <div
-                                class="p-4 text-sm text-gray-600 bg-white rounded-md border border-gray-200"
-                            >
-                                No similar mentor entries found.
-                            </div>
-                        {/if}
-
-                        {#if selectedExistingMentorId}
-                            <button
-                                class="self-start p-1 px-3 rounded-md bg-slate-500 hover:bg-slate-600 text-white"
-                                onclick={clearExistingMentorSelection}
-                            >
-                                Clear Selected Existing Mentor
-                            </button>
-                        {/if}
-                    </div>
-                {/if}
-
                 <span class="text-gray-600 max-w-[20rem] text-sm"
-                    >Mentor details can be edited here and will be saved
-                    alongside your project changes.</span
+                    >Mentor details are read-only on this page to keep the form
+                    focused. Use the button below to edit mentor details.</span
                 >
+                <button
+                    class="mt-2 p-2 px-4 rounded-md bg-blue-500 hover:bg-blue-600 text-white"
+                    onclick={() => (mentorEditorOpen = true)}
+                >
+                    Edit Mentor Details
+                </button>
             </div>
         </div>
 
@@ -419,4 +378,232 @@
             </div>
         </div>
     </div>
+
+    {#if mentorEditorOpen}
+        <div
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+        >
+            <div
+                class="w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-xl border border-gray-300 bg-gray-100 p-6"
+            >
+                <div class="mb-4 flex items-center justify-between gap-2">
+                    <h3 class="text-xl font-semibold">Edit Mentor Details</h3>
+                    <button
+                        class="p-1 px-3 rounded-md bg-gray-500 hover:bg-gray-600 text-white"
+                        onclick={closeMentorEditor}
+                    >
+                        Close
+                    </button>
+                </div>
+
+                <div class="grid gap-6 lg:grid-cols-2 items-start">
+                    <div class="flex flex-col items-start gap-2">
+                        <div
+                            class="flex flex-col items-start bg-gray-200 rounded-xl p-4 w-full gap-1"
+                        >
+                            <span class="text-sm text-gray-600">Full Name</span>
+                            <input
+                                class="text-lg font-bold rounded-md bg-gray-50 p-2 border border-gray-400 w-full"
+                                type="text"
+                                bind:value={mentor.name}
+                            />
+                            <span class="text-sm text-gray-600 mt-1">Email</span>
+                            <input
+                                class="text-base text-gray-700 rounded-md bg-gray-50 p-2 border border-gray-400 w-full"
+                                type="email"
+                                bind:value={mentor.email}
+                            />
+                            <span class="text-sm text-gray-600 mt-1"
+                                >Phone (optional)</span
+                            >
+                            <input
+                                class="text-base text-gray-700 rounded-md bg-gray-50 p-2 border border-gray-400 w-full"
+                                type="text"
+                                bind:value={mentor.phoneNumber}
+                            />
+                            <span class="text-sm text-gray-600 mt-1"
+                                >Organization</span
+                            >
+                            <input
+                                class="text-base rounded-md bg-gray-50 p-2 border border-gray-400 w-full"
+                                type="text"
+                                bind:value={mentor.organization}
+                            />
+                        </div>
+
+                        <span class="text-gray-600 text-sm"
+                            >Changes made here are applied to the form and will
+                            save with project changes.</span
+                        >
+                    </div>
+
+                    <div class="flex flex-col items-start gap-2 w-full">
+                        {#if mentorChanged}
+                            <div
+                                class="flex flex-col gap-2 w-full rounded-xl border border-amber-300 bg-amber-50 p-4"
+                            >
+                                <span class="text-base font-semibold"
+                                    >Mentor Update Confirmation Required</span
+                                >
+                                <span class="text-sm text-gray-700">
+                                    You changed mentor details. Choose one option
+                                    before saving:
+                                </span>
+
+                                <label class="flex items-start gap-2 text-sm">
+                                    <input
+                                        type="radio"
+                                        name="mentor-action"
+                                        checked={mentorAction === "create-new"}
+                                        onchange={() =>
+                                            selectMentorAction("create-new")}
+                                    />
+                                    <span
+                                        >Create a NEW mentor record with the
+                                        entered details.</span
+                                    >
+                                </label>
+
+                                <label class="flex items-start gap-2 text-sm">
+                                    <input
+                                        type="radio"
+                                        name="mentor-action"
+                                        checked={mentorAction === "use-existing"}
+                                        onchange={() =>
+                                            selectMentorAction("use-existing")}
+                                    />
+                                    <span
+                                        >Use an EXISTING mentor record
+                                        (recommended if this mentor already
+                                        exists).</span
+                                    >
+                                </label>
+                            </div>
+                        {/if}
+
+                        {#if mentorDeduplicationOpen}
+                            <div
+                                class="flex flex-col gap-3 w-full rounded-xl border border-gray-300 bg-gray-100 p-4"
+                            >
+                                <div
+                                    class="flex items-center justify-between gap-2"
+                                >
+                                    <span class="text-lg font-semibold"
+                                        >Mentor Deduplication</span
+                                    >
+                                    <!-- <button
+                                        class="p-1 px-3 rounded-md bg-gray-500 hover:bg-gray-600 text-white"
+                                        onclick={() => {
+                                            mentorDeduplicationOpen = false;
+                                            mentorDeduplicationLoading = false;
+                                            candidateMentors = [];
+                                            selectedExistingMentorId = "";
+                                        }}
+                                    >
+                                        Close
+                                    </button> -->
+                                </div>
+
+                                <span
+                                    class="text-sm text-gray-600 max-w-[36rem]"
+                                >
+                                    Review possible matching mentors before
+                                    saving. If one matches, select it and keep
+                                    "Use an EXISTING mentor" selected above.
+                                </span>
+
+                                {#if mentorDeduplicationLoading}
+                                    <div class="p-4 text-sm text-gray-600">
+                                        Searching for similar mentors...
+                                    </div>
+                                {:else if candidateMentors.length > 0}
+                                    <div class="flex flex-col gap-2 w-full">
+                                        <span class="text-sm text-gray-600"
+                                            >Select an existing mentor if one
+                                            matches:</span
+                                        >
+                                        <div class="candidate-mentor-list">
+                                            {#each candidateMentors as candidate}
+                                                <div
+                                                    class="bg-white border border-gray-300 rounded-md p-2 flex items-center justify-between gap-2"
+                                                >
+                                                    <div class="flex flex-col">
+                                                        <span
+                                                            class="font-semibold text-sm"
+                                                            >{candidate.name}</span
+                                                        >
+                                                        <span
+                                                            class="text-xs text-gray-600"
+                                                            >{candidate.email}</span
+                                                        >
+                                                        <span
+                                                            class="text-xs text-gray-600"
+                                                            >{candidate.organization}</span
+                                                        >
+                                                    </div>
+                                                    <button
+                                                        class="p-1 px-3 rounded-md text-white {selectedExistingMentorId ===
+                                                        candidate._id
+                                                            ? 'bg-slate-400 cursor-not-allowed'
+                                                            : 'bg-blue-500 hover:bg-blue-600'}"
+                                                        disabled={selectedExistingMentorId ===
+                                                            candidate._id}
+                                                        onclick={() =>
+                                                            chooseExistingMentor(candidate)}
+                                                    >
+                                                        {selectedExistingMentorId ===
+                                                        candidate._id
+                                                            ? "Selected"
+                                                            : "Use"}
+                                                    </button>
+                                                </div>
+                                            {/each}
+                                        </div>
+                                    </div>
+                                {:else}
+                                    <div
+                                        class="p-4 text-sm text-gray-600 bg-white rounded-md border border-gray-200"
+                                    >
+                                        No similar mentor entries found.
+                                    </div>
+                                {/if}
+
+                                {#if selectedExistingMentorId}
+                                    <button
+                                        class="self-start p-1 px-3 rounded-md bg-slate-500 hover:bg-slate-600 text-white"
+                                        onclick={clearExistingMentorSelection}
+                                    >
+                                        Clear Selected Existing Mentor
+                                    </button>
+                                {/if}
+                            </div>
+                        {/if}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {/if}
 </main>
+
+<style>
+    .edit-layout {
+        display: grid;
+        width: 100%;
+        grid-template-columns: minmax(20rem, 1.3fr) minmax(20rem, 1fr);
+    }
+
+    .candidate-mentor-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        max-height: 15rem;
+        overflow-y: auto;
+        padding-right: 0.25rem;
+    }
+
+    @media (max-width: 1320px) {
+        .edit-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

@@ -20,6 +20,7 @@ export async function POST({ locals, request, params: { projectId } }) {
         project: { shortDesc, tags, title },
         mentorInformation,
         existingMentorId,
+        mentorAction,
     } = await request.json();
 
     const existingProject = await ProjectSchema.findOne(
@@ -78,20 +79,38 @@ export async function POST({ locals, request, params: { projectId } }) {
 
     let nextMentorId = existingProject.mentorId.toString();
 
-    if (existingMentorId && existingMentorId !== nextMentorId) {
-        const selectedMentor = await MentorSchema.findById(existingMentorId, "_id").lean();
-        if (!selectedMentor) {
-            return error(400, "Selected existing mentor was not found.");
+    if (mentorChanged) {
+        if (mentorAction !== "create-new" && mentorAction !== "use-existing") {
+            return error(
+                400,
+                "Mentor details changed. Please choose whether to create a new mentor or use an existing mentor.",
+            );
         }
-        nextMentorId = existingMentorId;
-    } else if (mentorChanged) {
-        const mentor = await MentorSchema.create({
-            name: incomingMentorInformation.fullName,
-            organization: incomingMentorInformation.organization,
-            email: incomingMentorInformation.email,
-            phoneNumber: incomingMentorInformation.phoneNumber,
-        });
-        nextMentorId = mentor._id.toString();
+
+        if (mentorAction === "use-existing") {
+            if (!existingMentorId || existingMentorId === nextMentorId) {
+                return error(400, "Please select an existing mentor.");
+            }
+
+            const selectedMentor = await MentorSchema.findById(
+                existingMentorId,
+                "_id",
+            ).lean();
+            if (!selectedMentor) {
+                return error(400, "Selected existing mentor was not found.");
+            }
+            nextMentorId = existingMentorId;
+        }
+
+        if (mentorAction === "create-new") {
+            const mentor = await MentorSchema.create({
+                name: incomingMentorInformation.fullName,
+                organization: incomingMentorInformation.organization,
+                email: incomingMentorInformation.email,
+                phoneNumber: incomingMentorInformation.phoneNumber,
+            });
+            nextMentorId = mentor._id.toString();
+        }
     }
 
     await ProjectSchema.findOneAndUpdate(sanitizeFilter({ _id: projectId }), {

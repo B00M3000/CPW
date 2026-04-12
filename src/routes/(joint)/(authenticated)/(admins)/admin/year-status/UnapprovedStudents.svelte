@@ -66,7 +66,7 @@
                         <TableBodyCell class="!p-4">
                             <div class="flex justify-end">
                                 <button
-                                    class="rounded-md bg-slate-300 flex gap-2 items-center justify-center p-2 hover:bg-slate-400"
+                                    class="rounded-md bg-slate-200 flex gap-2 items-center justify-center p-2 hover:bg-slate-300"
                                     onclick={() =>
                                         window.open(
                                             `/admin/project-center/${item._id}`,

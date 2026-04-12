@@ -39,7 +39,7 @@ export async function load({ params: { projectId } }) {
 
     project.mentor = mentor;
     project.student = student;
-    project.pdfUrl = project.pdf?.s3ObjectKey ? `/project-pdfs/${projectId}` : null;
+    project.pdfUrl = project.pdf ? `/project-pdfs/${project._id.toString()}` : null;
 
     return { project, mentor, student, images: inflatedImages };
 }

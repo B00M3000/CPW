@@ -1,9 +1,11 @@
 <script lang=ts>
+    import { browser } from "$app/environment";
     import { ArrowLeft, Plus, Info, FolderOpen, Search, X, ChevronRight } from "lucide-svelte";
     import { Circle } from "svelte-loading-spinners";
     import { tags as tagMap } from "@/lib/tags";
     import MultiSelect from "svelte-multiselect";
     import { goto } from "$app/navigation";
+    import { onMount } from "svelte";
     import toast from "svelte-french-toast";
     import Modal from "@/client/components/Modal.svelte";
 
@@ -14,12 +16,48 @@
     let searchResults: any[] = $state([]);
     let searching = $state(false);
 
+    const PROJECT_SEARCH_QUERY_PARAM = "q";
+
+    function setProjectSearchParam(nextQuery: string) {
+        if (!browser) return;
+
+        const url = new URL(window.location.href);
+        if (nextQuery) url.searchParams.set(PROJECT_SEARCH_QUERY_PARAM, nextQuery);
+        else url.searchParams.delete(PROJECT_SEARCH_QUERY_PARAM);
+
+        window.history.replaceState(window.history.state, "", url);
+    }
+
+    onMount(() => {
+        if (!browser) return;
+
+        const initialQuery =
+            new URL(window.location.href).searchParams
+                .get(PROJECT_SEARCH_QUERY_PARAM)
+                ?.trim() || "";
+
+        if (initialQuery) {
+            searchQuery = initialQuery;
+            searchProjects();
+        }
+    });
+
     async function searchProjects(e?: SubmitEvent) {
         e?.preventDefault();
-        if (!searchQuery.trim()) return;
+
+        const trimmedQuery = searchQuery.trim();
+        if (!trimmedQuery) {
+            searchResults = [];
+            setProjectSearchParam("");
+            return;
+        }
+
+        searchQuery = trimmedQuery;
+        setProjectSearchParam(trimmedQuery);
+
         searching = true;
         try {
-            const res = await fetch(`/admin/api/project/search?q=${encodeURIComponent(searchQuery)}`);
+            const res = await fetch(`/admin/api/project/search?q=${encodeURIComponent(trimmedQuery)}`);
             if (res.ok) {
                 const data = await res.json();
                 searchResults = data.projects;
