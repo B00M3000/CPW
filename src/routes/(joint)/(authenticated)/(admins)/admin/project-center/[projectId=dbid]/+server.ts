@@ -10,8 +10,8 @@ import { deleteObject, uploadObject } from "@/server/aws";
 import { AWS_S3_IMAGES_BUCKET } from "$env/static/private";
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
+import { MAX_PDF_SIZE_BYTES } from "@/lib/constants/upload";
 
-const ADMIN_MAX_PDF_SIZE_BYTES = 10 * 1000 * 1000;
 const MAX_PDF_FILENAME_LENGTH = 120;
 
 function assertPdfSignature(buffer: Buffer) {
@@ -34,7 +34,7 @@ export const PUT: RequestHandler = async ({ request, params: { projectId }, loca
     if (pdfFile.type !== "application/pdf") error(400, { message: "File MIME type must be application/pdf." });
     if (!pdfFile.name.toLowerCase().endsWith(".pdf")) error(400, { message: "File extension must be .pdf." });
     if (pdfFile.size <= 0) error(400, { message: "PDF file cannot be empty." });
-    if (pdfFile.size > ADMIN_MAX_PDF_SIZE_BYTES) error(400, { message: "PDF exceeds the 10 MB file size limit." });
+    if (pdfFile.size > MAX_PDF_SIZE_BYTES) error(400, { message: "PDF exceeds the 25 MB file size limit." });
 
     const fileBuffer = Buffer.from(await pdfFile.arrayBuffer());
     if (!assertPdfSignature(fileBuffer)) error(400, { message: "File does not contain a valid PDF signature." });

@@ -3,8 +3,7 @@ import { ProjectSchema } from "@/server/mongo/schemas/project";
 import { AWS_S3_IMAGES_BUCKET } from "$env/static/private";
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
-
-const MAX_PDF_SIZE_BYTES = 10 * 1000 * 1000;
+import { MAX_PDF_SIZE_BYTES } from "@/lib/constants/upload";
 
 function assertPdfSignature(buffer: Buffer) {
     const signature = buffer.subarray(0, 5).toString("utf-8");
@@ -48,7 +47,7 @@ export const PUT: RequestHandler = async ({ request, locals, params: { projectId
     }
 
     if (pdfFile.size > MAX_PDF_SIZE_BYTES) {
-        error(400, { message: "PDF exceeds the 10 MB file size limit." });
+        error(400, { message: "PDF exceeds the 25 MB file size limit." });
     }
 
     const fileBuffer = Buffer.from(await pdfFile.arrayBuffer());

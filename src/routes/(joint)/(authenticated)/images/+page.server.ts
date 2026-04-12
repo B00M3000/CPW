@@ -21,30 +21,36 @@ export async function load({ url: { searchParams }, locals }) {
     const items = clamp(parseIntOrElse(searchParams.get("items"), 10), 1, 25);
     const skip = page * items;
 
-    const projectFilter =
-        locals.user?.accessLevel === AccessLevel.Admin ? {} : { publish: true };
+    const isAdmin = locals.user?.accessLevel === AccessLevel.Admin;
 
-    const visibleProjectIds = (
-        await ProjectSchema.find(projectFilter, "_id").lean()
-    ).map(({ _id }) => _id.toString());
+    // Admins see all images regardless of publish status, so no project filter is needed.
+    // For non-admins we still need to restrict to images from published projects.
+    let visibleProjectIds: string[] | null = null;
+    if (!isAdmin) {
+        visibleProjectIds = (
+            await ProjectSchema.find({ publish: true }, "_id").lean()
+        ).map(({ _id }) => _id.toString());
 
-    if (visibleProjectIds.length === 0) {
-        return {
-            images: [],
-            page: 0,
-            items,
-            totalImageCount: 0,
-            mode,
-        };
+        if (visibleProjectIds.length === 0) {
+            return {
+                images: [],
+                page: 0,
+                items,
+                totalImageCount: 0,
+                mode,
+            };
+        }
     }
+
+    const imageFilter = visibleProjectIds
+        ? { projectId: { $in: visibleProjectIds } }
+        : {};
 
     if (mode === "random") {
         const randomImages = (
             await ImageSchema.aggregate([
                 {
-                    $match: {
-                        projectId: { $in: visibleProjectIds },
-                    },
+                    $match: imageFilter,
                 },
                 {
                     $addFields: {
@@ -91,7 +97,7 @@ export async function load({ url: { searchParams }, locals }) {
 
     const recentImages = (
         await ImageSchema.find(
-            { projectId: { $in: visibleProjectIds } },
+            imageFilter,
             "projectId description",
         )
             .lean()
@@ -101,9 +107,7 @@ export async function load({ url: { searchParams }, locals }) {
     ).map(stringifyObjectId);
 
     const inflatedImages = await inflateImagesWithProjects(recentImages);
-    const totalImageCount = await ImageSchema.countDocuments({
-        projectId: { $in: visibleProjectIds },
-    });
+    const totalImageCount = await ImageSchema.countDocuments(imageFilter);
     return {
         images: inflatedImages,
         page,
