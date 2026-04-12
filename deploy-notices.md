@@ -1,2 +1,0 @@
-use prim
-.env.production
