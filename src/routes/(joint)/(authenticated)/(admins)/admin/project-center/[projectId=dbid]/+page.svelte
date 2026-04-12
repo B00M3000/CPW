@@ -199,7 +199,7 @@
         uploadingPdf = true;
         const formData = new FormData();
         formData.set("pdf", selectedPdf);
-        const res = await fetch(`/manage-projects/${project._id}/report/pdf`, {
+        const res = await fetch(`/admin/project-center/${project._id}`, {
             method: "PUT",
             body: formData,
         });
@@ -217,7 +217,7 @@
 
     async function removePdf() {
         removingPdf = true;
-        const res = await fetch(`/manage-projects/${project._id}/report/pdf`, {
+        const res = await fetch(`/admin/project-center/${project._id}`, {
             method: "DELETE",
         });
         removingPdf = false;
@@ -497,7 +497,7 @@
                         />{/if}
                 </div>
             {:else}
-                <div class="flex flex-col 2xl:flex-row gap-4">
+                <div class="flex flex-col lg:flex-row gap-4">
                     <div
                         class="flex-1 max-h-96 overflow-y-auto border border-gray-300 rounded-md p-4 bg-white whitespace-pre-wrap text-base"
                     >

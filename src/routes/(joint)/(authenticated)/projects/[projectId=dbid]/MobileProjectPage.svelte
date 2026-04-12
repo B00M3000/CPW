@@ -91,6 +91,18 @@
                 </div>
                 <div class="fadeout"></div>
             </div>
+            <!-- PDF displayed below text (stacked for narrow screens) -->
+            {#if data.project.pdfUrl}
+            <div class="mt-4 bg-gray-200 border border-solid border-gray-400 rounded-xl overflow-hidden">
+                <div class="p-4 py-3 bg-gray-300 flex justify-between items-center">
+                    <h4 class="text-lg font-semibold">Project PDF</h4>
+                    <a class="text-sm text-blue-800 underline" href={data.project.pdfUrl} target="_blank" rel="noreferrer">Download</a>
+                </div>
+                <div class="p-4">
+                    <iframe title="Project PDF" src={data.project.pdfUrl} class="w-full h-[65vh] border border-gray-300 rounded bg-white"></iframe>
+                </div>
+            </div>
+            {/if}
         </div>
         {:else if view == Views.PDF}
         <div class='p-4 w-full'>

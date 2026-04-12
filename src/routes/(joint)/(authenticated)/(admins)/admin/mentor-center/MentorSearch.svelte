@@ -172,7 +172,7 @@
                         <div class="flex flex-wrap gap-1">
                             {#each mentor.projects as proj}
                                 <a
-                                    href="/admin/project-center/{proj._id}"
+                                    href={`/admin/project-center/${proj._id}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     class="text-xs bg-gray-100 border border-gray-200 rounded-full px-2 py-0.5 text-gray-700 hover:bg-gray-200 hover:border-gray-300 transition-colors max-w-[20rem] inline-flex items-center gap-2"

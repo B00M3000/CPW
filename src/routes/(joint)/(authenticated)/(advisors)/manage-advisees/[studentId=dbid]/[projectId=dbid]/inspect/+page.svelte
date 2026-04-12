@@ -75,20 +75,9 @@
             </button>
         </div>
 
-        {#if data.project.pdfUrl}
-        <div class="bg-white border border-gray-300 rounded-lg p-4 mb-4">
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-                <h4 class="text-lg font-semibold">Submitted PDF</h4>
-                <a class="text-blue-700 underline" href={data.project.pdfUrl} target="_blank" rel="noreferrer">
-                    Download PDF
-                </a>
-            </div>
-            <iframe title="Project PDF" src={data.project.pdfUrl} class="w-full h-[28rem] border border-gray-300 rounded"></iframe>
-        </div>
-        {/if}
-
-        <div class="flex justify-center w-full">
-            <div class="w-[9.5in] min-h-full bg-white whitespace-pre-wrap break-words p-[1in] mb-8 flex flex-col" class:justify-center={!report} >
+        <!-- Text + PDF side by side on wide screens, stacked on narrow -->
+        <div class="flex flex-col lg:flex-row gap-4 w-full mb-8">
+            <div class="flex-1 min-w-0 overflow-y-auto max-h-[80vh] bg-white whitespace-pre-wrap break-words p-8 flex flex-col" class:justify-center={!report}>
                 {#if report}
                 <h4 class="text-2xl text-center mb-4">{data.project.title}</h4>
                 <h5 class="text-lg text-center mb-8">{data.project.student.name}</h5>
@@ -100,6 +89,17 @@
                 </div>
                 {/if}
             </div>
+            {#if data.project.pdfUrl}
+            <div class="flex-1 min-w-0 flex flex-col gap-2">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <h4 class="text-lg font-semibold">Submitted PDF</h4>
+                    <a class="text-blue-700 underline text-sm" href={data.project.pdfUrl} target="_blank" rel="noreferrer">
+                        Download PDF
+                    </a>
+                </div>
+                <iframe title="Project PDF" src={data.project.pdfUrl} class="w-full flex-1 min-h-[28rem] border border-gray-300 rounded"></iframe>
+            </div>
+            {/if}
         </div>
 
         <h2 class="text-xl mb-2">Things to look for: </h2>

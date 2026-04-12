@@ -1,1 +1,1 @@
-export const MAX_PDF_SIZE_BYTES = 25 * 1000 * 1000;
+export const MAX_PDF_SIZE_BYTES = 10 * 1000 * 1000;

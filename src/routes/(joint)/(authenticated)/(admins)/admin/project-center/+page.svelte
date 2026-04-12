@@ -341,7 +341,7 @@
             <div class="flex flex-col gap-2 max-h-[60vh] overflow-y-auto">
                 {#each searchResults as project}
                 <a
-                    href="/admin/project-center/{project._id}"
+                    href={`/admin/project-center/${project._id}`}
                     class="flex items-center justify-between p-3 rounded-lg bg-white hover:bg-blue-50 border border-gray-200 transition-colors"
                 >
                     <div>

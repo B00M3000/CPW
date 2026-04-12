@@ -79,18 +79,10 @@
             </div>
         </div>
         <!-- Report -->
-        <div class="report w-full h-full relative">
-            <div class="overflow-y-auto w-full h-full">
-                {#if data.project.pdfUrl}
-                <div class="bg-white border border-gray-300 rounded p-4 mb-4">
-                    <div class="flex justify-between items-center mb-3 gap-2">
-                        <h4 class="text-lg font-semibold">Project PDF</h4>
-                        <a class="text-blue-700 underline" href={data.project.pdfUrl} target="_blank" rel="noreferrer">Download PDF</a>
-                    </div>
-                    <iframe title="Project PDF" src={data.project.pdfUrl} class="w-full h-[24rem] border border-gray-300 rounded"></iframe>
-                </div>
-                {/if}
-                <div class="w-[8.5in] min-h-full bg-white whitespace-pre-wrap break-words p-[1in] flex flex-col" class:justify-center={!report} >
+        <div class="report w-full h-full relative overflow-hidden">
+            <div class="flex gap-4 p-4 w-full h-full overflow-hidden">
+                <!-- Text report -->
+                <div class="flex-1 min-w-0 overflow-y-auto bg-white whitespace-pre-wrap break-words p-8 flex flex-col" class:justify-center={!report}>
                     {#if report}
                     <h4 class="text-2xl text-center mb-4">{data.project.title}</h4>
                     <h5 class="text-lg text-center mb-8">{data.student?.name}</h5>
@@ -102,6 +94,16 @@
                     </div>
                     {/if}
                 </div>
+                <!-- PDF panel (side by side on wide screens) -->
+                {#if data.project.pdfUrl}
+                <div class="flex-1 min-w-0 flex flex-col gap-2 overflow-hidden">
+                    <div class="flex justify-between items-center flex-none">
+                        <h4 class="font-semibold text-lg">Project PDF</h4>
+                        <a class="text-blue-700 underline text-sm" href={data.project.pdfUrl} target="_blank" rel="noreferrer">Download PDF</a>
+                    </div>
+                    <iframe title="Project PDF" src={data.project.pdfUrl} class="flex-1 min-h-0 w-full border border-gray-300 rounded"></iframe>
+                </div>
+                {/if}
             </div>
             <div class="fadeout"></div>
         </div>
