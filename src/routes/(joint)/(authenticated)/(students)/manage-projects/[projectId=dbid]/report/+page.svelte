@@ -152,7 +152,7 @@
         </div>
         <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-sm text-blue-900">
             You can submit either plain text, a PDF, or both. PDF uploads can include images and charts, and you can export
-            directly to PDF from Google Docs, Word, or similar tools. Maximum file size: 10 MB.
+            directly to PDF from Google Docs, Word, or similar tools. Maximum file size: 25 MB.
         </div>
         <div class="flex items-center justify-start mb-5 gap-4">
             <button class="cancel" on:click={() => goto("/manage-projects")}>Cancel</button>
