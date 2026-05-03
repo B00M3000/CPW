@@ -35,16 +35,27 @@ export async function GET({ url: { searchParams } }) {
     });
 
     const studentMap = new Map(students.map((s: any) => [s._id.toString(), (s as any).name]));
+    const missingStudentIds = [...new Set(
+        allProjects
+            .map((p: any) => p.studentId?.toString())
+            .filter((studentId): studentId is string => Boolean(studentId) && !studentMap.has(studentId))
+    )];
 
-    const inflated = await Promise.all(allProjects.map(stringifyObjectId).map(async (p: any) => {
-        if (studentMap.has(p.studentId)) {
-            p.studentName = studentMap.get(p.studentId);
-        } else {
-            const student = await UserSchema.findById(p.studentId, "name").lean();
-            p.studentName = student ? (student as any).name : "Unknown";
+    if (missingStudentIds.length) {
+        const missingStudents = await UserSchema.find(
+            { _id: { $in: missingStudentIds } },
+            "_id name"
+        ).lean();
+
+        for (const student of missingStudents) {
+            studentMap.set((student as any)._id.toString(), (student as any).name);
         }
+    }
+
+    const inflated = allProjects.map(stringifyObjectId).map((p: any) => {
+        p.studentName = studentMap.get(p.studentId) ?? "Unknown";
         return p;
-    }));
+    });
 
     return json({ projects: inflated });
 }
