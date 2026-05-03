@@ -1,4 +1,3 @@
-import { MentorSchema } from "@/server/mongo/schemas/mentor";
 import { ProjectSchema } from "@/server/mongo/schemas/project";
 import { deleteObject } from "@/server/aws";
 import { error, json } from "@sveltejs/kit";
