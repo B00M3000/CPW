@@ -35,4 +35,4 @@ ENV BODY_SIZE_LIMIT=52428800
 
 EXPOSE 3000/tcp
 
-CMD node -r dotenv/config .
+ENTRYPOINT ["node", "-r", "dotenv/config", "."]
