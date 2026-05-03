@@ -53,7 +53,7 @@ export async function load({ url: { searchParams } }) {
                     }
                 ]
             }
-        }).addFields({ score: { $meta: "searchScore" } }).sort({ score: -1 })
+        }).sort({ score: { $meta: "searchScore" } })
     } else {
         aggregate.sort("-createdAt")
     }
@@ -155,8 +155,10 @@ export async function load({ url: { searchParams } }) {
 
     const totalProjectCount: number = returnEmpty
         ? 0
-        : (await ProjectSchema.aggregate(aggregate.pipeline()).count("total"))[0]
-              .total;
+        : (
+              (await ProjectSchema.aggregate(aggregate.pipeline()).count("total"))[0]
+                  ?.total || 0
+          );
 
     const inflatedProjects = await Promise.all(
         projects.map(stringifyObjectId).map(injectStudentAndMentor),

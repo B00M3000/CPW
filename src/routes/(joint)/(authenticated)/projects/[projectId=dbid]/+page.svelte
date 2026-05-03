@@ -13,7 +13,7 @@
     let windowWidth: number = $state(9999);
 </script>
 
-{#if windowWidth < 1180}
+{#if windowWidth < 1440}
     <MobileProjectPage {data} />
 {:else}
     <NormalProjectPage {data}  />

@@ -3,6 +3,10 @@ import { error, json } from "@sveltejs/kit";
 
 export async function GET({ url: { searchParams } }) {
     const compound: any = {};
+    const parsedLimit = Number.parseInt(searchParams.get("limit") || "10", 10);
+    const limit = Number.isFinite(parsedLimit)
+        ? Math.min(Math.max(parsedLimit, 1), 10)
+        : 10;
 
     const name = searchParams.get("name")?.trim();
     if (!name) return error(400, "Missing mentor name search parameter.");
@@ -42,9 +46,9 @@ export async function GET({ url: { searchParams } }) {
 
     const mentors = await MentorSchema.aggregate(pipline)
         .sort({
-            score: { $meta: "textScore" },
+            score: { $meta: "searchScore" },
         })
-        .limit(10)
+        .limit(limit)
         .project({
             _id: 1,
             name: 1,

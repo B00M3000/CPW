@@ -11,7 +11,7 @@
     let doubleSpacing = $state(false);
     let report = $derived(!doubleSpacing ? data.project?.fullReport.trim() : data.project?.fullReport.replaceAll('\n', '\n\n').trim());
 
-    enum Views { FullReport, Images };
+    enum Views { FullReport, PDF, Images };
 
     let view = $state(Views.FullReport);
 
@@ -57,8 +57,9 @@
         </div>
         <!-- Report and Images Tabs -->
         <div class="px-4 w-full">
-            <div class="bg-gray-200 border border-gray-400 rounded-xl grid grid-cols-2 px-2 w-full shadow-lg">
+            <div class="bg-gray-200 border border-gray-400 rounded-xl grid grid-cols-3 px-2 w-full shadow-lg">
                 <button class="rounded-lg my-2 p-3 px-4 transition-all {view == Views.FullReport ? "bg-gray-300" : "cursor-pointer"}" onclick = {() => view = Views.FullReport}>View Full Report</button>
+                <button class="rounded-lg  my-2 p-3 px-4 transition-all {view == Views.PDF ? "bg-gray-300" : "cursor-pointer"}" onclick = {() => view = Views.PDF}>View PDF</button>
                 <button class="rounded-lg  my-2 p-3 px-4 transition-all {view == Views.Images ? "bg-gray-300" : "cursor-pointer"}" onclick = {() => view = Views.Images}>View Images</button>
             </div>
         </div>
@@ -82,13 +83,43 @@
                         <div class="w-full h-4"></div>
                         {:else}
                         <div class="flex flex-col items-center justify-center gap-16">
-                            <span class="text-4xl w-full text-center">No report has been uploaded for this project.</span>
+                            <span class="text-4xl w-full text-center">No text report has been uploaded for this project.</span>
                             <span class="text-7xl w-full text-center">¯\_(ツ)_/¯</span>
                         </div>
                         {/if}
                     </div>
                 </div>
                 <div class="fadeout"></div>
+            </div>
+            <!-- PDF displayed below text (stacked for narrow screens) -->
+            {#if data.project.pdfUrl}
+            <div class="mt-4 bg-gray-200 border border-solid border-gray-400 rounded-xl overflow-hidden">
+                <div class="p-4 py-3 bg-gray-300 flex justify-between items-center">
+                    <h4 class="text-lg font-semibold">Project PDF</h4>
+                    <a class="text-sm text-blue-800 underline" href={data.project.pdfUrl} target="_blank" rel="noreferrer">Download</a>
+                </div>
+                <div class="p-4">
+                    <iframe title="Project PDF" src={data.project.pdfUrl} class="w-full h-[65vh] border border-gray-300 rounded bg-white"></iframe>
+                </div>
+            </div>
+            {/if}
+        </div>
+        {:else if view == Views.PDF}
+        <div class='p-4 w-full'>
+            <div class="images bg-gray-200 border border-solid border-gray-400 rounded-xl grid grid-rows-[auto_minmax(0,_1fr)] w-full">
+                <div class="p-8 py-4 text-xl bg-gray-300 shadow-md rounded-t-xl flex justify-between items-center">
+                    <span>Project PDF</span>
+                    {#if data.project.pdfUrl}
+                    <a class="text-sm text-blue-800 underline" href={data.project.pdfUrl} target="_blank" rel="noreferrer">Download</a>
+                    {/if}
+                </div>
+                <div class="p-4">
+                    {#if data.project.pdfUrl}
+                    <iframe title="Project PDF" src={data.project.pdfUrl} class="w-full h-[65vh] border border-gray-300 rounded bg-white"></iframe>
+                    {:else}
+                    <div class="flex items-center justify-center min-h-[16rem] text-gray-600">No PDF uploaded for this project.</div>
+                    {/if}
+                </div>
             </div>
         </div>
         {:else if view == Views.Images}

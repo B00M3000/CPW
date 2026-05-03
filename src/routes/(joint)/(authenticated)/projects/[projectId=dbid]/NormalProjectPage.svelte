@@ -21,8 +21,9 @@
 
     let enlargedImageView = $state(false);
 
+    /** @param {MouseEvent} event */
     function backgroundClick(event) {
-        if(event.target.id == 'enlarged-image-view') enlargedImageView = false;
+        if (event.target === event.currentTarget) enlargedImageView = false;
     }
 </script>
 
@@ -78,20 +79,31 @@
             </div>
         </div>
         <!-- Report -->
-        <div class="report w-full h-full relative">
-            <div class="overflow-y-auto w-full h-full">
-                <div class="w-[8.5in] min-h-full bg-white whitespace-pre-wrap break-words p-[1in] flex flex-col" class:justify-center={!report} >
+        <div class="report w-full h-full relative overflow-hidden">
+            <div class="flex gap-4 p-4 w-full h-full overflow-hidden">
+                <!-- Text report -->
+                <div class="flex-1 min-w-0 overflow-y-auto bg-white whitespace-pre-wrap break-words p-8 flex flex-col" class:justify-center={!report}>
                     {#if report}
                     <h4 class="text-2xl text-center mb-4">{data.project.title}</h4>
                     <h5 class="text-lg text-center mb-8">{data.student?.name}</h5>
                     <p class="text-base">{@html report}</p>
                     {:else}
                     <div class="flex flex-col items-center justify-center gap-16 h-full">
-                        <span class="text-4xl w-full text-center">No report has been uploaded for this project.</span>
+                        <span class="text-4xl w-full text-center">No text report has been uploaded for this project.</span>
                         <span class="text-7xl w-full text-center">¯\_(ツ)_/¯</span>
                     </div>
                     {/if}
                 </div>
+                <!-- PDF panel (side by side on wide screens) -->
+                {#if data.project.pdfUrl}
+                <div class="flex-1 min-w-0 flex flex-col gap-2 overflow-hidden">
+                    <div class="flex justify-between items-center flex-none">
+                        <h4 class="font-semibold text-lg">Project PDF</h4>
+                        <a class="text-blue-700 underline text-sm" href={data.project.pdfUrl} target="_blank" rel="noreferrer">Download PDF</a>
+                    </div>
+                    <iframe title="Project PDF" src={data.project.pdfUrl} class="flex-1 min-h-0 w-full border border-gray-300 rounded"></iframe>
+                </div>
+                {/if}
             </div>
             <div class="fadeout"></div>
         </div>
@@ -144,7 +156,6 @@
         grid-template-rows: auto auto minmax(0, 1fr);
         grid-template-areas: "toolbar report" "details report" "images report";
     }
-    .details { grid-area: details; }
     .report { grid-area: report; }
     .images { grid-area: images; }
     .toolbar { grid-area: toolbar; }

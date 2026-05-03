@@ -33,7 +33,7 @@ After submission, your page will have a new project on it. The project might loo
 
 1. _Publish Button:_ Once you’ve created a project, the project is automatically visible to your advisor. The publish button is located on the top right corner, and will say “Pending Advisor Review” until your advisor approves of it. Once your advisor approves of the project, it is published and made public. You have the choice to unpublish the project, however, by clicking on that button.
 
-2. _Edit Details:_ This allows you to edit project details.
+2. _Edit Details:_ This allows you to edit project details, including the mentor information tied to the project.
 
 3. _Add Full Report:_ This allows you to add a project report to your project.
 

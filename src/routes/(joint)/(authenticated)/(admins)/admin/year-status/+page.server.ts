@@ -22,7 +22,7 @@ export const load = async ({ depends }) => {
 
     const projects = await ProjectSchema.find(
         { year: currentYear() },
-        "studentId underReview title",
+        "studentId underReview title publish",
     ).lean();
 
 
@@ -47,7 +47,19 @@ export const load = async ({ depends }) => {
             .map(injectStudentAndAdvisor),
     );
 
-    return { missingStudents, inflatedUnapprovedProjects, ignoredStudents };
+    const inflatedApprovedProjects = await Promise.all(
+        projects
+            .filter((project) => !project.underReview)
+            .map((project) => stringifyObjectId(project as ProjectDocument))
+            .map(injectStudentAndAdvisor),
+    );
+
+    return {
+        missingStudents,
+        inflatedUnapprovedProjects,
+        inflatedApprovedProjects,
+        ignoredStudents,
+    };
 };
 
 async function injectAdvisor(student: any) {

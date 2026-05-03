@@ -10,10 +10,14 @@ import { error } from "@sveltejs/kit";
 
 export const load = async ({ locals, params: { projectId } }) => {
     const project = stringifyObjectId(
-        await ProjectSchema.findById(projectId, "studentId fullReport title").lean(),
+        await ProjectSchema.findById(
+            projectId,
+            "studentId fullReport title pdf",
+        ).lean(),
     );
     if (!project) error(404, "Project not found!");
     if (project.studentId != locals.user._id)
         error(403, "You cannot manage this project!");
+    project.pdfUrl = project.pdf ? `/project-pdfs/${project._id.toString()}` : null;
     return { project, projectId: project._id.toString() };
 };
