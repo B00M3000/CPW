@@ -31,6 +31,9 @@ export async function POST({ request }) {
             phoneNumber: newMentor.phoneNumber?.trim() || "",
         });
         resolvedMentorId = mentor._id.toString();
+    } else {
+        const mentor = await MentorSchema.findById(resolvedMentorId, "_id").lean();
+        if (!mentor) error(404, "Mentor not found");
     }
 
     const projectYear = typeof year === "number" ? year : currentYear();
