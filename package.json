@@ -39,7 +39,7 @@
         "svelte-multiselect": "11.2.2",
         "tailwindcss": "^4.2.2",
         "tslib": "^2.8.1",
-        "typescript": "^5.9.3",
+        "typescript": "^6.0.3",
         "typescript-eslint": "^8.58.1",
         "vite": "^5.4.21"
     },
